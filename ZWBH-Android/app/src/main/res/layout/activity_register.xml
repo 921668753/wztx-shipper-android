@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/DividerWidth"
-        android:layout_marginTop="@dimen/dimen10" />
+        android:layout_marginTop="@dimen/dimen15" />
 
     <LinearLayout
         style="@style/Match44"
@@ -103,10 +103,10 @@
             android:textSize="@dimen/textsize12" />
     </LinearLayout>
 
+
     <include layout="@layout/commom_dividerwidth1" />
 
     <LinearLayout
-        android:id="@+id/ll_pwd"
         style="@style/Match44"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
@@ -125,8 +125,9 @@
             android:layout_marginLeft="@dimen/dimen56"
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"
+            android:digits="@string/alphanumeric"
             android:hint="@string/password3"
-            android:inputType="textNoSuggestions"
+            android:inputType="textPassword"
             android:maxLength="20"
             android:password="true"
             android:singleLine="true"
@@ -156,24 +157,81 @@
             android:paddingTop="@dimen/dimen13"
             android:src="@mipmap/ic_biyan" />
 
+    </LinearLayout>
 
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        android:id="@+id/ll_referralCode"
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/referralcode"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            android:id="@+id/et_referralCode"
+            style="@style/AutoMatch"
+            android:layout_marginLeft="@dimen/dimen41"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:digits="@string/alphanumeric"
+            android:hint="@string/referralcode1"
+            android:inputType="text"
+            android:maxLength="8"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
     </LinearLayout>
 
 
     <TextView style="@style/DividerWidth" />
 
 
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen16"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen3"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/myagreement1"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize12" />
+
+        <TextView
+            android:id="@+id/tv_agreement"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen3"
+            android:text="@string/agreement"
+            android:textColor="@color/announcementCloseColors"
+            android:textSize="@dimen/textsize12" />
+    </LinearLayout>
+
+
     <TextView
-        android:id="@+id/tv_resetPassword"
+        android:id="@+id/tv_registe"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen45"
         android:layout_marginLeft="@dimen/dimen15"
         android:layout_marginRight="@dimen/dimen15"
-        android:layout_marginTop="@dimen/dimen26"
+        android:layout_marginTop="@dimen/dimen16"
         android:background="@drawable/shape_login1"
         android:gravity="center"
-        android:text="@string/resetPassword"
+        android:text="@string/register"
         android:textColor="@color/mainColor"
         android:textSize="@dimen/textsize16" />
+
 
 </LinearLayout>

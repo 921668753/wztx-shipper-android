@@ -1,11 +1,14 @@
 package com.ruitukeji.zwbh.loginregister;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
@@ -15,16 +18,23 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.CodeBean;
-import com.ruitukeji.zwbh.entity.IsAdBean;
 import com.ruitukeji.zwbh.entity.LoginBean;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
-import com.ruitukeji.zwbh.main.MainActivity;
+import com.ruitukeji.zwbh.loginregister.bindphone.BindPhoneActivity;
+import com.ruitukeji.zwbh.loginregister.registerretrievepassword.RegisterActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
-import cn.bingoogolapple.titlebar.BGATitleBar;
+import java.util.Map;
+
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD;
+import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 /**
  * 登录
@@ -32,12 +42,7 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  */
 
 public class LoginActivity extends BaseActivity implements LoginContract.View {
-    private LoginContract.Presenter mPresenter;
-    /**
-     * 标题
-     */
-    @BindView(id = R.id.titlebar)
-    private BGATitleBar titleba;
+
     /**
      * 账号
      */
@@ -71,6 +76,30 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @BindView(id = R.id.img_quxiao1, click = true)
     private ImageView img_quxiao1;
 
+    /**
+     * 密码显示
+     */
+    @BindView(id = R.id.img_biyan, click = true)
+    private ImageView img_biyan;
+
+    /**
+     * 微信登陆
+     */
+    @BindView(id = R.id.ll_loginweixin, click = true)
+    private LinearLayout ll_loginweixin;
+
+    /**
+     * QQ登陆
+     */
+    @BindView(id = R.id.ll_loginQQ, click = true)
+    private LinearLayout ll_loginQQ;
+
+    private String openid;
+    private String from;
+    private String nickname;
+    private String head_pic;
+    private int sex = 0;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_login);
@@ -92,7 +121,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void initWidget() {
         super.initWidget();
         initTitle();
-        //   tv_login.setFocusable(false);
         tv_login.setClickable(false);//不可点击
         changeInputView(et_accountNumber, img_quxiao);
         changeInputView(et_pwd, img_quxiao1);
@@ -115,15 +143,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         super.widgetClick(v);
 
         switch (v.getId()) {
-            case R.id.tv_forgotPassword:
-                Intent intent = new Intent();
-                intent.setClass(aty, RetrievePasswordActivity.class);
-                intent.putExtra("title", getString(R.string.retrievePassword));
-                showActivity(aty, intent);
-                break;
             case R.id.tv_login:
                 showLoadingDialog(MyApplication.getContext().getString(R.string.loggingLoad));
-                mPresenter.postToLogin(et_accountNumber.getText().toString(), et_pwd.getText().toString());
+                ((LoginContract.Presenter) mPresenter).postToLogin(et_accountNumber.getText().toString(), et_pwd.getText().toString());
                 break;
             case R.id.img_quxiao:
                 et_accountNumber.setText("");
@@ -131,63 +153,172 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             case R.id.img_quxiao1:
                 et_pwd.setText("");
                 break;
+            case R.id.img_biyan:
+                if (et_pwd.getInputType() == 0x00000081) {
+                    img_biyan.setImageResource(R.mipmap.ic_zhengkai);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                } else {
+                    img_biyan.setImageResource(R.mipmap.ic_biyan);
+                    et_pwd.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD);
+                }
+                et_pwd.setSelection(et_pwd.getText().toString().trim().length());
+                et_pwd.requestFocus();
+                break;
+            case R.id.tv_forgotPassword:
+                Intent intent = new Intent();
+                intent.setClass(aty, RetrievePasswordActivity.class);
+                intent.putExtra("title", getString(R.string.retrievePassword));
+                showActivity(aty, intent);
+                break;
             case R.id.tv_register:
-                showActivity(aty, SelectRegisterTypeActivity.class);
+                showActivity(aty, RegisterActivity.class);
+                break;
+            case R.id.ll_loginweixin:
+                thirdLogin(SHARE_MEDIA.WEIXIN);
+                break;
+            case R.id.ll_loginQQ:
+                thirdLogin(SHARE_MEDIA.QQ);
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    public void getSuccess(String s, int flag) {
-        if (flag == 0) {
-            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
-            MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "id", bean.getResult().getUserId());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", et_accountNumber.getText().toString().trim());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "real_name", bean.getResult().getReal_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
-            MainActivity.drawer.closeDrawers();
-            //    finish();
-            ((LoginContract.Presenter) mPresenter).getIsAd();
-            //   dismissLoadingDialog();
-        } else if (flag == 1) {
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "avatar", userInfoBean.getResult().getAvatar());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "real_name", userInfoBean.getResult().getReal_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "auth_status", userInfoBean.getResult().getAuth_status());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "type", userInfoBean.getResult().getType());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "recomm_code", userInfoBean.getResult().getRecomm_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "bond_status", userInfoBean.getResult().getBond_status());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "bond", userInfoBean.getResult().getBond());
-            finish();
-            dismissLoadingDialog();
-        } else if (flag == 2) {
-            IsAdBean isAdBean = (IsAdBean) JsonUtil.getInstance().json2Obj(s, IsAdBean.class);
-            if (isAdBean.getResult().getIs_ad().equals("0")) {
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", false);
-            } else {
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", true);
-            }
-            finish();
-            dismissLoadingDialog();
+
+    /**
+     * 微信QQ， 登录
+     * 第三方授权
+     */
+    private void thirdLogin(SHARE_MEDIA platform) {
+        UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, platform, umAuthListener);
+    }
+
+
+    UMAuthListener umAuthListener = new UMAuthListener() {
+        /**
+         * @desc 授权开始的回调
+         * @param platform 平台名称
+         */
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            showLoadingDialog(getString(R.string.authorizationLoad));
         }
+
+        /**
+         * @desc 授权成功的回调
+         * @param share_media 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param map 用户资料返回
+         */
+        @Override
+        public void onComplete(SHARE_MEDIA share_media, int action, Map<String, String> map) {
+            showLoadingDialog(getString(R.string.loggingLoad));
+            String temp = "";
+            //    Toast.makeText(LoginActivity.this, new Gson().toJson(map), Toast.LENGTH_LONG).show(); ouCjs1GFLA4yOb44uCKwIb9-d6Cw
+            for (String key : map.keySet()) {
+                temp = temp + key + " : " + map.get(key) + "\n";
+            }
+            Log.d("tag111", temp);
+            if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nan))) {
+                sex = 1;
+            } else if (map.get("gender") != null && map.get("gender").contains(getString(R.string.nv))) {
+                sex = 2;
+            } else {
+                sex = 0;
+            }
+            //openid = map.get("uid");
+            openid = map.get("openid");
+            Log.d("tag111", openid);
+            from = share_media.toString();
+            if (from != null && from.equals("WEIXIN")) {
+                from = "wx";
+            } else {
+                from = "qq";
+            }
+            nickname = map.get("name");
+            head_pic = map.get("iconurl");
+            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
+        }
+
+        /**
+         * @desc 授权失败的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         * @param t 错误原因
+         */
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            dismissLoadingDialog();
+            if (t.getMessage().contains(getString(R.string.authoriseErr3))) {
+                ViewInject.toast(getString(R.string.authoriseErr2));
+                return;
+            }
+            ViewInject.toast(getString(R.string.authoriseErr));
+            //   Toast.makeText(mContext, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * @desc 授权取消的回调
+         * @param platform 平台名称
+         * @param action 行为序号，开发者用不上
+         */
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            dismissLoadingDialog();
+            ViewInject.toast(getString(R.string.authoriseErr1));
+            //  Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-    public void error(String msg) {
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
+
+
+    @Override
+    public void getSuccess(String s, int flag) {
+        LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+        PreferenceHelper.write(this, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
+        PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime() + "");
+        PreferenceHelper.write(this, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
+        PreferenceHelper.write(this, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
+        /**
+         * 发送消息
+         */
+        RxBus.getInstance().post(new MsgEvent("RxBusRefreshMineEvent"));
+        MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
         dismissLoadingDialog();
-        ViewInject.toast(msg);
+        finish();
+    }
 
+    @Override
+    public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
+        if (flag == 1) {
+            Intent intent = new Intent(aty, BindPhoneActivity.class);
+            intent.putExtra("openid", openid);
+            intent.putExtra("from", from);
+            intent.putExtra("nickname", nickname);
+            intent.putExtra("head_pic", head_pic);
+            intent.putExtra("sex", sex);
+            showActivity(aty, intent);
+            return;
+        }
+        ViewInject.toast(msg);
     }
 
     @Override
@@ -198,7 +329,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     /**
      * 监听EditText输入改变
      */
-    public void changeInputView(final EditText editText, final View view) {
+    public void changeInputView(EditText editText, View view) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -236,5 +367,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             }
         });
     }
+
 
 }

@@ -16,7 +16,7 @@
     <color name="titlebackground">#fafafa</color>
     <color name="background">#ededed</color>
     <color name="titledivider">#bbbbbb</color>
-
+    <color name="a4A4AColor">#4A4A4A</color>
     <color name="dividercolors">#dcdcdc</color>
 
     <!--SelectRegisterTypeActivity-->
@@ -37,7 +37,21 @@
 
     <!--登录-->
     <color name="lonin1colors">#d7d7d7</color>
-    <color name="lonincolors">#ff6243</color>
-    <color name="textColor">#333333</color>
+    <color name="lonincolors">#fc5e49</color>
+    <color name="c7C7CDColors">#C7C7CD</color>
+    <color name="announcementCloseColors">#FA5A5A</color>
+    <color name="textColor">#52565c</color>
+    <color name="d7D7D7colors">#D7D7D7</color>
+
+
+    <!-- 主界面-->
+    <color name="e5E5E5olors">#E5E5E5</color>
+    <color name="d495olors">#39D495</color>
+    <color name="cDCDCDColors">#CDCDCD</color>
+    <color name="f96865Colors">#F96865</color>
+    <color name="fF9C0FColors">#FF9C0F</color>
+    <color name="fDF0F0Colors">#FDF0F0</color>
+
+
 
 </resources>

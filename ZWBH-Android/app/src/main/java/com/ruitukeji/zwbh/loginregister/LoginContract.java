@@ -1,7 +1,7 @@
 package com.ruitukeji.zwbh.loginregister;
 
+import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
-import com.ruitukeji.zwbh.common.BaseView;
 
 /**
  * Created by ruitu on 2016/9/24.
@@ -15,28 +15,24 @@ public interface LoginContract {
         void postToLogin(String phone, String pwd);
 
         /**
-         * 获取用户信息
+         * 第三方账号登录
          */
-        void getInfo();
+        void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex);
 
-        /**
-         * 获取广告状态
-         */
-        void getIsAd();
     }
 
-    interface View extends BaseView<Presenter> {
-        /**
-         * http请求正确
-         *
-         * @param s
-         */
-        void getSuccess(String s, int flag);
-
-        /**
-         * http请求错误
-         */
-        void error(String msg);
+    interface View extends BaseNewView<Presenter, String> {
+//        /**
+//         * http请求正确
+//         *
+//         * @param s
+//         */
+//        void getSuccess(String s);
+//
+//        /**
+//         * http请求错误
+//         */
+//        void error(String msg);
     }
 
 }
