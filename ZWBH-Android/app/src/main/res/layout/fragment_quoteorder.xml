@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:orientation="vertical">
+
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch">
+
+        <cn.bingoogolapple.refreshlayout.BGAStickyNavLayout
+            style="@style/MatchAuto"
+            android:orientation="vertical">
+            <!-- kyNavLayout必须有三个控件 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+
+            <ListView
+                android:id="@+id/lv_order"
+                style="@style/MatchAuto"></ListView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+        </cn.bingoogolapple.refreshlayout.BGAStickyNavLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+</LinearLayout>

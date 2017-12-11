@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mypublishedorder_topbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen50"
+    android:background="@color/mainColor"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        style="@style/AutoMatch"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_toQuoteOrder"
+            style="@style/MatchMatch"
+            android:gravity="center"
+            android:text="@string/toQuoteOrder"
+            android:textColor="@color/lonincolors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_toQuoteOrder1"
+            style="@style/Match1"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:background="@color/lonincolors" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout style="@style/AutoMatch">
+
+        <TextView
+            android:id="@+id/tv_quoteOrder"
+            style="@style/MatchMatch"
+            android:gravity="center"
+            android:text="@string/quoteOrder"
+            android:textColor="@color/lonincolors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_quoteOrder1"
+            style="@style/Match1"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:background="@color/lonincolors" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/AutoMatch"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_canceledOrder"
+            style="@style/MatchMatch"
+            android:gravity="center"
+            android:text="@string/canceledOrder"
+            android:textColor="@color/lonincolors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_canceledOrder1"
+            style="@style/Match1"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:background="@color/lonincolors" />
+    </RelativeLayout>
+
+    <RelativeLayout style="@style/AutoMatch">
+
+        <TextView
+            android:id="@+id/tv_theBidOrder"
+            style="@style/MatchMatch"
+            android:gravity="center"
+            android:text="@string/theBidOrder"
+            android:textColor="@color/lonincolors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_theBidOrder1"
+            style="@style/Match1"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:background="@color/lonincolors" />
+    </RelativeLayout>
+</LinearLayout>

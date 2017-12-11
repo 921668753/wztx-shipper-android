@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title"></include>
+
+
+    <LinearLayout
+        style="@style/MatchMatch"
+        android:layout_marginTop="@dimen/dimen54"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_personalUser"
+            style="@style/AutoWrap"
+            android:gravity="right"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/dimen35">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@mipmap/personaluser" />
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen15"
+                android:gravity="center"
+                android:text="个人用户"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize17" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_enterpriseUser"
+            style="@style/AutoWrap"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dimen35">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@mipmap/enterpriseuser" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen15"
+                android:gravity="center"
+                android:text="企业用户"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize17" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

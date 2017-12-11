@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:layout_marginTop="@dimen/dimen13"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/amountCover"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            android:id="@+id/et_amountCover"
+            style="@style/AutoMatch"
+            android:layout_marginLeft="@dimen/dimen38"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:focusableInTouchMode="false"
+            android:hint="@string/pleaseFillOut"
+            android:inputType="numberDecimal"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColorHint="@color/hintcolors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen15"
+            android:text="@string/yuan"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/DividerWidth"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/insuredAmount"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_insuredAmount"
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen39"
+            android:layout_marginRight="@dimen/dimen15"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textSize="@dimen/textsize15"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cargoInsurance1"
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen20"
+        android:gravity="center"
+        android:padding="@dimen/dimen15"
+        android:text="@string/cargoInsurance1"
+        android:textColor="@color/hintcolors"
+        android:textSize="@dimen/textsize13" />
+
+
+    <TextView
+        android:id="@+id/tv_determine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen40"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen32"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/determine"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize12" />
+
+
+</LinearLayout>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch">
+
+        <LinearLayout
+            style="@style/MatchMatch"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen15"
+                android:text="@string/accountBalance"
+                android:textColor="@color/hintcolors"
+                android:textSize="@dimen/textsize16" />
+
+
+            <TextView
+                android:id="@+id/tv_accountBalance"
+                style="@style/WrapWrap"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen25"
+                android:text="0.00"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize22" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_withdrawalAmount"
+                style="@style/Match44"
+                android:layout_marginTop="@dimen/dimen35"
+                android:background="@color/mainColor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:text="@string/withdrawalAmount"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawalAmount"
+                    style="@style/AutoWrap"
+                    android:layout_marginLeft="@dimen/dimen39"
+                    android:layout_marginRight="@dimen/dimen8"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="+0.00元"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    style="@style/WrapWrap"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:src="@mipmap/arrow" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_myReferralBonuses"
+                style="@style/Match44"
+                android:layout_marginTop="@dimen/dimen35"
+                android:background="@color/mainColor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:text="@string/myReferralBonuses"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    android:id="@+id/tv_myReferralBonuses"
+                    style="@style/AutoWrap"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="+0.00"
+                    android:textColor="@color/lonincolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    android:layout_marginRight="@dimen/dimen10"
+                    android:singleLine="true"
+                    android:text="@string/automaticDepositAmount"
+                    android:textSize="@dimen/textsize15" />
+            </LinearLayout>
+
+            <TextView style="@style/DividerWidth" />
+
+            <LinearLayout
+                android:id="@+id/ll_prepaidPhoneRecords"
+                style="@style/Match44"
+                android:background="@color/mainColor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:text="@string/prepaidPhoneRecords"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <ImageView
+                    style="@style/WrapWrap"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:src="@mipmap/arrow" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_recharge"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen40"
+                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginRight="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen32"
+                android:background="@drawable/shape_login"
+                android:gravity="center"
+                android:text="@string/recharge"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/textsize12" />
+        </LinearLayout>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+</LinearLayout>

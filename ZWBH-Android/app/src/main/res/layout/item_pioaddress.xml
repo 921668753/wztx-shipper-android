@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_address"
+    style="@style/Match44"
+    android:gravity="center_vertical"
+    android:textColor="@color/textColor"
+    android:textSize="@dimen/textsize15"></TextView>

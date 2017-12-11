@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_upload"
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/headPortrait"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/AutoMatch" />
+
+        <cn.bingoogolapple.imageview.BGAImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_user"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/headportrait"
+            app:bga_iv_borderColor="#ff0000"
+            app:bga_iv_isCircle="true" />
+
+        <!--<declare-styleable name="BGAImageView">-->
+        <!--&lt;!&ndash; 默认图片资源，默认值为 null &ndash;&gt;-->
+        <!--<attr name="srcCompat"/>-->
+        <!--&lt;!&ndash; 是否是圆形，默认值为 false &ndash;&gt;-->
+        <!--<attr name="bga_iv_circle" format="boolean"/>-->
+        <!--&lt;!&ndash; 圆角矩形的半径，默认值为 0dp &ndash;&gt;-->
+        <!--<attr name="bga_iv_cornerRadius" format="reference|dimension"/>-->
+        <!--&lt;!&ndash; 是否是矩形，默认值为 false &ndash;&gt;-->
+        <!--<attr name="bga_iv_square" format="boolean"/>-->
+        <!--&lt;!&ndash; 描边的宽度，默认值为 0dp &ndash;&gt;-->
+        <!--<attr name="bga_iv_borderWidth" format="reference|dimension"/>-->
+        <!--&lt;!&ndash; 描边的颜色，默认值为 Color.WHITE &ndash;&gt;-->
+        <!--<attr name="bga_iv_borderColor" format="reference|color"/>-->
+        <!--</declare-styleable>-->
+
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/arrow" />
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        android:id="@+id/ll_name"
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/userName"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/MatchWrap"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen15"
+            android:text="--"
+            android:textSize="@dimen/mian_font_size" />
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/userPhone"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/MatchWrap"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen15"
+            android:text="--"
+            android:textSize="@dimen/mian_font_size" />
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        android:id="@+id/ll_accountDeposit"
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/accountDeposit"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_accountDeposit"
+            style="@style/AutoWrap"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen15"
+            android:text="@string/failurePay"
+            android:textColor="@color/lonincolors"
+            android:textSize="@dimen/mian_font_size" />
+
+        <ImageView
+            android:id="@+id/img_arrow"
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/arrow" />
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        android:id="@+id/ll_personalCertificate"
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:paddingLeft="@dimen/dimen15"
+            android:text="@string/personalCertificate"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_personalCertificate"
+            style="@style/AutoWrap"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen15"
+            android:text="@string/unauthorized"
+            android:textColor="@color/lonincolors"
+            android:textSize="@dimen/mian_font_size" />
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/arrow" />
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+</LinearLayout>

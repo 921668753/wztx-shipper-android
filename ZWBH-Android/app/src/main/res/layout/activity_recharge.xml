@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title"></include>
+
+    <LinearLayout
+        style="@style/Match44"
+        android:layout_marginTop="@dimen/dimen13"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_inputAmountFull"
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:hint="@string/inputAmountFull"
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/hintcolors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
+            android:singleLine="true"
+            android:text="@string/yuan"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen15"
+        android:text="@string/choicePayment" />
+
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:src="@mipmap/weixin" />
+
+        <TextView
+            android:id="@+id/tv_accountNumber"
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/weChatPay"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            android:id="@+id/img_weChatPay"
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
+            android:layout_marginRight="@dimen/dimen15"
+            android:padding="@dimen/dimen10"
+            android:src="@mipmap/selected" />
+
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:src="@mipmap/zhifubao" />
+
+        <TextView
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/alipayPay"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            android:id="@+id/img_alipayPay"
+            android:layout_width="@dimen/dimen40"
+            android:layout_height="@dimen/dimen40"
+            android:layout_marginRight="@dimen/dimen15"
+            android:padding="@dimen/dimen10"
+            android:src="@mipmap/selected1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen40"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen32"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/recharge"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize12" />
+
+
+</LinearLayout>

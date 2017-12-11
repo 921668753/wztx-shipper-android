@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    tools:context="com.ruitukeji.zwbh.main.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:background="@color/titlebackground"
+        android:orientation="vertical"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/Match44"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageView
+                style="@style/WrapWrap"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@mipmap/wuzaitianxia" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/dimen30"
+                android:layout_height="@dimen/dimen45"
+                android:layout_centerInParent="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/dimen8">
+
+                <ImageView
+                    android:id="@+id/img_message"
+                    style="@style/WrapWrap"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/message" />
+
+                <TextView
+                    android:id="@+id/tv_tag"
+                    android:layout_width="@dimen/dimen10"
+                    android:layout_height="@dimen/dimen10"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dimen7"
+                    android:background="@drawable/shape_dot"
+                    android:gravity="center"
+                    android:maxLength="2"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_10"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView style="@style/TitleDividerWidth" />
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_main" />
+
+
+</android.support.design.widget.CoordinatorLayout>

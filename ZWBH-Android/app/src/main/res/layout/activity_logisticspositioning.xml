@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title"></include>
+
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map"
+        style="@style/MatchMatch"
+        android:layout_below="@+id/titlebarl" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_driver"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen80"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen15"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <cn.bingoogolapple.imageview.BGAImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/img_user"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen50"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:scaleType="centerCrop"
+            app:bga_iv_isCircle="true"
+            app:srcCompat="@mipmap/headportrait" />
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:layout_marginLeft="@dimen/dimen13"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/MatchAuto"
+                android:gravity="bottom"
+                android:text="张三 • 苏E8X33F"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textsize15" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                style="@style/MatchAuto"
+                android:layout_marginTop="@dimen/dimen10"
+                android:gravity="top"
+                android:text="18337072388"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize14" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

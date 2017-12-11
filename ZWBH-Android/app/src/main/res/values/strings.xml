@@ -1,0 +1,496 @@
+<resources>
+    <string name="app_name">物载天下</string>
+
+    <!--下拉刷新文本-->
+    <string name="pullDownRefreshText">下拉刷新</string>
+    <string name="refreshingText">加载中&#8230;</string>
+    <string name="releaseRefreshText">释放更新</string>
+    <string name="noMoreData">没有更多数据了</string>
+
+    <!--网络请求-->
+    <!--Dialog-->
+    <string name="loggingLoad">登录中&#8230;</string>
+    <string name="sendingLoad">发送中&#8230;</string>
+    <string name="dataLoad">数据加载中&#8230;</string>
+    <string name="submissionLoad">提交中&#8230;</string>
+    <string name="crossLoad">上传中&#8230;</string>
+    <string name="download">下载中&#8230;</string>
+    <string name="shareJumpLoad">分享跳转中&#8230;</string>
+    <!--Dialog-->
+
+
+    <!--app权限-->
+    <string name="readAndWrite">这款应用需要获取读写权限，才能使用</string>
+    <string name="sdPermission">您拒绝了「SD卡读写权限」所需要的相关权限!请到「设置」开启权限</string>
+
+    <!--网络请求-->
+    <string name="checkNetwork">无法连接,请检查网络连接是否正常</string>
+    <string name="illegalArgumentException">客户端错误，传输了不合法或不正确的数据(非法数据异常)</string>
+    <string name="clientError">客户端未知错误</string>
+    <string name="serverReturnsDataError">服务器返回数据错误</string>
+    <string name="serverReturnsDataNull">服务器返回数据为空</string>
+    <string name="serverReturnsImgDataNull">服务器返回图片数据为空</string>
+    <string name="urlError">客户端请求的URL错误</string>
+    <string name="otherError">其他错误</string>
+    <string name="grammarError">服务器不理解请求的语法</string>
+    <string name="serverError">服务器错误</string>
+    <string name="authenticationError"> 网络请求身份验证错误</string>
+    <string name="serverRejectsRequest">服务器拒绝请求</string>
+    <string name="requestError">客户端请求出错，妨碍了服务器的处理</string>
+    <string name="jsonError">Json解析错误</string>
+    <string name="clickRefresh">，点击刷新</string>
+
+    <!--工具类-->
+    <string name="forFailure">获取失败</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!--个人中心-->
+    <string name="name">姓名</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_order">我的订单</string>
+    <string name="online_service">在线客服</string>
+    <string name="recommend_courteous">推荐有礼</string>
+    <string name="about_us">关于我们</string>
+    <string name="settings">设置</string>
+    <string name="technicalSupport">技术支持@苏州睿途科技</string>
+
+    <!--登录-->
+    <string name="login">登录</string>
+    <string name="accountNumber">手机号</string>
+    <string name="accountErroe">手机号错误</string>
+    <string name="hintAccountText">请输入您的手机号</string>
+    <string name="inputPhone">请输入正确的手机号</string>
+    <string name="password">密码</string>
+    <string name="passwordErroe">密码错误</string>
+    <string name="hintPasswordText">请输入密码</string>
+    <string name="hintPasswordText2">账号或密码错误</string>
+    <string name="hintPasswordText1">密码长度应在6～20位内</string>
+    <string name="forgotPassword">忘记密码?</string>
+    <string name="register">注册</string>
+    <string name="register1">立即注册</string>
+    <string name="errorCode">请输入验证码</string>
+    <string name="phone">手机号</string>
+    <string name="phone1">电话</string>
+    <string name="thirdpartylogin">第三方登录</string>
+
+    <!--选择注册类型-->
+    <string name="selectRegisterTypeTitle">选择注册类型</string>
+    <string name="selectRegisterType">selectRegisterType</string>
+    <string name="personalUser">personalUser</string>
+    <string name="enterpriseUser">enterpriseUser</string>
+
+    <!--新用户注册-->
+    <string name="newUserRegister">新用户注册</string>
+    <string name="resetpwd">重置密码成功，请登录！</string>
+    <string name="password1">确认密码</string>
+    <string name="referralcode">推荐码</string>
+    <string name="referralcode1">请输入推荐码（可选）</string>
+    <string name="password2">请再输入一遍密码</string>
+    <string name="password3">请输入6～20位密码</string>
+    <string name="testget">已发送</string>
+    <string name="retrievePassword">找回密码</string>
+    <string name="verificationCode">验证码</string>
+    <string name="testGetCode">获取验证码</string>
+    <string name="clickFinish">点击完成代表您同意</string>
+    <string name="myagreement">我同意</string>
+    <string name="agreement">《物载天下服务协议》</string>
+    <string name="agreement4">物载天下服务协议</string>
+    <string name="agreement1">同意《物载天下服务协议》才能注册使用</string>
+    <string name="determine">确定</string>
+    <string name="resetPassword">重置密码</string>
+    <string name="hintAccountText1">请输入企业法人的手机号</string>
+
+    <!--个人认证  基本信息-->
+    <string name="personalAuthentication">个人认证</string>
+    <string name="enterpriseAuthentication">企业认证</string>
+    <string name="hintName">请输入姓名</string>
+    <string name="hintName1">请输入正确的姓名</string>
+    <string name="hintIDtext">请输入身份证号</string>
+    <string name="hintIDerrorText">请输入正确的身份证号</string>
+    <string name="registeredPhoneNumber">手机号注册</string>
+    <string name="information">基本信息</string>
+    <string name="identityAuthentication">身份认证</string>
+    <string name="prompt">请填写您的真实信息，通过后将不能修改</string>
+    <string name="realName">真实姓名</string>
+    <string name="pleaseFillOut">请填写</string>
+    <string name="pleaseFillOut1">请填写(选填)</string>
+    <string name="sex">性别</string>
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <string name="unknown">未知</string>
+    <string name="IdNumber">身份证号</string>
+    <string name="uploudHoldingIdPhoto">请上传手持身份证照片</string>
+    <string name="holdingIdPhoto">手持身份证照片</string>
+    <string name="sample">请参照“示例”，保证身份证号码清晰可见。</string>
+    <string name="sample1">遮挡，模糊，或传不相关图片的都将导致审核不通过。</string>
+    <string name="nextStep">下一步</string>
+    <string name="uploudIdCardPhoto">请上传身份证正面照片</string>
+    <string name="uploudIdCardPhotoBack">请上传身份证反面照片</string>
+
+    <!--个人认证  身份认证-->
+    <string name="enterpriseInformation">企业信息</string>
+    <string name="qualification">资质认证</string>
+    <string name="operationInformation">操作人信息</string>
+    <string name="companyName">企业全称</string>
+    <string name="companyName1">请填写营业执照上的公司名字</string>
+    <string name="enterpriseName">企业简称</string>
+    <string name="registrationNumber">营业执照注册号</string>
+    <string name="registrationNumber1">请填写组织机构代码/社会信用代码</string>
+    <string name="registrationNumber2">请填写正确的组织机构代码/社会信用代码</string>
+    <string name="legalPersonName">企业法人姓名</string>
+    <string name="legalPersonIdNumber">法人身份证号</string>
+    <string name="legalPersonIdNumber1">请填写正确的法人身份证号</string>
+    <string name="phoneNumber">企业联系电话</string>
+    <string name="phoneNumber1">请输入正确的企业联系电话</string>
+    <string name="address">地址</string>
+    <string name="accountName">开户名称</string>
+    <string name="accountName1">请填写在银行开户的企业名字</string>
+    <string name="openingBank">开户行</string>
+    <string name="openingBank1">请填写以企业名字开户的银行名称</string>
+    <string name="settlementAccount">结算账号</string>
+    <string name="settlementAccount1">请填写以企业名字开户的银行账号</string>
+    <string name="hold_pic">请上传企业法人身份证手持照片</string>
+    <string name="front_pic">请上传企业法人身份证正面照片</string>
+    <string name="back_pic">请上传企业法人身份证反面照片</string>
+    <string name="businessLicense_pic">请上传企业营业执照照片</string>
+    <string name="operationIdNumber">操作人身份证号</string>
+    <string name="operationIdNumber1">请填写正确的操作人身份证号</string>
+    <string name="sp_hold_pic">请上传操作人身份证手持照片</string>
+    <string name="sp_front_pic">请上传操作人身份证正面照片</string>
+    <string name="sp_back_pic">请上传操作人身份证反面照片</string>
+
+    <!--  企业认证  企业信息-->
+
+
+    <!--账户设置-->
+    <string name="accountSettings">账户设置</string>
+    <string name="headPortrait">头像</string>
+    <string name="userName">姓名</string>
+    <string name="userPhone">手机号</string>
+    <string name="accountDeposit">账户保证金</string>
+    <string name="failurePay">未缴纳</string>
+    <string name="checked">已缴纳</string>
+    <string name="frozen">冻结</string>
+    <string name="personalCertificate">个人认证</string>
+    <string name="unauthorized">未认证</string>
+    <string name="inAuthentication">认证中</string>
+    <string name="certified">认证通过</string>
+    <string name="refuse">认证失败</string>
+    <string name="delete">后台删除</string>
+    <string name="noData">没有数据</string>
+    <string name="pleaseWait">请耐心等待</string>
+    <string name="pleaseWait1">请联系客服，进行处理</string>
+    <string name="imagePathError">图片路径错误</string>
+    <string name="denyPermission">您拒绝了「图片选择」所需要的相关权限!</string>
+    <string name="needPermission">图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照\n\n3.读写权限</string>
+
+
+    <!--MainActivity-->
+    <string name="logisticsName">LogisticsName</string>
+    <string name="location">location</string>
+    <string name="cityDistribution">同城配送</string>
+    <string name="longTrunk">长途干线</string>
+    <string name="locationFailure">定位失败</string>
+    <string name="locationFailure1">定位失败，请手动输入</string>
+    <string name="loginAg">请重新登录</string>
+
+    <!--充值余额支付-->
+    <string name="operation_error">操作失败,请稍后再试</string>
+    <string name="alipay_system_exception">支付系统异常</string>
+    <string name="alipay_account_exception">此帐号绑定的支付宝账户被冻结或不允许支付</string>
+    <string name="alipay_has_unbound">该用户已解除绑定</string>
+    <string name="alipay_order_error">订单支付失败</string>
+    <string name="alipay_order_cancel">您取消了支付</string>
+    <string name="pay_error">支付失败</string>
+    <string name="pay_network">网络连接异常</string>
+    <string name="pay_result_confirmed">支付结果确认中</string>
+    <string name="alipay_order_canceled">支付已取消</string>
+    <string name="payment_succeed">恭喜您，支付成功！</string>
+    <string name="alipay_succeed">支付成功</string>
+    <string name="wxappinstalled">请先安装微信再进行支付</string>
+
+    <!--推荐有礼-->
+    <string name="shareSuccess">分享成功啦</string>
+    <string name="shareError">分享失败啦</string>
+    <string name="shareError1">没有安装应用,请安装相应应用</string>
+    <string name="shareCancel">分享取消了</string>
+    <string name="cancel">取消</string>
+
+    <!--车长车型-->
+    <string name="conductorModels">车长车型选择</string>
+    <string name="vehicleLength">车长</string>
+    <string name="vehicleModel">车型</string>
+    <string name="vehicleLengthModel">车长车型</string>
+    <!--同城配送-->
+    <string name="transportTime">用车时间</string>
+    <string name="realTime">实时</string>
+    <string name="urgent">加急</string>
+    <string name="makeAppointment">预约</string>
+    <string name="pleaseAdressEnter">请输入正确的地址，此非同城配送</string>
+    <string name="appointmentTime">预约时间选择</string>
+    <string name="appointmentTime2">请选择预约时间</string>
+    <string name="appointmentTime1">预约时间：</string>
+    <string name="pleaseEnter">请输入</string>
+    <string name="enterDestination">请输入目的地</string>
+    <string name="enterDestination1">未选择成功，请重新选择</string>
+    <string name="descriptionGoods">货物名称</string>
+    <string name="totalWeight">总重量</string>
+    <string name="tonne">吨</string>
+    <string name="totalVolume">总体积</string>
+    <string name="cubicMeters">立方米</string>
+    <string name="vehicleRequirements">车辆要求</string>
+    <string name="pleaseSelect">请选择</string>
+    <string name="cargoInsurance">货物保险</string>
+    <string name="cargoInsurance1">货物保险说明</string>
+    <string name="inTransitTime">在途时效</string>
+    <string name="hour">时</string>
+    <string name="hour1">请填写小时数（选填）</string>
+    <string name="minute">分</string>
+    <string name="minute1">请填写分钟数（选填）</string>
+    <string name="receiptGoods">货物回单</string>
+    <string name="is">是</string>
+    <string name="no">否</string>
+    <string name="systemPrice">系统价</string>
+    <string name="psychologicalPrice">心理价</string>
+    <string name="yuan">元</string>
+    <string name="totalMileage">总公里数</string>
+    <string name="kilometer">公里</string>
+    <string name="note">备注（选填）：请输入您的其他要求</string>
+    <string name="note1">备注：</string>
+    <string name="submitOrders">提交订单</string>
+    <string name="addressSearch">地址搜索</string>
+    <string name="enterAddressName">输入地址名称</string>
+    <string name="greateThanCurrentTime">预约的时间要大于当前时间</string>
+    <string name="m">米</string>
+    <string name="correctNumberMinutes">请输入正确的分钟数</string>
+    <string name="latLongErr">获取经纬度失败</string>
+    <string name="distanceErr">获取距离失败</string>
+    <string name="orderSubmit">确认提交订单？</string>
+    <string name="totalCost">合计总费用</string>
+    <string name="orderSubmit1">若48小时无人接单将自动取消，</string>
+    <string name="originPosition">请输入发货人地址</string>
+    <string name="shipperName">请填写发货人姓名</string>
+    <string name="contactInformation">请填写发货人联系方式</string>
+    <string name="originPosition1">请输入收货人地址</string>
+    <string name="shipperName1">请填写收货人姓名</string>
+    <string name="contactInformation1">请填写收货人联系方式</string>
+    <string name="addressNotSame">发货人地址和收货人地址不能相同</string>
+    <string name="agreement2">《物载天下发布服务协议》</string>
+    <string name="agreement5">物载天下发布服务协议</string>
+    <string name="agreement3">同意《物载天下发布服务协议》才能发布订单</string>
+    <string name="payMargin">您还未缴纳保证金，缴纳保证金后才能发布订单</string>
+    <string name="payMargin1">您的保证金已被冻结，若要发布订单请联系客服</string>
+    <string name="unauthorized1">您还未认证或者认证失败，认证通过后才能发布订单</string>
+    <string name="submittedSuccessfully">提交成功</string>
+    <string name="submittedInformation">提交后如要修改请联系客服！！</string>
+
+    <!--发货信息-->
+    <string name="deliveryInformation">发货信息</string>
+    <string name="place">地点</string>
+    <string name="pleaseFillDetails">请补充填写详细信息(选填)</string>
+
+    <!--货物保险-->
+    <string name="amountCover">投保金额</string>
+    <string name="insuredAmount">保险金额</string>
+
+    <!--消息中心-->
+    <string name="message">消息</string>
+
+    <string name="systemMessage">系统消息</string>
+    <string name="personalMessage">个人消息</string>
+
+    <string name="messagecenter">消息中心</string>
+
+    <string name="deleteMessage">确定删除消息吗？</string>
+    <!--消息中心详情-->
+    <string name="messageDetails">消息详情</string>
+
+    <!--缴纳保证金-->
+    <string name="payDeposit">缴纳保证金</string>
+    <string name="choicePayment">选择支付方式</string>
+    <string name="weChatPay">微信支付</string>
+    <string name="alipayPay">支付宝支付</string>
+    <string name="inputAmountFull">输入充值金额</string>
+    <string name="inputAmountFull1">请输入正确的充值金额</string>
+    <!--我的钱包-->
+    <string name="myWallet">我的钱包</string>
+    <string name="bill">账单</string>
+    <string name="accountBalance">账户余额（元）</string>
+    <string name="withdrawalAmount">可提现金额</string>
+    <string name="myReferralBonuses">我的推荐奖励</string>
+    <string name="automaticDepositAmount">（已自动存入余额）</string>
+    <string name="prepaidPhoneRecords">充值记录</string>
+    <string name="recharge">充值</string>
+
+
+    <!--提现-->
+    <string name="withdrawal">提现</string>
+    <string name="withdrawalAmount1">提现金额</string>
+    <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
+    <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
+    <string name="bankName">银行名称</string>
+    <string name="presentingBank">如农业银行，工商银行等</string>
+    <string name="presentingBank1">请输入正确的银行名称</string>
+    <string name="paymentAccount">收款账号</string>
+    <string name="promptAccount">如工商银行账号</string>
+    <string name="promptAccount1">请输入正确的收款账号</string>
+    <string name="openAccountName">开户名</string>
+    <string name="accountHolderName">开户人姓名</string>
+    <string name="accountHolderName1">请输入开户人姓名</string>
+    <string name="hintWithdrawal">*请确认以上信息无误，三个工作日之内到账</string>
+    <string name="hintWithdrawal1">提现日期每月15号—20号</string>
+    <string name="confirmSubmit">确认提交</string>
+    <string name="confirmSubmit1">确认提交申请？</string>
+    <string name="confirmSubmit2">申请已提交成功！</string>
+    <string name="cancel1">&#160;&#160;&#160;取&#160;&#160;&#160;&#160;&#160;&#160;&#160;消&#160;&#160;&#160;</string>
+    <string name="confirm">&#160;&#160;&#160;确&#160;&#160;&#160;&#160;&#160;&#160;&#160;定&#160;&#160;&#160;</string>
+
+    <!--充值结果-->
+    <string name="topUpResults">充值结果</string>
+    <string name="payResult">支付结果</string>
+    <string name="paySuccess">支付成功！</string>
+    <string name="topUpSuccess">充值成功！</string>
+    <string name="topUpAmount">充值金额</string>
+    <string name="complete">完成</string>
+    <!--账单-->
+    <string name="freight">运价：</string>
+    <string name="notPaymentBill">未支付账单</string>
+    <string name="paymentBill">已支付账单</string>
+    <!--设置-->
+    <string name="changePassword">修改密码</string>
+    <string name="bannerSetting">首页轮播图设置</string>
+    <string name="versionNumber">版本号</string>
+    <string name="clearCache">清除缓存</string>
+    <string name="latestVersion">已是最新版本</string>
+    <string name="newVersion">有新版本</string>
+    <string name="updateVersion">有新版本是否更新</string>
+    <string name="update">&#160;&#160;&#160;更&#160;&#160;&#160;&#160;&#160;&#160;&#160;新&#160;&#160;&#160;</string>
+    <string name="logOut">退出登录</string>
+    <string name="showing">显示</string>
+    <string name="hides">隐藏</string>
+
+
+    <!--修改密码-->
+    <string name="originalPassword">原密码</string>
+    <string name="pleaseCurrentPassword">请输入当前密码</string>
+    <string name="pleaseCurrentPassword1">原密码长度应在6～20位内</string>
+    <string name="newPassword">新密码</string>
+    <string name="newPassword1">新密码长度应在6～20位内</string>
+    <string name="newPassword2">确认密码长度应在6～20位内</string>
+    <string name="pleaseNewPassword">请输入新密码</string>
+    <string name="confirmPassword">确认密码</string>
+    <string name="pleasePasswordAgain">请再次输入新密码</string>
+    <string name="passwordsNotMatch">两次密码输入不一致</string>
+    <string name="notRepeated">新密码和旧密码不能重复</string>
+    <string name="submit">提交</string>
+
+
+    <!--在线客服-->
+    <string name="customerServiceTelephone">客服电话</string>
+    <string name="customerServiceTelephone1">客服电话</string>
+    <string name="complaintTelphone">投诉电话</string>
+    <string name="complaintTelphone1">投诉电话</string>
+    <string name="emailAddress">邮件地址</string>
+    <string name="emailAddress1">邮件地址</string>
+    <!--推荐有礼-->
+    <string name="recommendedRecord">推荐记录</string>
+    <string name="cash">每邀请一人订单支付成功后，即可获得现金奖励</string>
+    <string name="cash1">好友也可以享受新人专属大礼哦！</string>
+    <string name="recommendFriends">推荐好友扫描，直接下载APP</string>
+    <string name="ruleDescription">推荐奖励说明></string>
+    <string name="ruleDescription1">规则说明</string>
+    <string name="recommendInviteCode">推荐邀请码：</string>
+    <string name="shareTo">分享至</string>
+    <string name="weChatFriends">微信好友</string>
+    <string name="circleFriends">朋友圈</string>
+    <string name="QQFriends">QQ好友</string>
+    <string name="Qzone">QQ空间</string>
+
+
+    <!--订单详情-->
+    <string name="orderDetails">订单详情</string>
+    <string name="orderStatus">订单状态</string>
+
+    <string name="init">初始状态</string>
+    <!--<string name="quote">报价中</string>-->
+    <!--<string name="quoted">已报价</string>-->
+    <!--<string name="distribute">发货中</string>-->
+    <!--<string name="photo">拍照完毕</string>-->
+
+    <string name="orderNumber">订单号</string>
+    <string name="insurancePolicy">保险单号</string>
+    <string name="weight">重量</string>
+    <string name="origin">起始地</string>
+    <string name="destination">目的地</string>
+    <string name="consigneeName">收货人姓名</string>
+    <string name="consigneeTelephone">收货人电话</string>
+    <string name="consigneeAddress">收货人地址</string>
+    <string name="senderName">寄件人姓名</string>
+    <string name="senderPhone">寄件人电话</string>
+    <string name="senderAddress">寄件人地址</string>
+    <string name="viewQuotation">查看报价</string>
+    <string name="viewDetails">查看详情</string>
+    <string name="ownerName">车主姓名</string>
+    <string name="contactPhoneNumber">联系电话</string>
+    <string name="deliveryTime1">发货时间</string>
+    <string name="arrivalTime">到达时间</string>
+    <string name="totalFreight">总运费</string>
+    <string name="evaluation">评价</string>
+    <string name="checkeValuation">查看评价</string>
+    <string name="lookMap">查看地图</string>
+    <string name="checkVoucher">查看凭证</string>
+    <string name="confirmPayment">确认支付</string>
+    <string name="paymentVoucherAudit">支付凭证审核中</string>
+    <string name="payAgain">重新支付</string>
+    <!--评价-->
+    <string name="share">分享</string>
+    <string name="deliveryTime">发货时效</string>
+    <string name="serviceAttitude">服务态度</string>
+    <string name="satisfaction">满意度</string>
+    <string name="customerEvaluation">客户评价：</string>
+    <string name="comment">发表评论</string>
+    <string name="commentSecc">评论成功</string>
+    <string name="comment1">请先发表评论后，然后才能分享！</string>
+
+    <!--查看定位-->
+    <string name="checkPositioning">查看定位</string>
+    <string name="phoneCall">拨打电话</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+
+    <!--报价列表-->
+    <string name="quotationList">报价列表</string>
+    <string name="driverQuotation">司机报价</string>
+
+    <!--付款-->
+    <string name="payment">付款</string>
+    <string name="broughtAccount">物载天下对公账号：</string>
+    <string name="uploadProofPayment">上传付款凭证</string>
+    <string name="balancePayment">余额支付</string>
+    <string name="uploadProofPayment1">请上传付款凭证</string>
+
+    <!--认证信息-->
+    <string name="authenticationInformation">认证信息</string>
+    <string name="bindingMobilePhone">绑定手机号</string>
+
+    <!--我的订单-->
+    <string name="allOrder">全部订单</string>
+
+    <string name="toSendGoods">待发货</string>
+    <string name="delivery">发货中</string>
+    <string name="completed">已完成</string>
+    <string name="evaluationShare">客户评价</string>
+    <string name="noEvaluation">未评价</string>
+    <string name="haveEvaluation">已评价</string>
+    <string name="hang">挂起</string>
+    <!--我发布的订单-->
+    <string name="myPublishedOrder">我的发布</string>
+    <string name="quoteDetails">报价详情</string>
+    <string name="toQuoteOrder">待报价</string>
+    <string name="quoteOrder">报价中</string>
+    <string name="canceledOrder">已取消</string>
+    <string name="theBidOrder">报价成功</string>
+    <string name="cancelOrder">确定取消订单吗？</string>
+
+</resources>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_header_container"
+    style="@style/MatchMatch"
+    android:background="@color/mainColor"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <LinearLayout
+        android:id="@+id/personal_data"
+        style="@style/MatchWrap"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dimen13"
+        android:paddingTop="@dimen/dimen40">
+
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="@dimen/dimen65"
+            android:layout_height="@dimen/dimen65"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/headportrait" />
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/WrapWrap"
+            android:paddingTop="@dimen/dimen12"
+            android:text="--"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            style="@style/WrapWrap"
+            android:layout_marginTop="@dimen/dimen12"
+            android:text="--"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize13"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+    <LinearLayout
+        android:id="@+id/my_wallet"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/wallet" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/my_wallet"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_myPublishedOrder"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/myrelease" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/myPublishedOrder"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my_order"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/order" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/my_order"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/online_service"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/customerservice" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/online_service"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/recommend_courteous"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/gift" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/recommend_courteous"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/about_us"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/about" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/about_us"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settings"
+        style="@style/Match44"
+        android:gravity="center_vertical">
+
+        <ImageView
+            style="@style/Image20"
+            android:layout_marginLeft="@dimen/dimen31"
+            app:srcCompat="@mipmap/set" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/settings"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--style="@style/MatchWrap"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="@dimen/dimen10"-->
+        <!--android:text="@string/technicalSupport"-->
+        <!--android:textColor="@color/hintcolors"-->
+        <!--android:textSize="@dimen/textsize13" />-->
+
+</LinearLayout>

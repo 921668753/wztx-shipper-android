@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen70"
+    android:background="@color/mainColor"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/img_agreement"
+        style="@style/WrapWrap"
+        android:paddingBottom="@dimen/dimen15"
+        android:paddingLeft="@dimen/dimen10"
+        android:paddingRight="@dimen/dimen10"
+        android:paddingTop="@dimen/dimen15"
+        android:scaleType="fitXY"
+        android:src="@mipmap/selected" />
+
+    <cn.bingoogolapple.imageview.BGAImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/img_user"
+        android:layout_width="@dimen/dimen50"
+        android:layout_height="@dimen/dimen50"
+        android:layout_marginLeft="@dimen/dimen8"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/headportrait"
+        app:bga_iv_isCircle="true" />
+
+    <LinearLayout
+        style="@style/AutoWrap"
+        android:layout_marginLeft="@dimen/dimen13"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/MatchAuto"
+            android:layout_marginBottom="@dimen/dimen5"
+            android:singleLine="true"
+            android:text="王磊"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textsize15" />
+
+
+        <LinearLayout
+            style="@style/MatchAuto"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_score"
+                style="@style/WrapWrap"
+                android:text="3200"
+                android:textColor="@color/lonincolors"
+                android:textSize="@dimen/textsize13" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/minute"
+                android:textColor="@color/hintcolors"
+                android:textSize="@dimen/textsize13" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_quote"
+        style="@style/WrapWrap"
+        android:padding="@dimen/dimen10"
+        android:text="￥3200"
+        android:textColor="@color/lonincolors"
+        android:textSize="@dimen/textsize16" />
+</LinearLayout>
