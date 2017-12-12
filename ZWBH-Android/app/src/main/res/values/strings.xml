@@ -121,7 +121,6 @@
     <string name="bindPhoneSuccessfully">绑定手机号成功！</string>
 
 
-
     <!--个人认证  基本信息-->
     <string name="personalAuthentication">个人认证</string>
     <string name="enterpriseAuthentication">企业认证</string>
@@ -134,8 +133,6 @@
     <string name="identityAuthentication">身份认证</string>
     <string name="prompt">请填写您的真实信息，通过后将不能修改</string>
     <string name="realName">真实姓名</string>
-    <string name="pleaseFillOut">请填写</string>
-    <string name="pleaseFillOut1">请填写(选填)</string>
     <string name="sex">性别</string>
     <string name="man">男</string>
     <string name="woman">女</string>
@@ -226,6 +223,49 @@
     <string name="submitOrders">提交订单</string>
     <string name="assignedVehicle">指派车辆</string>
 
+    <!--选择地址-->
+    <string name="selectAddress">选择地址</string>
+    <string name="cancel">取消</string>
+    <string name="pleaseEnterDeliveryLocation">请输入发货地点</string>
+    <string name="commonlyAddress">常用地址</string>
+    <string name="setCommonAddress">设为常用地址</string>
+
+    <!--始发地-->
+    <string name="provenance">始发地</string>
+    <string name="pleaseDetailedAddress">请输入详细地址，如街道、楼牌号等</string>
+    <string name="deliveryCustomer">发货客户</string>
+    <string name="shipper">发货人</string>
+    <string name="eixedTelephone">固定电话</string>
+    <string name="pleaseFillOut">请填写</string>
+    <string name="pleaseFillOut1">请填写(选填)</string>
+    <string name="destination">目的地</string>
+
+    <!--添加货物信息-->
+    <string name="addCargoInformation">添加货物信息</string>
+    <string name="descriptionGoods">货物名称</string>
+    <string name="goodsWeight">货物重量</string>
+    <string name="volumeGoods">货物体积</string>
+    <string name="cargoReceipt">货物签收单</string>
+    <string name="selectVehicle">选择车辆</string>
+    <string name="driverCargo">司机装卸货</string>
+    <string name="transportTime1">运输时长</string>
+    <string name="peiSongDian">配送点</string>
+    <string name="one">个</string>
+    <string name="costDistribution">配送点费用</string>
+    <string name="yuanA">元/个</string>
+    <string name="transportationEstimated">预计运输费用总额</string>
+    <string name="containsDistribution">(包含配送点费用)</string>
+    <string name="actualPayment">实际支付费用</string>
+
+    <!--填写货物签收单-->
+    <string name="fillCargoReceipt">填写货物签收单</string>
+    <string name="contactPerson">联系人</string>
+    <string name="contactInformation2">联系方式</string>
+    <string name="inArea">所在地区</string>
+    <string name="provinceCityArea">省份-城市-地区</string>
+    <string name="pleaseDetailedAddressInformation">请输入详细的地址信息</string>
+    <string name="expressDelivery">快递费到付</string>
+
 
     <!--充值余额支付-->
     <string name="operation_error">操作失败,请稍后再试</string>
@@ -247,25 +287,48 @@
     <string name="shareError">分享失败啦</string>
     <string name="shareError1">没有安装应用,请安装相应应用</string>
     <string name="shareCancel">分享取消了</string>
-    <string name="cancel">取消</string>
 
-    <!--车长车型-->
-    <string name="conductorModels">车长车型选择</string>
+
+    <!--选择车辆-->
     <string name="vehicleLength">车长</string>
     <string name="vehicleModel">车型</string>
     <string name="vehicleLengthModel">车长车型</string>
+    <string name="costDescription">费用说明</string>
+
+    <!--消息列表-->
+    <string name="message">消息</string>
+    <string name="edit">编辑</string>
+    <string name="complete">完成</string>
+    <string name="systemMessage">系统消息</string>
+    <string name="personalMessage">个人消息</string>
+    <string name="orderMessage">订单消息</string>
+    <string name="generalElection">全选</string>
+    <string name="markedRead">标为已读</string>
+    <string name="delete1">删除</string>
+
+    <!--订单消息-->
+    <string name="orderUser">下单用户：</string>
+    <string name="orderNumber2">订单编号：</string>
+
+    <!--消息弹框-->
+    <string name="dentifyLabelRead">确定标为已读？</string>
+    <string name="sureToDelete">确定删除？</string>
+
+    <!--消息中心-->
+    <string name="messagecenter">消息中心</string>
+    <string name="deleteMessage">确定删除消息吗？</string>
+
+
+    <!--消息中心详情-->
+    <string name="messageDetails">消息详情</string>
 
 
     <!--同城配送-->
     <string name="transportTime">用车时间</string>
-
     <string name="pleaseAdressEnter">请输入正确的地址，此非同城配送</string>
     <string name="appointmentTime">预约时间选择</string>
-
     <string name="pleaseEnter">请输入</string>
-
     <string name="enterDestination1">未选择成功，请重新选择</string>
-    <string name="descriptionGoods">货物名称</string>
     <string name="totalWeight">总重量</string>
     <string name="tonne">吨</string>
     <string name="totalVolume">总体积</string>
@@ -325,17 +388,6 @@
     <string name="amountCover">投保金额</string>
     <string name="insuredAmount">保险金额</string>
 
-    <!--消息中心-->
-    <string name="message">消息</string>
-
-    <string name="systemMessage">系统消息</string>
-    <string name="personalMessage">个人消息</string>
-
-    <string name="messagecenter">消息中心</string>
-
-    <string name="deleteMessage">确定删除消息吗？</string>
-    <!--消息中心详情-->
-    <string name="messageDetails">消息详情</string>
 
     <!--缴纳保证金-->
     <string name="payDeposit">缴纳保证金</string>
@@ -344,6 +396,7 @@
     <string name="alipayPay">支付宝支付</string>
     <string name="inputAmountFull">输入充值金额</string>
     <string name="inputAmountFull1">请输入正确的充值金额</string>
+
     <!--我的钱包-->
     <string name="myWallet">我的钱包</string>
     <string name="bill">账单</string>
@@ -383,7 +436,6 @@
     <string name="paySuccess">支付成功！</string>
     <string name="topUpSuccess">充值成功！</string>
     <string name="topUpAmount">充值金额</string>
-    <string name="complete">完成</string>
     <!--账单-->
     <string name="freight">运价：</string>
     <string name="notPaymentBill">未支付账单</string>
@@ -453,7 +505,7 @@
     <string name="insurancePolicy">保险单号</string>
     <string name="weight">重量</string>
     <string name="origin">起始地</string>
-    <string name="destination">目的地</string>
+
     <string name="consigneeName">收货人姓名</string>
     <string name="consigneeTelephone">收货人电话</string>
     <string name="consigneeAddress">收货人地址</string>

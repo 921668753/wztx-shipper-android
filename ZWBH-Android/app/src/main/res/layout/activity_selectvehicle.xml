@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    android:background="@color/background"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/common_title"></include>
+    <include layout="@layout/common_title" />
 
     <ScrollView
         style="@style/MatchMatch"
@@ -18,10 +18,10 @@
 
             <TextView
                 style="@style/Match44"
-                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginLeft="@dimen/dimen10"
                 android:gravity="center_vertical"
                 android:text="@string/vehicleModel"
-                android:textColor="@color/typecolors"
+                android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize15" />
 
             <com.ruitukeji.zwbh.utils.myview.NoScrollGridView
@@ -29,18 +29,19 @@
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
-                android:horizontalSpacing="@dimen/dimen10"
+                android:horizontalSpacing="@dimen/dimen15"
+                android:listSelector="@android:color/transparent"
                 android:numColumns="3"
-                android:verticalSpacing="@dimen/dimen10"
+                android:verticalSpacing="@dimen/dimen12"
                 tools:listitem="@layout/item_conductormodels" />
 
 
             <TextView
                 style="@style/Match44"
-                android:layout_marginLeft="@dimen/dimen15"
+                android:layout_marginLeft="@dimen/dimen10"
                 android:gravity="center_vertical"
                 android:text="@string/vehicleLength"
-                android:textColor="@color/typecolors"
+                android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize15" />
 
             <com.ruitukeji.zwbh.utils.myview.NoScrollGridView
@@ -48,10 +49,28 @@
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen10"
                 android:layout_marginRight="@dimen/dimen10"
-                android:horizontalSpacing="@dimen/dimen10"
+                android:horizontalSpacing="@dimen/dimen15"
+                android:listSelector="@android:color/transparent"
                 android:numColumns="3"
-                android:verticalSpacing="@dimen/dimen10"
+                android:verticalSpacing="@dimen/dimen12"
                 tools:listitem="@layout/item_conductormodels" />
+
+
+            <WebView
+                style="@style/MatchWrap"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_submit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen50"
+                android:layout_marginTop="@dimen/dimen58"
+                android:background="@color/announcementCloseColors"
+                android:gravity="center"
+                android:text="@string/submit"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/textsize16" />
 
         </LinearLayout>
     </ScrollView>

@@ -137,6 +137,7 @@
         android:textColor="@color/mainColor"
         android:textSize="@dimen/textsize16" />
 
+
     <RelativeLayout
         style="@style/MatchWrap"
         android:layout_marginTop="@dimen/dimen20">

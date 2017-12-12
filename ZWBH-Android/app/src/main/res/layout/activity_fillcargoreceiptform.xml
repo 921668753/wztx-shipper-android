@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+
+    <LinearLayout
+        style="@style/Match45"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/contactPerson"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen50"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match45"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/contactInformation2"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen34"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match45"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/inArea"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen34"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/provinceCityArea"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+
+        <ImageView
+            android:layout_width="@dimen/dimen7"
+            android:layout_height="@dimen/dimen13"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/ic_arrow" />
+
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <EditText
+        style="@style/Match45"
+        android:background="@color/white"
+        android:hint="@string/pleaseDetailedAddressInformation"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:singleLine="true"
+        android:textColor="@color/titletextcolors"
+        android:textColorHint="@color/cDCDCDColors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize15" />
+
+
+    <LinearLayout
+        style="@style/Match45"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/expressDelivery"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/AutoWrap" />
+
+
+        <ImageView
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen28"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/ic_arrow" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/Match45"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen20"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/determine"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>

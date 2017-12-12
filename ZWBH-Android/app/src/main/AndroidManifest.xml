@@ -102,7 +102,7 @@
             android:screenOrientation="portrait"></activity>
         <!--车长车型选择-->
         <activity
-            android:name=".main.ConductorModelsActivity"
+            android:name=".main.selectvehicle.SelectVehicleActivity"
             android:screenOrientation="portrait"></activity>
         <!--货物保险-->
         <activity

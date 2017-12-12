@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.MessageViewAdapter;
+import com.ruitukeji.zwbh.adapter.message.MessageViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;

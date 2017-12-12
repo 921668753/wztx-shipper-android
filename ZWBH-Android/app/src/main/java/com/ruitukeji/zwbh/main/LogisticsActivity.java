@@ -27,6 +27,7 @@ import com.ruitukeji.zwbh.entity.UserInfoBean;
 import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
+import com.ruitukeji.zwbh.main.selectvehicle.SelectVehicleActivity;
 import com.ruitukeji.zwbh.mine.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.onlineservice.OnlineServiceActivity;
 import com.ruitukeji.zwbh.mine.personaldata.PayDepositActivity;
@@ -39,8 +40,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
 
 /**
  * 同城配送  长途干线
@@ -353,7 +352,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
                 Intent intent = new Intent();
                 intent.putExtra("vehicleModelId", vehicleModelId);
                 intent.putExtra("vehicleLengthId", vehicleLengthId);
-                intent.setClass(aty, ConductorModelsActivity.class);
+                intent.setClass(aty, SelectVehicleActivity.class);
                 startActivityForResult(intent, 3);
                 break;
             case R.id.ll_cargoInsurance:

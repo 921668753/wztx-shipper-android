@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.adapter;
+package com.ruitukeji.zwbh.adapter.message;
 
 import android.content.Context;
 import android.view.View;

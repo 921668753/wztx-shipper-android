@@ -8,19 +8,49 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.RxVolley;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
+import com.ruitukeji.zwbh.utils.rx.RxManager;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 公用的父Fragment
  * 防止除向其他共用时增加
- * Created by ruitu on 2016/9/14.
+ * Created by ruitu on 2017/9/14.
  */
 
 public abstract class BaseFragment extends KJFragment implements LoadingDialogView {
 
-    public Object mPresenter;
+    public Object mPresenter = null;
+    public Subscription subscription = null;
     private SweetAlertDialog mLoadingDialog;
+
+
+    /**
+     * 必须此处创建订阅者 Subscription subscription
+     */
+    @Override
+    protected void initData() {
+        super.initData();
+        subscription = RxBus.getInstance().register(MsgEvent.class).subscribe(new Action1<MsgEvent>() {
+            @Override
+            public void call(MsgEvent msgEvent) {
+                callMsgEvent(msgEvent);
+            }
+        });
+    }
+
+    @Override
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            RxManager.get().add(this.getClass().getName(), subscription);
+        }
+    }
+
 
     @SuppressWarnings("deprecation")
     @Override
@@ -52,7 +82,6 @@ public abstract class BaseFragment extends KJFragment implements LoadingDialogVi
     public void onPause() {
         super.onPause();
         dismissLoadingDialog();
-        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
         //    MobclickAgent.onPause(this);
     }
 
@@ -69,10 +98,16 @@ public abstract class BaseFragment extends KJFragment implements LoadingDialogVi
         }
     }
 
+    public void callMsgEvent(MsgEvent msgEvent) {
+
+    }
 
     @Override
     public void onDestroy() {
+        RxVolley.getRequestQueue().cancelAll(KJActivityStack.create().getClass().getName());
+        RxManager.get().cancel(this.getClass().getName());
         super.onDestroy();
+        subscription = null;
         mLoadingDialog = null;
         mPresenter = null;
     }

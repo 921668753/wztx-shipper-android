@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen10"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen10">
+
+
+        <TextView
+            style="@style/WrapWrap"
+            android:gravity="center"
+            android:maxWidth="@dimen/dimen100"
+            android:text="苏州市"
+            android:textColor="@color/a4a4aColors"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen6"
+            android:layout_height="@dimen/dimen4"
+            android:layout_marginLeft="@dimen/dimen5"
+            android:layout_marginRight="@dimen/dimen10"
+            android:src="@mipmap/ic_biyan" />
+
+
+        <TextView style="@style/DividerHeight" />
+
+
+        <EditText
+            style="@style/AutoWrap"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:hint="@string/pleaseEnterDeliveryLocation"
+            android:paddingLeft="@dimen/dimen15"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+    <TextView style="@style/DividerWidth" />
+
+
+    <TextView
+        android:id="@+id/tv_divider"
+        style="@style/DividerWidth"
+        android:layout_marginTop="@dimen/dimen9" />
+
+    <ListView
+        android:id="@+id/lv_selectAddress"
+        style="@style/MatchWrap"
+        android:divider="@color/e6E6E6Colors"
+        android:dividerHeight="@dimen/dimen0.5"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_selectaddress" />
+
+    <TextView
+        android:id="@+id/tv_divider1"
+        style="@style/DividerWidth" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen9"
+        android:background="@drawable/shape_selectaddress"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <TextView
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:text="@string/commonlyAddress"
+            android:textColor="@color/typecolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            style="@style/DividerHeight"
+            android:layout_marginBottom="@dimen/dimen9"
+            android:layout_marginTop="@dimen/dimen9" />
+
+
+        <LinearLayout
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="@dimen/dimen30"
+                android:layout_height="@dimen/dimen30"
+                android:padding="@dimen/dimen6"
+                android:src="@mipmap/ic_arrow" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="@string/setCommonAddress"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize15" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

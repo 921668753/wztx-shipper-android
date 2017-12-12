@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="transparent">#00000000</color>
-    <color name="transparent_1">#00ffffff</color>
+    <color name="transparent_1">#40000000</color>
 
     <color name="mainColor">#FFFFFF</color>
     <color name="hintcolors">#999999</color>
@@ -15,7 +15,7 @@
     <color name="titletextcolors">#333333</color>
     <color name="titlebackground">#fafafa</color>
     <color name="background">#ededed</color>
-    <color name="titledivider">#bbbbbb</color>
+    <color name="titledivider">#dddddd</color>
     <color name="a4A4AColor">#4A4A4A</color>
     <color name="dividercolors">#dcdcdc</color>
 
@@ -30,14 +30,14 @@
     <color name="solidcolors">#FFE2DC</color>
 
 
-    <color name="white">#ffffff</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="certificationcolors">#dcdcdc</color>
     <color name="certificationcolors1">#62d405</color>
 
     <!--登录-->
     <color name="lonin1colors">#d7d7d7</color>
-    <color name="lonincolors">#fc5e49</color>
+    <color name="lonincolors">#FF3D41</color>
     <color name="c7C7CDColors">#C7C7CD</color>
     <color name="announcementCloseColors">#FA5A5A</color>
     <color name="textColor">#52565c</color>
@@ -51,6 +51,25 @@
     <color name="f96865Colors">#F96865</color>
     <color name="fF9C0FColors">#FF9C0F</color>
     <color name="fDF0F0Colors">#FDF0F0</color>
+
+    <!-- 地址选择-->
+    <color name="a4a4aColors">#4A4A4A</color>
+    <color name="e6E6E6Colors">#E6E6E6</color>
+    <color name="aAAAAAColors">#AAAAAA</color>
+
+    <!-- 选择车辆-->
+    <color name="cCCCCCColors">#CCCCCC</color>
+
+    <!-- 消息-->
+    <color name="fDBD25Colors">#FDBD25</color>
+    <color name="f85353Colors">#F85353</color>
+
+    <!-- 消息详情-->
+    <color name="e9E9EColors">#9E9E9E</color>
+    <color name="f2222Colors">#222222</color>
+
+    <!-- 消息弹框-->
+    <color name="aFF007Colors">#007AFF</color>
 
 
 

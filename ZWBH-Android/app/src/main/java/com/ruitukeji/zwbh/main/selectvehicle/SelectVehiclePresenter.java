@@ -1,8 +1,6 @@
-package com.ruitukeji.zwbh.main;
+package com.ruitukeji.zwbh.main.selectvehicle;
 
 import com.kymjs.rxvolley.client.HttpParams;
-import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
@@ -11,12 +9,12 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
  * Created by Administrator on 2017/2/21.
  */
 
-public class ConductorModelsPresenter implements ConductorModelsContract.Presenter {
+public class SelectVehiclePresenter implements SelectVehicleContract.Presenter {
 
 
-    private ConductorModelsContract.View mView;
+    private SelectVehicleContract.View mView;
 
-    public ConductorModelsPresenter(ConductorModelsContract.View view) {
+    public SelectVehiclePresenter(SelectVehicleContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }

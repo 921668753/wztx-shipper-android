@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen54"
+    android:background="@color/mainColor"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dimen20"
+    android:paddingRight="@dimen/dimen20">
+
+
+    <TextView
+        style="@style/MatchWrap"
+        android:singleLine="true"
+        android:text="昆山市"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize17" />
+
+    <TextView
+        style="@style/MatchWrap"
+        android:singleLine="true"
+        android:text="苏州市昆山市"
+        android:textColor="@color/aAAAAAColors"
+        android:textSize="@dimen/textsize12" />
+</LinearLayout>

@@ -32,6 +32,7 @@ import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -120,6 +121,11 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     private LocationBouncedDialog locationBouncedDialog;
     private Timer timer;
     private boolean isTost = true;
+
+    /**
+     * 时间选择器
+     */
+    private OptionsPickerView pvOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -601,6 +607,27 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         //  toLigon(msg);
 //        ViewInject.toast(msg);
     }
+
+    /**
+     * 请选择预约时间
+     */
+    private void appointmentTime() {
+        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+                //  ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
+            }
+        })
+                .setCancelColor(getResources().getColor(R.color.hintcolors))
+                .setSubmitColor(getResources().getColor(R.color.announcementCloseColors))
+                .setSubCalSize(15)
+                .setContentTextSize(17)
+                .setTextColorCenter(getResources().getColor(R.color.titletextcolors))
+                .build();
+    }
+
 
     @Override
     public void setPresenter(MainContract.Presenter presenter) {

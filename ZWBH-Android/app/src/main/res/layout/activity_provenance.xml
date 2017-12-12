@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/common_title" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor"
+        android:padding="@dimen/dimen15"
+        android:text="苏州市昆山市"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize15" />
+
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <EditText
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:hint="@string/pleaseDetailedAddress"
+        android:padding="@dimen/dimen15"
+        android:textColor="@color/titletextcolors"
+        android:textColorHint="@color/cDCDCDColors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize14" />
+
+
+    <LinearLayout
+        style="@style/Match44"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_accountNumber"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/deliveryCustomer"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            android:id="@+id/et_accountNumber"
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen61"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/shipper"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen75"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/phone"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen75"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        style="@style/Match44"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen15">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/eixedTelephone"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <EditText
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen61"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen45"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen20"
+        android:background="@drawable/shape_provenance"
+        android:gravity="center"
+        android:text="@string/determine"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>

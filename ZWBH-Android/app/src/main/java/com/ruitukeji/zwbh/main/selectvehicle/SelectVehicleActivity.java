@@ -1,8 +1,9 @@
-package com.ruitukeji.zwbh.main;
+package com.ruitukeji.zwbh.main.selectvehicle;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.LengthsViewAdapter;
@@ -14,6 +15,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.entity.ConductorModelsBean;
 import com.ruitukeji.zwbh.entity.ConductorModelsBean.ResultBean.LengthBean;
 import com.ruitukeji.zwbh.entity.ConductorModelsBean.ResultBean.TypeBean;
+import com.ruitukeji.zwbh.mine.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.myview.NoScrollGridView;
@@ -23,11 +25,11 @@ import java.util.List;
 import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
 /**
- * 车长车型选择
+ * 选择车辆
  * Created by Administrator on 2017/2/21.
  */
 
-public class ConductorModelsActivity extends BaseActivity implements ConductorModelsContract.View, AdapterView.OnItemClickListener {
+public class SelectVehicleActivity extends BaseActivity implements SelectVehicleContract.View, AdapterView.OnItemClickListener {
 
     /**
      * 车长
@@ -50,15 +52,22 @@ public class ConductorModelsActivity extends BaseActivity implements ConductorMo
     private int vehicleLengthId = 0;
 
 
+    /**
+     * 提交
+     */
+    @BindView(id = R.id.tv_submit, click = true)
+    private TextView tv_submit;
+
+
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_conductormodels);
+        setContentView(R.layout.activity_selectvehicle);
     }
 
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new ConductorModelsPresenter(this);
+        mPresenter = new SelectVehiclePresenter(this);
         lengthsViewAdapter = new LengthsViewAdapter(this);
         typesViewAdapter = new TypesViewAdapter(this);
         vehicleModelId = getIntent().getIntExtra("vehicleModelId", 0);
@@ -78,7 +87,26 @@ public class ConductorModelsActivity extends BaseActivity implements ConductorMo
             @Override
             public void onClickRightCtv() {
                 super.onClickRightCtv();
-                //   showActivity(aty, RecommendedRecordActivity.class);
+                Intent intent = new Intent(aty, AboutUsActivity.class);
+                intent.putExtra("type", "type");
+                showActivity(aty, intent);
+            }
+        };
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.selectVehicle), getString(R.string.costDescription), R.id.titlebar, simpleDelegate);
+        showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+        ((SelectVehicleContract.Presenter) mPresenter).getConductorModels();
+        gv_vehiclelength.setAdapter(lengthsViewAdapter);
+        gv_vehiclelength.setOnItemClickListener(this);
+        gv_vehiclemodel.setAdapter(typesViewAdapter);
+        gv_vehiclemodel.setOnItemClickListener(this);
+    }
+
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_submit:
                 if (typeBean == null || lengthBean == null) {
                     ViewInject.toast(getString(R.string.pleaseSelect) + getString(R.string.vehicleLengthModel));
                     return;
@@ -97,15 +125,8 @@ public class ConductorModelsActivity extends BaseActivity implements ConductorMo
                 setResult(RESULT_OK, intent);
                 // 结束该activity 结束之后，前面的activity才可以处理结果
                 aty.finish();
-            }
-        };
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.conductorModels), getString(R.string.determine), R.id.titlebar, simpleDelegate);
-        showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-        ((ConductorModelsContract.Presenter) mPresenter).getConductorModels();
-        gv_vehiclelength.setAdapter(lengthsViewAdapter);
-        gv_vehiclelength.setOnItemClickListener(this);
-        gv_vehiclemodel.setAdapter(typesViewAdapter);
-        gv_vehiclemodel.setOnItemClickListener(this);
+                break;
+        }
     }
 
     @Override
@@ -165,7 +186,7 @@ public class ConductorModelsActivity extends BaseActivity implements ConductorMo
     }
 
     @Override
-    public void setPresenter(ConductorModelsContract.Presenter presenter) {
+    public void setPresenter(SelectVehicleContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
