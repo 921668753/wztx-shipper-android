@@ -79,6 +79,7 @@
     <dimen name="dimen90">90dp</dimen>
     <dimen name="dimen95">95dp</dimen>
     <dimen name="dimen100">100dp</dimen>
+    <dimen name="dimen101">101dp</dimen>
     <dimen name="dimen103">103dp</dimen>
     <dimen name="dimen105">105dp</dimen>
     <dimen name="dimen110">110dp</dimen>
@@ -93,6 +94,7 @@
     <dimen name="dimen250">250dp</dimen>
     <dimen name="dimen300">300dp</dimen>
 
+    <dimen name="textsize11">11sp</dimen>
     <dimen name="textsize12">12sp</dimen>
     <dimen name="textsize13">13sp</dimen>
     <dimen name="textsize14">14sp</dimen>

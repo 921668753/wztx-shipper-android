@@ -130,7 +130,7 @@
     <string name="hintIDerrorText">请输入正确的身份证号</string>
     <string name="registeredPhoneNumber">手机号注册</string>
     <string name="information">基本信息</string>
-    <string name="identityAuthentication">身份认证</string>
+
     <string name="prompt">请填写您的真实信息，通过后将不能修改</string>
     <string name="realName">真实姓名</string>
     <string name="sex">性别</string>
@@ -321,6 +321,14 @@
 
     <!--消息中心详情-->
     <string name="messageDetails">消息详情</string>
+
+
+    <!--个人中心-->
+    <string name="incompleteCertification">未完成认证</string>
+    <string name="myOrder">我的订单</string>
+    <string name="addressManagement">地址管理</string>
+    <string name="driverManagement">司机管理</string>
+    <string name="identityAuthentication">身份认证</string>
 
 
     <!--同城配送-->

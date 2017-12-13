@@ -71,6 +71,8 @@
     <!-- 消息弹框-->
     <color name="aFF007Colors">#007AFF</color>
 
-
+    <!-- 个人中心-->
+    <color name="fA4343Colors">#FA4343</color>
+    <color name="fEE9E9Colors">#FEE9E9</color>
 
 </resources>
