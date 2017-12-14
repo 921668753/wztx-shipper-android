@@ -35,5 +35,6 @@ public class PersonalCenterActivity extends BaseActivity {
         ActivityTitleUtils.initToolbar(aty, getString(R.string.app_name), true, R.id.titlebar);
         titlebar.getTitleCtv().setTextColor(getResources().getColor(R.color.white));
         titlebar.setBackgroundResource(R.color.announcementCloseColors);
+        titlebar.setLeftDrawable(R.mipmap.mine_back);
     }
 }

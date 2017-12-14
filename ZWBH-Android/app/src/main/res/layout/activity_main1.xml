@@ -7,7 +7,9 @@
     android:orientation="vertical">
 
 
-    <RelativeLayout style="@style/MatchWrap">
+    <RelativeLayout
+        style="@style/MatchWrap"
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="@dimen/dimen50"
@@ -16,7 +18,7 @@
             android:paddingLeft="@dimen/dimen15"
             android:paddingRight="@dimen/dimen5"
             android:paddingTop="@dimen/dimen12"
-            android:src="@mipmap/ic_biyan" />
+            android:src="@mipmap/ic_nav_user" />
 
 
         <TextView
@@ -40,7 +42,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dimen15"
                 android:layout_marginTop="@dimen/dimen12"
-                android:src="@mipmap/ic_biyan" />
+                android:src="@mipmap/icon_message" />
 
             <TextView
                 android:id="@+id/tv_message"

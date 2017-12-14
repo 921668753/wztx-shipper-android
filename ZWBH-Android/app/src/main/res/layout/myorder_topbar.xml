@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/myorder_topbar"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen50"
+    style="@style/Match44"
     android:background="@color/mainColor"
     android:orientation="horizontal">
 
@@ -20,126 +19,106 @@
 
 
         <TextView
-            android:id="@+id/tv_allOrder"
+            android:id="@+id/tv_all"
             style="@style/MatchMatch"
             android:gravity="center"
-            android:text="@string/allOrder"
-            android:textColor="@color/lonincolors"
-            android:textSize="@dimen/textsize13" />
+            android:text="@string/all"
+            android:textColor="@color/announcementCloseColors"
+            android:textSize="@dimen/textsize14" />
 
         <TextView
-            android:id="@+id/tv_allOrder1"
-            style="@style/Match1"
+            android:id="@+id/tv_all1"
+            style="@style/Match1.5"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen15"
             android:layout_marginRight="@dimen/dimen10"
-            android:background="@color/lonincolors" />
+            android:background="@color/announcementCloseColors" />
 
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        style="@style/AutoMatch"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_quoteOrder"
-            style="@style/MatchMatch"
-            android:gravity="center"
-            android:text="@string/quoteOrder"
-            android:textColor="@color/lonincolors"
-            android:textSize="@dimen/textsize13" />
-
-        <TextView
-            android:id="@+id/tv_quoteOrder1"
-            style="@style/Match1"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/dimen10"
-            android:layout_marginRight="@dimen/dimen10"
-            android:background="@color/lonincolors" />
     </RelativeLayout>
 
 
     <RelativeLayout style="@style/AutoMatch">
 
         <TextView
-            android:id="@+id/tv_sendGoodsOrder"
+            android:id="@+id/tv_pendingOrder"
             style="@style/MatchMatch"
             android:gravity="center"
-            android:text="@string/toSendGoods"
-            android:textColor="@color/lonincolors"
+            android:text="@string/pendingOrder"
+            android:textColor="@color/announcementCloseColors"
             android:textSize="@dimen/textsize13" />
 
         <TextView
-            android:id="@+id/tv_sendGoodsOrder1"
-            style="@style/Match1"
+            android:id="@+id/tv_pendingOrder1"
+            style="@style/Match1.5"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/dimen10"
             android:layout_marginRight="@dimen/dimen10"
-            android:background="@color/lonincolors" />
+            android:background="@color/announcementCloseColors" />
     </RelativeLayout>
 
 
     <RelativeLayout style="@style/AutoMatch">
 
         <TextView
-            android:id="@+id/tv_deliveryOrder"
+            android:id="@+id/tv_pendingDelivery"
             style="@style/MatchMatch"
             android:gravity="center"
-            android:text="@string/delivery"
-            android:textColor="@color/lonincolors"
+            android:text="@string/pendingDelivery"
+            android:textColor="@color/announcementCloseColors"
             android:textSize="@dimen/textsize13" />
 
         <TextView
-            android:id="@+id/tv_deliveryOrder1"
-            style="@style/Match1"
+            android:id="@+id/tv_pendingDelivery1"
+            style="@style/Match1.5"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/dimen10"
             android:layout_marginRight="@dimen/dimen10"
-            android:background="@color/lonincolors" />
+            android:background="@color/announcementCloseColors" />
     </RelativeLayout>
 
     <RelativeLayout style="@style/AutoMatch">
 
         <TextView
-            android:id="@+id/tv_completedOrder"
+            android:id="@+id/tv_transportation"
+            style="@style/MatchMatch"
+            android:gravity="center"
+            android:text="@string/transportation"
+            android:textColor="@color/announcementCloseColors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_transportation1"
+            style="@style/Match1.5"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:background="@color/announcementCloseColors" />
+    </RelativeLayout>
+
+    <RelativeLayout style="@style/AutoMatch">
+
+        <TextView
+            android:id="@+id/tv_completed"
             style="@style/MatchMatch"
             android:gravity="center"
             android:text="@string/completed"
-            android:textColor="@color/lonincolors"
+            android:textColor="@color/announcementCloseColors"
             android:textSize="@dimen/textsize13" />
 
         <TextView
-            android:id="@+id/tv_completedOrder1"
-            style="@style/Match1"
+            android:id="@+id/tv_completed1"
+            style="@style/Match1.5"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="@dimen/dimen10"
-            android:layout_marginRight="@dimen/dimen10"
-            android:background="@color/lonincolors" />
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@color/announcementCloseColors" />
     </RelativeLayout>
 
-    <RelativeLayout style="@style/AutoMatch">
 
-        <TextView
-            android:id="@+id/tv_evaluationShareOrder"
-            style="@style/MatchMatch"
-            android:gravity="center"
-            android:text="@string/evaluationShare"
-            android:textColor="@color/lonincolors"
-            android:textSize="@dimen/textsize13" />
-
-        <TextView
-            android:id="@+id/tv_evaluationShareOrder1"
-            style="@style/Match1"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/dimen10"
-            android:layout_marginRight="@dimen/dimen10"
-            android:background="@color/lonincolors" />
-    </RelativeLayout>
 </LinearLayout>

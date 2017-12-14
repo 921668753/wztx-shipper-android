@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen95"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/dimen15">
+
+
+    <ImageView
+        android:layout_width="@dimen/dimen60"
+        android:layout_height="@dimen/dimen60"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_user_header" />
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen17">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:text="戴师傅·苏EA5670"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15" />
+
+
+            <TextView
+                style="@style/AutoWrap"
+                android:gravity="right"
+                android:text="￥300.00"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginTop="@dimen/dimen5"
+            android:text="4.2米/厢式货车"
+            android:textColor="@color/aAAAAAColors"
+            android:textSize="@dimen/textsize12" />
+
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="200单/司机等级4.9/服务等级4.9/3次投诉"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView style="@style/AutoWrap" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen28"
+                android:layout_height="@dimen/dimen22"
+                android:paddingLeft="@dimen/dimen8"
+                android:paddingTop="@dimen/dimen2"
+                android:src="@mipmap/ic_checkbox_unselect" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

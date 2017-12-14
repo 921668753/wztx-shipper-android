@@ -20,7 +20,6 @@
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize15" />
 
-
     <include layout="@layout/commom_dividerwidth1" />
 
     <EditText

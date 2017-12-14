@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen43"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/dimen51"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dimen5"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen15"
+            android:paddingTop="@dimen/dimen5"
+            android:src="@mipmap/back" />
+
+
+        <LinearLayout
+            style="@style/WrapMatch"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_individualOwners"
+                style="@style/AutoMatch"
+                android:layout_marginRight="@dimen/dimen65"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/tv_individualOwners"
+                    style="@style/MatchAuto"
+                    android:gravity="center"
+                    android:text="@string/individualOwners"
+                    android:textColor="@color/announcementCloseColors"
+                    android:textSize="@dimen/textsize17"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_individualOwners1"
+                    android:layout_width="@dimen/dimen79"
+                    android:layout_height="@dimen/dimen2"
+                    android:background="@color/announcementCloseColors" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_companyOwner"
+                style="@style/AutoMatch"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_companyOwner"
+                    style="@style/MatchAuto"
+                    android:gravity="center"
+                    android:text="@string/companyOwner"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize17" />
+
+                <TextView
+                    android:id="@+id/tv_companyOwner1"
+                    android:layout_width="@dimen/dimen79"
+                    android:layout_height="@dimen/dimen2"
+                    android:background="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        style="@style/MatchMatch" />
+
+</LinearLayout>

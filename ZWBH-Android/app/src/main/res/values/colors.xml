@@ -75,4 +75,18 @@
     <color name="fA4343Colors">#FA4343</color>
     <color name="fEE9E9Colors">#FEE9E9</color>
 
+
+    <!-- 个人货主-->
+    <color name="fDF0C8Colors">#FDF0C8</color>
+    <color name="fD8D29Colors">#FD8D29</color>
+
+    <!-- 我的订单-->
+    <color name="e7E7EColors">#7E7E7E</color>
+
+    <!-- 订单详情-->
+    <color name="a1A1AColors">#1A1A1A</color>
+    <color name="fAFAFAColors">#FAFAFA</color>
+
+
+
 </resources>

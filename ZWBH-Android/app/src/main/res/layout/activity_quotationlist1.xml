@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchMatch">
+
+        <ScrollView
+            style="@style/MatchMatch"
+            android:scrollbars="none">
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:orientation="vertical">
+
+                <com.ruitukeji.zwbh.utils.myview.ChildLiistView
+                    android:id="@+id/lv_quotationlist"
+                    style="@style/MatchWrap"
+                    android:background="@color/white"
+                    android:divider="@color/background"
+                    android:dividerHeight="@dimen/dimen0.5"
+                    android:overScrollMode="never"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:scrollbars="none"
+                    tools:listitem="@layout/item_quotationlist1" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen45"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:layout_marginTop="@dimen/dimen25"
+                    android:background="@drawable/shape_login"
+                    android:gravity="center"
+                    android:text="@string/determine"
+                    android:textColor="@color/mainColor"
+                    android:textSize="@dimen/textsize16" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <include layout="@layout/common_error" />
+
+</LinearLayout>

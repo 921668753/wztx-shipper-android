@@ -5,7 +5,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/common_title"></include>
+    <include layout="@layout/common_title"/>
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mRefreshLayout"
@@ -22,9 +22,10 @@
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-    <include layout="@layout/common_bottombar"
-        android:visibility="gone"/>
+    <include
+        layout="@layout/common_bottombar"
+        android:visibility="gone" />
 
-    <include layout="@layout/common_error"></include>
+    <include layout="@layout/common_error"/>
 
 </LinearLayout>

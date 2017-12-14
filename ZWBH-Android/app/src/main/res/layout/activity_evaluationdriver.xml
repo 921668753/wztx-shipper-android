@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen72"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen30"
+            android:text="@string/deliveryTime"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <RatingBar
+            android:id="@+id/rb_deliveryTime"
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen28"
+            android:layout_marginLeft="@dimen/dimen34"
+            android:layout_marginTop="@dimen/dimen24"
+            android:numStars="5"
+            android:stepSize="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen72"
+        android:background="@color/mainColor"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen14"
+            android:text="@string/serviceAttitude"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <RatingBar
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen28"
+            android:layout_marginLeft="@dimen/dimen34"
+            android:layout_marginTop="@dimen/dimen8"
+            android:numStars="5"
+            android:stepSize="1" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_submit"
+        style="@style/Match50"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen32"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize16" />
+
+</LinearLayout>

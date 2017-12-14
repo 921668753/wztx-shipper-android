@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match50"
+    android:background="@color/white"
+    android:gravity="center_vertical|right"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_cancelorder"
+        android:gravity="center"
+        android:text="@string/cancelOrder1"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize13" />
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/viewQuotation"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_cancelorder"
+        android:gravity="center"
+        android:text="@string/checkAbnormal"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_cancelorder"
+        android:gravity="center"
+        android:text="@string/viewShippingTrack"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/contactDriver"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize13"
+        android:visibility="visible" />
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/evaluationDriver"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+
+</LinearLayout>

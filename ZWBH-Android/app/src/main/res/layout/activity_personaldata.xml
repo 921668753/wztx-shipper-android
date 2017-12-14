@@ -5,11 +5,13 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/common_title"></include>
+    <include layout="@layout/common_title" />
 
     <LinearLayout
         android:id="@+id/ll_upload"
-        style="@style/MatchWrap"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen65"
+        android:layout_marginTop="@dimen/dimen15"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -18,20 +20,20 @@
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="@string/headPortrait"
-            android:textColor="@color/textColor"
+            android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
         <TextView style="@style/AutoMatch" />
 
-        <cn.bingoogolapple.imageview.BGAImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/img_user"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="5dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/headportrait"
-            app:bga_iv_borderColor="#ff0000"
-            app:bga_iv_isCircle="true" />
+        <!--<cn.bingoogolapple.imageview.BGAImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/img_user"-->
+        <!--android:layout_width="35dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@mipmap/headportrait"-->
+        <!--app:bga_iv_borderColor="#ff0000"-->
+        <!--app:bga_iv_isCircle="true" />-->
 
         <!--<declare-styleable name="BGAImageView">-->
         <!--&lt;!&ndash; 默认图片资源，默认值为 null &ndash;&gt;-->
@@ -48,18 +50,27 @@
         <!--<attr name="bga_iv_borderColor" format="reference|color"/>-->
         <!--</declare-styleable>-->
 
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen45"
+            android:layout_marginRight="@dimen/dimen15"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_user_header" />
+
 
         <ImageView
-            style="@style/WrapWrap"
+            android:layout_width="@dimen/dimen7"
+            android:layout_height="@dimen/dimen14"
             android:layout_marginRight="@dimen/dimen15"
             android:src="@mipmap/arrow" />
     </LinearLayout>
 
-    <TextView style="@style/DividerWidth" />
+    <include layout="@layout/commom_dividerwidth1" />
 
     <LinearLayout
         android:id="@+id/ll_name"
-        style="@style/Match44"
+        style="@style/Match45"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -68,7 +79,7 @@
             style="@style/WrapWrap"
             android:paddingLeft="@dimen/dimen15"
             android:text="@string/userName"
-            android:textColor="@color/textColor"
+            android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
         <TextView
@@ -77,13 +88,14 @@
             android:gravity="right"
             android:paddingRight="@dimen/dimen15"
             android:text="--"
-            android:textSize="@dimen/mian_font_size" />
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize15" />
     </LinearLayout>
 
-    <TextView style="@style/DividerWidth" />
+    <include layout="@layout/commom_dividerwidth1" />
 
     <LinearLayout
-        style="@style/Match44"
+        style="@style/Match45"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -92,7 +104,7 @@
             style="@style/WrapWrap"
             android:paddingLeft="@dimen/dimen15"
             android:text="@string/userPhone"
-            android:textColor="@color/textColor"
+            android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
         <TextView
@@ -101,17 +113,21 @@
             android:gravity="right"
             android:paddingRight="@dimen/dimen15"
             android:text="--"
-            android:textSize="@dimen/mian_font_size" />
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize15" />
     </LinearLayout>
 
-    <TextView style="@style/DividerWidth" />
+    <TextView
+        style="@style/DividerWidth"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_accountDeposit"
         style="@style/Match44"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/WrapWrap"
@@ -136,14 +152,17 @@
             android:src="@mipmap/arrow" />
     </LinearLayout>
 
-    <TextView style="@style/DividerWidth" />
+    <TextView
+        style="@style/DividerWidth"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_personalCertificate"
         style="@style/Match44"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/WrapWrap"

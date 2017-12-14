@@ -46,15 +46,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <!--个人中心-->
-    <string name="name">姓名</string>
-    <string name="my_wallet">我的钱包</string>
-    <string name="my_order">我的订单</string>
-    <string name="online_service">在线客服</string>
-    <string name="recommend_courteous">推荐有礼</string>
-    <string name="about_us">关于我们</string>
-    <string name="settings">设置</string>
-    <string name="technicalSupport">技术支持@苏州睿途科技</string>
+
 
     <!--登录-->
     <string name="alphanumeric">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
@@ -138,7 +130,7 @@
     <string name="woman">女</string>
     <string name="unknown">未知</string>
     <string name="IdNumber">身份证号</string>
-    <string name="uploudHoldingIdPhoto">请上传手持身份证照片</string>
+
     <string name="holdingIdPhoto">手持身份证照片</string>
     <string name="sample">请参照“示例”，保证身份证号码清晰可见。</string>
     <string name="sample1">遮挡，模糊，或传不相关图片的都将导致审核不通过。</string>
@@ -147,16 +139,14 @@
     <string name="uploudIdCardPhotoBack">请上传身份证反面照片</string>
 
     <!--个人认证  身份认证-->
-    <string name="enterpriseInformation">企业信息</string>
+
     <string name="qualification">资质认证</string>
-    <string name="operationInformation">操作人信息</string>
-    <string name="companyName">企业全称</string>
+
     <string name="companyName1">请填写营业执照上的公司名字</string>
     <string name="enterpriseName">企业简称</string>
     <string name="registrationNumber">营业执照注册号</string>
     <string name="registrationNumber1">请填写组织机构代码/社会信用代码</string>
     <string name="registrationNumber2">请填写正确的组织机构代码/社会信用代码</string>
-    <string name="legalPersonName">企业法人姓名</string>
     <string name="legalPersonIdNumber">法人身份证号</string>
     <string name="legalPersonIdNumber1">请填写正确的法人身份证号</string>
     <string name="phoneNumber">企业联系电话</string>
@@ -178,8 +168,6 @@
     <string name="sp_front_pic">请上传操作人身份证正面照片</string>
     <string name="sp_back_pic">请上传操作人身份证反面照片</string>
 
-    <!--  企业认证  企业信息-->
-
 
     <!--账户设置-->
     <string name="accountSettings">账户设置</string>
@@ -191,7 +179,7 @@
     <string name="checked">已缴纳</string>
     <string name="frozen">冻结</string>
     <string name="personalCertificate">个人认证</string>
-    <string name="unauthorized">未认证</string>
+
     <string name="inAuthentication">认证中</string>
     <string name="certified">认证通过</string>
     <string name="refuse">认证失败</string>
@@ -222,6 +210,11 @@
     <string name="cargoInformation">货物信息</string>
     <string name="submitOrders">提交订单</string>
     <string name="assignedVehicle">指派车辆</string>
+
+    <!--指派车辆-->
+    <string name="licensePlateNumber">车牌号</string>
+    <string name="pleaseLicensePlateNumber">请输入车牌号</string>
+    <string name="confirmAssigned">确认指派</string>
 
     <!--选择地址-->
     <string name="selectAddress">选择地址</string>
@@ -329,6 +322,136 @@
     <string name="addressManagement">地址管理</string>
     <string name="driverManagement">司机管理</string>
     <string name="identityAuthentication">身份认证</string>
+    <string name="name">姓名</string>
+    <string name="goCertification">去认证</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="my_order">我的订单</string>
+    <string name="invoiceManagement">发票管理</string>
+    <string name="abnormalRecords">异常记录</string>
+    <string name="myWallet">我的钱包</string>
+    <string name="inviteFriends">邀请好友</string>
+    <string name="complaintCenter">投诉中心</string>
+    <string name="helpCenter">帮助中心</string>
+    <string name="systemSettings">系统设置</string>
+    <string name="online_service">在线客服</string>
+    <string name="rechargeWithdrawal">充值、提现</string>
+    <string name="recommend_courteous">推荐有礼</string>
+    <string name="about_us">关于我们</string>
+    <string name="settings">设置</string>
+    <string name="technicalSupport">技术支持@物载天下网络科技</string>
+
+    <!--个人中心   货主认证-->
+    <string name="individualOwners">个人货主</string>
+    <string name="companyOwner">公司货主</string>
+    <string name="unauthorized">未认证</string>
+
+    <!--个人中心   个人货主-->
+    <string name="basicInformation">基本信息</string>
+    <string name="validityIdentityCard">身份证有效期</string>
+    <string name="faceIdentityCard">身份证正面</string>
+    <string name="uploadYourIdCard">请上传清晰的身份证正面照片</string>
+    <string name="IdCard">身份证反面</string>
+    <string name="uploadClearYourIdCard">请上传清晰的身份证反面照片</string>
+    <string name="sampleDiagram">示例图</string>
+    <string name="uploudHoldingIdPhoto">请上传清的手持照片</string>
+
+    <!--个人中心   公司货主-->
+    <string name="enterpriseInformation">企业信息</string>
+    <string name="companyName">公司名称</string>
+    <string name="businessLicense">营业执照</string>
+    <string name="companyAddress">公司地址</string>
+    <string name="phoneCompany">公司电话</string>
+    <string name="businessLicensePhoto">营业执照照片</string>
+    <string name="uploadPictureBusinessLicense">请上传清晰的营业执照照片</string>
+    <string name="legalPersonInformation">法人信息</string>
+    <string name="legalPersonName">法人姓名</string>
+    <string name="operationInformation">操作人信息</string>
+    <string name="operationName">操作人姓名</string>
+
+
+    <!--我的订单-->
+    <string name="allOrder">全部订单</string>
+    <string name="toSendGoods">待发货</string>
+    <string name="delivery">发货中</string>
+    <string name="completed">已完成</string>
+    <string name="evaluationShare">客户评价</string>
+    <string name="noEvaluation">未评价</string>
+    <string name="haveEvaluation">已评价</string>
+    <string name="hang">挂起</string>
+    <string name="all">全部</string>
+    <string name="pendingOrder">待接单</string>
+    <string name="pendingDelivery">待发货</string>
+    <string name="transportation">运输中</string>
+    <string name="orderNumber1">订单号：</string>
+    <string name="orderTime">订单时间</string>
+    <string name="systemForecast">系统预估</string>
+    <string name="userOffer">用户出价</string>
+    <string name="place1">起运地</string>
+    <string name="symbol">￥</string>
+    <string name="cancelOrder1">取消订单</string>
+    <string name="viewQuotation">查看报价</string>
+    <string name="onArrival">到达起运地</string>
+    <string name="start">发车</string>
+    <string name="destination1">到达目的地</string>
+    <string name="checkAbnormal">查看异常</string>
+    <string name="viewShippingTrack">查看运输轨迹</string>
+    <string name="contactDriver">联系司机</string>
+    <string name="evaluationDriver">评价司机</string>
+
+    <!--订单详情-->
+    <string name="orderDetails">订单详情</string>
+    <string name="orderStatus">订单状态</string>
+    <string name="orderTime1">订单时间：</string>
+    <string name="rderForecastPrice">订单预估价格：</string>
+    <string name="actualPayment1">实际支付费用：</string>
+    <string name="parametersGoods">货物参数</string>
+    <string name="volume">体积</string>
+    <string name="cubic">立方</string>
+    <string name="require">需要</string>
+    <string name="noRequire">不需要</string>
+    <string name="deliveryInformation1">寄货人信息</string>
+    <string name="consigneeInformation">收货人信息</string>
+    <string name="shippingInformation">配送信息</string>
+    <string name="vehicleInformation">车辆信息</string>
+    <string name="hour2">小时</string>
+    <string name="minutes">分钟</string>
+    <string name="driverInformation">司机信息</string>
+    <string name="collect">收藏</string>
+    <string name="complaints">投诉</string>
+    <string name="complaintsAboutDriver">投诉司机</string>
+    <string name="describeSpecificReasons">请描述具体原因</string>
+
+
+
+
+
+
+    <string name="init">初始状态</string>
+    <string name="orderNumber">订单号</string>
+    <string name="insurancePolicy">保险单号</string>
+    <string name="weight">重量</string>
+    <string name="origin">起始地</string>
+
+    <string name="consigneeName">收货人姓名</string>
+    <string name="consigneeTelephone">收货人电话</string>
+    <string name="consigneeAddress">收货人地址</string>
+    <string name="senderName">寄件人姓名</string>
+    <string name="senderPhone">寄件人电话</string>
+    <string name="senderAddress">寄件人地址</string>
+
+    <string name="viewDetails">查看详情</string>
+    <string name="ownerName">车主姓名</string>
+    <string name="contactPhoneNumber">联系电话</string>
+    <string name="deliveryTime1">发货时间</string>
+    <string name="arrivalTime">到达时间</string>
+    <string name="totalFreight">总运费</string>
+    <string name="evaluation">评价</string>
+    <string name="checkeValuation">查看评价</string>
+    <string name="lookMap">查看地图</string>
+    <string name="checkVoucher">查看凭证</string>
+    <string name="confirmPayment">确认支付</string>
+    <string name="paymentVoucherAudit">支付凭证审核中</string>
+    <string name="payAgain">重新支付</string>
 
 
     <!--同城配送-->
@@ -406,7 +529,7 @@
     <string name="inputAmountFull1">请输入正确的充值金额</string>
 
     <!--我的钱包-->
-    <string name="myWallet">我的钱包</string>
+
     <string name="bill">账单</string>
     <string name="accountBalance">账户余额（元）</string>
     <string name="withdrawalAmount">可提现金额</string>
@@ -499,41 +622,6 @@
     <string name="Qzone">QQ空间</string>
 
 
-    <!--订单详情-->
-    <string name="orderDetails">订单详情</string>
-    <string name="orderStatus">订单状态</string>
-
-    <string name="init">初始状态</string>
-    <!--<string name="quote">报价中</string>-->
-    <!--<string name="quoted">已报价</string>-->
-    <!--<string name="distribute">发货中</string>-->
-    <!--<string name="photo">拍照完毕</string>-->
-
-    <string name="orderNumber">订单号</string>
-    <string name="insurancePolicy">保险单号</string>
-    <string name="weight">重量</string>
-    <string name="origin">起始地</string>
-
-    <string name="consigneeName">收货人姓名</string>
-    <string name="consigneeTelephone">收货人电话</string>
-    <string name="consigneeAddress">收货人地址</string>
-    <string name="senderName">寄件人姓名</string>
-    <string name="senderPhone">寄件人电话</string>
-    <string name="senderAddress">寄件人地址</string>
-    <string name="viewQuotation">查看报价</string>
-    <string name="viewDetails">查看详情</string>
-    <string name="ownerName">车主姓名</string>
-    <string name="contactPhoneNumber">联系电话</string>
-    <string name="deliveryTime1">发货时间</string>
-    <string name="arrivalTime">到达时间</string>
-    <string name="totalFreight">总运费</string>
-    <string name="evaluation">评价</string>
-    <string name="checkeValuation">查看评价</string>
-    <string name="lookMap">查看地图</string>
-    <string name="checkVoucher">查看凭证</string>
-    <string name="confirmPayment">确认支付</string>
-    <string name="paymentVoucherAudit">支付凭证审核中</string>
-    <string name="payAgain">重新支付</string>
     <!--评价-->
     <string name="share">分享</string>
     <string name="deliveryTime">发货时效</string>
@@ -564,16 +652,6 @@
     <string name="authenticationInformation">认证信息</string>
     <string name="bindingMobilePhone">绑定手机号</string>
 
-    <!--我的订单-->
-    <string name="allOrder">全部订单</string>
-
-    <string name="toSendGoods">待发货</string>
-    <string name="delivery">发货中</string>
-    <string name="completed">已完成</string>
-    <string name="evaluationShare">客户评价</string>
-    <string name="noEvaluation">未评价</string>
-    <string name="haveEvaluation">已评价</string>
-    <string name="hang">挂起</string>
     <!--我发布的订单-->
     <string name="myPublishedOrder">我的发布</string>
     <string name="quoteDetails">报价详情</string>

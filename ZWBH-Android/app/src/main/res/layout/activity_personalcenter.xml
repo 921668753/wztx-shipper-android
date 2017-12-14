@@ -15,7 +15,6 @@
             style="@style/MatchWrap"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen101"
@@ -29,11 +28,12 @@
                     android:layout_height="@dimen/dimen60"
                     android:layout_marginLeft="@dimen/dimen20"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/headportrait" />
+                    android:src="@mipmap/avatar" />
 
 
                 <LinearLayout
                     style="@style/AutoWrap"
+                    android:layout_width="280dp"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen18"
                     android:paddingRight="@dimen/dimen15">
@@ -68,7 +68,7 @@
                             android:layout_height="@dimen/dimen6"
                             android:layout_marginLeft="@dimen/dimen5"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/ic_arrow" />
+                            android:src="@mipmap/mine_arrow" />
 
                     </LinearLayout>
 
@@ -79,7 +79,7 @@
                     android:layout_height="@dimen/dimen13"
                     android:layout_marginRight="@dimen/dimen15"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/ic_arrow" />
+                    android:src="@mipmap/avatar_arrow" />
 
             </LinearLayout>
 
@@ -99,7 +99,7 @@
                         android:layout_width="@dimen/dimen43"
                         android:layout_height="@dimen/dimen43"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_arrow" />
+                        android:src="@mipmap/ic_order" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -120,7 +120,7 @@
                         android:layout_width="@dimen/dimen43"
                         android:layout_height="@dimen/dimen43"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_arrow" />
+                        android:src="@mipmap/ic_address" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -141,7 +141,7 @@
                         android:layout_width="@dimen/dimen43"
                         android:layout_height="@dimen/dimen43"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_arrow" />
+                        android:src="@mipmap/ic_driver" />
 
                     <TextView
                         style="@style/WrapWrap"
@@ -164,23 +164,219 @@
 
                 <TextView
                     style="@style/WrapWrap"
-                    android:text="@string/about_us"
+                    android:text="@string/identityAuthentication"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
-
 
                 <TextView
                     style="@style/AutoWrap"
                     android:gravity="right"
-                    android:text="@string/about_us"
+                    android:text="@string/goCertification"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize12" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceManagement"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
 
+                <TextView style="@style/AutoWrap" />
+
                 <ImageView
-                    android:layout_width="@dimen/dimen43"
-                    android:layout_height="@dimen/dimen43"
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/ic_arrow" />
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/abnormalRecords"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/myWallet"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/AutoWrap"
+                    android:gravity="right"
+                    android:text="@string/rechargeWithdrawal"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize12" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match50"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/inviteFriends"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/complaintCenter"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/helpCenter"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/systemSettings"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView style="@style/AutoWrap" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen7"
+                    android:layout_height="@dimen/dimen13"
+                    android:layout_marginLeft="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow1" />
 
             </LinearLayout>
 

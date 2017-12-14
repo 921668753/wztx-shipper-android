@@ -10,12 +10,9 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.AllOrderFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.CompletedFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.DeliveryFragment;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.EvaluationShareFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.QuoteOrderFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.SendGoodsFragment;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
-
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
 
 /**
  * 我的订单
@@ -23,38 +20,53 @@ import static com.ruitukeji.zwbh.main.MainActivity.drawer;
  */
 
 public class MyOrderActivity extends BaseActivity {
+    /**
+     * 全部订单
+     */
+    @BindView(id = R.id.tv_all, click = true)
+    private TextView tv_all;
+    @BindView(id = R.id.tv_all1)
+    private TextView tv_all1;
 
-    @BindView(id = R.id.tv_allOrder, click = true)
-    private TextView tv_allOrder;
-    @BindView(id = R.id.tv_allOrder1)
-    private TextView tv_allOrder1;
-    @BindView(id = R.id.tv_quoteOrder, click = true)
-    private TextView tv_quoteOrder;
-    @BindView(id = R.id.tv_quoteOrder1)
-    private TextView tv_quoteOrder1;
-    @BindView(id = R.id.tv_sendGoodsOrder, click = true)
-    private TextView tv_sendGoodsOrder;
-    @BindView(id = R.id.tv_sendGoodsOrder1)
-    private TextView tv_sendGoodsOrder1;
-    @BindView(id = R.id.tv_deliveryOrder, click = true)
-    private TextView tv_deliveryOrder;
-    @BindView(id = R.id.tv_deliveryOrder1)
-    private TextView tv_deliveryOrder1;
-    @BindView(id = R.id.tv_completedOrder, click = true)
-    private TextView tv_completedOrder;
-    @BindView(id = R.id.tv_completedOrder1)
-    private TextView tv_completedOrder1;
-    @BindView(id = R.id.tv_evaluationShareOrder, click = true)
-    private TextView tv_evaluationShareOrder;
-    @BindView(id = R.id.tv_evaluationShareOrder1)
-    private TextView tv_evaluationShareOrder1;
+    /**
+     * 待接单
+     */
+    @BindView(id = R.id.tv_pendingOrder, click = true)
+    private TextView tv_pendingOrder;
+    @BindView(id = R.id.tv_pendingOrder1)
+    private TextView tv_pendingOrder1;
+
+
+    /**
+     * 待发货
+     */
+    @BindView(id = R.id.tv_pendingDelivery, click = true)
+    private TextView tv_pendingDelivery;
+    @BindView(id = R.id.tv_pendingDelivery1)
+    private TextView tv_pendingDelivery1;
+
+    /**
+     * 运输中
+     */
+    @BindView(id = R.id.tv_transportation, click = true)
+    private TextView tv_transportation;
+    @BindView(id = R.id.tv_transportation1)
+    private TextView tv_transportation1;
+
+    /**
+     * 已完成
+     */
+    @BindView(id = R.id.tv_completed, click = true)
+    private TextView tv_completed;
+    @BindView(id = R.id.tv_completed1)
+    private TextView tv_completed1;
+
 
     private BaseFragment contentFragment;
     private BaseFragment contentFragment1;
     private BaseFragment contentFragment2;
     private BaseFragment contentFragment3;
     private BaseFragment contentFragment4;
-    private BaseFragment contentFragment5;
 
     /**
      * 用来表示移动的Fragment
@@ -75,17 +87,12 @@ public class MyOrderActivity extends BaseActivity {
         contentFragment2 = new SendGoodsFragment();
         contentFragment3 = new DeliveryFragment();
         contentFragment4 = new CompletedFragment();
-        contentFragment5 = new EvaluationShareFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        try {
-            drawer.closeDrawers();
-        } catch (Exception e) {
-        }
         ActivityTitleUtils.initToolbar(aty, getString(R.string.my_order), true, R.id.titlebar);
         if (chageIcon == 0) {
             chageIcon = 0;
@@ -107,10 +114,6 @@ public class MyOrderActivity extends BaseActivity {
             chageIcon = 4;
             cleanColors(4);
             changeFragment(contentFragment4);
-        } else if (chageIcon == 5) {
-            chageIcon = 5;
-            cleanColors(5);
-            changeFragment(contentFragment5);
         } else {
             chageIcon = 0;
             cleanColors(0);
@@ -127,35 +130,31 @@ public class MyOrderActivity extends BaseActivity {
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.tv_allOrder:
+            case R.id.tv_all:
                 chageIcon = 0;
                 cleanColors(0);
                 changeFragment(contentFragment);
                 break;
-            case R.id.tv_quoteOrder:
+            case R.id.tv_pendingOrder:
                 chageIcon = 1;
                 cleanColors(1);
                 changeFragment(contentFragment1);
                 break;
-            case R.id.tv_sendGoodsOrder:
+
+            case R.id.tv_pendingDelivery:
                 chageIcon = 2;
                 cleanColors(2);
                 changeFragment(contentFragment2);
                 break;
-            case R.id.tv_deliveryOrder:
+            case R.id.tv_transportation:
                 chageIcon = 3;
                 cleanColors(3);
                 changeFragment(contentFragment3);
                 break;
-            case R.id.tv_completedOrder:
+            case R.id.tv_completed:
                 chageIcon = 4;
                 cleanColors(4);
                 changeFragment(contentFragment4);
-                break;
-            case R.id.tv_evaluationShareOrder:
-                chageIcon = 5;
-                cleanColors(5);
-                changeFragment(contentFragment5);
                 break;
             default:
                 break;
@@ -166,36 +165,34 @@ public class MyOrderActivity extends BaseActivity {
      * 清除颜色，并添加颜色
      */
     public void cleanColors(int chageIcon) {
-        tv_allOrder.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_allOrder1.setBackgroundResource(R.color.mainColor);
-        tv_quoteOrder.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_quoteOrder1.setBackgroundResource(R.color.mainColor);
-        tv_sendGoodsOrder.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_sendGoodsOrder1.setBackgroundResource(R.color.mainColor);
-        tv_deliveryOrder.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_deliveryOrder1.setBackgroundResource(R.color.mainColor);
-        tv_completedOrder.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_completedOrder1.setBackgroundResource(R.color.mainColor);
-        tv_evaluationShareOrder.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_evaluationShareOrder1.setBackgroundResource(R.color.mainColor);
+        tv_all.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_all1.setBackgroundResource(R.color.mainColor);
+        tv_pendingOrder.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_pendingOrder1.setBackgroundResource(R.color.mainColor);
+        tv_pendingDelivery.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_pendingDelivery1.setBackgroundResource(R.color.mainColor);
+        tv_transportation.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_transportation1.setBackgroundResource(R.color.mainColor);
+        tv_completed.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_completed1.setBackgroundResource(R.color.mainColor);
         if (chageIcon == 0) {
-            tv_allOrder.setTextColor(getResources().getColor(R.color.lonincolors));
-            tv_allOrder1.setBackgroundResource(R.color.lonincolors);
+            tv_all.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_all1.setBackgroundResource(R.color.announcementCloseColors);
         } else if (chageIcon == 1) {
-            tv_quoteOrder.setTextColor(getResources().getColor(R.color.lonincolors));
-            tv_quoteOrder1.setBackgroundResource(R.color.lonincolors);
+            tv_pendingOrder.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_pendingOrder1.setBackgroundResource(R.color.announcementCloseColors);
         } else if (chageIcon == 2) {
-            tv_sendGoodsOrder.setTextColor(getResources().getColor(R.color.lonincolors));
-            tv_sendGoodsOrder1.setBackgroundResource(R.color.lonincolors);
+            tv_pendingDelivery.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_pendingDelivery1.setBackgroundResource(R.color.announcementCloseColors);
         } else if (chageIcon == 3) {
-            tv_deliveryOrder.setTextColor(getResources().getColor(R.color.lonincolors));
-            tv_deliveryOrder1.setBackgroundResource(R.color.lonincolors);
+            tv_transportation.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_transportation1.setBackgroundResource(R.color.announcementCloseColors);
         } else if (chageIcon == 4) {
-            tv_completedOrder.setTextColor(getResources().getColor(R.color.lonincolors));
-            tv_completedOrder1.setBackgroundResource(R.color.lonincolors);
-        } else if (chageIcon == 5) {
-            tv_evaluationShareOrder.setTextColor(getResources().getColor(R.color.lonincolors));
-            tv_evaluationShareOrder1.setBackgroundResource(R.color.lonincolors);
+            tv_completed.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_completed1.setBackgroundResource(R.color.announcementCloseColors);
+        } else {
+            tv_all.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_all1.setBackgroundResource(R.color.announcementCloseColors);
         }
     }
 }
