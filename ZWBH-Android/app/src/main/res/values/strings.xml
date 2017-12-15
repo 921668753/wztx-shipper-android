@@ -465,9 +465,19 @@
     <string name="applicationInvoice">申请发票</string>
     <string name="billingRecords">开票记录</string>
 
+    <!--申请发票-->
+    <string name="invoiceType">发票类型</string>
+    <string name="commercialInvoice">普通发票</string>
+    <string name="specialVATInvoices">增值税专用发票</string>
+    <string name="invoiceAmount1">发票金额(元)</string>
+    <string name="headType">抬头类型</string>
+    <string name="personal">个人</string>
+    <string name="company">公司</string>
+    <string name="invoiceRise">发票抬头</string>
+    <string name="invoiceContent">发票内容</string>
+
 
     <!--开票记录-->
-    <string name="invoiceType">发票类型</string>
     <string name="VATinvoice">增值税发票</string>
     <string name="invoiceAmount">发票金额</string>
     <string name="invoiceTime">开票时间</string>
@@ -478,8 +488,6 @@
     <!--开票详情-->
     <string name="billingDetails">开票详情</string>
     <string name="receiptInformation">收件信息</string>
-
-
 
 
     <!--异常记录-->
@@ -598,12 +606,10 @@
     <string name="confirmPaymentPassword">确认支付密码</string>
 
 
-
     <!--投诉中心-->
     <string name="complaintsTime">投诉时间</string>
     <string name="complaintsReasons">投诉原因</string>
     <string name="processingResult">处理结果</string>
-
 
 
     <!--同城配送-->
