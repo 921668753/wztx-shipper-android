@@ -19,7 +19,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.LoginBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
-import com.ruitukeji.zwbh.mine.aboutus.AboutUsActivity;
+import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.umeng.analytics.MobclickAgent;

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mRefreshLayout"
+        style="@style/MatchAuto"
+        android:paddingTop="@dimen/dimen10">
+
+        <ListView
+            android:id="@+id/lv_address"
+            style="@style/MatchWrap"
+            android:divider="@color/background"
+            android:dividerHeight="@dimen/dimen10"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:listitem="@layout/item_address" />
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <include layout="@layout/common_error" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen60"
+        android:background="@color/mainColor"
+        android:orientation="vertical">
+
+        <TextView style="@style/DividerWidth" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
+            android:layout_marginTop="@dimen/dimen10"
+            android:background="@color/announcementCloseColors"
+            android:gravity="center"
+            android:text="@string/newAddress"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize16" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

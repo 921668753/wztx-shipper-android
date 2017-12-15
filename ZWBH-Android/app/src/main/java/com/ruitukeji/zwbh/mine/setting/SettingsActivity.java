@@ -18,7 +18,7 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
-import com.ruitukeji.zwbh.main.MainActivity;
+import com.ruitukeji.zwbh.mine.setting.changepassword.ChangePasswordActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
 import com.ruitukeji.zwbh.utils.FileNewUtil;

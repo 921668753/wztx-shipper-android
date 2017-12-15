@@ -134,7 +134,6 @@
     <string name="holdingIdPhoto">手持身份证照片</string>
     <string name="sample">请参照“示例”，保证身份证号码清晰可见。</string>
     <string name="sample1">遮挡，模糊，或传不相关图片的都将导致审核不通过。</string>
-    <string name="nextStep">下一步</string>
     <string name="uploudIdCardPhoto">请上传身份证正面照片</string>
     <string name="uploudIdCardPhotoBack">请上传身份证反面照片</string>
 
@@ -155,7 +154,6 @@
     <string name="accountName">开户名称</string>
     <string name="accountName1">请填写在银行开户的企业名字</string>
     <string name="openingBank">开户行</string>
-    <string name="openingBank1">请填写以企业名字开户的银行名称</string>
     <string name="settlementAccount">结算账号</string>
     <string name="settlementAccount1">请填写以企业名字开户的银行账号</string>
     <string name="hold_pic">请上传企业法人身份证手持照片</string>
@@ -420,12 +418,6 @@
     <string name="complaints">投诉</string>
     <string name="complaintsAboutDriver">投诉司机</string>
     <string name="describeSpecificReasons">请描述具体原因</string>
-
-
-
-
-
-
     <string name="init">初始状态</string>
     <string name="orderNumber">订单号</string>
     <string name="insurancePolicy">保险单号</string>
@@ -452,6 +444,166 @@
     <string name="confirmPayment">确认支付</string>
     <string name="paymentVoucherAudit">支付凭证审核中</string>
     <string name="payAgain">重新支付</string>
+
+
+    <!--地址管理-->
+    <string name="deliveryAddress">发货地址</string>
+    <string name="shippingAddress">收货地址</string>
+    <string name="newAddress">新增地址</string>
+    <string name="setDefaultAddress">设为默认地址</string>
+    <string name="changeAddress">修改地址</string>
+
+
+    <!--司机管理-->
+    <string name="commonlyUsedDriver">常用司机</string>
+    <string name="blacklist">黑名单</string>
+    <string name="joinBlacklist">加入黑名单</string>
+    <string name="removeBlacklist">移除黑名单</string>
+
+
+    <!--发票管理-->
+    <string name="applicationInvoice">申请发票</string>
+    <string name="billingRecords">开票记录</string>
+
+
+    <!--开票记录-->
+    <string name="invoiceType">发票类型</string>
+    <string name="VATinvoice">增值税发票</string>
+    <string name="invoiceAmount">发票金额</string>
+    <string name="invoiceTime">开票时间</string>
+    <string name="issued">已发出</string>
+    <string name="rejected">已拒绝</string>
+    <string name="pendingApproval">待审核</string>
+
+    <!--开票详情-->
+    <string name="billingDetails">开票详情</string>
+    <string name="receiptInformation">收件信息</string>
+
+
+
+
+    <!--异常记录-->
+    <string name="descriptionGoods1">货物名称：</string>
+    <string name="thePlace1">起运地：</string>
+    <string name="destination2">目的地：</string>
+
+    <!--异常情况-->
+    <string name="abnormalSituation">异常情况</string>
+    <string name="abnormalLocation1">异常地点：</string>
+    <string name="abnormalTime1">异常时间：</string>
+    <string name="abnormalReason1">异常原因：</string>
+
+
+    <!--我的钱包-->
+    <string name="bill">账单</string>
+    <string name="accountBalance">账户余额（元）</string>
+    <string name="withdrawalAmount">可提现金额（元）</string>
+    <string name="totalConsumption">消费总额（元）</string>
+    <string name="outstandingAmount">未支付总额（元）</string>
+    <string name="accountDetails">账户明细</string>
+    <string name="recharge">充值</string>
+    <string name="cashWithdrawal">提现</string>
+    <string name="myBankCard">我的银行卡</string>
+    <string name="paymentPasswordManagement">支付密码管理</string>
+    <string name="myReferralBonuses">我的推荐奖励</string>
+    <string name="automaticDepositAmount">（已自动存入余额）</string>
+    <string name="prepaidPhoneRecords">充值记录</string>
+
+
+    <!--账户明细-->
+    <string name="paid">已支付</string>
+    <string name="unpaid">未支付</string>
+
+    <!--我的银行卡-->
+    <string name="addBankCard">添加银行卡</string>
+
+    <!--添加银行卡-->
+    <string name="cardholder">持卡人</string>
+    <string name="accountHolderName1">请输入持卡人姓名</string>
+    <string name="bankCardNumber">银行卡号</string>
+    <string name="bankCardNumber1">请输入银行卡号</string>
+    <string name="withdrawalsBank">提现银行</string>
+    <string name="withdrawalsBank1">请输入提现银行</string>
+    <string name="openingBank1">请输入开户行</string>
+    <string name="accountText">请输入手机号</string>
+    <string name="confirmAdd">确认添加</string>
+    <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
+    <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
+    <string name="bankName">银行名称</string>
+    <string name="presentingBank">如农业银行，工商银行等</string>
+    <string name="presentingBank1">请输入正确的银行名称</string>
+    <string name="paymentAccount">收款账号</string>
+    <string name="promptAccount">如工商银行账号</string>
+    <string name="promptAccount1">请输入正确的收款账号</string>
+    <string name="openAccountName">开户名</string>
+    <string name="accountHolderName">开户人姓名</string>
+
+    <!--提现-->
+    <string name="withdrawal">提现</string>
+    <string name="withdrawalRecord">提现记录</string>
+    <string name="withdrawalAmount1">提现金额</string>
+    <string name="hintWithdrawal">*请确认以上信息无误，三个工作日之内到账</string>
+    <string name="hintWithdrawal1">提现日期每月15号—20号</string>
+    <string name="confirmSubmit">确认提交</string>
+    <string name="confirmSubmit1">确认提交申请？</string>
+    <string name="confirmSubmit2">申请已提交成功！</string>
+    <string name="cancel1">&#160;&#160;&#160;取&#160;&#160;&#160;&#160;&#160;&#160;&#160;消&#160;&#160;&#160;</string>
+    <string name="confirm">&#160;&#160;&#160;确&#160;&#160;&#160;&#160;&#160;&#160;&#160;定&#160;&#160;&#160;</string>
+    <string name="withdrawalRecord1">请输入提现金额</string>
+    <string name="withdrawalAmount2">可提现金额</string>
+    <string name="allWithdrawal">全部提现</string>
+    <string name="toBank">到账银行</string>
+    <string name="modification">修改</string>
+    <string name="tail">尾号</string>
+    <string name="consent">同意</string>
+    <string name="withdrawAgreement">《提现协议》</string>
+
+
+    <!--充值-->
+    <string name="topUpAmount">充值金额</string>
+    <string name="optionPay">选择支付方式</string>
+    <string name="weChatPay">微信支付</string>
+    <string name="alipayPay">支付宝支付</string>
+    <string name="prepaidImmediately">立即充值</string>
+    <string name="rechargeRecord">充值记录</string>
+
+
+    <!--设置支付密码-->
+    <string name="setPaymentPassword">设置支付密码</string>
+    <string name="pleaseEnterPaymentPassword">请输入支付密码</string>
+    <string name="pleaseEnterPaymentPassword1">请输入正确的支付密码</string>
+    <string name="pleaseEnterConfirm">请再次输入以确认</string>
+    <string name="paymentPasswordsNotMatch">两次输入的支付密码不一致</string>
+
+    <!--修改支付密码-->
+    <string name="modifyPaymentPassword">修改支付密码</string>
+    <string name="toResend1">秒后重发</string>
+    <string name="doRememberAccountNumber">您是否记得账号</string>
+    <string name="currentPaymentPassword">当前使用的支付密码</string>
+    <string name="doNotRemember">不记得</string>
+    <string name="remember">记得</string>
+    <string name="verificationCodeMobilePhone">我们已发送验证码到您的手机</string>
+    <string name="fillIn">填写</string>
+    <string name="idNumber">的身份证号</string>
+    <string name="authenticate">验证身份</string>
+    <string name="pleaseEnterIdNumber">请输入证件号</string>
+    <string name="pleaseEnterOldPaymentPassword">请输入旧的支付密码</string>
+    <string name="nextStep">下一步</string>
+
+    <!--修改支付密码-->
+    <string name="pleaseEnterNewPaymentPassword">请输入新的支付密码</string>
+
+
+    <!--确认支付密码-->
+    <string name="confirmPaymentPassword">确认支付密码</string>
+
+
+
+    <!--投诉中心-->
+    <string name="complaintsTime">投诉时间</string>
+    <string name="complaintsReasons">投诉原因</string>
+    <string name="processingResult">处理结果</string>
+
 
 
     <!--同城配送-->
@@ -523,59 +675,28 @@
     <!--缴纳保证金-->
     <string name="payDeposit">缴纳保证金</string>
     <string name="choicePayment">选择支付方式</string>
-    <string name="weChatPay">微信支付</string>
-    <string name="alipayPay">支付宝支付</string>
     <string name="inputAmountFull">输入充值金额</string>
     <string name="inputAmountFull1">请输入正确的充值金额</string>
 
-    <!--我的钱包-->
-
-    <string name="bill">账单</string>
-    <string name="accountBalance">账户余额（元）</string>
-    <string name="withdrawalAmount">可提现金额</string>
-    <string name="myReferralBonuses">我的推荐奖励</string>
-    <string name="automaticDepositAmount">（已自动存入余额）</string>
-    <string name="prepaidPhoneRecords">充值记录</string>
-    <string name="recharge">充值</string>
-
-
-    <!--提现-->
-    <string name="withdrawal">提现</string>
-    <string name="withdrawalAmount1">提现金额</string>
-    <string name="notHigherWithdrawalLimit">不可高于可提现额度</string>
-    <string name="notHigherWithdrawalLimit1">请输入正确的提现金额</string>
-    <string name="bankName">银行名称</string>
-    <string name="presentingBank">如农业银行，工商银行等</string>
-    <string name="presentingBank1">请输入正确的银行名称</string>
-    <string name="paymentAccount">收款账号</string>
-    <string name="promptAccount">如工商银行账号</string>
-    <string name="promptAccount1">请输入正确的收款账号</string>
-    <string name="openAccountName">开户名</string>
-    <string name="accountHolderName">开户人姓名</string>
-    <string name="accountHolderName1">请输入开户人姓名</string>
-    <string name="hintWithdrawal">*请确认以上信息无误，三个工作日之内到账</string>
-    <string name="hintWithdrawal1">提现日期每月15号—20号</string>
-    <string name="confirmSubmit">确认提交</string>
-    <string name="confirmSubmit1">确认提交申请？</string>
-    <string name="confirmSubmit2">申请已提交成功！</string>
-    <string name="cancel1">&#160;&#160;&#160;取&#160;&#160;&#160;&#160;&#160;&#160;&#160;消&#160;&#160;&#160;</string>
-    <string name="confirm">&#160;&#160;&#160;确&#160;&#160;&#160;&#160;&#160;&#160;&#160;定&#160;&#160;&#160;</string>
 
     <!--充值结果-->
     <string name="topUpResults">充值结果</string>
     <string name="payResult">支付结果</string>
     <string name="paySuccess">支付成功！</string>
     <string name="topUpSuccess">充值成功！</string>
-    <string name="topUpAmount">充值金额</string>
+
     <!--账单-->
     <string name="freight">运价：</string>
     <string name="notPaymentBill">未支付账单</string>
     <string name="paymentBill">已支付账单</string>
+
+
     <!--设置-->
     <string name="changePassword">修改密码</string>
     <string name="bannerSetting">首页轮播图设置</string>
     <string name="versionNumber">版本号</string>
     <string name="clearCache">清除缓存</string>
+    <string name="userFeedback">用户反馈</string>
     <string name="latestVersion">已是最新版本</string>
     <string name="newVersion">有新版本</string>
     <string name="updateVersion">有新版本是否更新</string>
@@ -583,6 +704,9 @@
     <string name="logOut">退出登录</string>
     <string name="showing">显示</string>
     <string name="hides">隐藏</string>
+
+    <!--用户反馈-->
+    <string name="ridiculeGiveSomeAdvice">我要吐槽或给点建议</string>
 
 
     <!--修改密码-->

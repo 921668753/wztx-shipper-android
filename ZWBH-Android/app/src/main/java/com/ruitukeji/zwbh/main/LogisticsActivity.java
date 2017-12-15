@@ -28,7 +28,7 @@ import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
 import com.ruitukeji.zwbh.main.selectvehicle.SelectVehicleActivity;
-import com.ruitukeji.zwbh.mine.aboutus.AboutUsActivity;
+import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.onlineservice.OnlineServiceActivity;
 import com.ruitukeji.zwbh.mine.personaldata.PayDepositActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;

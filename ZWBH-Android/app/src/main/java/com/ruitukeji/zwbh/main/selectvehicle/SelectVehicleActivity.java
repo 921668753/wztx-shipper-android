@@ -15,7 +15,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.entity.ConductorModelsBean;
 import com.ruitukeji.zwbh.entity.ConductorModelsBean.ResultBean.LengthBean;
 import com.ruitukeji.zwbh.entity.ConductorModelsBean.ResultBean.TypeBean;
-import com.ruitukeji.zwbh.mine.aboutus.AboutUsActivity;
+import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.myview.NoScrollGridView;

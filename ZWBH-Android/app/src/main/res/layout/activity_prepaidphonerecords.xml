@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchMatch"
     android:background="@color/background"
     android:fitsSystemWindows="true"
@@ -7,7 +8,7 @@
 
     <include layout="@layout/common_title" />
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mRefreshLayout"
         android:background="@color/background"
@@ -25,6 +26,6 @@
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-    <include layout="@layout/common_error"></include>
+    <include layout="@layout/common_error"/>
 
 </LinearLayout>

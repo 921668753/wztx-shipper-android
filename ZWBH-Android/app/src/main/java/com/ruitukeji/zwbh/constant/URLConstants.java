@@ -257,6 +257,11 @@ public class URLConstants {
     public static String PAY = APIURL + "pay";
 
     /**
+     * 提现记录
+     */
+    public static String SHOWCASHRECORD = APIURL + "pay/showCashRecord";
+
+    /**
      * 充值 支付宝支付
      */
     public static String RECHARGEBYALIPAY = APIURL + "pay/rechargeByAlipay";

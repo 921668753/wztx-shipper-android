@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen60"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        style="@style/AutoWrap"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="订单号201712060321"
+            android:textColor="@color/f2222Colors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginTop="@dimen/dimen5"
+            android:text="2017-12-12"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize12" />
+
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/WrapWrap"
+        android:paddingLeft="@dimen/dimen10"
+        android:text="@string/symbol"
+        android:textColor="@color/f2222Colors"
+        android:textSize="@dimen/textsize17"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/WrapWrap"
+        android:maxWidth="@dimen/dimen200"
+        android:paddingRight="@dimen/dimen15"
+        android:text="3000.00"
+        android:textColor="@color/f2222Colors"
+        android:textSize="@dimen/textsize17"
+        android:textStyle="bold" />
+
+</LinearLayout>

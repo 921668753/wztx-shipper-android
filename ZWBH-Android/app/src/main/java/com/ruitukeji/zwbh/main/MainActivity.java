@@ -53,7 +53,7 @@ import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.entity.UserInfoBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
-import com.ruitukeji.zwbh.mine.aboutus.AboutUsActivity;
+import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.mypublishedorder.MyPublishedGoodsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.MyWalletActivity;

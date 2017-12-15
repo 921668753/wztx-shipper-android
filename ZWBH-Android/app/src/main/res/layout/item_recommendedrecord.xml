@@ -7,13 +7,12 @@
     android:padding="@dimen/dimen10">
     <!--推荐记录-->
 
-    <cn.bingoogolapple.imageview.BGAImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
         android:id="@+id/img_user"
         android:layout_width="@dimen/dimen50"
         android:layout_height="@dimen/dimen50"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/headportrait"
-        app:bga_iv_isCircle="true" />
+        android:scaleType="fitXY"
+        android:src="@mipmap/headportrait" />
 
     <LinearLayout
         style="@style/AutoMatch"
@@ -26,7 +25,7 @@
             style="@style/MatchAuto"
             android:gravity="bottom"
             android:text="张三"
-            android:textColor="@color/textColor"
+            android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
         <TextView
@@ -41,7 +40,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_bonus"
+        android:id="@+id/tv_reward"
         style="@style/WrapMatch"
         android:gravity="center"
         android:text="奖励5元"

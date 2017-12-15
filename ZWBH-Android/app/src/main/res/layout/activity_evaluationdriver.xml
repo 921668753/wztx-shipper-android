@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:a_zhon="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".mine.myorder.orderdetails.EvaluationDriverActivity">
 
     <include layout="@layout/common_title" />
 
@@ -22,15 +25,20 @@
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize14" />
 
-        <RatingBar
-            android:id="@+id/rb_deliveryTime"
-            style="@style/roomRatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen28"
-            android:layout_marginLeft="@dimen/dimen34"
-            android:layout_marginTop="@dimen/dimen24"
-            android:numStars="5"
-            android:stepSize="1" />
+        <com.azhong.ratingbar.RatingBar
+            android:layout_width="@dimen/dimen210"
+            android:layout_height="@dimen/dimen46"
+            android:layout_marginLeft="@dimen/dimen16"
+            android:layout_marginTop="@dimen/dimen15"
+            a_zhon:clickable="true"
+            a_zhon:image_height="@dimen/dimen42"
+            a_zhon:image_padding="@dimen/dimen9"
+            a_zhon:image_width="@dimen/dimen42"
+            a_zhon:star="0"
+            a_zhon:star_count="5"
+            a_zhon:star_img="@mipmap/star1"
+            a_zhon:unstar_img="@mipmap/star" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -47,14 +55,20 @@
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize14" />
 
-        <RatingBar
-            style="@style/roomRatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dimen28"
-            android:layout_marginLeft="@dimen/dimen34"
-            android:layout_marginTop="@dimen/dimen8"
-            android:numStars="5"
-            android:stepSize="1" />
+        <com.azhong.ratingbar.RatingBar
+            android:layout_width="@dimen/dimen210"
+            android:layout_height="@dimen/dimen46"
+            android:layout_marginLeft="@dimen/dimen16"
+            a_zhon:clickable="true"
+            a_zhon:image_height="@dimen/dimen42"
+            a_zhon:image_padding="@dimen/dimen9"
+            a_zhon:image_width="@dimen/dimen42"
+            a_zhon:star="0"
+            a_zhon:star_count="5"
+            a_zhon:star_img="@mipmap/star1"
+            a_zhon:unstar_img="@mipmap/star" />
+
+
     </LinearLayout>
 
 

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchWrap"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen18"
+    android:paddingLeft="@dimen/dimen20"
+    android:paddingRight="@dimen/dimen20"
+    android:paddingTop="@dimen/dimen18">
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/complaintsTime"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/AutoWrap"
+            android:paddingLeft="@dimen/dimen30"
+            android:text="2017-12-7 16:09:56"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/complaintsAboutDriver"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            style="@style/AutoWrap"
+            android:paddingLeft="@dimen/dimen30"
+            android:text="戴志豪"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/licensePlateNumber"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            style="@style/AutoWrap"
+            android:paddingLeft="@dimen/dimen43"
+            android:text="苏E12345"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/complaintsReasons"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            style="@style/AutoWrap"
+            android:paddingLeft="@dimen/dimen30"
+            android:text="延迟"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/processingResult"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            style="@style/AutoWrap"
+            android:paddingLeft="@dimen/dimen30"
+            android:text="司机扣除信用分值"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

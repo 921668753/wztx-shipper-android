@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen105"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dimen20"
+    android:paddingRight="@dimen/dimen20">
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/invoiceType"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen29"
+            android:text="@string/VATinvoice"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/AutoWrap"
+            android:gravity="right"
+            android:text="@string/issued"
+            android:textColor="@color/c48bColors"
+            android:textSize="@dimen/textsize14" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen6"
+            android:layout_height="@dimen/dimen11"
+            android:layout_marginLeft="@dimen/dimen8"
+            android:src="@mipmap/ic_arrow" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/invoiceAmount"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen29"
+            android:maxWidth="@dimen/dimen200"
+            android:singleLine="true"
+            android:text="500000000.00"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/yuan"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/invoiceTime"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen29"
+            android:maxWidth="@dimen/dimen200"
+            android:singleLine="true"
+            android:text="2017-12-7 16:09:56"
+            android:textColor="@color/a1A1AColors"
+            android:textSize="@dimen/textsize14" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

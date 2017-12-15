@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+
+    <EditText
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="@string/ridiculeGiveSomeAdvice"
+        android:maxHeight="@dimen/dimen250"
+        android:minHeight="@dimen/dimen150"
+        android:padding="@dimen/dimen15"
+        android:textColor="@color/titletextcolors"
+        android:textColorHint="@color/cCCCCCColors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize14" />
+
+
+    <LinearLayout
+        style="@style/Match50"
+        android:layout_marginTop="@dimen/dimen15"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/phone"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+
+        <EditText
+            style="@style/MatchMatch"
+            android:layout_marginLeft="@dimen/dimen39"
+            android:layout_marginRight="@dimen/dimen15"
+            android:background="@android:color/transparent"
+            android:hint="@string/accountText"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/cDCDCDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_determine"
+        style="@style/Match45"
+        android:layout_marginLeft="@dimen/dimen15"
+        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginTop="@dimen/dimen18"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/determine"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize16" />
+
+
+</LinearLayout>

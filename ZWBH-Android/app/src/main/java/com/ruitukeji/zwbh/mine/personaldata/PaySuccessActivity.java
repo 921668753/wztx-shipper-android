@@ -13,7 +13,7 @@ import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.OrderDetailsActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.PaymentActivity;
-import com.ruitukeji.zwbh.mine.mywallet.RechargeActivity;
+import com.ruitukeji.zwbh.mine.mywallet.recharge.RechargeActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 /**

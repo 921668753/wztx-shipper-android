@@ -13,6 +13,7 @@
     <dimen name="dimen0">0dp</dimen>
     <dimen name="dimen0.5">0.5dp</dimen>
     <dimen name="dimen1">1dp</dimen>
+    <dimen name="dimen1.5">1.5dp</dimen>
     <dimen name="dimen2">2dp</dimen>
     <dimen name="dimen2.5">2.5dp</dimen>
     <dimen name="dimen3">3dp</dimen>
@@ -35,6 +36,7 @@
     <dimen name="dimen18">18dp</dimen>
     <dimen name="dimen19">19dp</dimen>
     <dimen name="dimen20">20dp</dimen>
+    <dimen name="dimen21">21dp</dimen>
     <dimen name="dimen22">22dp</dimen>
     <dimen name="dimen23">23dp</dimen>
     <dimen name="dimen24">24dp</dimen>
@@ -54,9 +56,11 @@
     <dimen name="dimen39">39dp</dimen>
     <dimen name="dimen40">40dp</dimen>
     <dimen name="dimen41">41dp</dimen>
+    <dimen name="dimen42">42dp</dimen>
     <dimen name="dimen43">43dp</dimen>
     <dimen name="dimen44">44dp</dimen>
     <dimen name="dimen45">45dp</dimen>
+    <dimen name="dimen46">46dp</dimen>
     <dimen name="dimen47">47dp</dimen>
     <dimen name="dimen48">48dp</dimen>
     <dimen name="dimen49">49dp</dimen>
@@ -70,7 +74,9 @@
     <dimen name="dimen59">59dp</dimen>
     <dimen name="dimen60">60dp</dimen>
     <dimen name="dimen61">61dp</dimen>
+    <dimen name="dimen62">62dp</dimen>
     <dimen name="dimen63">63dp</dimen>
+    <dimen name="dimen64">64dp</dimen>
     <dimen name="dimen65">65dp</dimen>
     <dimen name="dimen68">68dp</dimen>
     <dimen name="dimen70">70dp</dimen>
@@ -92,6 +98,8 @@
     <dimen name="dimen103">103dp</dimen>
     <dimen name="dimen104">104dp</dimen>
     <dimen name="dimen105">105dp</dimen>
+    <dimen name="dimen107">107dp</dimen>
+    <dimen name="dimen109">109dp</dimen>
     <dimen name="dimen110">110dp</dimen>
     <dimen name="dimen130">130dp</dimen>
     <dimen name="dimen134">134dp</dimen>
@@ -102,7 +110,9 @@
     <dimen name="dimen161">161dp</dimen>
     <dimen name="dimen178">178dp</dimen>
     <dimen name="dimen180">180dp</dimen>
+    <dimen name="dimen192">192dp</dimen>
     <dimen name="dimen200">200dp</dimen>
+    <dimen name="dimen210">210dp</dimen>
     <dimen name="dimen233">233dp</dimen>
     <dimen name="dimen250">250dp</dimen>
     <dimen name="dimen300">300dp</dimen>
@@ -118,6 +128,14 @@
     <dimen name="textsize20">20sp</dimen>
     <dimen name="textsize21">21sp</dimen>
     <dimen name="textsize22">22sp</dimen>
+    <dimen name="textsize23">23sp</dimen>
+    <dimen name="textsize24">24sp</dimen>
+    <dimen name="textsize26">26sp</dimen>
+    <dimen name="textsize33">33sp</dimen>
+    <dimen name="textsize35">35sp</dimen>
+
+
+
     <!--MIn-->
     <dimen name="titlebar_height">45dp</dimen>
     <dimen name="titlebar_lift">10dp</dimen>

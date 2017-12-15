@@ -87,6 +87,31 @@
     <color name="a1A1AColors">#1A1A1A</color>
     <color name="fAFAFAColors">#FAFAFA</color>
 
+    <!-- 异常记录-->
+    <color name="a959494Colors">#959494</color>
+
+
+
+    <!-- 开票记录-->
+    <color name="c48bColors">#30C48B</color>
+
+
+    <!-- 我的钱包-->
+    <color name="bBBBBBColors">#BBBBBB</color>
+
+    <!--设置支付密码-->
+    <color name="fEFDFDColors">#FEFDFD</color>
+    <color name="bEBEC0Colors">#BEBEC0</color>
+    <color name="e8E8EColors">#8E8E8E</color>
+
+    <!--修改支付密码-->
+    <color name="translucent_gray">#BBBBBB</color>
+
+    <!--我的银行卡-->
+    <color name="aDF6Colors">#68ADF6</color>
+
+    <!--充值-->
+    <color name="c12121olors">#121212</color>
 
 
 </resources>
