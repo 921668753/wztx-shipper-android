@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/background"
     android:fitsSystemWindows="true"
@@ -9,17 +8,317 @@
 
     <include layout="@layout/common_title" />
 
-    <TextView
-        style="@style/Match50"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/dimen15"
-        android:text="@string/receiptInformation"
-        android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize15"
-        android:textStyle="bold" />
+    <ScrollView
+        style="@style/MatchMatch"
+        android:scrollbars="none">
 
-    <TextView style="@style/DividerWidth" />
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Match50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:text="@string/receiptInformation"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15"
+                android:textStyle="bold" />
+
+            <TextView style="@style/DividerWidth" />
 
 
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen19">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/detailedAddress"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/MatchWrap"
+                    android:layout_marginLeft="@dimen/dimen43"
+                    android:text="江苏省苏州市园区新平街388号腾飞江苏省苏州市园区新平街388号腾飞"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen19"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/recipient"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen58"
+                    android:maxWidth="@dimen/dimen160"
+                    android:text="戴志豪"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen17"
+                    android:text="18362720300"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/Match50"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:text="@string/invoiceInformation"
+                android:textColor="@color/titletextcolors"
+                android:textSize="@dimen/textsize15"
+                android:textStyle="bold" />
+
+            <TextView style="@style/DividerWidth" />
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen19">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceRise"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen43"
+                    android:text="物载天下网络科技有限公司"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/taxpayerIdentificationNumber"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen13"
+                    android:text="932626262MKT"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceContent"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen43"
+                    android:maxWidth="@dimen/dimen160"
+                    android:text="货运服务费"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceAmount"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen43"
+                    android:maxWidth="@dimen/dimen233"
+                    android:text="500000.00"
+                    android:textColor="@color/announcementCloseColors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="元"
+                    android:textColor="@color/announcementCloseColors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen19"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/applyTime"
+                    android:textColor="@color/hintcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen43"
+                    android:text="2017-12-15 11:21:14"
+                    android:textColor="@color/a1A1AColors"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen65"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+
+                <LinearLayout
+                    style="@style/AutoWrap"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/MatchWrap"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="1"
+                            android:textColor="@color/titletextcolors"
+                            android:textSize="@dimen/textsize15" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="@string/anInvoice"
+                            android:textColor="@color/titletextcolors"
+                            android:textSize="@dimen/textsize15" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="12"
+                            android:textColor="@color/titletextcolors"
+                            android:textSize="@dimen/textsize15" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="@string/anOrder"
+                            android:textColor="@color/titletextcolors"
+                            android:textSize="@dimen/textsize15" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/MatchWrap"
+                        android:layout_marginTop="@dimen/dimen5"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="2017.08.20 09：00"
+                            android:textColor="@color/hintcolors"
+                            android:textSize="@dimen/textsize12" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="-"
+                            android:textColor="@color/hintcolors"
+                            android:textSize="@dimen/textsize12" />
+
+                        <TextView
+                            style="@style/WrapWrap"
+                            android:text="2017.10.20 12：00"
+                            android:textColor="@color/hintcolors"
+                            android:textSize="@dimen/textsize12" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen8"
+                    android:layout_height="@dimen/dimen14"
+                    android:src="@mipmap/ic_arrow" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

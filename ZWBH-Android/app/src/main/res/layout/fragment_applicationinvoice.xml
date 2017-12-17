@@ -1,195 +1,483 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/background"
-    android:scrollbars="none">
+    android:orientation="vertical">
+
+    <ScrollView
+        style="@style/MatchAuto"
+        android:scrollbars="none">
+
+        <LinearLayout
+            style="@style/MatchWrap"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/Match45"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceType"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen26"
+                    android:layout_height="@dimen/dimen26"
+                    android:layout_marginLeft="@dimen/dimen41"
+                    android:padding="@dimen/dimen5"
+                    android:src="@mipmap/ic_checkbox_select" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/commercialInvoice"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen26"
+                    android:layout_height="@dimen/dimen26"
+                    android:layout_marginLeft="@dimen/dimen14"
+                    android:padding="@dimen/dimen5"
+                    android:src="@mipmap/ic_checkbox_unselect" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/specialVATInvoices"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceAmount1"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen19"
+                    android:text="20000"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match45"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/headType"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen26"
+                    android:layout_height="@dimen/dimen26"
+                    android:layout_marginLeft="@dimen/dimen41"
+                    android:padding="@dimen/dimen5"
+                    android:src="@mipmap/ic_checkbox_select" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/personal"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen26"
+                    android:layout_height="@dimen/dimen26"
+                    android:layout_marginLeft="@dimen/dimen43"
+                    android:padding="@dimen/dimen5"
+                    android:src="@mipmap/ic_checkbox_unselect" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/company"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceRise"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/pleaseFillOut"
+                    android:paddingLeft="@dimen/dimen46"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/ein"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:digits="@string/alphanumeric"
+                    android:hint="@string/fillTaxpayerIdentificationNumber"
+                    android:paddingLeft="@dimen/dimen76"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/invoiceContent"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+                
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/pleaseFillOut"
+                    android:paddingLeft="@dimen/dimen46"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/addressTelephoneNumber"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/fillAddressTelephoneNumber"
+                    android:paddingLeft="@dimen/dimen31"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/openingBankAccount"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/fillOpeningBankAccount"
+                    android:paddingLeft="@dimen/dimen15"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/Match45"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/recipient"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/pleaseFillOut"
+                    android:paddingLeft="@dimen/dimen61"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/contactPhoneNumber"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/pleaseFillOut"
+                    android:paddingLeft="@dimen/dimen46"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/inArea"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="@string/pleaseSelect"
+                    android:paddingLeft="@dimen/dimen46"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textSize="@dimen/textsize15" />
+
+
+                <ImageView
+                    style="@style/ImageArrow"
+                    android:src="@mipmap/ic_arrow" />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/commom_dividerwidth1" />
+
+            <LinearLayout
+                style="@style/Match45"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen15"
+                android:paddingRight="@dimen/dimen15">
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/detailedAddress"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <EditText
+                    style="@style/AutoMatch"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/pleaseFillOut"
+                    android:paddingLeft="@dimen/dimen46"
+                    android:textColor="@color/titletextcolors"
+                    android:textColorHint="@color/cDCDCDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
+                    android:textSize="@dimen/textsize15" />
+
+            </LinearLayout>
+
+
+            <TextView
+                style="@style/Match45"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen15"
+                android:text="@string/allInvoicesPaidDelivery"
+                android:textColor="@color/hintcolors"
+                android:textSize="@dimen/textsize12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen40"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen4">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen40"
+                    android:layout_height="@dimen/dimen40"
+                    android:padding="@dimen/dimen11"
+                    android:src="@mipmap/ic_checkbox_unselect" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/generalElection"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+
+            <TextView style="@style/DividerWidth" />
+
+            <com.ruitukeji.zwbh.utils.myview.ChildLiistView
+                android:id="@+id/lv_applicationInvoice"
+                style="@style/MatchWrap"
+                android:background="@color/white"
+                android:divider="@color/e5E5E5olors"
+                android:dividerHeight="@dimen/dimen0.5"
+                android:overScrollMode="never"
+                android:paddingBottom="@dimen/dimen19"
+                android:paddingLeft="@dimen/dimen15"
+                android:scrollbars="none"
+                tools:listitem="@layout/item_applicationinvoice" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <TextView style="@style/DividerWidth" />
+
 
     <LinearLayout
-        style="@style/MatchWrap"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen65"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            style="@style/Match45"
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:layout_marginRight="@dimen/dimen15"
             android:layout_marginTop="@dimen/dimen10"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
-
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/invoiceType"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-
-            <ImageView
-                android:layout_width="@dimen/dimen26"
-                android:layout_height="@dimen/dimen26"
-                android:layout_marginLeft="@dimen/dimen41"
-                android:padding="@dimen/dimen5"
-                android:src="@mipmap/ic_checkbox_select" />
-
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/commercialInvoice"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-            <ImageView
-                android:layout_width="@dimen/dimen26"
-                android:layout_height="@dimen/dimen26"
-                android:layout_marginLeft="@dimen/dimen14"
-                android:padding="@dimen/dimen5"
-                android:src="@mipmap/ic_checkbox_unselect" />
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/specialVATInvoices"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-        </LinearLayout>
-
-
-        <include layout="@layout/commom_dividerwidth1" />
-
-
-        <LinearLayout
-            style="@style/Match45"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
-
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/invoiceAmount1"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-
-            <TextView
-                style="@style/WrapWrap"
-                android:layout_marginLeft="@dimen/dimen19"
-                android:text="20000"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            style="@style/Match45"
-            android:layout_marginTop="@dimen/dimen10"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
-
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/headType"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-
-            <ImageView
-                android:layout_width="@dimen/dimen26"
-                android:layout_height="@dimen/dimen26"
-                android:layout_marginLeft="@dimen/dimen41"
-                android:padding="@dimen/dimen5"
-                android:src="@mipmap/ic_checkbox_select" />
-
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/personal"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-            <ImageView
-                android:layout_width="@dimen/dimen26"
-                android:layout_height="@dimen/dimen26"
-                android:layout_marginLeft="@dimen/dimen43"
-                android:padding="@dimen/dimen5"
-                android:src="@mipmap/ic_checkbox_unselect" />
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/company"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-        </LinearLayout>
-
-        <include layout="@layout/commom_dividerwidth1" />
-
-        <LinearLayout
-            style="@style/Match45"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/invoiceRise"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-
-            <EditText
-                style="@style/AutoMatch"
-                android:background="@android:color/transparent"
-                android:hint="@string/pleaseFillOut"
-                android:paddingLeft="@dimen/dimen46"
-                android:textColor="@color/titletextcolors"
-                android:textColorHint="@color/cDCDCDColors"
-                android:textSize="@dimen/textsize15" />
-
-
-        </LinearLayout>
-
-        <include layout="@layout/commom_dividerwidth1" />
-
-        <LinearLayout
-            style="@style/Match45"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen15"
-            android:paddingRight="@dimen/dimen15">
-
-            <TextView
-                style="@style/WrapWrap"
-                android:text="@string/invoiceContent"
-                android:textColor="@color/titletextcolors"
-                android:textSize="@dimen/textsize15" />
-
-
-            <EditText
-                style="@style/AutoMatch"
-                android:background="@android:color/transparent"
-                android:hint="@string/pleaseFillOut"
-                android:paddingLeft="@dimen/dimen46"
-                android:textColor="@color/titletextcolors"
-                android:textColorHint="@color/cDCDCDColors"
-                android:textSize="@dimen/textsize15" />
-
-
-        </LinearLayout>
+            android:background="@drawable/shape_login"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize16" />
 
     </LinearLayout>
 
-
-</ScrollView>
+</LinearLayout>

@@ -42,7 +42,7 @@ public class RecommendedRecordViewAdapter extends BGAAdapterViewAdapter<ListBean
         /**
          * 奖励
          */
-        viewHolderHelper.setText(R.id.tv_bonus, "奖励" + listBean.getBonus() + "元");
+        viewHolderHelper.setText(R.id.tv_reward, listBean.getBonus());
 
         /**
          * 头像

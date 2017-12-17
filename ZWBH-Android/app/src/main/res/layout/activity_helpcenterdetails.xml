@@ -31,7 +31,7 @@
 
         <TextView style="@style/DividerWidth" />
 
-        <com.ruitukeji.zwbs.utils.myview.WebViewLayout
+        <com.ruitukeji.zwbh.utils.myview.WebViewLayout
             android:id="@+id/web_viewlayout"
             style="@style/MatchWrap"
             android:paddingBottom="@dimen/dimen27"

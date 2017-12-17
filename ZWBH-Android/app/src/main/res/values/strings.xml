@@ -475,6 +475,15 @@
     <string name="company">公司</string>
     <string name="invoiceRise">发票抬头</string>
     <string name="invoiceContent">发票内容</string>
+    <string name="recipient">收件人</string>
+    <string name="detailedAddress">详细地址</string>
+    <string name="allInvoicesPaidDelivery">所有发票寄送均为货到付款 请谅解</string>
+    <string name="ein">税号</string>
+    <string name="fillTaxpayerIdentificationNumber">请填写纳税人识别号</string>
+    <string name="addressTelephoneNumber">地址和电话</string>
+    <string name="fillAddressTelephoneNumber">请填写地址和电话</string>
+    <string name="openingBankAccount">开户行和账号</string>
+    <string name="fillOpeningBankAccount">请填写开户行和账号</string>
 
 
     <!--开票记录-->
@@ -485,9 +494,23 @@
     <string name="rejected">已拒绝</string>
     <string name="pendingApproval">待审核</string>
 
+
+
     <!--开票详情-->
     <string name="billingDetails">开票详情</string>
     <string name="receiptInformation">收件信息</string>
+    <string name="invoiceInformation">发票信息</string>
+    <string name="taxpayerIdentificationNumber">纳税人识别号</string>
+    <string name="applyTime">申请时间</string>
+    <string name="anInvoice">张发票，含</string>
+    <string name="anOrder">个订单</string>
+
+
+    <!--所含订单-->
+    <string name="containsOrder">所含订单</string>
+
+
+
 
 
     <!--异常记录-->
