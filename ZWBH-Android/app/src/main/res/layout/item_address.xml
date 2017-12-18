@@ -14,12 +14,14 @@
         android:paddingTop="@dimen/dimen14">
 
         <TextView
+            android:id="@+id/tv_companyName"
             style="@style/AutoWrap"
             android:text="物载天下网络科技有限公司"
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
         <TextView
+            android:id="@+id/tv_phone"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="133****2067"
@@ -38,12 +40,14 @@
         android:paddingRight="@dimen/dimen15">
 
         <TextView
+            android:id="@+id/tv_address"
             style="@style/AutoWrap"
             android:text="江苏省苏州市工业园区娄葑镇腾飞创新园"
             android:textColor="@color/hintcolors"
             android:textSize="@dimen/textsize13" />
 
         <TextView
+            android:id="@+id/tv_name"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="戴志豪"
@@ -61,6 +65,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/img_setDefaultAddress"
             android:layout_width="@dimen/dimen39"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dimen3"
@@ -80,6 +85,7 @@
         <TextView style="@style/AutoWrap" />
 
         <LinearLayout
+            android:id="@+id/ll_edit"
             style="@style/WrapWrap"
             android:orientation="horizontal"
             android:padding="@dimen/dimen5">
@@ -99,6 +105,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_delete"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:layout_marginRight="@dimen/dimen10"

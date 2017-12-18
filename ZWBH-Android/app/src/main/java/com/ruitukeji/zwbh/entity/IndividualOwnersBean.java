@@ -4,7 +4,7 @@ package com.ruitukeji.zwbh.entity;
  * Created by Admin on 2017/7/11.
  */
 
-public class PersonalCertificateBean extends BaseResult<PersonalCertificateBean.ResultBean> {
+public class IndividualOwnersBean extends BaseResult<IndividualOwnersBean.ResultBean> {
 
 
     public class ResultBean {

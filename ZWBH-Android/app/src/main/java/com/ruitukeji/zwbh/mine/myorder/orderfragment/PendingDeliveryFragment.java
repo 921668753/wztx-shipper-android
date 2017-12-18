@@ -1,39 +1,47 @@
-package com.ruitukeji.zwbh.mine.recommendcourteous;
+package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.RecommendedRecordViewAdapter;
-import com.ruitukeji.zwbh.application.MyApplication;
-import com.ruitukeji.zwbh.common.BaseActivity;
+import com.ruitukeji.zwbh.adapter.OrderViewAdapter;
+import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.RecommendedRecordBean;
-import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
- * 推荐记录
- * Created by Administrator on 2017/2/13.
+ * 待发货
+ * Created by Administrator on 2017/2/16.
  */
 
-public class RecommendedRecordActivity extends BaseActivity implements RecommendedRecordContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class PendingDeliveryFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    private RecommendedRecordViewAdapter mAdapter;
+    private OrderViewAdapter mAdapter;
 
-    @BindView(id = R.id.lv_recommendedrecord)
-    private ListView lv_recommendedrecord;
+    private MyOrderActivity aty;
+
+    @BindView(id = R.id.lv_order)
+    private ListView lv_order;
+
 
     /**
      * 错误提示页
@@ -54,29 +62,40 @@ public class RecommendedRecordActivity extends BaseActivity implements Recommend
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+    /**
+     * 订单状态（all全部状态，quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
+     */
+    private String type = "quoted";
 
     @Override
-    public void setRootView() {
-        setContentView(R.layout.activity_recommendedrecord);
+    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        aty = (MyOrderActivity) getActivity();
+        return View.inflate(aty, R.layout.fragment_allorder, null);
     }
 
     @Override
-    public void initData() {
+    protected void initData() {
         super.initData();
-        mPresenter = new RecommendedRecordPresenter(this);
-        mAdapter = new RecommendedRecordViewAdapter(this);
+        mPresenter = new OrderPresenter(this);
+        mAdapter = new OrderViewAdapter(getActivity());
     }
 
     @Override
-    public void initWidget() {
-        super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.recommendedRecord), true, R.id.titlebar);
-        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
-        lv_recommendedrecord.setAdapter(mAdapter);
-        lv_recommendedrecord.setOnItemClickListener(this);
-        showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-        ((RecommendedRecordContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, getActivity(), true);
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
+        lv_order.setAdapter(mAdapter);
+        lv_order.setOnItemClickListener(this);
+    }
 
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "SendGoodsFragment");
+        Intent intent = new Intent(aty, OrderDetailsActivity.class);
+        intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+        aty.showActivity(aty, intent);
     }
 
     @Override
@@ -84,7 +103,7 @@ public class RecommendedRecordActivity extends BaseActivity implements Recommend
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((RecommendedRecordContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
     }
 
     @Override
@@ -99,7 +118,7 @@ public class RecommendedRecordActivity extends BaseActivity implements Recommend
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((RecommendedRecordContract.Presenter) mPresenter).getRecommendedRecord(mMorePageNumber);
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         return true;
     }
 
@@ -117,29 +136,24 @@ public class RecommendedRecordActivity extends BaseActivity implements Recommend
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        // ViewInject.toast("1");
-    }
-
-    @Override
     public void getSuccess(String s) {
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
+        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
+        mMorePageNumber = orderBean.getResult().getPage();
+        totalPageNumber = orderBean.getResult().getPageTotal();
+        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
+            mAdapter.addNewData(orderBean.getResult().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
+            mAdapter.addMoreData(orderBean.getResult().getList());
         }
         dismissLoadingDialog();
     }
@@ -160,8 +174,16 @@ public class RecommendedRecordActivity extends BaseActivity implements Recommend
     }
 
     @Override
-    public void setPresenter(RecommendedRecordContract.Presenter presenter) {
+    public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    /**
+     * 当通过changeFragment()显示时会被调用(类似于onResume)
+     */
+    @Override
+    public void onChange() {
+        super.onChange();
     }
 
     @Override
@@ -170,5 +192,5 @@ public class RecommendedRecordActivity extends BaseActivity implements Recommend
         mAdapter.clear();
         mAdapter = null;
     }
-
 }
+

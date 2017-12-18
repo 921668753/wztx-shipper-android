@@ -20,6 +20,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_complaintsTime"
             style="@style/AutoWrap"
             android:paddingLeft="@dimen/dimen30"
             android:text="2017-12-7 16:09:56"
@@ -34,21 +35,19 @@
         android:layout_marginTop="@dimen/dimen10"
         android:orientation="horizontal">
 
-
         <TextView
             style="@style/WrapWrap"
             android:text="@string/complaintsAboutDriver"
             android:textColor="@color/hintcolors"
             android:textSize="@dimen/textsize14" />
 
-
         <TextView
+            android:id="@+id/tv_complaintsAboutDriver"
             style="@style/AutoWrap"
             android:paddingLeft="@dimen/dimen30"
             android:text="戴志豪"
             android:textColor="@color/a1A1AColors"
             android:textSize="@dimen/textsize14" />
-
 
     </LinearLayout>
 
@@ -56,7 +55,6 @@
         style="@style/MatchWrap"
         android:layout_marginTop="@dimen/dimen10"
         android:orientation="horizontal">
-
 
         <TextView
             style="@style/WrapWrap"
@@ -64,14 +62,13 @@
             android:textColor="@color/hintcolors"
             android:textSize="@dimen/textsize14" />
 
-
         <TextView
+            android:id="@+id/tv_licensePlateNumber"
             style="@style/AutoWrap"
             android:paddingLeft="@dimen/dimen43"
             android:text="苏E12345"
             android:textColor="@color/a1A1AColors"
             android:textSize="@dimen/textsize14" />
-
 
     </LinearLayout>
 
@@ -79,7 +76,6 @@
         style="@style/MatchWrap"
         android:layout_marginTop="@dimen/dimen10"
         android:orientation="horizontal">
-
 
         <TextView
             style="@style/WrapWrap"
@@ -87,14 +83,13 @@
             android:textColor="@color/hintcolors"
             android:textSize="@dimen/textsize14" />
 
-
         <TextView
+            android:id="@+id/tv_complaintsReasons"
             style="@style/AutoWrap"
             android:paddingLeft="@dimen/dimen30"
             android:text="延迟"
             android:textColor="@color/a1A1AColors"
             android:textSize="@dimen/textsize14" />
-
 
     </LinearLayout>
 
@@ -103,21 +98,19 @@
         android:layout_marginTop="@dimen/dimen10"
         android:orientation="horizontal">
 
-
         <TextView
             style="@style/WrapWrap"
             android:text="@string/processingResult"
             android:textColor="@color/hintcolors"
             android:textSize="@dimen/textsize14" />
 
-
         <TextView
+            android:id="@+id/tv_processingResult"
             style="@style/AutoWrap"
             android:paddingLeft="@dimen/dimen30"
             android:text="司机扣除信用分值"
             android:textColor="@color/a1A1AColors"
             android:textSize="@dimen/textsize14" />
-
 
     </LinearLayout>
 

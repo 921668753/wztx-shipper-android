@@ -14,10 +14,12 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_deliveryAddress"
             style="@style/AutoMatch"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_deliveryAddress"
                 style="@style/MatchAuto"
                 android:gravity="center"
                 android:text="@string/deliveryAddress"
@@ -25,6 +27,7 @@
                 android:textSize="@dimen/textsize15" />
 
             <TextView
+                android:id="@+id/tv_deliveryAddress1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen1.5"
                 android:layout_marginLeft="@dimen/dimen55"
@@ -34,10 +37,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_shippingAddress"
             style="@style/AutoMatch"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_shippingAddress"
                 style="@style/MatchAuto"
                 android:gravity="center"
                 android:text="@string/shippingAddress"
@@ -45,6 +50,7 @@
                 android:textSize="@dimen/textsize15" />
 
             <TextView
+                android:id="@+id/tv_shippingAddress1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen1.5"
                 android:layout_marginLeft="@dimen/dimen55"

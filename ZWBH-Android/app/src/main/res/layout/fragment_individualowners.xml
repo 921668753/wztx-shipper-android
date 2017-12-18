@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_unauthorized"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen35"
         android:background="@color/fDF0C8Colors"
@@ -45,7 +46,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <EditText
-                    android:id="@+id/et_name"
+                    android:id="@+id/et_userName"
                     style="@style/MatchMatch"
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
@@ -54,6 +55,7 @@
                     android:paddingRight="@dimen/dimen15"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/c7C7CDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize15" />
             </LinearLayout>
 
@@ -74,6 +76,7 @@
 
 
                 <ImageView
+                    android:id="@+id/img_man"
                     android:layout_width="@dimen/dimen40"
                     android:layout_height="@dimen/dimen40"
                     android:layout_marginLeft="@dimen/dimen93"
@@ -87,6 +90,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
+                    android:id="@+id/img_woman"
                     android:layout_width="@dimen/dimen40"
                     android:layout_height="@dimen/dimen40"
                     android:layout_marginLeft="@dimen/dimen37"
@@ -127,6 +131,7 @@
                     android:paddingRight="@dimen/dimen15"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/c7C7CDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize15" />
             </LinearLayout>
 
@@ -150,13 +155,16 @@
                     android:id="@+id/tv_userPhone"
                     style="@style/MatchMatch"
                     android:background="@android:color/transparent"
+                    android:digits="0123456789"
                     android:gravity="center_vertical"
                     android:hint="@string/pleaseFillOut"
                     android:inputType="phone"
+                    android:maxLength="11"
                     android:paddingLeft="@dimen/dimen88"
                     android:paddingRight="@dimen/dimen15"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/c7C7CDColors"
+                    android:textCursorDrawable="@drawable/shape_cursor"
                     android:textSize="@dimen/textsize15" />
             </LinearLayout>
 

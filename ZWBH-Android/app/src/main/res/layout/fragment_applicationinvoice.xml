@@ -367,7 +367,6 @@
                     android:textColorHint="@color/cDCDCDColors"
                     android:textSize="@dimen/textsize15" />
 
-
                 <ImageView
                     style="@style/ImageArrow"
                     android:src="@mipmap/ic_arrow" />

@@ -13,12 +13,14 @@
         android:paddingTop="@dimen/dimen14">
 
         <TextView
+            android:id="@+id/tv_name"
             style="@style/AutoWrap"
             android:text="戴师傅"
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
         <TextView
+            android:id="@+id/tv_phone"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="133****2067"
@@ -37,12 +39,14 @@
         android:paddingRight="@dimen/dimen15">
 
         <TextView
+            android:id="@+id/tv_licensePlateNumber"
             style="@style/AutoWrap"
             android:text="苏EA5670"
             android:textColor="@color/hintcolors"
             android:textSize="@dimen/textsize12" />
 
         <TextView
+            android:id="@+id/tv_conductorModels"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="4.2米/厢式货车"
@@ -62,16 +66,19 @@
         <TextView style="@style/AutoWrap" />
 
         <LinearLayout
+            android:id="@+id/ll_joinBlacklist"
             style="@style/WrapWrap"
             android:orientation="horizontal"
             android:padding="@dimen/dimen5">
 
             <ImageView
+                android:id="@+id/img_join"
                 android:layout_width="@dimen/dimen17"
                 android:layout_height="@dimen/dimen17"
                 android:src="@mipmap/icon_join" />
 
             <TextView
+                android:id="@+id/tv_joinBlacklist"
                 style="@style/WrapWrap"
                 android:layout_marginLeft="@dimen/dimen5"
                 android:text="@string/joinBlacklist"
@@ -81,6 +88,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_delete"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen10"
             android:layout_marginRight="@dimen/dimen10"

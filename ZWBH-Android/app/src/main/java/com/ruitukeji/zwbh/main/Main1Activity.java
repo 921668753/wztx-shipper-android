@@ -47,12 +47,11 @@ import com.ruitukeji.zwbh.entity.HomeBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.entity.UserInfoBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
-import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.mypublishedorder.MyPublishedGoodsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.MyWalletActivity;
 import com.ruitukeji.zwbh.mine.personaldata.PersonalDataActivity;
-import com.ruitukeji.zwbh.mine.recommendcourteous.RecommendCourteousActivity;
+import com.ruitukeji.zwbh.mine.invitefriends.SharePoliteActivity;
 import com.ruitukeji.zwbh.mine.setting.SettingsActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -564,7 +563,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         } else if (flag == 9) {
             showActivity(aty, MyOrderActivity.class);
         } else if (flag == 10) {
-            showActivity(aty, RecommendCourteousActivity.class);
+            showActivity(aty, SharePoliteActivity.class);
         } else if (flag == 11) {
             showActivity(aty, SettingsActivity.class);
         } else if (flag == 12) {

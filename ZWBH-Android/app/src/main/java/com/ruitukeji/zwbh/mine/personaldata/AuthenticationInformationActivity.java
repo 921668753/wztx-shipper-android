@@ -17,11 +17,10 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ImagePreviewNoDelActivity;
-import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.CompanyAuthInfoBean;
-import com.ruitukeji.zwbh.entity.PersonalCertificateBean;
+import com.ruitukeji.zwbh.entity.CompanyOwnerBean;
+import com.ruitukeji.zwbh.entity.IndividualOwnersBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.myview.ChildLiistView;
@@ -139,13 +138,13 @@ public class AuthenticationInformationActivity extends BaseActivity implements A
     @Override
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
-            PersonalCertificateBean personalCertificateBean = (PersonalCertificateBean) JsonUtil.getInstance().json2Obj(s, PersonalCertificateBean.class);
-            tv_realName.setText(personalCertificateBean.getResult().getReal_name());
-            tv_bindingMobilePhone.setText(personalCertificateBean.getResult().getPhone());
-            tv_idNumber.setText(personalCertificateBean.getResult().getIdentity());
-            if (personalCertificateBean.getResult().getSex() == 1) {
+            IndividualOwnersBean individualOwnersBean = (IndividualOwnersBean) JsonUtil.getInstance().json2Obj(s, IndividualOwnersBean.class);
+            tv_realName.setText(individualOwnersBean.getResult().getReal_name());
+            tv_bindingMobilePhone.setText(individualOwnersBean.getResult().getPhone());
+            tv_idNumber.setText(individualOwnersBean.getResult().getIdentity());
+            if (individualOwnersBean.getResult().getSex() == 1) {
                 tv_sex.setText(getString(R.string.man));
-            } else if (personalCertificateBean.getResult().getSex() == 2) {
+            } else if (individualOwnersBean.getResult().getSex() == 2) {
                 tv_sex.setText(getString(R.string.woman));
             } else {
                 tv_sex.setText(getString(R.string.unknown));
@@ -153,37 +152,37 @@ public class AuthenticationInformationActivity extends BaseActivity implements A
             images.clear();
             imageViewAdapter.clear();
             ImageItem imageItem = new ImageItem();
-            imageItem.path = personalCertificateBean.getResult().getFront_pic();
+            imageItem.path = individualOwnersBean.getResult().getFront_pic();
             images.add(imageItem);
             ImageItem imageItem1 = new ImageItem();
-            imageItem1.path = personalCertificateBean.getResult().getBack_pic();
+            imageItem1.path = individualOwnersBean.getResult().getBack_pic();
             images.add(imageItem1);
             imageViewAdapter.addMoreData(images);
         } else if (flag == 1) {
-            CompanyAuthInfoBean companyAuthInfoBean = (CompanyAuthInfoBean) JsonUtil.getInstance().json2Obj(s, CompanyAuthInfoBean.class);
-            tv_companyName.setText(companyAuthInfoBean.getResult().getCom_name());
-            tv_registrationNumber.setText(companyAuthInfoBean.getResult().getCom_buss_num());
-            tv_legalPersonName.setText(companyAuthInfoBean.getResult().getLaw_person());
-            tv_legalPersonIdNumber.setText(companyAuthInfoBean.getResult().getLaw_identity());
-            tv_phoneNumber.setText(companyAuthInfoBean.getResult().getCom_phone());
-            tv_address.setText(companyAuthInfoBean.getResult().getAddress());
-            tv_operationIdNumber.setText(companyAuthInfoBean.getResult().getIdentity());
+            CompanyOwnerBean companyOwnerBean = (CompanyOwnerBean) JsonUtil.getInstance().json2Obj(s, CompanyOwnerBean.class);
+            tv_companyName.setText(companyOwnerBean.getResult().getCom_name());
+            tv_registrationNumber.setText(companyOwnerBean.getResult().getCom_buss_num());
+            tv_legalPersonName.setText(companyOwnerBean.getResult().getLaw_person());
+            tv_legalPersonIdNumber.setText(companyOwnerBean.getResult().getLaw_identity());
+            tv_phoneNumber.setText(companyOwnerBean.getResult().getCom_phone());
+            tv_address.setText(companyOwnerBean.getResult().getAddress());
+            tv_operationIdNumber.setText(companyOwnerBean.getResult().getIdentity());
             images.clear();
             imageViewAdapter.clear();
             ImageItem imageItem = new ImageItem();
-            imageItem.path = companyAuthInfoBean.getResult().getLaw_front_pic();
+            imageItem.path = companyOwnerBean.getResult().getLaw_front_pic();
             images.add(imageItem);
             ImageItem imageItem1 = new ImageItem();
-            imageItem1.path = companyAuthInfoBean.getResult().getLaw_back_pic();
+            imageItem1.path = companyOwnerBean.getResult().getLaw_back_pic();
             images.add(imageItem1);
             ImageItem imageItem2 = new ImageItem();
-            imageItem2.path = companyAuthInfoBean.getResult().getBuss_pic();
+            imageItem2.path = companyOwnerBean.getResult().getBuss_pic();
             images.add(imageItem2);
             ImageItem imageItem3 = new ImageItem();
-            imageItem3.path = companyAuthInfoBean.getResult().getFront_pic();
+            imageItem3.path = companyOwnerBean.getResult().getFront_pic();
             images.add(imageItem3);
             ImageItem imageItem4 = new ImageItem();
-            imageItem4.path = companyAuthInfoBean.getResult().getBack_pic();
+            imageItem4.path = companyOwnerBean.getResult().getBack_pic();
             images.add(imageItem4);
             imageViewAdapter.addMoreData(images);
         }

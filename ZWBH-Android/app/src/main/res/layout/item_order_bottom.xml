@@ -11,6 +11,17 @@
         android:layout_marginRight="@dimen/dimen15"
         android:background="@drawable/shape_cancelorder"
         android:gravity="center"
+        android:text="@string/checkAbnormal"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_cancelorder"
+        android:gravity="center"
         android:text="@string/cancelOrder1"
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize13" />
@@ -26,16 +37,6 @@
         android:textSize="@dimen/textsize13"
         android:visibility="gone" />
 
-    <TextView
-        android:layout_width="@dimen/dimen86"
-        android:layout_height="@dimen/dimen32"
-        android:layout_marginRight="@dimen/dimen15"
-        android:background="@drawable/shape_cancelorder"
-        android:gravity="center"
-        android:text="@string/checkAbnormal"
-        android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize13"
-        android:visibility="gone" />
 
     <TextView
         android:layout_width="@dimen/dimen86"
@@ -70,6 +71,5 @@
         android:textColor="@color/white"
         android:textSize="@dimen/textsize13"
         android:visibility="gone" />
-
 
 </LinearLayout>

@@ -333,6 +333,7 @@
     <string name="systemSettings">系统设置</string>
     <string name="online_service">在线客服</string>
     <string name="rechargeWithdrawal">充值、提现</string>
+    <string name="sharePolite">分享有礼</string>
     <string name="recommend_courteous">推荐有礼</string>
     <string name="about_us">关于我们</string>
     <string name="settings">设置</string>
@@ -346,12 +347,14 @@
     <!--个人中心   个人货主-->
     <string name="basicInformation">基本信息</string>
     <string name="validityIdentityCard">身份证有效期</string>
+    <string name="aboveCurrentTime">有效日期应大于当前时间</string>
     <string name="faceIdentityCard">身份证正面</string>
     <string name="uploadYourIdCard">请上传清晰的身份证正面照片</string>
     <string name="IdCard">身份证反面</string>
     <string name="uploadClearYourIdCard">请上传清晰的身份证反面照片</string>
     <string name="sampleDiagram">示例图</string>
     <string name="uploudHoldingIdPhoto">请上传清的手持照片</string>
+
 
     <!--个人中心   公司货主-->
     <string name="enterpriseInformation">企业信息</string>

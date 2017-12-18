@@ -11,7 +11,7 @@ import com.ruitukeji.zwbh.entity.MyWalletBean;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.PrepaidPhoneRecordsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.RechargeActivity;
 import com.ruitukeji.zwbh.mine.mywallet.withdrawal.WithdrawalActivity;
-import com.ruitukeji.zwbh.mine.recommendcourteous.RecommendedRecordActivity;
+import com.ruitukeji.zwbh.mine.invitefriends.RecommendedRecordActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;

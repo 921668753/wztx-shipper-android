@@ -566,7 +566,6 @@
                     android:textSize="@dimen/textsize15" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/ll_totalFreight"
                 style="@style/Match44"

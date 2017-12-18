@@ -16,7 +16,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.CompanyAuthInfoBean;
+import com.ruitukeji.zwbh.entity.CompanyOwnerBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
@@ -157,25 +157,25 @@ public class EnterpriseInformationActivity extends BaseActivity implements EasyP
         if (flag == 0) {
             choicePhotoWrapper();
         } else if (flag == 1) {
-            CompanyAuthInfoBean companyAuthInfoBean = (CompanyAuthInfoBean) JsonUtil.getInstance().json2Obj(s, CompanyAuthInfoBean.class);
-            et_companyName.setText(companyAuthInfoBean.getResult().getCom_name());
-            et_registrationNumber.setText(companyAuthInfoBean.getResult().getCom_buss_num());
-            et_legalPersonName.setText(companyAuthInfoBean.getResult().getLaw_person());
-            et_legalPersonIdNumber.setText(companyAuthInfoBean.getResult().getLaw_identity());
-            et_phoneNumber.setText(companyAuthInfoBean.getResult().getCom_phone());
-            et_address.setText(companyAuthInfoBean.getResult().getAddress());
-            et_accountName.setText(companyAuthInfoBean.getResult().getDeposit_name());
-            et_openingBank.setText(companyAuthInfoBean.getResult().getBank());
-            et_settlementAccount.setText(companyAuthInfoBean.getResult().getAccount());
+            CompanyOwnerBean companyOwnerBean = (CompanyOwnerBean) JsonUtil.getInstance().json2Obj(s, CompanyOwnerBean.class);
+            et_companyName.setText(companyOwnerBean.getResult().getCom_name());
+            et_registrationNumber.setText(companyOwnerBean.getResult().getCom_buss_num());
+            et_legalPersonName.setText(companyOwnerBean.getResult().getLaw_person());
+            et_legalPersonIdNumber.setText(companyOwnerBean.getResult().getLaw_identity());
+            et_phoneNumber.setText(companyOwnerBean.getResult().getCom_phone());
+            et_address.setText(companyOwnerBean.getResult().getAddress());
+            et_accountName.setText(companyOwnerBean.getResult().getDeposit_name());
+            et_openingBank.setText(companyOwnerBean.getResult().getBank());
+            et_settlementAccount.setText(companyOwnerBean.getResult().getAccount());
 
-            hold_pic = companyAuthInfoBean.getResult().getLaw_hold_pic();
-            front_pic = companyAuthInfoBean.getResult().getLaw_front_pic();
-            back_pic = companyAuthInfoBean.getResult().getLaw_back_pic();
-            sp_identity = companyAuthInfoBean.getResult().getIdentity();
-            sp_hold_pic = companyAuthInfoBean.getResult().getHold_pic();
-            sp_front_pic = companyAuthInfoBean.getResult().getFront_pic();
-            sp_back_pic = companyAuthInfoBean.getResult().getBack_pic();
-            buss_pic = companyAuthInfoBean.getResult().getBuss_pic();
+            hold_pic = companyOwnerBean.getResult().getLaw_hold_pic();
+            front_pic = companyOwnerBean.getResult().getLaw_front_pic();
+            back_pic = companyOwnerBean.getResult().getLaw_back_pic();
+            sp_identity = companyOwnerBean.getResult().getIdentity();
+            sp_hold_pic = companyOwnerBean.getResult().getHold_pic();
+            sp_front_pic = companyOwnerBean.getResult().getFront_pic();
+            sp_back_pic = companyOwnerBean.getResult().getBack_pic();
+            buss_pic = companyOwnerBean.getResult().getBuss_pic();
         }
         dismissLoadingDialog();
     }

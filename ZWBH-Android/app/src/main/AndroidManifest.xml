@@ -224,12 +224,12 @@
 
         <!--推荐有礼-->
         <activity
-            android:name=".mine.recommendcourteous.RecommendCourteousActivity"
+            android:name=".mine.invitefriends.SharePoliteActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--推荐记录-->
         <activity
-            android:name=".mine.recommendcourteous.RecommendedRecordActivity"
+            android:name=".mine.invitefriends.RecommendedRecordActivity"
             android:screenOrientation="portrait"></activity>
 
         <!--关于我们-->

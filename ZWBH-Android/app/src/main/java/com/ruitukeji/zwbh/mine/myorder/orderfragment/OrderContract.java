@@ -2,7 +2,6 @@ package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
-import com.ruitukeji.zwbh.mine.recommendcourteous.RecommendedRecordContract;
 
 /**
  * Created by Administrator on 2017/2/13.

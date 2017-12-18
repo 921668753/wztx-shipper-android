@@ -24,15 +24,16 @@ import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.Quotation
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
+
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
- * 报价中
+ * 全部
  * Created by Administrator on 2017/2/12.
  */
 
-public class QuoteOrderFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
+public class AllFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -44,11 +45,10 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
     @BindView(id = R.id.lv_order)
     private ListView lv_order;
 
-
     /**
      * 错误提示页
      */
-    @BindView(id = R.id.ll_commonError, click = true)
+    @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
@@ -67,7 +67,7 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
     /**
      * 订单状态（all全部状态，quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
      */
-    private String type = "quote";
+    private String type = "all";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -86,19 +86,22 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, getActivity(), true);
-        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "QuoteOrderFragment");
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "AllOrderFragment");
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
+        if (mAdapter.getItem(i).getStatus() != null && mAdapter.getItem(i).getStatus().equals("quote")) {
+            intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
+        }
         aty.showActivity(aty, intent);
     }
 
@@ -109,6 +112,21 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
         showLoadingDialog(getString(R.string.dataLoad));
         ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
     }
+
+
+    /**
+     * 控件监听事件
+     */
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_hintText:
+                mRefreshLayout.beginRefreshing();
+                break;
+        }
+    }
+
 
     @Override
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
@@ -126,33 +144,20 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
         return true;
     }
 
-    /**
-     * 控件监听事件
-     */
-    @Override
-    public void widgetClick(View v) {
-        super.widgetClick(v);
-        switch (v.getId()) {
-            case R.id.tv_hintText:
-                mRefreshLayout.beginRefreshing();
-                break;
-        }
-    }
 
     @Override
     public void onResume() {
         super.onResume();
-        boolean isRefreshQuoteOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshQuoteOrder", false);
-        if (isRefreshQuoteOrder) {
+        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
+        if (isRefreshOrder) {
             mRefreshLayout.beginRefreshing();
         }
     }
 
-
     @Override
     public void getSuccess(String s) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteOrder", false);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteOrder1", false);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
@@ -167,7 +172,7 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
             mAdapter.addNewData(orderBean.getResult().getList());
-        } else {
+        } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(orderBean.getResult().getList());
         }
@@ -200,12 +205,11 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
     @Override
     public void onChange() {
         super.onChange();
-        boolean isRefreshQuoteOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshQuoteOrder1", false);
-        if (isRefreshQuoteOrder1) {
+        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
+        if (isRefreshAllOrder1) {
             mRefreshLayout.beginRefreshing();
         }
     }
-
 
     @Override
     public void onDestroy() {
@@ -214,17 +218,14 @@ public class QuoteOrderFragment extends BaseFragment implements OrderContract.Vi
         mAdapter = null;
     }
 
+
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "QuoteOrderFragment");
         if (view.getId() == R.id.tv_driverQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
             intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
             aty.showActivity(aty, intent);
         }
-
-
     }
 }
-

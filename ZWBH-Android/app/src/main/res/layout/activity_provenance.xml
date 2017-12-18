@@ -10,8 +10,8 @@
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv_address"
+        style="@style/MatchWrap"
         android:background="@color/mainColor"
         android:padding="@dimen/dimen15"
         android:text="苏州市昆山市"
@@ -21,6 +21,7 @@
     <include layout="@layout/commom_dividerwidth1" />
 
     <EditText
+        android:id="@+id/et_detailedAddress"
         style="@style/MatchWrap"
         android:background="@color/mainColor"
         android:hint="@string/pleaseDetailedAddress"
@@ -39,7 +40,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_accountNumber"
+            android:id="@+id/tv_deliveryCustomer"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="@string/deliveryCustomer"
@@ -47,7 +48,7 @@
             android:textSize="@dimen/textsize15" />
 
         <EditText
-            android:id="@+id/et_accountNumber"
+            android:id="@+id/et_deliveryCustomer"
             style="@style/AutoWrap"
             android:layout_marginLeft="@dimen/dimen61"
             android:layout_marginRight="@dimen/dimen15"
@@ -70,6 +71,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_shipper"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
             android:text="@string/shipper"
@@ -77,6 +79,7 @@
             android:textSize="@dimen/textsize15" />
 
         <EditText
+            android:id="@+id/et_shipper"
             style="@style/AutoWrap"
             android:layout_marginLeft="@dimen/dimen75"
             android:layout_marginRight="@dimen/dimen15"
@@ -106,6 +109,7 @@
             android:textSize="@dimen/textsize15" />
 
         <EditText
+            android:id="@+id/et_phone"
             style="@style/AutoWrap"
             android:layout_marginLeft="@dimen/dimen75"
             android:layout_marginRight="@dimen/dimen15"
@@ -135,6 +139,7 @@
             android:textSize="@dimen/textsize15" />
 
         <EditText
+            android:id="@+id/et_eixedTelephone"
             style="@style/AutoWrap"
             android:layout_marginLeft="@dimen/dimen61"
             android:layout_marginRight="@dimen/dimen15"
@@ -150,6 +155,7 @@
 
 
     <TextView
+        android:id="@+id/tv_determine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen45"
         android:layout_marginLeft="@dimen/dimen15"

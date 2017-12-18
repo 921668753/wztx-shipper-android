@@ -10,14 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -26,11 +24,11 @@ import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
- * 待发货
+ * 发货中
  * Created by Administrator on 2017/2/16.
  */
 
-public class SendGoodsFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class TransportationFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -63,9 +61,9 @@ public class SendGoodsFragment extends BaseFragment implements OrderContract.Vie
      */
     private boolean isShowLoadingMore = false;
     /**
-     * 订单状态（all全部状态，quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
+     * 订单状态（quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
      */
-    private String type = "quoted";
+    private String type = "distribute";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -92,7 +90,6 @@ public class SendGoodsFragment extends BaseFragment implements OrderContract.Vie
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "SendGoodsFragment");
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
         aty.showActivity(aty, intent);

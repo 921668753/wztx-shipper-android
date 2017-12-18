@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.recommendcourteous;
+package com.ruitukeji.zwbh.mine.invitefriends;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,11 +31,11 @@ import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
 /**
- * 推荐有礼
+ * 分享有礼
  * Created by Administrator on 2017/2/10.
  */
 
-public class RecommendCourteousActivity extends BaseActivity {
+public class SharePoliteActivity extends BaseActivity {
 
     @BindView(id = R.id.tv_recommendInviteCode)
     private TextView tv_recommendInviteCode;
@@ -86,7 +86,7 @@ public class RecommendCourteousActivity extends BaseActivity {
                 showActivity(aty, RecommendedRecordActivity.class);
             }
         };
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.recommend_courteous), getString(R.string.recommendedRecord), R.id.titlebar, simpleDelegate);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.sharePolite), getString(R.string.recommendedRecord), R.id.titlebar, simpleDelegate);
     }
 
     @Override
@@ -136,8 +136,8 @@ public class RecommendCourteousActivity extends BaseActivity {
             @Override
             protected Bitmap doInBackground(Void... params) {
                 share_shipper = PreferenceHelper.readString(aty, StringConstants.FILENAME, "share_shipper");
-                Bitmap logoBitmap = BitmapFactory.decodeResource(RecommendCourteousActivity.this.getResources(), R.mipmap.android_template);
-                return QRCodeEncoder.syncEncodeQRCode(share_shipper + "?code=" + recomm_code, BGAQRCodeUtil.dp2px(RecommendCourteousActivity.this, 150), Color.BLACK, logoBitmap);
+                Bitmap logoBitmap = BitmapFactory.decodeResource(SharePoliteActivity.this.getResources(), R.mipmap.android_template);
+                return QRCodeEncoder.syncEncodeQRCode(share_shipper + "?code=" + recomm_code, BGAQRCodeUtil.dp2px(SharePoliteActivity.this, 150), Color.BLACK, logoBitmap);
             }
 
             @Override

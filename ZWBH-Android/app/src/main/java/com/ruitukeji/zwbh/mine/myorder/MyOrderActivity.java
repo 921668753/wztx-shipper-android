@@ -7,11 +7,11 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.AllOrderFragment;
+import com.ruitukeji.zwbh.mine.myorder.orderfragment.AllFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.CompletedFragment;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.DeliveryFragment;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.QuoteOrderFragment;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.SendGoodsFragment;
+import com.ruitukeji.zwbh.mine.myorder.orderfragment.PendingDeliveryFragment;
+import com.ruitukeji.zwbh.mine.myorder.orderfragment.PendingOrderFragment;
+import com.ruitukeji.zwbh.mine.myorder.orderfragment.TransportationFragment;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 /**
@@ -82,10 +82,10 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        contentFragment = new AllOrderFragment();
-        contentFragment1 = new QuoteOrderFragment();
-        contentFragment2 = new SendGoodsFragment();
-        contentFragment3 = new DeliveryFragment();
+        contentFragment = new AllFragment();
+        contentFragment1 = new PendingOrderFragment();
+        contentFragment2 = new PendingDeliveryFragment();
+        contentFragment3 = new TransportationFragment();
         contentFragment4 = new CompletedFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
     }

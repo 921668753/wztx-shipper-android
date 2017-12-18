@@ -19,7 +19,7 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.PersonalCertificateBean;
+import com.ruitukeji.zwbh.entity.IndividualOwnersBean;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -169,14 +169,14 @@ public class PersonalInformationActivity extends BaseActivity implements EasyPer
                 GlideImageLoader.glideLoader(this, imgUrl + "?imageView2/1/w/140/h/140", img_holdingIdentityCertification, 1);
             }
         } else if (flag == 2) {
-            PersonalCertificateBean personalCertificateBean = (PersonalCertificateBean) JsonUtil.getInstance().json2Obj(s, PersonalCertificateBean.class);
-            et_accountNumber.setText(personalCertificateBean.getResult().getReal_name());
-            et_IdNumber.setText(personalCertificateBean.getResult().getIdentity());
-            if (personalCertificateBean.getResult().getSex() == 1) {
+            IndividualOwnersBean individualOwnersBean = (IndividualOwnersBean) JsonUtil.getInstance().json2Obj(s, IndividualOwnersBean.class);
+            et_accountNumber.setText(individualOwnersBean.getResult().getReal_name());
+            et_IdNumber.setText(individualOwnersBean.getResult().getIdentity());
+            if (individualOwnersBean.getResult().getSex() == 1) {
                 img_man.setImageResource(R.mipmap.selected);
                 img_woman.setImageResource(R.mipmap.selected1);
                 sex = 1;
-            } else if (personalCertificateBean.getResult().getSex() == 2) {
+            } else if (individualOwnersBean.getResult().getSex() == 2) {
                 img_man.setImageResource(R.mipmap.selected1);
                 img_woman.setImageResource(R.mipmap.selected);
                 sex = 2;
@@ -185,11 +185,11 @@ public class PersonalInformationActivity extends BaseActivity implements EasyPer
                 img_woman.setImageResource(R.mipmap.selected1);
                 sex = 1;
             }
-            imgUrl = personalCertificateBean.getResult().getHold_pic();
+            imgUrl = individualOwnersBean.getResult().getHold_pic();
             isPreview = true;
             GlideImageLoader.glideLoader(this, imgUrl + "?imageView2/1/w/140/h/140", img_holdingIdentityCertification, 1);
-            back_pic = personalCertificateBean.getResult().getBack_pic();
-            front_pic = personalCertificateBean.getResult().getFront_pic();
+            back_pic = individualOwnersBean.getResult().getBack_pic();
+            front_pic = individualOwnersBean.getResult().getFront_pic();
         }
         dismissLoadingDialog();
     }

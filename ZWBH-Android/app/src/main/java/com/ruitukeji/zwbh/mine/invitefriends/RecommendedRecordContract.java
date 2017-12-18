@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.recommendcourteous;
+package com.ruitukeji.zwbh.mine.invitefriends;
 
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;

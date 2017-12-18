@@ -59,7 +59,7 @@ import com.ruitukeji.zwbh.mine.mypublishedorder.MyPublishedGoodsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.MyWalletActivity;
 import com.ruitukeji.zwbh.mine.onlineservice.OnlineServiceActivity;
 import com.ruitukeji.zwbh.mine.personaldata.PersonalDataActivity;
-import com.ruitukeji.zwbh.mine.recommendcourteous.RecommendCourteousActivity;
+import com.ruitukeji.zwbh.mine.invitefriends.SharePoliteActivity;
 import com.ruitukeji.zwbh.mine.setting.SettingsActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -653,7 +653,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         } else if (flag == 9) {
             showActivity(aty, MyOrderActivity.class);
         } else if (flag == 10) {
-            showActivity(aty, RecommendCourteousActivity.class);
+            showActivity(aty, SharePoliteActivity.class);
         } else if (flag == 11) {
             showActivity(aty, SettingsActivity.class);
         } else if (flag == 12) {

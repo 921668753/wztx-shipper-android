@@ -16,6 +16,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_personalData"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen101"
                 android:background="@color/announcementCloseColors"
@@ -24,6 +25,7 @@
 
 
                 <ImageView
+                    android:id="@+id/img_headPortrait"
                     android:layout_width="@dimen/dimen60"
                     android:layout_height="@dimen/dimen60"
                     android:layout_marginLeft="@dimen/dimen20"
@@ -39,14 +41,16 @@
                     android:paddingRight="@dimen/dimen15">
 
                     <TextView
+                        android:id="@+id/tv_name"
                         style="@style/WrapWrap"
                         android:singleLine="true"
-                        android:text="@string/about_us"
+                        android:text="戴志豪"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize18" />
 
 
                     <LinearLayout
+                        android:id="@+id/ll_incompleteCertification"
                         android:layout_width="@dimen/dimen80"
                         android:layout_height="@dimen/dimen18"
                         android:layout_marginTop="@dimen/dimen10"
@@ -55,6 +59,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_incompleteCertification"
                             style="@style/WrapWrap"
                             android:layout_marginLeft="@dimen/dimen9"
                             android:gravity="center"
@@ -91,6 +96,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_myOrder"
                     style="@style/AutoMatch"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -112,6 +118,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_addressManagement"
                     style="@style/AutoMatch"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -133,6 +140,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_driverManagement"
                     style="@style/AutoMatch"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -155,6 +163,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_identityAuthentication"
                 style="@style/Match50"
                 android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/white"
@@ -188,6 +197,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_invoiceManagement"
                 style="@style/Match50"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -215,6 +225,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_abnormalRecords"
                 style="@style/Match50"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -242,6 +253,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_myWallet"
                 style="@style/Match50"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -273,6 +285,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_inviteFriends"
                 style="@style/Match50"
                 android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/white"
@@ -301,6 +314,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_complaintCenter"
                 style="@style/Match50"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -328,6 +342,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_helpCenter"
                 style="@style/Match50"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -356,6 +371,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_systemSettings"
                 style="@style/Match50"
                 android:background="@color/white"
                 android:gravity="center_vertical"

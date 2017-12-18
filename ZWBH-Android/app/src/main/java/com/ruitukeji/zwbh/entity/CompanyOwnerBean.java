@@ -4,7 +4,7 @@ package com.ruitukeji.zwbh.entity;
  * Created by Admin on 2017/7/11.
  */
 
-public class CompanyAuthInfoBean extends BaseResult<CompanyAuthInfoBean.ResultBean> {
+public class CompanyOwnerBean extends BaseResult<CompanyOwnerBean.ResultBean> {
 
 
     public class ResultBean {

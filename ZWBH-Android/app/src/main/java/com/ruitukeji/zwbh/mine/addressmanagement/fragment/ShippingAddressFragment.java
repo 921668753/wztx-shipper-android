@@ -27,11 +27,12 @@ import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
- * 发货地址
+ * 收货地址
  * Created by Administrator on 2017/12/15.
  */
 
-public class DeliveryAddressFragment extends BaseFragment implements AddressContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
+public class ShippingAddressFragment extends BaseFragment implements AddressContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
+
 
     private AddressManagementActivity aty;
 
@@ -179,7 +180,6 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
 //        }
             dismissLoadingDialog();
         } else if (flag == 1) {
-
             dismissLoadingDialog();
         } else if (flag == 2) {
             mRefreshLayout.beginRefreshing();
