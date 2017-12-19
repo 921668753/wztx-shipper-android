@@ -31,6 +31,7 @@
 
 
                 <ImageView
+                    android:id="@+id/img_commercialInvoice"
                     android:layout_width="@dimen/dimen26"
                     android:layout_height="@dimen/dimen26"
                     android:layout_marginLeft="@dimen/dimen41"
@@ -45,6 +46,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
+                    android:id="@+id/img_specialVATInvoices"
                     android:layout_width="@dimen/dimen26"
                     android:layout_height="@dimen/dimen26"
                     android:layout_marginLeft="@dimen/dimen14"
@@ -80,6 +82,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_invoiceAmount"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen19"
                     android:text="20000"
@@ -106,6 +109,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
+                    android:id="@+id/img_personal"
                     android:layout_width="@dimen/dimen26"
                     android:layout_height="@dimen/dimen26"
                     android:layout_marginLeft="@dimen/dimen41"
@@ -119,6 +123,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <ImageView
+                    android:id="@+id/img_company"
                     android:layout_width="@dimen/dimen26"
                     android:layout_height="@dimen/dimen26"
                     android:layout_marginLeft="@dimen/dimen43"
@@ -151,6 +156,7 @@
 
 
                 <EditText
+                    android:id="@+id/et_invoiceRise"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
@@ -163,9 +169,12 @@
 
             </LinearLayout>
 
-            <include layout="@layout/commom_dividerwidth1" />
+            <include
+                android:id="@+id/ll_einDividerWidth"
+                layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_ein"
                 style="@style/Match45"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -181,6 +190,7 @@
 
 
                 <EditText
+                    android:id="@+id/et_ein"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:digits="@string/alphanumeric"
@@ -209,8 +219,9 @@
                     android:text="@string/invoiceContent"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
-                
+
                 <EditText
+                    android:id="@+id/et_invoiceContent"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
@@ -222,9 +233,12 @@
 
             </LinearLayout>
 
-            <include layout="@layout/commom_dividerwidth1" />
+            <include
+                android:id="@+id/ll_addressTelephoneNumberDivider"
+                layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_addressTelephoneNumber"
                 style="@style/Match45"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -240,6 +254,7 @@
 
 
                 <EditText
+                    android:id="@+id/et_addressTelephoneNumber"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/fillAddressTelephoneNumber"
@@ -252,9 +267,12 @@
 
             </LinearLayout>
 
-            <include layout="@layout/commom_dividerwidth1" />
+            <include
+                android:id="@+id/ll_openingBankAccountDivider"
+                layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_openingBankAccount"
                 style="@style/Match45"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -270,6 +288,7 @@
 
 
                 <EditText
+                    android:id="@+id/et_openingBankAccount"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/fillOpeningBankAccount"
@@ -299,6 +318,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <EditText
+                    android:id="@+id/et_recipient"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
@@ -328,6 +348,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <EditText
+                    android:id="@+id/et_contactPhoneNumber"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
@@ -344,6 +365,7 @@
             <include layout="@layout/commom_dividerwidth1" />
 
             <LinearLayout
+                android:id="@+id/ll_inArea"
                 style="@style/Match45"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -358,6 +380,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <TextView
+                    android:id="@+id/tv_inArea"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
@@ -391,6 +414,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <EditText
+                    android:id="@+id/et_detailedAddress"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
@@ -420,6 +444,7 @@
                 android:paddingLeft="@dimen/dimen4">
 
                 <ImageView
+                    android:id="@+id/img_generalElection"
                     android:layout_width="@dimen/dimen40"
                     android:layout_height="@dimen/dimen40"
                     android:padding="@dimen/dimen11"
@@ -465,8 +490,8 @@
 
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/tv_submit"
+            style="@style/MatchMatch"
             android:layout_marginBottom="@dimen/dimen10"
             android:layout_marginLeft="@dimen/dimen15"
             android:layout_marginRight="@dimen/dimen15"
