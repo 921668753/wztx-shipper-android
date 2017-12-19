@@ -37,7 +37,6 @@
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize16" />
 
-
                 <TextView
                     style="@style/WrapWrap"
                     android:layout_gravity="bottom"

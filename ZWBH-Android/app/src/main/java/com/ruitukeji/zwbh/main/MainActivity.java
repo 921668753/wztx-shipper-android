@@ -134,12 +134,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private boolean isTost = true;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        init(savedInstanceState);
-    }
-
-    @Override
     public void setRootView() {
         setContentView(R.layout.activity_main);
     }
@@ -176,7 +170,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     protected void threadDataInited() {
         super.threadDataInited();
         // showLoadingDialog(getString(R.string.dataLoad));
-      //  ((MainContract.Presenter) mPresenter).getHome();
+        //  ((MainContract.Presenter) mPresenter).getHome();
     }
 
     @Override
@@ -351,7 +345,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
 
-    private void init(Bundle savedInstanceState) {
+    public void init(Bundle savedInstanceState) {
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
         mAmap = mMapView.getMap();
@@ -540,7 +534,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 AMapUtil.addEmulateData(mAmap, nearbySearch.getDatas());
                 dismissLoadingDialog();
             } else {
-                error("周边搜索为空", 0);
+                errorMsg("周边搜索为空", 0);
             }
         } else if (flag == 1) {
             if (!(s.equals("true"))) {
@@ -662,7 +656,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
     @Override
-    public void error(String msg, int flag) {
+    public void errorMsg(String msg, int flag) {
         if (flag == 0) {
             ViewInject.toast(msg);
         } else if (flag == 1) {

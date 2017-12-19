@@ -1,6 +1,12 @@
 package com.ruitukeji.zwbh.main;
 
+import android.app.Activity;
+import android.widget.TextView;
+
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps2d.AMap;
+import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
 
@@ -27,6 +33,11 @@ public interface MainContract {
         void getInfo();
 
         /**
+         * 注册广播
+         */
+        void registerMessageReceiver();
+
+        /**
          * 下载app
          */
         void downloadApp(String updateAppUrl);
@@ -41,20 +52,19 @@ public interface MainContract {
          */
         void setupLocationStyle(AMap mAmap);
 
+        /**
+         * 选择物流类型
+         */
+        void chooseLogisticsType(Main1Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
+
+        /**
+         * 设置状态：实时，加急，预约
+         */
+        void settingType(Main1Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
     }
 
-    interface View extends BaseView<Presenter> {
-        /**
-         * http请求正确
-         *
-         * @param s
-         */
-        void getSuccess(String s, int flag);
+    interface View extends BaseNewView<Presenter, String> {
 
-        /**
-         * http请求错误
-         */
-        void error(String msg, int flag);
     }
 
 }

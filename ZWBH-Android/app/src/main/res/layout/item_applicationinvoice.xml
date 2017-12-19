@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/dimen20">
 
     <ImageView
+        android:id="@+id/img_applicationInvoice"
         android:layout_width="@dimen/dimen31"
         android:layout_height="@dimen/dimen40"
         android:paddingBottom="@dimen/dimen11"
@@ -25,12 +26,14 @@
         android:paddingLeft="@dimen/dimen5">
 
         <TextView
+            android:id="@+id/tv_orderNumber"
             style="@style/MatchWrap"
             android:text="订单号：201710310026"
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize13" />
 
         <TextView
+            android:id="@+id/tv_time"
             style="@style/MatchWrap"
             android:layout_marginTop="@dimen/dimen8"
             android:text="2017-11-09 10:37"
@@ -52,6 +55,7 @@
 
 
             <TextView
+                android:id="@+id/tv_startAddress"
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen13"
                 android:text="江苏省昆山市花桥镇海星路6号"
@@ -74,6 +78,7 @@
                 android:src="@drawable/shape_dot_red" />
 
             <TextView
+                android:id="@+id/tv_endAddress"
                 style="@style/MatchWrap"
                 android:layout_marginLeft="@dimen/dimen13"
                 android:text="江苏省昆山市花桥镇海星路6号"
@@ -86,6 +91,7 @@
 
 
     <TextView
+        android:id="@+id/tv_money"
         style="@style/WrapWrap"
         android:maxWidth="@dimen/dimen70"
         android:text="50000"

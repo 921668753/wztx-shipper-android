@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -35,7 +35,6 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
@@ -45,8 +44,10 @@ import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.entity.HomeBean;
 import com.ruitukeji.zwbh.entity.HomeBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.main.announcement.AnnouncementActivity;
+import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
+import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.mypublishedorder.MyPublishedGoodsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.MyWalletActivity;
@@ -56,26 +57,26 @@ import com.ruitukeji.zwbh.mine.setting.SettingsActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
+import com.sunfusheng.marqueeview.MarqueeView;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class Main1Activity extends BaseActivity implements EasyPermissions.PermissionCallbacks, LocationSource, AMapLocationListener, MainContract.View, BGABanner.Delegate<ImageView, ListBean>, BGABanner.Adapter<ImageView, ListBean>, CloudSearch.OnCloudSearchListener {
+public class Main1Activity extends BaseActivity implements EasyPermissions.PermissionCallbacks, LocationSource, AMapLocationListener, MainContract.View, CloudSearch.OnCloudSearchListener {
 
     private long firstTime = 0;
     public static boolean isForeground = false;
-    // for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
@@ -91,15 +92,110 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
 
+    /**
+     * 个人中心
+     */
+    @BindView(id = R.id.img_user, click = true)
+    private ImageView img_user;
 
+    /**
+     * 消息中心
+     */
+    @BindView(id = R.id.img_message, click = true)
+    private ImageView img_message;
+    @BindView(id = R.id.tv_message)
+    private TextView tv_message;
+
+
+    /**
+     * 同城物流
+     */
+    @BindView(id = R.id.ll_cityDistribution, click = true)
+    private LinearLayout ll_cityDistribution;
+    @BindView(id = R.id.tv_cityDistribution)
+    private TextView tv_cityDistribution;
+    @BindView(id = R.id.tv_cityDistribution1)
+    private TextView tv_cityDistribution1;
+    /**
+     * 全国物流
+     */
+    @BindView(id = R.id.ll_longTrunk, click = true)
+    private LinearLayout ll_longTrunk;
+    @BindView(id = R.id.tv_longTrunk)
+    private TextView tv_longTrunk;
+    @BindView(id = R.id.tv_longTrunk1)
+    private TextView tv_longTrunk1;
+    /**
+     * 通知
+     */
+    @BindView(id = R.id.ll_ad)
+    private LinearLayout ll_ad;
+    @BindView(id = R.id.marqueeView)
+    private MarqueeView marqueeView;
+
+    /**
+     * 实时
+     */
+    @BindView(id = R.id.tv_realTime, click = true)
+    private TextView tv_realTime;
+    /**
+     * 加急
+     */
+    @BindView(id = R.id.tv_urgent, click = true)
+    private TextView tv_urgent;
+
+    /**
+     * 预约
+     */
+    @BindView(id = R.id.tv_makeAppointment, click = true)
+    private TextView tv_makeAppointment;
+
+    /**
+     * 预约时间
+     */
+    @BindView(id = R.id.tv_appointmentTime)
+    private TextView tv_appointmentTime;
     @BindView(id = R.id.ll_appointmentTime, click = true)
     private LinearLayout ll_appointmentTime;
-//
-//    @BindView(id = R.id.tv_longTrunk, click = true)
-//    private TextView tv_longTrunk;
-//
-//    @BindView(id = R.id.banner_ad)
-//    private BGABanner mForegroundBanner;
+    @BindView(id = R.id.tv_appointmentTime1)
+    private TextView tv_appointmentTime1;
+
+    /**
+     * 出发地
+     */
+    @BindView(id = R.id.tv_pleaseEnterDeparturePoint, click = true)
+    private TextView tv_pleaseEnterDeparturePoint;
+
+
+    /**
+     * 目的地
+     */
+    @BindView(id = R.id.tv_enterDestination, click = true)
+    private TextView tv_enterDestination;
+
+    /**
+     * 货物信息
+     */
+    @BindView(id = R.id.rl_cargoInformation, click = true)
+    private RelativeLayout rl_cargoInformation;
+
+    /**
+     * 价格
+     */
+    @BindView(id = R.id.tv_price)
+    private TextView tv_price;
+
+    /**
+     * 提交订单
+     */
+    @BindView(id = R.id.tv_submitOrders, click = true)
+    private TextView tv_submitOrders;
+
+    /**
+     * 指派车辆
+     */
+    @BindView(id = R.id.tv_assignedVehicle, click = true)
+    private TextView tv_assignedVehicle;
 
     private SweetAlertDialog sweetAlertDialog = null;
     private String province = null;
@@ -151,17 +247,80 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         });
         timer = new Timer();
         registerMessageReceiver();
-        initBanner();
         mCloudSearch = new CloudSearch(this);// 初始化查询类
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
-        boolean isUpdate = PreferenceHelper.readBoolean(MyApplication.getContext(), StringConstants.FILENAME, "isUpdate", false);
+        boolean isUpdate = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isUpdate", false);
         getSuccess(String.valueOf(isUpdate), 1);
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
+        img_message.setOnClickListener(this);
+        img_user.setOnClickListener(this);
+        ll_cityDistribution.setOnClickListener(this);
+        ll_longTrunk.setOnClickListener(this);
         locationBouncedDialog.show();
+        ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+        tv_appointmentTime.setVisibility(View.GONE);
+        ll_appointmentTime.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.img_user:
+                showActivity(aty, PersonalCenterActivity.class);
+                break;
+            case R.id.img_message:
+                //   tv_tag.setVisibility(View.GONE);
+                showActivity(aty, MessageCenterActivity.class);
+                break;
+            case R.id.ll_appointmentTime:
+
+                break;
+            case R.id.ll_cityDistribution:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.ll_longTrunk:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.tv_realTime:
+                ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+                tv_appointmentTime.setVisibility(View.GONE);
+                ll_appointmentTime.setVisibility(View.GONE);
+                break;
+            case R.id.tv_urgent:
+                ((MainContract.Presenter) mPresenter).settingType(this, 1, tv_realTime, tv_urgent, tv_makeAppointment);
+                tv_appointmentTime.setVisibility(View.GONE);
+                ll_appointmentTime.setVisibility(View.GONE);
+                break;
+            case R.id.tv_makeAppointment:
+                ((MainContract.Presenter) mPresenter).settingType(this, 2, tv_realTime, tv_urgent, tv_makeAppointment);
+                tv_appointmentTime.setVisibility(View.VISIBLE);
+                ll_appointmentTime.setVisibility(View.VISIBLE);
+                tv_appointmentTime1.setText(getString(R.string.appointmentTime2));
+                break;
+            case R.id.tv_pleaseEnterDeparturePoint:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.tv_enterDestination:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.rl_cargoInformation:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.tv_price:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.tv_submitOrders:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.tv_assignedVehicle:
+                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+        }
     }
 
     /**
@@ -179,7 +338,6 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             mlocationClient.setLocationListener(this);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-
             //获取一次定位结果：
             //该方法默认为false。
             mLocationOption.setOnceLocation(true);
@@ -200,15 +358,12 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     private void choiceLocationWrapper() {
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-//            File takePhotoDir = new File(Environment.getExternalStorageDirectory(), StringConstants.PHOTOPATH);
-//            startActivityForResult(BGAPhotoPickerActivity.newIntent(this, true ? takePhotoDir : null, 1, null, false), NumericConstants.REQUEST_CODE_CHOOSE_PHOTO);
             // 设置定位监听
             mAmap.setLocationSource(this);
 // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
             mAmap.setMyLocationEnabled(true);
         } else {
-            EasyPermissions.requestPermissions(this, "定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限", NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.locationPermissions), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
         }
     }
 
@@ -225,7 +380,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (requestCode == NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER) {
-            ViewInject.toast("您拒绝了「定位」所需要的相关权限!");
+            ViewInject.toast(getString(R.string.locationPermissions1));
         } else if (requestCode == NumericConstants.READ_AND_WRITE_CODE) {
             ViewInject.toast(getString(R.string.sdPermission));
         }
@@ -247,7 +402,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
-            if (amapLocation != null && amapLocation.getErrorCode() == 0) {
+            if (amapLocation.getErrorCode() == 0) {
                 isTost = true;
                 mlocationClient.stopLocation();
                 province = amapLocation.getProvince();
@@ -312,36 +467,6 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     }
 
 
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        switch (v.getId()) {
-//            case R.id.img_message:
-//                tv_tag.setVisibility(View.GONE);
-//                showActivity(aty, MessageCenterActivity.class);
-//                break;
-            case R.id.ll_appointmentTime:
-
-
-                break;
-//            case R.id.tv_longTrunk:
-//                ((MainContract.Presenter) mPresenter).isLogin(6);
-//                break;
-//            case R.id.personal_data:
-//                ((MainContract.Presenter) mPresenter).isLogin(7);
-//                break;
-//            case R.id.my_wallet:
-//                ((MainContract.Presenter) mPresenter).isLogin(8);
-//                break;
-//            case R.id.ll_myPublishedOrder:
-//                ((MainContract.Presenter) mPresenter).isLogin(12);
-//                break;
-//            case R.id.my_order:
-//                ((MainContract.Presenter) mPresenter).isLogin(9);
-//                break;
-        }
-    }
-
     /**
      * 退出应用
      *
@@ -356,13 +481,8 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
                     //如果两次按键时间间隔大于2秒，则不退出
-                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                    if (drawer.isDrawerOpen(GravityCompat.START)) {
-                        drawer.closeDrawer(GravityCompat.START);
-                    } else {
-                        ViewInject.toast("再按一次退出程序");
-                        firstTime = secondTime;//更新firstTime
-                    }
+                    ViewInject.toast("再按一次退出程序");
+                    firstTime = secondTime;//更新firstTime
                     return true;
                 } else {
                     //  int i = 1 / 0;
@@ -380,16 +500,10 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     protected void onResume() {
         super.onResume();
-//        boolean isGoneBanner = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isGoneBanner", false);
-//        if (isGoneBanner) {
-//            mForegroundBanner.setVisibility(View.GONE);
-//        } else {
-//            mForegroundBanner.setVisibility(View.VISIBLE);
-//        }
 //        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-//        mMapView.onResume();
-//        isForeground = true;
-//        mForegroundBanner.startAutoPlay();
+        mMapView.onResume();
+        marqueeView.startFlipping();
+        isForeground = true;
     }
 
 
@@ -397,10 +511,10 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     protected void onPause() {
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
+        marqueeView.stopFlipping();
         mMapView.onPause();
         deactivate();
         isForeground = true;
-        //   mForegroundBanner.stopAutoPlay();
     }
 
     /**
@@ -423,7 +537,6 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         if (null != mlocationClient) {
             mlocationClient.onDestroy();
         }
-        // mLocationTask.onDestroy();
     }
 
     public void registerMessageReceiver() {
@@ -452,7 +565,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 AMapUtil.addEmulateData(mAmap, nearbySearch.getDatas());
                 dismissLoadingDialog();
             } else {
-                error("周边搜索为空", 0);
+                errorMsg("周边搜索为空", 0);
             }
         } else if (flag == 1) {
             if (!(s.equals("true"))) {
@@ -496,83 +609,20 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //                // tv_tag.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
 //            }
             processLogic(homeBean.getResult().getList());
-            if (timer != null) {
-                timer.schedule(new Task(), 2000);
-            }
-            // ((MainContract.Presenter) mPresenter).getInfo();
-            dismissLoadingDialog();
-        } else if (flag == 4) {
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "avatar", userInfoBean.getResult().getAvatar());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "real_name", userInfoBean.getResult().getReal_name());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "auth_status", userInfoBean.getResult().getAuth_status());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "type", userInfoBean.getResult().getType());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "recomm_code", userInfoBean.getResult().getRecomm_code());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "bond_status", userInfoBean.getResult().getBond_status());
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "bond", userInfoBean.getResult().getBond());
-//            if (StringUtils.isEmpty(userInfoBean.getResult().getAvatar())) {
-//                img_user.setImageResource(R.mipmap.headload);
-//            } else {
-//                GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70", img_user, 0);
-//            }
-//            if (StringUtils.isEmpty(userInfoBean.getResult().getReal_name())) {
-//                tv_name.setVisibility(View.GONE);
-//            } else {
-//                tv_name.setVisibility(View.VISIBLE);
-//                tv_name.setText(userInfoBean.getResult().getReal_name());
-//            }
-            dismissLoadingDialog();
-//            if (locationBouncedDialog != null && locationBouncedDialog.isShowing()) {
-//                locationBouncedDialog.dismiss();
-//            }
-        } else if (flag == 5) {
-            Intent intent = new Intent();
-            intent.putExtra(getString(R.string.logisticsName), getString(R.string.cityDistribution));
-            intent.putExtra("province", province);
-            intent.putExtra("city", city);
-            intent.putExtra("district", district);
-            intent.putExtra("aoiName", aoiName);
-            intent.putExtra("lat", lat);
-            intent.putExtra("longi", longi);
-            intent.putExtra("tran_type", 0);
-            intent.setClass(this, LogisticsActivity.class);
-            showActivity(aty, intent);
-            dismissLoadingDialog();
-        } else if (flag == 6) {
-            Intent longTrunk = new Intent();
-            longTrunk.putExtra(getString(R.string.logisticsName), getString(R.string.longTrunk));
-            // longTrunk.putExtra(getString(R.string.location), getString(R.string.cityDistribution));
-            longTrunk.putExtra("province", province);
-            longTrunk.putExtra("city", city);
-            longTrunk.putExtra("district", district);
-            longTrunk.putExtra("aoiName", aoiName);
-            longTrunk.putExtra("lat", lat);
-            longTrunk.putExtra("longi", longi);
-            longTrunk.putExtra("tran_type", 1);
-            longTrunk.setClass(this, LogisticsActivity.class);
-            showActivity(aty, longTrunk);
-            dismissLoadingDialog();
-        } else if (flag == 7) {
-            showActivity(aty, PersonalDataActivity.class);
-        } else if (flag == 8) {
-            showActivity(aty, MyWalletActivity.class);
-        } else if (flag == 9) {
-            showActivity(aty, MyOrderActivity.class);
-        } else if (flag == 10) {
-            showActivity(aty, SharePoliteActivity.class);
-        } else if (flag == 11) {
-            showActivity(aty, SettingsActivity.class);
-        } else if (flag == 12) {
-            showActivity(aty, MyPublishedGoodsActivity.class);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (timer != null) {
+                        timer.schedule(new Task(), 2000);
+                    }
+                    dismissLoadingDialog();
+                }
+            });
         }
     }
 
     @Override
-    public void error(String msg, int flag) {
+    public void errorMsg(String msg, int flag) {
         if (flag == 0) {
             ViewInject.toast(msg);
         } else if (flag == 1) {
@@ -633,16 +683,11 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         if (rCode == AMapException.CODE_AMAP_SUCCESS && cloudResult != null && cloudResult.getClouds() != null && !cloudResult.getClouds().isEmpty()) {
             AMapUtil.addEmulateData1(mAmap, cloudResult.getClouds());
             dismissLoadingDialog();
-            //    showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-            ((MainContract.Presenter) mPresenter).getHome();
-            //  timer.schedule(new Task(), 1000); // 定时器延时执行任务方法
         } else {
-            ((MainContract.Presenter) mPresenter).getHome();
-            //   timer.schedule(new Task(), 1000); // 定时器延时执行任务方法
-            //  showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.no_result));
         }
+        ((MainContract.Presenter) mPresenter).getHome();
     }
 
     @Override
@@ -671,43 +716,30 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     /**
      * 广告轮播图
      */
+    List<String> tips = new ArrayList<>();
+
     @SuppressWarnings("unchecked")
     private void processLogic(List<ListBean> list) {
-        if (list == null || list.size() == 0) {
-            // error(getString(R.string.serverReturnsDataNull), 0);
-            return;
-        }
-//        mForegroundBanner.setBackground(null);
-//        mForegroundBanner.setData(list, null);
-    }
-
-    //  监听广告 item 的单击事件
-    @Override
-    public void fillBannerItem(BGABanner banner, ImageView itemView, ListBean model, int position) {
-        GlideImageLoader.glideOrdinaryLoader(this, model.getSrc(), itemView);
-    }
-
-    @Override
-    public void onBannerItemClick(BGABanner banner, ImageView itemView, ListBean model, int position) {
-        if (StringUtils.isEmpty(model.getUrl())) {
-            return;
-        }
-        Intent bannerDetails = new Intent(this, BannerDetailsActivity.class);
-        bannerDetails.putExtra("url", model.getUrl());
-        showActivity(aty, bannerDetails);
-    }
-
-    /**
-     * 初始化轮播图
-     */
-    public void initBanner() {
-//        mForegroundBanner.setAutoPlayAble(true);
-//        mForegroundBanner.setOverScrollMode(View.OVER_SCROLL_NEVER);
-//        mForegroundBanner.setAllowUserScrollable(true);
-//        mForegroundBanner.setAutoPlayInterval(3000);
-//        // 初始化方式1：配置数据源的方式1：通过传入数据模型并结合 Adapter 的方式配置数据源。这种方式主要用于加载网络图片，以及实现少于3页时的无限轮播
-//        mForegroundBanner.setAdapter(this);
-//        mForegroundBanner.setDelegate(this);
+//        if (list == null || list.size() == 0) {
+//            ll_ad.setVisibility(View.GONE);
+//            return;
+//        }
+        tips.add("2. 欢迎大家关注我哦！");
+        tips.add("3. GitHub帐号：sfsheng0322");
+        tips.add("4. 新浪微博：孙福生微博");
+        tips.add("5. 个人博客：sunfusheng.com");
+        tips.add("6. 微信公众号：孙福生");
+        marqueeView.startWithList(tips);
+// 在代码里设置自己的动画
+        //   marqueeView.startWithList(tips, R.anim.anim_bottom_in, R.anim.anim_top_out);
+        ll_ad.setVisibility(View.VISIBLE);
+        marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, TextView textView) {
+                Intent intent = new Intent(aty, AnnouncementActivity.class);
+                showActivity(aty, intent);
+            }
+        });
     }
 
 
@@ -718,8 +750,8 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             if (locationBouncedDialog != null && locationBouncedDialog.isShowing()) {
                 locationBouncedDialog.dismiss();
             }
-            timer.cancel();
-            timer = null;
+//            timer.cancel();
+//            timer = null;
         }
     }
 }

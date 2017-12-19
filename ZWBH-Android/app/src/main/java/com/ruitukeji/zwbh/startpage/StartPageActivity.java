@@ -21,6 +21,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.AppConfigBean;
+import com.ruitukeji.zwbh.main.Main1Activity;
 import com.ruitukeji.zwbh.main.MainActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
@@ -99,7 +100,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 //        } else {
         jumpIntent.setAction("android.intent.action.MAIN");
         jumpIntent.addCategory("android.intent.category.LAUNCHER");
-        jumpIntent.setClass(this, MainActivity.class);
+        jumpIntent.setClass(this, Main1Activity.class);
         //    }
         skipActivity(aty, jumpIntent);
         overridePendingTransition(0, 0);

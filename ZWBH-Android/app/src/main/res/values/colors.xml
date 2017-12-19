@@ -52,6 +52,9 @@
     <color name="fF9C0FColors">#FF9C0F</color>
     <color name="fDF0F0Colors">#FDF0F0</color>
 
+    <!--公告通知-->
+    <color name="announcementColors">#2c2e35</color>
+
     <!-- 地址选择-->
     <color name="a4a4aColors">#4A4A4A</color>
     <color name="e6E6E6Colors">#E6E6E6</color>

@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.invitefriends;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -97,7 +98,6 @@ public class SharePoliteActivity extends BaseActivity {
         share_shipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper");
         share_shipper_description = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper_description");
         share_shipper_title = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper_title");
-
         createQRCodeWithLogo();
     }
 
@@ -127,6 +127,7 @@ public class SharePoliteActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void createQRCodeWithLogo() {
         /*
         这里为了偷懒，就没有处理匿名 AsyncTask 内部类导致 Activity 泄漏的问题

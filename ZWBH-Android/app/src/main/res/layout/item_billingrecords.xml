@@ -20,6 +20,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_invoiceType"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen29"
             android:text="@string/VATinvoice"
@@ -27,6 +28,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_invoiceState"
             style="@style/AutoWrap"
             android:gravity="right"
             android:text="@string/issued"
@@ -55,6 +57,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_invoiceAmount"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen29"
             android:maxWidth="@dimen/dimen200"
@@ -85,6 +88,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_invoiceTime"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen29"
             android:maxWidth="@dimen/dimen200"

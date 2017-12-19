@@ -191,6 +191,9 @@
 
 
     <!--主界面-->
+
+    <string name="locationPermissions">定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限</string>
+    <string name="locationPermissions1">您拒绝了「定位」所需要的相关权限!</string>
     <string name="logisticsName">LogisticsName</string>
     <string name="location">location</string>
     <string name="cityDistribution">同城物流</string>
@@ -208,6 +211,11 @@
     <string name="cargoInformation">货物信息</string>
     <string name="submitOrders">提交订单</string>
     <string name="assignedVehicle">指派车辆</string>
+
+
+
+    <!--公告通知-->
+    <string name="close">关闭</string>
 
     <!--指派车辆-->
     <string name="licensePlateNumber">车牌号</string>
@@ -498,7 +506,6 @@
     <string name="pendingApproval">待审核</string>
 
 
-
     <!--开票详情-->
     <string name="billingDetails">开票详情</string>
     <string name="receiptInformation">收件信息</string>
@@ -511,9 +518,6 @@
 
     <!--所含订单-->
     <string name="containsOrder">所含订单</string>
-
-
-
 
 
     <!--异常记录-->

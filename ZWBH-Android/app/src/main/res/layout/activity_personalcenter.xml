@@ -5,7 +5,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/common_title" />
+    <include layout="@layout/common_title1" />
 
     <ScrollView
         style="@style/MatchWrap"

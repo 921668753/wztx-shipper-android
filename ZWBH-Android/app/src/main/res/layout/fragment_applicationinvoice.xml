@@ -473,8 +473,6 @@
                 android:paddingLeft="@dimen/dimen15"
                 android:scrollbars="none"
                 tools:listitem="@layout/item_applicationinvoice" />
-
-
         </LinearLayout>
     </ScrollView>
 

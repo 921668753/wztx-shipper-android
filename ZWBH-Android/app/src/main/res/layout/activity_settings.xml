@@ -135,6 +135,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_userFeedback"
         style="@style/Match45"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
@@ -161,6 +162,7 @@
     <include layout="@layout/commom_dividerwidth1" />
 
     <LinearLayout
+        android:id="@+id/ll_aboutUs"
         style="@style/Match45"
         android:background="@color/mainColor"
         android:gravity="center_vertical"

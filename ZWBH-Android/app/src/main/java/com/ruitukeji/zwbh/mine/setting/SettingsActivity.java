@@ -1,6 +1,7 @@
 package com.ruitukeji.zwbh.mine.setting;
 
 import android.Manifest;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,7 +19,9 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.setting.changepassword.ChangePasswordActivity;
+import com.ruitukeji.zwbh.mine.setting.userfeedback.UserFeedbackActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
@@ -30,8 +33,6 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
 
 /**
  * 设置
@@ -63,8 +64,24 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
     @BindView(id = R.id.tv_cache)
     private TextView cache;
 
+    /**
+     * 用户反馈
+     */
+    @BindView(id = R.id.ll_userFeedback, click = true)
+    private LinearLayout ll_userFeedback;
+
+    /**
+     * 关于我们
+     */
+    @BindView(id = R.id.ll_aboutUs, click = true)
+    private LinearLayout ll_aboutUs;
+
+    /**
+     * 退出登陆
+     */
     @BindView(id = R.id.tv_logOut, click = true)
     private TextView tv_logOut;
+
     private String updateAppUrl = null;
     private boolean isUpdateApp = false;
     private SweetAlertDialog sweetAlertDialog = null;
@@ -106,7 +123,6 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             tv_hides.setTextColor(getResources().getColor(R.color.lonincolors));
             tv_hides.setBackgroundResource(R.drawable.shape_afterwork);
         }
-        drawer.closeDrawers();
         queryCache();
     }
 
@@ -171,16 +187,24 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
                 cache.setText("0KB");
                 ViewInject.toast("清除成功");
                 break;
+            case R.id.ll_userFeedback:
+                showActivity(aty, UserFeedbackActivity.class);
+                break;
+            case R.id.ll_aboutUs:
+                Intent aboutUs = new Intent(aty, AboutUsActivity.class);
+                aboutUs.putExtra("type", "shipper_about");
+                showActivity(aty, aboutUs);
+                break;
             case R.id.tv_logOut:
                 // PreferenceHelper.clean(this, StringConstants.FILENAME);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", false);
+             //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", false);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-                drawer.closeDrawers();
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
+              //  drawer.closeDrawers();
+             //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
                 skipActivity(aty, LoginActivity.class);
                 break;
         }

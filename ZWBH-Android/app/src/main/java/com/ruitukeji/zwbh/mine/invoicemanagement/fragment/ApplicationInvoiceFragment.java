@@ -10,8 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.adapter.mine.invoicemanagement.ApplicationInvoiceViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.invoicemanagement.InvoiceManagementActivity;
 import com.ruitukeji.zwbh.utils.myview.ChildLiistView;
 
@@ -20,7 +24,8 @@ import com.ruitukeji.zwbh.utils.myview.ChildLiistView;
  * Created by Administrator on 2017/12/15.
  */
 
-public class ApplicationInvoiceFragment extends BaseFragment {
+public class ApplicationInvoiceFragment extends BaseFragment implements ApplicationInvoiceContract.View {
+
     private InvoiceManagementActivity aty;
 
     /**
@@ -28,6 +33,7 @@ public class ApplicationInvoiceFragment extends BaseFragment {
      */
     @BindView(id = R.id.img_commercialInvoice, click = true)
     private ImageView img_commercialInvoice;
+
     /**
      * 增值税专用发票
      */
@@ -133,6 +139,9 @@ public class ApplicationInvoiceFragment extends BaseFragment {
     @BindView(id = R.id.lv_applicationInvoice)
     private ChildLiistView lv_applicationInvoice;
 
+    private ApplicationInvoiceViewAdapter mAdapter = null;
+
+
     /**
      * 提交
      */
@@ -149,12 +158,41 @@ public class ApplicationInvoiceFragment extends BaseFragment {
     @Override
     protected void initData() {
         super.initData();
+        mAdapter = new ApplicationInvoiceViewAdapter(aty);
+
     }
 
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
+        selectHeadType("personal");
     }
+
+    /**
+     * 选择抬头类型
+     */
+    private void selectHeadType(String headType) {
+        if (headType.equals("personal")) {
+            ll_einDividerWidth.setVisibility(View.GONE);
+            et_ein.setText("");
+            ll_addressTelephoneNumberDivider.setVisibility(View.GONE);
+            et_addressTelephoneNumber.setText("");
+            ll_addressTelephoneNumber.setVisibility(View.GONE);
+            ll_openingBankAccountDivider.setVisibility(View.GONE);
+            et_openingBankAccount.setText("");
+            ll_openingBankAccount.setVisibility(View.GONE);
+        } else if (headType.equals("company")) {
+            ll_einDividerWidth.setVisibility(View.VISIBLE);
+            et_ein.setText("");
+            ll_addressTelephoneNumberDivider.setVisibility(View.VISIBLE);
+            et_addressTelephoneNumber.setText("");
+            ll_addressTelephoneNumber.setVisibility(View.VISIBLE);
+            ll_openingBankAccountDivider.setVisibility(View.VISIBLE);
+            et_openingBankAccount.setText("");
+            ll_openingBankAccount.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     @Override
     protected void widgetClick(View v) {
@@ -169,23 +207,43 @@ public class ApplicationInvoiceFragment extends BaseFragment {
 
                 break;
             case R.id.img_personal:
-
-
+                selectHeadType("personal");
                 break;
             case R.id.img_company:
-
-
+                selectHeadType("company");
                 break;
             case R.id.ll_inArea:
-
 
 
                 break;
             case R.id.tv_submit:
 
 
-
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(ApplicationInvoiceContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        if (flag == 0) {
+        } else if (flag == 1) {
+        }
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+            dismissLoadingDialog();
+            aty.showActivity(aty, LoginActivity.class);
+            return;
+        }
+        dismissLoadingDialog();
+        ViewInject.toast(msg);
     }
 }

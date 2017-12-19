@@ -1,4 +1,5 @@
-package com.ruitukeji.zwbh.mine.invitefriends;
+package com.ruitukeji.zwbh.mine.invoicemanagement.fragment;
+
 
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
@@ -6,33 +7,35 @@ import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
 /**
- * Created by Administrator on 2017/2/13.
+ * Created by Administrator on 2017/2/24.
  */
 
-public class RecommendedRecordPresenter implements RecommendedRecordContract.Presenter {
+public class BillingRecordsPresenter implements BillingRecordsContract.Presenter {
 
-    private RecommendedRecordContract.View mView;
 
-    public RecommendedRecordPresenter(RecommendedRecordContract.View view) {
+    private BillingRecordsContract.View mView;
+
+    public BillingRecordsPresenter(BillingRecordsContract.View view) {
         mView = view;
         mView.setPresenter(this);
     }
 
     @Override
-    public void getRecommendedRecord(int page) {
+    public void getBillingRecordsList(int page) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);
         RequestClient.showMyRecommList(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response);
+                mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg);
+                mView.errorMsg(msg, 0);
             }
         });
+
     }
 }

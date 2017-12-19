@@ -45,6 +45,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_detailedAddress"
                     style="@style/MatchWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:text="江苏省苏州市园区新平街388号腾飞江苏省苏州市园区新平街388号腾飞"
@@ -71,6 +72,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_name"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen58"
                     android:maxWidth="@dimen/dimen160"
@@ -80,6 +82,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_phone"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen17"
                     android:text="18362720300"
@@ -118,6 +121,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_invoiceRise"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:text="物载天下网络科技有限公司"
@@ -143,6 +147,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_taxpayerIdentificationNumber"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen13"
                     android:text="932626262MKT"
@@ -168,6 +173,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_invoiceContent"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:maxWidth="@dimen/dimen160"
@@ -194,6 +200,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_invoiceAmount"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:maxWidth="@dimen/dimen233"
@@ -226,6 +233,7 @@
                     android:textSize="@dimen/textsize15" />
 
                 <TextView
+                    android:id="@+id/tv_applyTime"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:text="2017-12-15 11:21:14"
@@ -237,6 +245,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_anInvoice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen65"
                 android:layout_marginTop="@dimen/dimen10"
@@ -256,6 +265,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_anInvoice"
                             style="@style/WrapWrap"
                             android:text="1"
                             android:textColor="@color/titletextcolors"
@@ -268,6 +278,7 @@
                             android:textSize="@dimen/textsize15" />
 
                         <TextView
+                            android:id="@+id/tv_anOrder"
                             style="@style/WrapWrap"
                             android:text="12"
                             android:textColor="@color/titletextcolors"
@@ -287,6 +298,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_startTime"
                             style="@style/WrapWrap"
                             android:text="2017.08.20 09：00"
                             android:textColor="@color/hintcolors"
@@ -299,11 +311,11 @@
                             android:textSize="@dimen/textsize12" />
 
                         <TextView
+                            android:id="@+id/tv_endTime"
                             style="@style/WrapWrap"
                             android:text="2017.10.20 12：00"
                             android:textColor="@color/hintcolors"
                             android:textSize="@dimen/textsize12" />
-
 
                     </LinearLayout>
                 </LinearLayout>

@@ -7,8 +7,8 @@
 
     <include layout="@layout/common_title" />
 
-
     <EditText
+        android:id="@+id/et_ridiculeGiveSomeAdvice"
         style="@style/MatchWrap"
         android:layout_marginTop="@dimen/dimen10"
         android:background="@color/white"
@@ -39,10 +39,12 @@
 
 
         <EditText
+            android:id="@+id/et_phone"
             style="@style/MatchMatch"
             android:layout_marginLeft="@dimen/dimen39"
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"
+            android:digits="0123456789"
             android:hint="@string/accountText"
             android:inputType="phone"
             android:maxLength="11"

@@ -1,7 +1,13 @@
 package com.ruitukeji.zwbh.main;
 
+import android.app.Notification;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.widget.TextView;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.MyLocationStyle;
@@ -19,6 +25,11 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.MathUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
+
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
+
+import static com.ruitukeji.zwbh.main.Main1Activity.*;
 
 
 /**
@@ -45,7 +56,7 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, 3);
+                mView.errorMsg(msg, 3);
             }
         });
     }
@@ -79,13 +90,13 @@ public class MainPresenter implements MainContract.Presenter {
                     mView.getSuccess(response, 0);
                 } else {
                     Log.d("nearbySearch", nearbySearch.getStatus() + "");
-                    mView.error("周边搜索出现异常,云端返回数据错误", 0);
+                    mView.errorMsg("周边搜索出现异常,云端返回数据错误", 0);
                 }
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, 0);
+                mView.errorMsg(msg, 0);
             }
         });
     }
@@ -101,9 +112,60 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, 4);
+                mView.errorMsg(msg, 4);
             }
         });
+    }
+
+    @Override
+    public void registerMessageReceiver() {
+
+
+    }
+
+
+    /**
+     * 清除颜色，并添加颜色
+     */
+    @Override
+    public void chooseLogisticsType(Main1Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
+        tv_cityDistribution.setTextColor(activity.getResources().getColor(R.color.typecolors));
+        tv_cityDistribution1.setBackgroundResource(R.color.mainColor);
+        tv_longTrunk.setTextColor(activity.getResources().getColor(R.color.typecolors));
+        tv_longTrunk1.setBackgroundResource(R.color.mainColor);
+        if (chageIcon == 0) {
+            tv_cityDistribution.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_cityDistribution1.setBackgroundResource(R.color.announcementCloseColors);
+        } else if (chageIcon == 1) {
+            tv_longTrunk.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_longTrunk1.setBackgroundResource(R.color.announcementCloseColors);
+        } else {
+            tv_cityDistribution.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_cityDistribution1.setBackgroundResource(R.color.announcementCloseColors);
+        }
+    }
+
+    @Override
+    public void settingType(Main1Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
+        tv_realTime.setTextColor(activity.getResources().getColor(R.color.typecolors));
+        tv_realTime.setBackgroundResource(R.color.mainColor);
+        tv_urgent.setTextColor(activity.getResources().getColor(R.color.typecolors));
+        tv_urgent.setBackgroundResource(R.color.mainColor);
+        tv_makeAppointment.setTextColor(activity.getResources().getColor(R.color.typecolors));
+        tv_makeAppointment.setBackgroundResource(R.color.mainColor);
+        if (type == 0) {
+            tv_realTime.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_realTime.setBackgroundResource(R.drawable.shape_main_type1);
+        } else if (type == 1) {
+            tv_urgent.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_urgent.setBackgroundResource(R.drawable.shape_main_type1);
+        } else if (type == 2) {
+            tv_makeAppointment.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_makeAppointment.setBackgroundResource(R.drawable.shape_main_type1);
+        } else {
+            tv_realTime.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
+            tv_realTime.setBackgroundResource(R.drawable.shape_main_type1);
+        }
     }
 
     /**
@@ -127,7 +189,7 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, 2);
+                mView.errorMsg(msg, 2);
             }
         });
     }
@@ -142,7 +204,7 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, flag);
+                mView.errorMsg(msg, flag);
             }
         });
     }
