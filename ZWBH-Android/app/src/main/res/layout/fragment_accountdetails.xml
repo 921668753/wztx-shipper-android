@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:background="@color/background"
     android:orientation="vertical">
 
-    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:tools="http://schemas.android.com/tools"
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
         style="@style/MatchAuto"
         android:paddingTop="@dimen/dimen10">
@@ -12,11 +13,11 @@
         <ListView
             android:id="@+id/lv_accountDetails"
             style="@style/MatchWrap"
-            android:paddingLeft="@dimen/dimen15"
             android:background="@color/white"
             android:divider="@color/e5E5E5olors"
             android:dividerHeight="@dimen/dimen0.5"
             android:overScrollMode="never"
+            android:paddingLeft="@dimen/dimen15"
             android:scrollbars="none"
             tools:listitem="@layout/item_accountdetails" />
 

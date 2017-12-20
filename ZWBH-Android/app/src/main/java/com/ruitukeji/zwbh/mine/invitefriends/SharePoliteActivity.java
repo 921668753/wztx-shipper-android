@@ -67,7 +67,7 @@ public class SharePoliteActivity extends BaseActivity {
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_recommendcourteous);
+        setContentView(R.layout.activity_sharepolite);
     }
 
 

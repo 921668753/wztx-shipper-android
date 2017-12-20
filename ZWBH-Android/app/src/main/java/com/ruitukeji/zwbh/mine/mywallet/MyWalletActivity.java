@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.mywallet;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -7,8 +8,13 @@ import android.widget.TextView;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.MyWalletBean;
+import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.mybankcard.MyBankCardActivity;
+import com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ModifyPaymentPasswordActivity;
+import com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.setpaymentpassword.SetPaymentPasswordActivity;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.PrepaidPhoneRecordsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.RechargeActivity;
 import com.ruitukeji.zwbh.mine.mywallet.withdrawal.WithdrawalActivity;
@@ -102,32 +108,12 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         ActivityTitleUtils.initToolbar(aty, getString(R.string.myWallet), true, R.id.titlebar);
     }
 
-
-    @Override
-    public void setPresenter(MyWalletContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void getSuccess(String success, int flag) {
-        MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
-        tv_accountBalance.setText(myWalletBean.getResult().getBalance());
-//        tv_myReferralBonuses.setText("+" + myWalletBean.getResult().getBonus());
-        dismissLoadingDialog();
-    }
-
-    @Override
-    public void errorMsg(String msg, int flag) {
-        toLigon(msg);
-        dismissLoadingDialog();
-    }
-
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_accountDetails:
-                showActivity(aty, RecommendedRecordActivity.class);
+                ((MyWalletContract.Presenter) mPresenter).isLogin(1);
                 break;
             case R.id.tv_recharge:
                 showActivity(aty, RechargeActivity.class);
@@ -139,10 +125,52 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
                 showActivity(aty, MyBankCardActivity.class);
                 break;
             case R.id.ll_paymentPassword:
-                showActivity(aty, PrepaidPhoneRecordsActivity.class);
+                ((MyWalletContract.Presenter) mPresenter).isLogin(2);
                 break;
         }
     }
+
+
+    @Override
+    public void setPresenter(MyWalletContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        if (flag == 0) {
+            MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
+            tv_accountBalance.setText(myWalletBean.getResult().getBalance());
+//        tv_myReferralBonuses.setText("+" + myWalletBean.getResult().getBonus());
+        } else if (flag == 1) {
+            showActivity(aty, AccountDetailsActivity.class);
+        } else if (flag == 2) {
+            if (true) {
+                showActivity(aty, ModifyPaymentPasswordActivity.class);
+            } else {
+                showActivity(aty, SetPaymentPasswordActivity.class);
+            }
+        }
+        dismissLoadingDialog();
+
+
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        if (flag == 0) {
+            toLigon(msg);
+        }
+        dismissLoadingDialog();
+        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+            Intent intent = new Intent(aty, LoginActivity.class);
+            intent.putExtra("type", "personalCenter");
+            showActivity(aty, intent);
+            return;
+        }
+
+    }
+
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {

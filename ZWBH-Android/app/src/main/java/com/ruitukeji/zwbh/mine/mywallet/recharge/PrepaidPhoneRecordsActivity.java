@@ -27,8 +27,8 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 public class PrepaidPhoneRecordsActivity extends BaseActivity implements PrepaidPhoneRecordsContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
 
-    @BindView(id = R.id.lv_prepaidPhoneRecords)
-    private ListView lv_prepaidPhoneRecords;
+    @BindView(id = R.id.lv_rechargeRecord)
+    private ListView lv_rechargeRecord;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -62,7 +62,7 @@ public class PrepaidPhoneRecordsActivity extends BaseActivity implements Prepaid
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_prepaidphonerecords);
+        setContentView(R.layout.activity_rechargerecord);
     }
 
     @Override
@@ -77,8 +77,8 @@ public class PrepaidPhoneRecordsActivity extends BaseActivity implements Prepaid
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.prepaidPhoneRecords), true, R.id.titlebar);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
-        lv_prepaidPhoneRecords.setAdapter(rechargeRecordViewAdapter);
-//        lv_prepaidPhoneRecords.setOnItemClickListener(this);
+        lv_rechargeRecord.setAdapter(rechargeRecordViewAdapter);
+//        lv_rechargeRecord.setOnItemClickListener(this);
         ((PrepaidPhoneRecordsContract.Presenter) mPresenter).getPrepaidPhoneRecords(mMorePageNumber);
     }
 

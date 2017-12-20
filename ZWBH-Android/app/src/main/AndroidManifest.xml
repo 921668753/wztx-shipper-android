@@ -219,6 +219,73 @@
             android:name=".mine.mywallet.MyWalletActivity"
             android:screenOrientation="portrait" />
 
+        <!--个人中心  我的钱包 账户明细-->
+        <activity
+            android:name=".mine.mywallet.accountdetails.AccountDetailsActivity"
+            android:screenOrientation="portrait" />
+
+
+        <!--个人中心  我的钱包  充值-->
+        <activity
+            android:name=".mine.mywallet.recharge.RechargeActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 充值 充值记录-->
+        <activity
+            android:name=".mine.mywallet.recharge.RechargeRecordActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包  提现-->
+        <activity
+            android:name=".mine.mywallet.withdrawal.WithdrawalActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包  我的银行卡-->
+        <activity
+            android:name=".mine.mywallet.mybankcard.MyBankCardActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 我的银行卡 添加银行卡-->
+        <activity
+            android:name=".mine.mywallet.mybankcard.AddBankCardActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 设置支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.setpaymentpassword.SetPaymentPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 设置支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.setpaymentpassword.SetPaymentPassword1Activity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 修改支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ModifyPaymentPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 修改支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ModifyPaymentPassword1Activity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 修改支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ModifyPaymentPassword2Activity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包 修改支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ModifyPaymentPassword3Activity"
+            android:screenOrientation="portrait" />
+
+
+        <!--个人中心  我的钱包 确认支付密码-->
+        <activity
+            android:name=".mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ConfirmPaymentPasswordActivity"
+            android:screenOrientation="portrait" />
+
         <!--个人中心 邀请好友-->
         <activity
             android:name=".mine.invitefriends.SharePoliteActivity"
@@ -286,20 +353,6 @@
             android:name=".mine.mywallet.BillActivity"
             android:screenOrientation="portrait" />
 
-        <!--我的钱包  提现-->
-        <activity
-            android:name=".mine.mywallet.withdrawal.WithdrawalActivity"
-            android:screenOrientation="portrait" />
-
-        <!--我的钱包  充值-->
-        <activity
-            android:name=".mine.mywallet.recharge.RechargeActivity"
-            android:screenOrientation="portrait" />
-
-        <!--我的钱包  充值记录-->
-        <activity
-            android:name=".mine.mywallet.recharge.PrepaidPhoneRecordsActivity"
-            android:screenOrientation="portrait" />
 
         <!--我发布的订单-->
         <activity

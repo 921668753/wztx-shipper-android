@@ -16,13 +16,13 @@
 
         <!-- item_order -->
         <ListView
-            android:id="@+id/lv_prepaidPhoneRecords"
+            android:id="@+id/lv_rechargeRecord"
             style="@style/MatchMatch"
             android:divider="@color/background"
             android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
             android:scrollbars="none"
-            tools:listitem="@layout/item_bill" />
+            tools:listitem="@layout/item_rechargerecord" />
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 

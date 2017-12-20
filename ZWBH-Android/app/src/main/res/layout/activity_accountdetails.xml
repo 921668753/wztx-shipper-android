@@ -14,10 +14,12 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/ll_paid"
             style="@style/AutoMatch"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_paid"
                 style="@style/MatchAuto"
                 android:gravity="center"
                 android:text="@string/paid"
@@ -25,6 +27,7 @@
                 android:textSize="@dimen/textsize15" />
 
             <TextView
+                android:id="@+id/tv_paid1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen1.5"
                 android:layout_marginLeft="@dimen/dimen55"
@@ -34,10 +37,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_unpaid"
             style="@style/AutoMatch"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_unpaid"
                 style="@style/MatchAuto"
                 android:gravity="center"
                 android:text="@string/unpaid"
@@ -45,6 +50,7 @@
                 android:textSize="@dimen/textsize15" />
 
             <TextView
+                android:id="@+id/tv_unpaid1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen1.5"
                 android:layout_marginLeft="@dimen/dimen55"

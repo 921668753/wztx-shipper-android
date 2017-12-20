@@ -15,7 +15,7 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 public class RechargeRecordViewAdapter extends BGAAdapterViewAdapter<ListBean> {
     public RechargeRecordViewAdapter(Context context) {
-        super(context, R.layout.item_prepaidphonerecords);
+        super(context, R.layout.item_rechargerecord);
     }
 
 //    @Override

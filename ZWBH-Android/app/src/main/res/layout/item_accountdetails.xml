@@ -11,12 +11,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_orderNumber"
             style="@style/WrapWrap"
             android:text="订单号201712060321"
             android:textColor="@color/f2222Colors"
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_time"
             style="@style/WrapWrap"
             android:layout_marginTop="@dimen/dimen5"
             android:text="2017-12-12"
@@ -35,6 +37,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tv_money"
         style="@style/WrapWrap"
         android:maxWidth="@dimen/dimen200"
         android:paddingRight="@dimen/dimen15"
