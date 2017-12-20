@@ -66,13 +66,13 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     /**
      * 男
      */
-    @BindView(id = R.id.img_man)
+    @BindView(id = R.id.img_man, click = true)
     private ImageView img_man;
 
     /**
      * 女
      */
-    @BindView(id = R.id.img_woman)
+    @BindView(id = R.id.img_woman, click = true)
     private ImageView img_woman;
 
     /**
@@ -136,9 +136,10 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     @Override
     protected void initData() {
         super.initData();
+        mPresenter = new IndividualOwnersPresenter(this);
         images = new ArrayList<>();
         initImagePicker();
-
+        asOfTheDatePicker();
     }
 
 
@@ -198,6 +199,14 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     protected void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.img_man:
+                img_man.setImageResource(R.mipmap.ic_checkbox_select);
+                img_woman.setImageResource(R.mipmap.ic_checkbox_unselect);
+                break;
+            case R.id.img_woman:
+                img_man.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_woman.setImageResource(R.mipmap.ic_checkbox_select);
+                break;
             case R.id.ll_validityIdentityCard:
                 pvTime.setDate(calendar);
                 //弹出时间选择器
@@ -285,7 +294,7 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
                     return;
                 }
                 String filePath = images.get(0).path;
-                ((CompanyOwnerContract.Presenter) mPresenter).postUpLoadImg(filePath, requestCode);
+                ((IndividualOwnersContract.Presenter) mPresenter).postUpLoadImg(filePath, requestCode);
             } else {
                 ViewInject.toast(getString(R.string.noData));
             }

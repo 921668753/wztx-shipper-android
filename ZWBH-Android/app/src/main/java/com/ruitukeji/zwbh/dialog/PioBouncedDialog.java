@@ -85,7 +85,7 @@ public abstract class PioBouncedDialog extends Dialog implements TextWatcher, On
 //        poiSearchTask.search(mDestinaionText.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 //第二个参数传入null或者“”代表在全国进行检索，否则按照传入的city进行检索
         InputtipsQuery inputquery = new InputtipsQuery(s.toString(), null);
-        // inputquery.setCityLimit(true);//限制在当前城市
+      //   inputquery.setCityLimit(true);//限制在当前城市
         //   构造 Inputtips 对象，并设置监听。
         Inputtips inputTips = new Inputtips(context, inputquery);
         inputTips.setInputtipsListener(this);

@@ -21,6 +21,7 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddress1Activity;
+import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddressActivity;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
@@ -50,6 +51,13 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
+    /**
+     * 新增地址
+     */
+    @BindView(id = R.id.tv_newAddress, click = true)
+    private TextView tv_newAddress;
+
     /**
      * 当前页码
      */
@@ -117,6 +125,13 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
         switch (v.getId()) {
             case R.id.tv_hintText:
                 mRefreshLayout.beginRefreshing();
+                break;
+            case R.id.tv_newAddress:
+                Intent intent = new Intent(aty, NewAddAddressActivity.class);
+                intent.putExtra("title", getString(R.string.newAddress));
+                intent.putExtra("type", 0);
+                intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
+                aty.showActivity(aty, intent);
                 break;
         }
     }

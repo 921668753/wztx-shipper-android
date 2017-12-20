@@ -368,6 +368,8 @@
 
 -keep class com.ruitukeji.zwbh.entity.** { *; }        # 保持实体类不被混淆
 
+-keep class com.ruitukeji.zwbh.common.** { *; }        # 保持实体类不被混淆
+
  -keepclasseswithmembernames class * {              # 保持 native 方法不被混淆
      native <methods>;
  }

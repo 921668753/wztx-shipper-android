@@ -1,40 +1,45 @@
-package com.ruitukeji.zwbh.mine.helpcenter;
+package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.mine.helpcenter.HelpCenterViewAdapter;
-import com.ruitukeji.zwbh.common.BaseActivity;
+import com.ruitukeji.zwbh.adapter.OrderViewAdapter;
+import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.RecommendedRecordBean;
-import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
- * 帮助中心
- * Created by Administrator on 2017/12/12.
+ * 待支付
+ * Created by Administrator on 2017/2/16.
  */
 
-public class HelpCenterActivity extends BaseActivity implements HelpCenterContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
-
+public class PendingPaymentFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    private HelpCenterViewAdapter mAdapter;
+    private OrderViewAdapter mAdapter;
 
-    @BindView(id = R.id.lv_helpCenter)
-    private ListView lv_helpCenter;
+    private MyOrderActivity aty;
+
+    @BindView(id = R.id.lv_order)
+    private ListView lv_order;
+
 
     /**
      * 错误提示页
@@ -55,36 +60,47 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+    /**
+     * 订单状态（quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
+     */
+    private String type = "photo";
 
     @Override
-    public void setRootView() {
-        setContentView(R.layout.activity_helpcenter);
+    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        aty = (MyOrderActivity) getActivity();
+        return View.inflate(aty, R.layout.fragment_allorder, null);
     }
 
     @Override
-    public void initData() {
+    protected void initData() {
         super.initData();
-        mPresenter = new HelpCenterPresenter(this);
-        mAdapter = new HelpCenterViewAdapter(this);
+        mPresenter = new OrderPresenter(this);
+        mAdapter = new OrderViewAdapter(getActivity());
     }
 
     @Override
-    public void initWidget() {
-        super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.helpCenter), true, R.id.titlebar);
-        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
-        lv_helpCenter.setAdapter(mAdapter);
-        lv_helpCenter.setOnItemClickListener(this);
-        ((HelpCenterContract.Presenter) mPresenter).getHelpCenter(mMorePageNumber);
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, getActivity(), true);
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
+        lv_order.setAdapter(mAdapter);
+        lv_order.setOnItemClickListener(this);
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(aty, OrderDetailsActivity.class);
+        intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+        aty.showActivity(aty, intent);
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mMorePageNumber = 0;
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((HelpCenterContract.Presenter) mPresenter).getHelpCenter(mMorePageNumber);
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
     }
 
     @Override
@@ -99,13 +115,8 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((HelpCenterContract.Presenter) mPresenter).getHelpCenter(mMorePageNumber);
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         return true;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //  ViewInject.toast("1");
     }
 
     /**
@@ -116,7 +127,6 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_hintText:
-                ViewInject.toast("111");
                 mRefreshLayout.beginRefreshing();
                 break;
         }
@@ -127,27 +137,27 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
+        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
+        mMorePageNumber = orderBean.getResult().getPage();
+        totalPageNumber = orderBean.getResult().getPageTotal();
+        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
+            mAdapter.addNewData(orderBean.getResult().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
+            mAdapter.addMoreData(orderBean.getResult().getList());
         }
         dismissLoadingDialog();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void error(String msg) {
+        toLigon(msg);
         isShowLoadingMore = false;
         mRefreshLayout.setVisibility(View.GONE);
         ll_commonError.setVisibility(View.VISIBLE);
@@ -161,7 +171,23 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
     }
 
     @Override
-    public void setPresenter(HelpCenterContract.Presenter presenter) {
+    public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
+    /**
+     * 当通过changeFragment()显示时会被调用(类似于onResume)
+     */
+    @Override
+    public void onChange() {
+        super.onChange();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.clear();
+        mAdapter = null;
+    }
 }
+

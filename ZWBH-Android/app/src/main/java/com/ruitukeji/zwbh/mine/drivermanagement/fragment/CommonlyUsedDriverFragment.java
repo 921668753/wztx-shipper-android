@@ -36,8 +36,8 @@ public class CommonlyUsedDriverFragment extends BaseFragment implements DriverMa
 
     private CommonlyUsedDriverViewAdapter mAdapter;
 
-    @BindView(id = R.id.lv_address)
-    private ListView lv_address;
+    @BindView(id = R.id.lv_driver)
+    private ListView lv_driver;
 
     /**
      * 错误提示页
@@ -80,8 +80,8 @@ public class CommonlyUsedDriverFragment extends BaseFragment implements DriverMa
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, getActivity(), true);
-        lv_address.setAdapter(mAdapter);
-        lv_address.setOnItemClickListener(this);
+        lv_driver.setAdapter(mAdapter);
+        lv_driver.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         mRefreshLayout.beginRefreshing();
     }

@@ -175,6 +175,7 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
         if (headType.equals("personal")) {
             ll_einDividerWidth.setVisibility(View.GONE);
             et_ein.setText("");
+            ll_ein.setVisibility(View.GONE);
             ll_addressTelephoneNumberDivider.setVisibility(View.GONE);
             et_addressTelephoneNumber.setText("");
             ll_addressTelephoneNumber.setVisibility(View.GONE);
@@ -184,6 +185,7 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
         } else if (headType.equals("company")) {
             ll_einDividerWidth.setVisibility(View.VISIBLE);
             et_ein.setText("");
+            ll_ein.setVisibility(View.VISIBLE);
             ll_addressTelephoneNumberDivider.setVisibility(View.VISIBLE);
             et_addressTelephoneNumber.setText("");
             ll_addressTelephoneNumber.setVisibility(View.VISIBLE);
@@ -199,17 +201,21 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_commercialInvoice:
-
-
+                img_commercialInvoice.setImageResource(R.mipmap.ic_checkbox_select);
+                img_specialVATInvoices.setImageResource(R.mipmap.ic_checkbox_unselect);
                 break;
             case R.id.img_specialVATInvoices:
-
-
+                img_commercialInvoice.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_specialVATInvoices.setImageResource(R.mipmap.ic_checkbox_select);
                 break;
             case R.id.img_personal:
+                img_personal.setImageResource(R.mipmap.ic_checkbox_select);
+                img_company.setImageResource(R.mipmap.ic_checkbox_unselect);
                 selectHeadType("personal");
                 break;
             case R.id.img_company:
+                img_personal.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_company.setImageResource(R.mipmap.ic_checkbox_select);
                 selectHeadType("company");
                 break;
             case R.id.ll_inArea:

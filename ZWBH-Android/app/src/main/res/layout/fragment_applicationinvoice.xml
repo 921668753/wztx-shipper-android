@@ -43,7 +43,7 @@
                     style="@style/WrapWrap"
                     android:text="@string/commercialInvoice"
                     android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize15" />
+                    android:textSize="@dimen/textsize14" />
 
                 <ImageView
                     android:id="@+id/img_specialVATInvoices"
@@ -57,7 +57,7 @@
                     style="@style/WrapWrap"
                     android:text="@string/specialVATInvoices"
                     android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize15" />
+                    android:textSize="@dimen/textsize14" />
 
             </LinearLayout>
 

@@ -11,7 +11,6 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.mine.shippercertification.certificationfragment.CompanyOwnerFragment;
 import com.ruitukeji.zwbh.mine.shippercertification.certificationfragment.IndividualOwnersFragment;
-import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 /**
  * 货主认证
@@ -71,7 +70,6 @@ public class ShipperCertificationActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.my_order), true, R.id.titlebar);
         if (chageIcon == 0) {
             chageIcon = 0;
             cleanColors(0);

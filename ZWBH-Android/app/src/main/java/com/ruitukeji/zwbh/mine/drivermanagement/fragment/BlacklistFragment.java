@@ -16,7 +16,6 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.mine.addressmanagement.fragment.AddressContract;
 import com.ruitukeji.zwbh.mine.drivermanagement.DriverManagementActivity;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
@@ -102,7 +101,7 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AddressContract.Presenter) mPresenter).getAddress(mMorePageNumber, type);
+        ((DriverManagementContract.Presenter) mPresenter).getDriverList(mMorePageNumber, type);
     }
 
 
@@ -132,7 +131,7 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AddressContract.Presenter) mPresenter).getAddress(mMorePageNumber, type);
+        ((DriverManagementContract.Presenter) mPresenter).getDriverList(mMorePageNumber, type);
         return true;
     }
 

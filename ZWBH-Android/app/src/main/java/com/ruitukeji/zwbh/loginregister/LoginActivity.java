@@ -99,6 +99,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     private String nickname;
     private String head_pic;
     private int sex = 0;
+    private String type;
 
     @Override
     public void setRootView() {
@@ -112,6 +113,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void initData() {
         super.initData();
         mPresenter = new LoginPresenter(this);
+        type = getIntent().getStringExtra("type");
     }
 
     /**
@@ -299,7 +301,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         /**
          * 发送消息
          */
-        RxBus.getInstance().post(new MsgEvent("RxBusRefreshMineEvent"));
+        if (type != null && type.equals("personalCenter")) {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
+        } else {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
+        }
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
         MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
         dismissLoadingDialog();
         finish();

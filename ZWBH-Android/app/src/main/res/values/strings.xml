@@ -192,6 +192,7 @@
 
     <!--主界面-->
 
+    <string name="exitProcedureAgain">再按一次退出程序</string>
     <string name="locationPermissions">定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限</string>
     <string name="locationPermissions1">您拒绝了「定位」所需要的相关权限!</string>
     <string name="logisticsName">LogisticsName</string>
@@ -226,6 +227,7 @@
     <string name="selectAddress">选择地址</string>
     <string name="cancel">取消</string>
     <string name="pleaseEnterDeliveryLocation">请输入发货地点</string>
+    <string name="pleaseEnterReceivingPlace">请输入收货地点</string>
     <string name="commonlyAddress">常用地址</string>
     <string name="setCommonAddress">设为常用地址</string>
 
@@ -238,6 +240,11 @@
     <string name="pleaseFillOut">请填写</string>
     <string name="pleaseFillOut1">请填写(选填)</string>
     <string name="destination">目的地</string>
+
+    <!--目的地-->
+    <string name="receivingCustomer">收货客户</string>
+    <string name="consignee">收货人</string>
+
 
     <!--添加货物信息-->
     <string name="addCargoInformation">添加货物信息</string>
@@ -323,6 +330,7 @@
 
 
     <!--个人中心-->
+    <string name="loginregister">登录/注册</string>
     <string name="incompleteCertification">未完成认证</string>
     <string name="myOrder">我的订单</string>
     <string name="addressManagement">地址管理</string>
@@ -391,6 +399,7 @@
     <string name="pendingOrder">待接单</string>
     <string name="pendingDelivery">待发货</string>
     <string name="transportation">运输中</string>
+    <string name="pendingPayment">待支付</string>
     <string name="orderNumber1">订单号：</string>
     <string name="orderTime">订单时间</string>
     <string name="systemForecast">系统预估</string>

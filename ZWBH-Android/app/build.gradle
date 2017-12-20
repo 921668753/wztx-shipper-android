@@ -105,9 +105,9 @@ android {
             debuggable true
             jniDebuggable true
             zipAlignEnabled true
-            shrinkResources true
+            shrinkResources false
             // 是否进行混淆
-            minifyEnabled true
+            minifyEnabled false
             // 混淆文件的位置
             signingConfig signingConfigs.debug
             buildConfigField "String", "GAODE_APPKEY", "\"7e863564eb0ceb3db0a075b9a04ef7d3\""
@@ -162,9 +162,9 @@ dependencies {
     //图片列表  GAImageView-Android   imgview框架
     compile 'pub.devrel:easypermissions:1.1.0'
     //权限申请工具类
-    compile 'com.github.bumptech.glide:glide:4.0.0'
+    compile 'com.github.bumptech.glide:glide:4.3.0'
     //图片加载框架
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
     compile 'com.google.zxing:core:latest.release'
     //创建二维码图片
     compile 'cn.bingoogolapple:bga-qrcodecore:latest.release'

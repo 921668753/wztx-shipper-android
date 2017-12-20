@@ -24,20 +24,21 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.entity.UserInfoBean;
 import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
 
 /**
  * 账户设置
@@ -92,7 +93,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @Override
     public void initWidget() {
         super.initWidget();
-        drawer.closeDrawers();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.accountSettings), true, R.id.titlebar);
         showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         ((PersonalDataContract.Presenter) mPresenter).getInfo();
@@ -225,11 +225,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
-            boolean isRefreshPersonalDataActivity = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity", false);
-            if (!isRefreshPersonalDataActivity) {
-                GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), userInfoBean.getResult().getAvatar() + "?imageView2/1/w/60/h/60", img_user, 0);
-            }
-            PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity", false);
+            GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), userInfoBean.getResult().getAvatar() + "?imageView2/1/w/60/h/60", img_user, 0);
             tv_phone.setText(userInfoBean.getResult().getPhone());
             if (StringUtils.isEmpty(userInfoBean.getResult().getReal_name())) {
                 ll_name.setVisibility(View.GONE);
@@ -276,6 +272,12 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 PreferenceHelper.write(this, StringConstants.FILENAME, "avatar", uploadImageBean.getResult().getFile().getUrl());
                 GlideImageLoader.glideLoader(this, uploadImageBean.getResult().getFile().getUrl(), img_user, 0);
                 PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
+//                /**
+//                 * 发送消息
+//                 */
+//                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
+//                msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
+//                RxBus.getInstance().post(msgEvent);
             }
         }
         dismissLoadingDialog();
@@ -288,28 +290,28 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        boolean isRefreshPersonalDataActivity = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity", false);
-        if (isRefreshPersonalDataActivity) {
-            showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-            ((PersonalDataContract.Presenter) mPresenter).getInfo();
-        }
-        boolean isRefreshPersonalDataActivity1 = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity1", false);
-        if (isRefreshPersonalDataActivity1) {
-            String bond_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "bond_status");
-            if (bond_status == null || bond_status.equals("init")) {
-                img_arrow.setVisibility(View.VISIBLE);
-                tv_accountDeposit.setText(getString(R.string.failurePay));
-            } else if (bond_status.equals("checked")) {
-                img_arrow.setVisibility(View.GONE);
-                tv_accountDeposit.setText(getString(R.string.checked));
-            } else if (bond_status.equals("frozen")) {
-                img_arrow.setVisibility(View.VISIBLE);
-                tv_accountDeposit.setText(getString(R.string.frozen));
-            }
-            PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity1", false);
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        boolean isRefreshPersonalDataActivity = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity", false);
+//        if (isRefreshPersonalDataActivity) {
+//            showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+//            ((PersonalDataContract.Presenter) mPresenter).getInfo();
+//        }
+//        boolean isRefreshPersonalDataActivity1 = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity1", false);
+//        if (isRefreshPersonalDataActivity1) {
+//            String bond_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "bond_status");
+//            if (bond_status == null || bond_status.equals("init")) {
+//                img_arrow.setVisibility(View.VISIBLE);
+//                tv_accountDeposit.setText(getString(R.string.failurePay));
+//            } else if (bond_status.equals("checked")) {
+//                img_arrow.setVisibility(View.GONE);
+//                tv_accountDeposit.setText(getString(R.string.checked));
+//            } else if (bond_status.equals("frozen")) {
+//                img_arrow.setVisibility(View.VISIBLE);
+//                tv_accountDeposit.setText(getString(R.string.frozen));
+//            }
+//           // PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity1", false);
+//        }
+//    }
 }

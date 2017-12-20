@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
@@ -155,6 +156,13 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
     String uploudHoldingIdPhotoOperationUrl = "";
     private boolean isUploudHoldingIdPhotoOperation = true;
 
+    /**
+     * 提交
+     */
+    @BindView(id = R.id.tv_submit, click = true)
+    private TextView tv_submit;
+
+
     private ImagePicker imagePicker;
     ArrayList<ImageItem> images = null;
 
@@ -167,6 +175,7 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
     @Override
     protected void initData() {
         super.initData();
+        mPresenter = new CompanyOwnerPresenter(this);
         images = new ArrayList<>();
         initImagePicker();
     }
@@ -276,6 +285,9 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
                 //打开预览
                 toImagePreviewDelActivity(img_uploudHoldingIdPhotoOperation, images, NumericConstants.REQUEST_CODE_PREVIEW6);
                 break;
+            case R.id.tv_submit:
+
+                break;
         }
     }
 
@@ -287,6 +299,7 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+
 
 
         } else if (flag == 1) {

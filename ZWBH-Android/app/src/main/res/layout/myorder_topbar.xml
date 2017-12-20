@@ -99,7 +99,25 @@
             android:layout_marginRight="@dimen/dimen10"
             android:background="@color/announcementCloseColors" />
     </RelativeLayout>
+    <RelativeLayout style="@style/AutoMatch">
 
+        <TextView
+            android:id="@+id/tv_pendingPayment"
+            style="@style/MatchMatch"
+            android:gravity="center"
+            android:text="@string/pendingPayment"
+            android:textColor="@color/announcementCloseColors"
+            android:textSize="@dimen/textsize13" />
+
+        <TextView
+            android:id="@+id/tv_pendingPayment1"
+            style="@style/Match1.5"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginRight="@dimen/dimen10"
+            android:background="@color/announcementCloseColors" />
+    </RelativeLayout>
     <RelativeLayout style="@style/AutoMatch">
 
         <TextView

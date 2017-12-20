@@ -19,6 +19,12 @@ public interface IndividualOwnersContract {
          * 获取个人货主信息
          */
         void getIndividualOwners();
+
+
+        /**
+         * 上传头像
+         */
+        void postUpLoadImg(String path, int flag);
     }
 
     interface View extends BaseNewView<Presenter, String> {

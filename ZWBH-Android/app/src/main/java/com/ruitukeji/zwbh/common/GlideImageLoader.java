@@ -101,12 +101,12 @@ public class GlideImageLoader implements ImageLoader {
         if (0 == tag) {
             GlideApp.with(context)
                     .load(url)
-                    //  .skipMemoryCache(true)//设置跳过内存缓存
+                //    .skipMemoryCache(true)//设置跳过内存缓存
                     .placeholder(R.mipmap.loading)
                     .error(R.mipmap.headload)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .transform(new GlideCircleTransform(context))
-                    .dontAnimate()//没有任何淡入淡出效果
+                      .dontAnimate()//没有任何淡入淡出效果
                     //    .transition(withCrossFade().crossFade())//应用在淡入淡出
                     .into(imageView);
         } else if (1 == tag) {

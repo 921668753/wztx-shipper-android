@@ -8,6 +8,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.entity.MyWalletBean;
+import com.ruitukeji.zwbh.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.PrepaidPhoneRecordsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.RechargeActivity;
 import com.ruitukeji.zwbh.mine.mywallet.withdrawal.WithdrawalActivity;
@@ -17,10 +18,6 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-import cn.bingoogolapple.titlebar.BGATitleBar;
-import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
-
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
 
 /**
  * 我的钱包
@@ -32,30 +29,63 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
+    /**
+     * 账户余额
+     */
     @BindView(id = R.id.tv_accountBalance)
     private TextView tv_accountBalance;
 
+    /**
+     * 可提现金额
+     */
     @BindView(id = R.id.tv_withdrawalAmount)
     private TextView tv_withdrawalAmount;
 
-    @BindView(id = R.id.tv_myReferralBonuses)
-    private TextView tv_myReferralBonuses;
+    /**
+     * 消费总额
+     */
+    @BindView(id = R.id.tv_totalConsumption)
+    private TextView tv_totalConsumption;
 
-    @BindView(id = R.id.ll_myReferralBonuses, click = true)
-    private LinearLayout ll_myReferralBonuses;
+    /**
+     * 未支付总额
+     */
+    @BindView(id = R.id.tv_outstandingAmount)
+    private TextView tv_outstandingAmount;
 
-    @BindView(id = R.id.ll_withdrawalAmount, click = true)
-    private LinearLayout ll_withdrawalAmount;
+    /**
+     * 账户明细
+     */
+    @BindView(id = R.id.ll_accountDetails, click = true)
+    private LinearLayout ll_accountDetails;
 
-    @BindView(id = R.id.tv_recharge, click = true)
-    private TextView tv_recharge;
+    /**
+     * 充值
+     */
+    @BindView(id = R.id.ll_recharge, click = true)
+    private LinearLayout ll_recharge;
 
-    @BindView(id = R.id.ll_prepaidPhoneRecords, click = true)
-    private LinearLayout ll_prepaidPhoneRecords;
+    /**
+     * 提现
+     */
+    @BindView(id = R.id.ll_cashWithdrawal, click = true)
+    private TextView ll_cashWithdrawal;
+
+    /**
+     * 我的银行卡
+     */
+    @BindView(id = R.id.ll_myBankCard, click = true)
+    private LinearLayout ll_myBankCard;
+
+    /**
+     * 支付密码管理
+     */
+    @BindView(id = R.id.ll_paymentPassword, click = true)
+    private LinearLayout ll_paymentPassword;
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_mywallet);
+        setContentView(R.layout.activity_mywallet1);
     }
 
     @Override
@@ -69,35 +99,9 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     public void initWidget() {
         super.initWidget();
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
-        drawer.closeDrawers();
-        BGATitleBar.SimpleDelegate simpleDelegate = new SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                aty.finish();
-            }
-
-            @Override
-            public void onClickRightCtv() {
-                showActivity(aty, BillActivity.class);
-            }
-        };
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.myWallet), getString(R.string.bill), R.id.titlebar, simpleDelegate);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.myWallet), true, R.id.titlebar);
     }
 
-    @Override
-    public void getSuccess(String s) {
-        MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(s, MyWalletBean.class);
-        tv_accountBalance.setText(myWalletBean.getResult().getBalance());
-        tv_myReferralBonuses.setText("+" + myWalletBean.getResult().getBonus());
-        dismissLoadingDialog();
-    }
-
-    @Override
-    public void error(String msg) {
-        toLigon(msg);
-        dismissLoadingDialog();
-        //    ViewInject.toast(msg);
-    }
 
     @Override
     public void setPresenter(MyWalletContract.Presenter presenter) {
@@ -105,19 +109,36 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     }
 
     @Override
+    public void getSuccess(String success, int flag) {
+        MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
+        tv_accountBalance.setText(myWalletBean.getResult().getBalance());
+//        tv_myReferralBonuses.setText("+" + myWalletBean.getResult().getBonus());
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+        toLigon(msg);
+        dismissLoadingDialog();
+    }
+
+    @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.ll_myReferralBonuses:
+            case R.id.ll_accountDetails:
                 showActivity(aty, RecommendedRecordActivity.class);
-                break;
-            case R.id.ll_withdrawalAmount:
-                showActivity(aty, WithdrawalActivity.class);
                 break;
             case R.id.tv_recharge:
                 showActivity(aty, RechargeActivity.class);
                 break;
-            case R.id.ll_prepaidPhoneRecords:
+            case R.id.ll_cashWithdrawal:
+                showActivity(aty, WithdrawalActivity.class);
+                break;
+            case R.id.ll_myBankCard:
+                showActivity(aty, MyBankCardActivity.class);
+                break;
+            case R.id.ll_paymentPassword:
                 showActivity(aty, PrepaidPhoneRecordsActivity.class);
                 break;
         }

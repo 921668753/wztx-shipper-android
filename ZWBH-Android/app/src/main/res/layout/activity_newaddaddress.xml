@@ -20,6 +20,7 @@
 
 
         <TextView
+            android:id="@+id/tv_city"
             style="@style/WrapWrap"
             android:gravity="center"
             android:maxWidth="@dimen/dimen100"
@@ -39,6 +40,7 @@
 
 
         <EditText
+            android:id="@+id/et_enterDeliveryLocation"
             style="@style/AutoWrap"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
@@ -58,7 +60,8 @@
     <TextView
         android:id="@+id/tv_divider"
         style="@style/DividerWidth"
-        android:layout_marginTop="@dimen/dimen9" />
+        android:layout_marginTop="@dimen/dimen9"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/lv_selectAddress"
@@ -71,7 +74,8 @@
 
     <TextView
         android:id="@+id/tv_divider1"
-        style="@style/DividerWidth" />
+        style="@style/DividerWidth"
+        android:visibility="gone" />
 
 
 </LinearLayout>

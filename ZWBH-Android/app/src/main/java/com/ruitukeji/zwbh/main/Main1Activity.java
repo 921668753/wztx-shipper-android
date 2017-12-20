@@ -231,21 +231,21 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     public void initData() {
         super.initData();
         mPresenter = new MainPresenter(this);
-        locationBouncedDialog = new LocationBouncedDialog(this);
-        locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss();
-                    dialog = null;
-                    finish();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-        timer = new Timer();
+//        locationBouncedDialog = new LocationBouncedDialog(this);
+//        locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    dialog.dismiss();
+//                    dialog = null;
+//                    finish();
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+//            }
+//        });
+    //    timer = new Timer();
         registerMessageReceiver();
         mCloudSearch = new CloudSearch(this);// 初始化查询类
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
@@ -260,7 +260,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         img_user.setOnClickListener(this);
         ll_cityDistribution.setOnClickListener(this);
         ll_longTrunk.setOnClickListener(this);
-        locationBouncedDialog.show();
+     //   locationBouncedDialog.show();
         ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
         tv_appointmentTime.setVisibility(View.GONE);
         ll_appointmentTime.setVisibility(View.GONE);
@@ -481,7 +481,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 long secondTime = System.currentTimeMillis();
                 if (secondTime - firstTime > 2000) {
                     //如果两次按键时间间隔大于2秒，则不退出
-                    ViewInject.toast("再按一次退出程序");
+                    ViewInject.toast(getString(R.string.exitProcedureAgain));
                     firstTime = secondTime;//更新firstTime
                     return true;
                 } else {
@@ -537,6 +537,8 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         if (null != mlocationClient) {
             mlocationClient.onDestroy();
         }
+        timer.cancel();
+        timer = null;
     }
 
     public void registerMessageReceiver() {
@@ -608,10 +610,10 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //                }
 //                // tv_tag.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
 //            }
-            processLogic(homeBean.getResult().getList());
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    processLogic(homeBean.getResult().getList());
                     if (timer != null) {
                         timer.schedule(new Task(), 2000);
                     }
@@ -687,8 +689,18 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             dismissLoadingDialog();
             ViewInject.toast(getString(R.string.no_result));
         }
-        ((MainContract.Presenter) mPresenter).getHome();
+        startHome();
     }
+
+    private void startHome() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ((MainContract.Presenter) mPresenter).getHome();
+            }
+        }).start();
+    }
+
 
     @Override
     public void onCloudItemDetailSearched(CloudItemDetail cloudItemDetail, int i) {
@@ -750,8 +762,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             if (locationBouncedDialog != null && locationBouncedDialog.isShowing()) {
                 locationBouncedDialog.dismiss();
             }
-//            timer.cancel();
-//            timer = null;
+
         }
     }
 }

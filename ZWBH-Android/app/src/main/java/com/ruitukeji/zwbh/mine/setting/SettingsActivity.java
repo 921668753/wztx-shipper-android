@@ -26,6 +26,8 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.io.File;
 import java.util.List;
@@ -35,7 +37,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * 设置
+ * 系统设置
  * Created by Administrator on 2017/2/10.
  */
 
@@ -124,6 +126,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             tv_hides.setBackgroundResource(R.drawable.shape_afterwork);
         }
         queryCache();
+        ((SettingsContract.Presenter) mPresenter).isLogin(3);
     }
 
     /**
@@ -153,7 +156,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_changePassword:
-                showActivity(aty, ChangePasswordActivity.class);
+                ((SettingsContract.Presenter) mPresenter).isLogin(4);
                 break;
             case R.id.tv_showing:
                 if (isGoneBanner) {
@@ -197,14 +200,18 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
                 break;
             case R.id.tv_logOut:
                 // PreferenceHelper.clean(this, StringConstants.FILENAME);
-             //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", false);
+                //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", false);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
-              //  drawer.closeDrawers();
-             //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
+                //  drawer.closeDrawers();
+                //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
+                /**
+                 * 发送消息
+                 */
+                RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
                 skipActivity(aty, LoginActivity.class);
                 break;
         }
@@ -249,12 +256,20 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             tv_hides.setBackgroundResource(R.drawable.shape_afterwork1);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", true);
         }
+        if (flag == 3) {
+            tv_logOut.setVisibility(View.VISIBLE);
+        } else if (flag == 4) {
+            showActivity(aty, ChangePasswordActivity.class);
+        }
         dismissLoadingDialog();
     }
 
     @Override
-    public void error(String msg) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+    public void errorMsg(String msg, int flag) {
+        if (flag == 3) {
+            tv_logOut.setVisibility(View.GONE);
+            return;
+        } else if (flag != 3 && msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             dismissLoadingDialog();
             showActivity(aty, LoginActivity.class);
             return;
@@ -296,5 +311,14 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             ViewInject.toast(getString(R.string.sdPermission));
         }
     }
-
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
+            getSuccess("", 3);
+        }
+    }
 }

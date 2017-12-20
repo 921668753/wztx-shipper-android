@@ -11,6 +11,7 @@ import com.ruitukeji.zwbh.mine.myorder.orderfragment.AllFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.CompletedFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.PendingDeliveryFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.PendingOrderFragment;
+import com.ruitukeji.zwbh.mine.myorder.orderfragment.PendingPaymentFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.TransportationFragment;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
@@ -54,6 +55,14 @@ public class MyOrderActivity extends BaseActivity {
     private TextView tv_transportation1;
 
     /**
+     * 待支付
+     */
+    @BindView(id = R.id.tv_pendingPayment, click = true)
+    private TextView tv_pendingPayment;
+    @BindView(id = R.id.tv_pendingPayment1)
+    private TextView tv_pendingPayment1;
+
+    /**
      * 已完成
      */
     @BindView(id = R.id.tv_completed, click = true)
@@ -67,7 +76,7 @@ public class MyOrderActivity extends BaseActivity {
     private BaseFragment contentFragment2;
     private BaseFragment contentFragment3;
     private BaseFragment contentFragment4;
-
+    private BaseFragment contentFragment5;
     /**
      * 用来表示移动的Fragment
      */
@@ -86,7 +95,8 @@ public class MyOrderActivity extends BaseActivity {
         contentFragment1 = new PendingOrderFragment();
         contentFragment2 = new PendingDeliveryFragment();
         contentFragment3 = new TransportationFragment();
-        contentFragment4 = new CompletedFragment();
+        contentFragment4 = new PendingPaymentFragment();
+        contentFragment5 = new CompletedFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
     }
 
@@ -113,6 +123,10 @@ public class MyOrderActivity extends BaseActivity {
         } else if (chageIcon == 4) {
             chageIcon = 4;
             cleanColors(4);
+            changeFragment(contentFragment4);
+        } else if (chageIcon == 5) {
+            chageIcon = 5;
+            cleanColors(5);
             changeFragment(contentFragment4);
         } else {
             chageIcon = 0;
@@ -151,10 +165,15 @@ public class MyOrderActivity extends BaseActivity {
                 cleanColors(3);
                 changeFragment(contentFragment3);
                 break;
-            case R.id.tv_completed:
+            case R.id.tv_pendingPayment:
                 chageIcon = 4;
                 cleanColors(4);
                 changeFragment(contentFragment4);
+                break;
+            case R.id.tv_completed:
+                chageIcon = 5;
+                cleanColors(5);
+                changeFragment(contentFragment5);
                 break;
             default:
                 break;
@@ -173,6 +192,8 @@ public class MyOrderActivity extends BaseActivity {
         tv_pendingDelivery1.setBackgroundResource(R.color.mainColor);
         tv_transportation.setTextColor(getResources().getColor(R.color.typecolors));
         tv_transportation1.setBackgroundResource(R.color.mainColor);
+        tv_pendingPayment.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_pendingPayment1.setBackgroundResource(R.color.mainColor);
         tv_completed.setTextColor(getResources().getColor(R.color.typecolors));
         tv_completed1.setBackgroundResource(R.color.mainColor);
         if (chageIcon == 0) {
@@ -188,6 +209,9 @@ public class MyOrderActivity extends BaseActivity {
             tv_transportation.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_transportation1.setBackgroundResource(R.color.announcementCloseColors);
         } else if (chageIcon == 4) {
+            tv_pendingPayment.setTextColor(getResources().getColor(R.color.announcementCloseColors));
+            tv_pendingPayment1.setBackgroundResource(R.color.announcementCloseColors);
+        }else if (chageIcon == 5) {
             tv_completed.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_completed1.setBackgroundResource(R.color.announcementCloseColors);
         } else {

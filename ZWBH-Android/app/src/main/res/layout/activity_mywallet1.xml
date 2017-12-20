@@ -21,6 +21,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_accountBalance"
                     style="@style/MatchWrap"
                     android:layout_gravity="center_horizontal"
                     android:background="@color/mainColor"
@@ -31,7 +32,6 @@
                     android:textSize="@dimen/textsize33" />
 
                 <TextView
-                    android:id="@+id/tv_accountBalance"
                     style="@style/MatchWrap"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
@@ -60,6 +60,7 @@
                         android:paddingRight="@dimen/dimen15">
 
                         <TextView
+                            android:id="@+id/tv_withdrawalAmount"
                             style="@style/WrapWrap"
                             android:text="300.00"
                             android:textColor="@color/typecolors"
@@ -87,6 +88,7 @@
                         android:paddingRight="@dimen/dimen15">
 
                         <TextView
+                            android:id="@+id/tv_totalConsumption"
                             style="@style/WrapWrap"
                             android:text="300.00"
                             android:textColor="@color/typecolors"
@@ -113,6 +115,7 @@
                         android:paddingRight="@dimen/dimen15">
 
                         <TextView
+                            android:id="@+id/tv_outstandingAmount"
                             style="@style/WrapWrap"
                             android:text="300.00"
                             android:textColor="@color/typecolors"
@@ -129,7 +132,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/ll_incomeDetails"
+                    android:id="@+id/ll_accountDetails"
                     style="@style/Match50"
                     android:layout_marginTop="@dimen/dimen10"
                     android:background="@color/mainColor"

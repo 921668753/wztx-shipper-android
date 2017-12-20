@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.mywallet;
 
+import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
 
@@ -14,20 +15,14 @@ public interface MyWalletContract {
          * 获取我的钱包信息
          */
         void getMyWallet();
+
+        /**
+         * 是否登录
+         */
+        void isLogin(int flag);
     }
 
-    interface View extends BaseView<Presenter> {
-        /**
-         * http请求正确
-         *
-         * @param s
-         */
-        void getSuccess(String s);
-
-        /**
-         * http请求错误
-         */
-        void error(String msg);
+    interface View extends BaseNewView<Presenter, String> {
     }
 
 }
