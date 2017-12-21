@@ -1,16 +1,21 @@
 package com.ruitukeji.zwbh.mine.mywallet.accountdetails;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.OptionsPickerView;
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.PaidFragment;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.UnpaidFragment;
-import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 /**
  * 账户明细
@@ -19,6 +24,20 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 public class AccountDetailsActivity extends BaseActivity {
 
+
+    /**
+     * 标题栏
+     */
+    @BindView(id = R.id.img_back, click = true)
+    private ImageView img_back;
+
+    @BindView(id = R.id.ll_classification, click = true)
+    private LinearLayout ll_classification;
+
+    @BindView(id = R.id.tv_classification)
+    private TextView tv_classification;
+
+    private OptionsPickerView pvOptions;
 
     /**
      * 已支付
@@ -56,12 +75,12 @@ public class AccountDetailsActivity extends BaseActivity {
         contentFragment = new PaidFragment();
         contentFragment1 = new UnpaidFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
+        chooseClassification();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.accountDetails), true, R.id.titlebar);
         if (chageIcon == 0) {
             chageIcon = 0;
             cleanColors(0);
@@ -86,6 +105,12 @@ public class AccountDetailsActivity extends BaseActivity {
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
+            case R.id.ll_classification:
+                pvOptions.show(tv_classification);
+                break;
             case R.id.ll_paid:
                 chageIcon = 0;
                 cleanColors(0);
@@ -119,5 +144,35 @@ public class AccountDetailsActivity extends BaseActivity {
             tv_paid.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_paid1.setBackgroundResource(R.color.announcementCloseColors);
         }
+    }
+
+    /**
+     * 选择分类
+     */
+    private void chooseClassification() {
+        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                //返回的分别是三个级别的选中位置
+                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+                // ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
+                /**
+                 * 发送消息
+                 */
+//                RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+//                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
+//           //     msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
+//                RxBus.getInstance().post(msgEvent);
+            }
+        }).build();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pvOptions != null && pvOptions.isShowing()) {
+            pvOptions.dismiss();
+        }
+        pvOptions = null;
     }
 }

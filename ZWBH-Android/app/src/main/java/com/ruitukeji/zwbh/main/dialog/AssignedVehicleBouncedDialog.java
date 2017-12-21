@@ -1,18 +1,15 @@
 package com.ruitukeji.zwbh.main.dialog;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseDialog;
 import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.MessageBean.ResultBean.ListBean;
-import com.ruitukeji.zwbh.loginregister.LoginActivity;
 
 /**
  * 主界面---指派车辆弹框
@@ -24,13 +21,12 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
     private Context context;
     private ImageView img_cancel;
     private TextView tv_confirmAssigned;
-    private ListBean listBean;
     private AssignedVehicleBouncedContract.Presenter mPresenter;
+    private EditText et_pleaseLicensePlateNumber;
 
-    public AssignedVehicleBouncedDialog(Context context, ListBean listBean) {
+    public AssignedVehicleBouncedDialog(Context context) {
         super(context, R.style.MyDialog);
         this.context = context;
-        this.listBean = listBean;
     }
 
     @Override
@@ -43,6 +39,7 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
     private void initView() {
         img_cancel = (ImageView) findViewById(R.id.img_cancel);
         img_cancel.setOnClickListener(this);
+        et_pleaseLicensePlateNumber = (EditText) findViewById(R.id.et_pleaseLicensePlateNumber);
         tv_confirmAssigned = (TextView) findViewById(R.id.tv_confirmAssigned);
         tv_confirmAssigned.setOnClickListener(this);
         mPresenter = new AssignedVehicleBouncedPresenter(this);
@@ -55,11 +52,7 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
                 dismiss();
                 break;
             case R.id.tv_confirmAssigned:
-//                if (listBean.getMind_price() == null || listBean.getMind_price().equals("0.00")) {
-//                    mPresenter.getQuoteAdd(listBean.getId(), listBean.getSystem_price(), 1);
-//                    break;
-//                }
-//                mPresenter.getQuoteAdd(listBean.getId(), listBean.getMind_price(), 1);
+                mPresenter.getAssignedVehicle(et_pleaseLicensePlateNumber.getText().toString().trim());
                 break;
         }
     }
@@ -67,7 +60,7 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
     @Override
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
-            confirm();
+            confirm(s);
         }
         dismissLoadingDialog();
     }
@@ -79,15 +72,15 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
 
     @Override
     public void error(String msg) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            Intent intent = new Intent(context, LoginActivity.class);
-            context.startActivity(intent);
-            return;
-        }
+//        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+//            dismissLoadingDialog();
+//            Intent intent = new Intent(context, LoginActivity.class);
+//            context.startActivity(intent);
+//            return;
+//        }
         dismissLoadingDialog();
         ViewInject.toast(msg);
     }
 
-    public abstract void confirm();
+    public abstract void confirm(String pleaseLicensePlateNumber);
 }

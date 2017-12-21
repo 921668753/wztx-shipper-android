@@ -18,6 +18,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -208,6 +209,17 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
 //            mRefreshLayout.beginRefreshing();
 //        }
     }
+
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+//         if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
+//        mRefreshLayout.beginRefreshing();
+//        }
+    }
+
 
     @Override
     public void onDestroy() {

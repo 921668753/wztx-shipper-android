@@ -159,13 +159,41 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        style="@style/Match45"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/setCommonAddress"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/AutoWrap" />
+
+
+        <ImageView
+            android:id="@+id/img_off"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen28"
+            android:layout_marginRight="@dimen/dimen15"
+            android:src="@mipmap/switch_btn_off" />
+
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/tv_determine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen45"
         android:layout_marginLeft="@dimen/dimen15"
         android:layout_marginRight="@dimen/dimen15"
-        android:layout_marginTop="@dimen/dimen20"
+        android:layout_marginTop="@dimen/dimen18"
         android:background="@drawable/shape_provenance"
         android:gravity="center"
         android:text="@string/determine"

@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.main.selectvehicle;
+package com.ruitukeji.zwbh.main.cargoinformation.selectvehicle;
 
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.retrofit.RequestClient;

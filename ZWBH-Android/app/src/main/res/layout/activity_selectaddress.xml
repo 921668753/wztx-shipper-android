@@ -4,7 +4,8 @@
     style="@style/MatchMatch"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,ContentDescription,UseCompoundDrawables">
 
     <include layout="@layout/common_title" />
 
@@ -20,6 +21,7 @@
 
 
         <TextView
+            android:id="@+id/tv_cityName"
             style="@style/WrapWrap"
             android:gravity="center"
             android:maxWidth="@dimen/dimen100"
@@ -39,6 +41,7 @@
 
 
         <EditText
+            android:id="@+id/et_enterDeliveryLocation"
             style="@style/AutoWrap"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
@@ -59,7 +62,8 @@
     <TextView
         android:id="@+id/tv_divider"
         style="@style/DividerWidth"
-        android:layout_marginTop="@dimen/dimen9" />
+        android:layout_marginTop="@dimen/dimen9"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/lv_selectAddress"
@@ -68,13 +72,16 @@
         android:dividerHeight="@dimen/dimen0.5"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"
+        android:visibility="gone"
         tools:listitem="@layout/item_selectaddress" />
 
     <TextView
         android:id="@+id/tv_divider1"
-        style="@style/DividerWidth" />
+        style="@style/DividerWidth"
+        android:visibility="gone" />
 
     <LinearLayout
+        android:id="@+id/ll_commonlyAddress"
         style="@style/Match44"
         android:layout_marginLeft="@dimen/dimen15"
         android:layout_marginRight="@dimen/dimen15"
@@ -85,6 +92,7 @@
 
 
         <TextView
+            android:id="@+id/tv_commonlyAddress"
             style="@style/AutoMatch"
             android:gravity="center"
             android:text="@string/commonlyAddress"
@@ -96,7 +104,6 @@
             android:layout_marginBottom="@dimen/dimen9"
             android:layout_marginTop="@dimen/dimen9" />
 
-
         <LinearLayout
             style="@style/AutoMatch"
             android:gravity="center"
@@ -104,10 +111,11 @@
 
 
             <ImageView
+                android:id="@+id/img_select"
                 android:layout_width="@dimen/dimen30"
                 android:layout_height="@dimen/dimen30"
                 android:padding="@dimen/dimen6"
-                android:src="@mipmap/ic_arrow" />
+                android:src="@mipmap/ic_checkbox_unselect" />
 
             <TextView
                 style="@style/WrapWrap"

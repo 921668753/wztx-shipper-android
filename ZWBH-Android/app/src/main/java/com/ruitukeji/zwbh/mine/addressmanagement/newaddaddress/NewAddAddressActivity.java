@@ -145,7 +145,7 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         intent.putExtra("shipper", shipper);
         intent.putExtra("phone", phone);
         intent.putExtra("eixedTelephone", eixedTelephone);
-        skipActivity(aty, intent);
+        showActivity(aty, intent);
     }
 
     @Override
@@ -163,12 +163,5 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
 //            ViewInject.toast(rCode + "");
             pioAddressViewAdapter.clear();
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
     }
 }

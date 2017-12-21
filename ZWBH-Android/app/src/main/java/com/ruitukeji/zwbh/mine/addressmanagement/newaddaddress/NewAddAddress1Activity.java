@@ -1,6 +1,5 @@
 package com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress;
 
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -84,7 +83,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_provenance);
+        setContentView(R.layout.activity_newaddaddress1);
     }
 
     @Override
@@ -151,22 +150,22 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.tv_address:
-                Intent intent = new Intent(aty, NewAddAddressActivity.class);
-                intent.putExtra("lat", lat);
-                intent.putExtra("longi", longi);
-                intent.putExtra("district", district);
-                intent.putExtra("placeName", placeName);
-                intent.putExtra("type", getIntent().getIntExtra("type", 0));
-                intent.putExtra("title", title);
-
-                intent.putExtra("detailedAddress", et_detailedAddress.getText().toString().trim());
-                intent.putExtra("deliveryCustomer", et_deliveryCustomer.getText().toString().trim());
-                intent.putExtra("shipper", et_shipper.getText().toString().trim());
-                intent.putExtra("phone", et_phone.getText().toString().trim());
-                intent.putExtra("eixedTelephone", et_eixedTelephone.getText().toString().trim());
-                skipActivity(aty, intent);
-                break;
+//            case R.id.tv_address:
+//                Intent intent = new Intent(aty, NewAddAddressActivity.class);
+//                intent.putExtra("lat", lat);
+//                intent.putExtra("longi", longi);
+//                intent.putExtra("district", district);
+//                intent.putExtra("placeName", placeName);
+//                intent.putExtra("type", getIntent().getIntExtra("type", 0));
+//                intent.putExtra("title", title);
+//
+//                intent.putExtra("detailedAddress", et_detailedAddress.getText().toString().trim());
+//                intent.putExtra("deliveryCustomer", et_deliveryCustomer.getText().toString().trim());
+//                intent.putExtra("shipper", et_shipper.getText().toString().trim());
+//                intent.putExtra("phone", et_phone.getText().toString().trim());
+//                intent.putExtra("eixedTelephone", et_eixedTelephone.getText().toString().trim());
+//                skipActivity(aty, intent);
+//                break;
             case R.id.tv_determine:
 
 

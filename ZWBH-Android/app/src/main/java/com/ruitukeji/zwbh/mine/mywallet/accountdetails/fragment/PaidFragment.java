@@ -18,6 +18,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
@@ -113,7 +114,7 @@ public class PaidFragment extends BaseFragment implements AccountDetailsContract
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber,is_pay);
+        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber, is_pay);
     }
 
 
@@ -129,7 +130,7 @@ public class PaidFragment extends BaseFragment implements AccountDetailsContract
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber,is_pay);
+        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber, is_pay);
         return true;
     }
 
@@ -206,6 +207,15 @@ public class PaidFragment extends BaseFragment implements AccountDetailsContract
 //        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
 //        if (isRefreshAllOrder1) {
 //            mRefreshLayout.beginRefreshing();
+//        }
+    }
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+//         if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
+//        mRefreshLayout.beginRefreshing();
 //        }
     }
 

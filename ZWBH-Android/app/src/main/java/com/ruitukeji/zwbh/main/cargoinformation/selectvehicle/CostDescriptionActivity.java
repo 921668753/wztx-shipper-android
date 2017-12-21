@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.main.selectvehicle;
+package com.ruitukeji.zwbh.main.cargoinformation.selectvehicle;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;

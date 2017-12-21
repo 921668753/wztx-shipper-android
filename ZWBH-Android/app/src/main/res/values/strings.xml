@@ -245,7 +245,6 @@
     <string name="receivingCustomer">收货客户</string>
     <string name="consignee">收货人</string>
 
-
     <!--添加货物信息-->
     <string name="addCargoInformation">添加货物信息</string>
     <string name="descriptionGoods">货物名称</string>
@@ -560,6 +559,10 @@
     <!--账户明细-->
     <string name="paid">已支付</string>
     <string name="unpaid">未支付</string>
+    <string name="thisWeek">本周</string>
+
+
+
 
     <!--我的银行卡-->
     <string name="addBankCard">添加银行卡</string>

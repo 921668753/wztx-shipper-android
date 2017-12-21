@@ -46,7 +46,10 @@ import com.ruitukeji.zwbh.entity.HomeBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.announcement.AnnouncementActivity;
+import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
+import com.ruitukeji.zwbh.main.dialog.AssignedVehicleBouncedDialog;
 import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
+import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.mypublishedorder.MyPublishedGoodsActivity;
@@ -72,6 +75,10 @@ import cn.jpush.android.api.JPushInterface;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
 
 public class Main1Activity extends BaseActivity implements EasyPermissions.PermissionCallbacks, LocationSource, AMapLocationListener, MainContract.View, CloudSearch.OnCloudSearchListener {
 
@@ -176,6 +183,10 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     /**
      * 货物信息
      */
+
+    @BindView(id = R.id.ll_cargoInformation)
+    private LinearLayout ll_cargoInformation;
+
     @BindView(id = R.id.rl_cargoInformation, click = true)
     private RelativeLayout rl_cargoInformation;
 
@@ -188,6 +199,8 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     /**
      * 提交订单
      */
+    @BindView(id = R.id.ll_submitOrders)
+    private LinearLayout ll_submitOrders;
     @BindView(id = R.id.tv_submitOrders, click = true)
     private TextView tv_submitOrders;
 
@@ -200,10 +213,11 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     private SweetAlertDialog sweetAlertDialog = null;
     private String province = null;
     private String city = null;
-    private String district = null;
     private String aoiName = null;
-    private String lat = null;
-    private String longi = null;
+
+    private String title = null;
+
+    private int type = 0;
 
     private CloudSearch mCloudSearch;
     private CloudSearch.Query mQuery;
@@ -215,6 +229,31 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
      * 时间选择器
      */
     private OptionsPickerView pvOptions;
+
+    /**
+     * 发货信息
+     */
+    private String detailedAddress;
+    private String deliveryCustomer;
+    private String shipper;
+    private String phone;
+    private String eixedTelephone;
+    private String lat;
+    private String longi;
+    private String district;
+    private String placeName;
+    /**
+     * 目的地信息
+     */
+    private String lat1;
+    private String longi1;
+    private String district1;
+    private String placeName1;
+    private String detailedAddress1;
+    private String deliveryCustomer1;
+    private String shipper1;
+    private String phone1;
+    private String eixedTelephone1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,7 +284,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //                }
 //            }
 //        });
-    //    timer = new Timer();
+        //    timer = new Timer();
         registerMessageReceiver();
         mCloudSearch = new CloudSearch(this);// 初始化查询类
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
@@ -256,14 +295,16 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     public void initWidget() {
         super.initWidget();
-        img_message.setOnClickListener(this);
-        img_user.setOnClickListener(this);
-        ll_cityDistribution.setOnClickListener(this);
-        ll_longTrunk.setOnClickListener(this);
-     //   locationBouncedDialog.show();
+//        img_message.setOnClickListener(this);
+//        img_user.setOnClickListener(this);
+//        ll_cityDistribution.setOnClickListener(this);
+//        ll_longTrunk.setOnClickListener(this);
+        //   locationBouncedDialog.show();
         ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
         tv_appointmentTime.setVisibility(View.GONE);
         ll_appointmentTime.setVisibility(View.GONE);
+        ll_cargoInformation.setVisibility(View.GONE);
+        ll_submitOrders.setVisibility(View.GONE);
     }
 
     @Override
@@ -303,22 +344,62 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 tv_appointmentTime1.setText(getString(R.string.appointmentTime2));
                 break;
             case R.id.tv_pleaseEnterDeparturePoint:
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                Intent provenanceIntent = new Intent(this, SelectAddressActivity.class);
+                provenanceIntent.putExtra("lat", lat);
+                provenanceIntent.putExtra("longi", longi);
+                provenanceIntent.putExtra("district", district);
+                provenanceIntent.putExtra("placeName", placeName);
+                provenanceIntent.putExtra("type", type);
+                provenanceIntent.putExtra("title", getString(R.string.provenance));
+                provenanceIntent.putExtra("detailedAddress", detailedAddress);
+                provenanceIntent.putExtra("deliveryCustomer", deliveryCustomer);
+                provenanceIntent.putExtra("shipper", shipper);
+                provenanceIntent.putExtra("phone", phone);
+                provenanceIntent.putExtra("eixedTelephone", eixedTelephone);
+                startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.tv_enterDestination:
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                Intent destinationIntent = new Intent(this, SelectAddressActivity.class);
+                destinationIntent.putExtra("lat", lat);
+                destinationIntent.putExtra("longi", longi);
+                destinationIntent.putExtra("district", district);
+                destinationIntent.putExtra("placeName", placeName);
+                destinationIntent.putExtra("type", type);
+                destinationIntent.putExtra("title", getString(R.string.destination));
+                destinationIntent.putExtra("detailedAddress", detailedAddress);
+                destinationIntent.putExtra("deliveryCustomer", deliveryCustomer);
+                destinationIntent.putExtra("shipper", shipper);
+                destinationIntent.putExtra("phone", phone);
+                destinationIntent.putExtra("eixedTelephone", eixedTelephone);
+                startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
-                break;
-            case R.id.tv_price:
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
+                cargoInformationIntent.putExtra("lat", lat);
+                cargoInformationIntent.putExtra("longi", longi);
+                cargoInformationIntent.putExtra("district", district);
+                cargoInformationIntent.putExtra("plac eName", placeName);
+                cargoInformationIntent.putExtra("type", type);
+                cargoInformationIntent.putExtra("title", getString(R.string.destination));
+                cargoInformationIntent.putExtra("detailedAddress", detailedAddress);
+                cargoInformationIntent.putExtra("deliveryCustomer", deliveryCustomer);
+                cargoInformationIntent.putExtra("shipper", shipper);
+                cargoInformationIntent.putExtra("phone", phone);
+                cargoInformationIntent.putExtra("eixedTelephone", eixedTelephone);
+                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
                 break;
             case R.id.tv_submitOrders:
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+
+
                 break;
             case R.id.tv_assignedVehicle:
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                AssignedVehicleBouncedDialog assignedVehicleBouncedDialog = new AssignedVehicleBouncedDialog(this) {
+                    @Override
+                    public void confirm(String pleaseLicensePlateNumber) {
+
+                    }
+                };
+                assignedVehicleBouncedDialog.show();
                 break;
         }
     }
@@ -762,6 +843,54 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             if (locationBouncedDialog != null && locationBouncedDialog.isShowing()) {
                 locationBouncedDialog.dismiss();
             }
+
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            /**
+             * 选择始发地页面返回
+             */
+            lat = getIntent().getStringExtra("lat");
+            longi = getIntent().getStringExtra("longi");
+            district = getIntent().getStringExtra("district");
+            placeName = getIntent().getStringExtra("placeName");
+            type = getIntent().getIntExtra("type", 0);
+
+            detailedAddress = getIntent().getStringExtra("detailedAddress");
+            deliveryCustomer = getIntent().getStringExtra("deliveryCustomer");
+            shipper = getIntent().getStringExtra("shipper");
+            phone = getIntent().getStringExtra("phone");
+            eixedTelephone = getIntent().getStringExtra("eixedTelephone");
+        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
+            /**
+             * 选择目的地页面返回
+             */
+            lat1 = getIntent().getStringExtra("lat");
+            longi1 = getIntent().getStringExtra("longi");
+            district1 = getIntent().getStringExtra("district");
+            placeName1 = getIntent().getStringExtra("placeName");
+            type = getIntent().getIntExtra("type", 0);
+
+            detailedAddress1 = getIntent().getStringExtra("detailedAddress");
+            deliveryCustomer1 = getIntent().getStringExtra("deliveryCustomer");
+            shipper1 = getIntent().getStringExtra("shipper");
+            phone1 = getIntent().getStringExtra("phone");
+            eixedTelephone1 = getIntent().getStringExtra("eixedTelephone");
+        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
+            //货物信息页面返回
+
+
+
+
+
+
+
+
 
         }
     }

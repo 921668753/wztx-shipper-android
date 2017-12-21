@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ruitukeji.zwbh">
+
     <!--地图包、搜索包需要的基础权限-->
     <!--定位包、导航包需要的额外权限（注：基础权限也需要）-->
     <!--<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
@@ -92,9 +93,35 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <!--公告通知-->
+        <!--主界面  公告通知-->
         <activity
             android:name=".main.announcement.AnnouncementActivity"
+            android:screenOrientation="portrait" />
+
+
+        <!--主界面  地址选择-->
+        <activity
+            android:name=".main.selectaddress.SelectAddressActivity"
+            android:screenOrientation="portrait" />
+
+        <!--主界面  地址选择  始发地/目的地-->
+        <activity
+            android:name=".main.selectaddress.ProvenanceActivity"
+            android:screenOrientation="portrait" />
+
+        <!--主界面  添加货物信息-->
+        <activity
+            android:name=".main.cargoinformation.AddCargoInformationActivity"
+            android:screenOrientation="portrait" />
+
+        <!--主界面  添加货物信息  填写货物签收单-->
+        <activity
+            android:name=".main.cargoinformation.FillCargoReceiptFormActivity"
+            android:screenOrientation="portrait" />
+
+        <!--主界面  添加货物信息  选择车辆-->
+        <activity
+            android:name=".main.cargoinformation.selectvehicle.SelectVehicleActivity"
             android:screenOrientation="portrait" />
 
         <!--首页轮播图-->
@@ -105,11 +132,6 @@
         <!--同城配送  长途干线-->
         <activity
             android:name=".main.LogisticsActivity"
-            android:screenOrientation="portrait" />
-
-        <!--车长车型选择-->
-        <activity
-            android:name=".main.selectvehicle.SelectVehicleActivity"
             android:screenOrientation="portrait" />
 
         <!--货物保险-->

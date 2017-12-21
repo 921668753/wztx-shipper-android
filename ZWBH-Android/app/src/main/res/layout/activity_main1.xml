@@ -337,6 +337,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_cargoInformation"
             style="@style/MatchWrap"
             android:layout_marginTop="@dimen/dimen5"
             android:background="@drawable/shape_main"
@@ -372,7 +373,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen49"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -380,7 +382,6 @@
                     android:text="1233"
                     android:textColor="@color/fF9C0FColors"
                     android:textSize="@dimen/textsize21" />
-
 
                 <TextView
                     style="@style/WrapWrap"
@@ -391,34 +392,6 @@
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen45"
-            android:layout_marginTop="@dimen/dimen5"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_submitOrders"
-                style="@style/AutoMatch"
-                android:background="@drawable/shape_submitorders"
-                android:gravity="center"
-                android:text="@string/submitOrders"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textsize17" />
-
-            <TextView
-                android:id="@+id/tv_assignedVehicle"
-                style="@style/AutoMatch"
-                android:layout_marginLeft="@dimen/dimen11"
-                android:background="@drawable/shape_assignedvehicle"
-                android:gravity="center"
-                android:text="@string/assignedVehicle"
-                android:textColor="@color/announcementCloseColors"
-                android:textSize="@dimen/textsize17" />
 
         </LinearLayout>
 

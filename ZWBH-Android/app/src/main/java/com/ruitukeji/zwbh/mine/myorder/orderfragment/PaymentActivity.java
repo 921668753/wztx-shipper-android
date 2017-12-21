@@ -471,7 +471,6 @@ public class PaymentActivity extends BaseActivity implements EasyPermissions.Per
         startActivityForResult(intentPreview, code);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

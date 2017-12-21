@@ -74,6 +74,15 @@ public class SharePoliteActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+        recomm_code = PreferenceHelper.readString(this, StringConstants.FILENAME, "recomm_code");
+        share_shipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper");
+        share_shipper_description = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper_description");
+        share_shipper_title = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper_title");
+    }
+
+    @Override
+    public void initWidget() {
+        super.initWidget();
         SimpleDelegate simpleDelegate = new SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {
@@ -88,16 +97,7 @@ public class SharePoliteActivity extends BaseActivity {
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.sharePolite), getString(R.string.recommendedRecord), R.id.titlebar, simpleDelegate);
-    }
-
-    @Override
-    public void initWidget() {
-        super.initWidget();
-        recomm_code = PreferenceHelper.readString(this, StringConstants.FILENAME, "recomm_code");
         tv_recommendInviteCode.setText(recomm_code);
-        share_shipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper");
-        share_shipper_description = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper_description");
-        share_shipper_title = PreferenceHelper.readString(this, StringConstants.FILENAME, "share_shipper_title");
         createQRCodeWithLogo();
     }
 
@@ -191,7 +191,7 @@ public class SharePoliteActivity extends BaseActivity {
 //                ViewInject.toast(getString(R.string.shareError1));
 //            } else {
             ViewInject.toast(getString(R.string.shareError));
-         //   ViewInject.toast(t.getMessage());
+            //   ViewInject.toast(t.getMessage());
             Log.d("throw", "throw:" + t.getMessage());
             //   }
             if (t != null) {

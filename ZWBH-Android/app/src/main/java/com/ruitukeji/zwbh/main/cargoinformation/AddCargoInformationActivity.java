@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.main.cargoinformation;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,7 +10,12 @@ import android.widget.TextView;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.main.cargoinformation.selectvehicle.SelectVehicleActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
 
 /**
  * 添加货物信息
@@ -41,7 +47,7 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
      */
     @BindView(id = R.id.img_cargoReceipt, click = true)
     private ImageView img_cargoReceipt;
-
+    private int cargoReceipt = 0;
     /**
      * 选择车辆
      */
@@ -94,11 +100,29 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
     @BindView(id = R.id.tv_submit, click = true)
     private TextView tv_submit;
 
+    private String contactPerson = "";
+    private String contactInformation = "";
+    private String inArea = "";
+    private String detailedAddressInformation = "";
+    private int expressDelivery = 0;
+    private int vehicleModelId = 0;
+    private int vehicleLengthId = 0;
+    private String totalMileage = "";
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_addcargoinformation);
     }
 
+    @Override
+    public void initData() {
+        super.initData();
+
+
+
+
+        mPresenter = new AddCargoInformationPresenter(this);
+    }
 
     @Override
     public void initWidget() {
@@ -110,7 +134,27 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.img_cargoReceipt:
+                Intent intent = new Intent(aty, FillCargoReceiptFormActivity.class);
+                intent.putExtra("cargoReceipt", cargoReceipt);
+                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+                break;
+            case R.id.ll_selectVehicle:
+                Intent selectVehicleIntent = new Intent(aty, SelectVehicleActivity.class);
+                selectVehicleIntent.putExtra("vehicleModelId", vehicleModelId);
+                selectVehicleIntent.putExtra("vehicleLengthId", vehicleLengthId);
+                startActivityForResult(selectVehicleIntent, REQUEST_CODE_PHOTO_PREVIEW);
+                break;
+            case R.id.img_driverCargo:
+                if (true) {
+                    img_driverCargo.setImageResource(R.mipmap.switch_btn_off);
+                } else {
+                    img_driverCargo.setImageResource(R.mipmap.switch_btn_on);
+                }
+                break;
             case R.id.tv_submit:
+
+
                 break;
         }
     }
@@ -123,10 +167,44 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
     @Override
     public void getSuccess(String success, int flag) {
 
+
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
+        ViewInject.toast(msg);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {// 如果等于1
+            // 说明是我们的那次请求
+            // 目的：区分请求，不同的请求要做不同的处理
+            cargoReceipt = data.getIntExtra("cargoReceipt", 0);
+            switch (cargoReceipt) {
+                case 0:
+                    img_cargoReceipt.setImageResource(R.mipmap.switch_btn_off);
+                    break;
+                case 1:
+                    contactPerson = data.getStringExtra("contactPerson");
+                    contactInformation = data.getStringExtra("contactInformation");
+                    inArea = data.getStringExtra("inArea");
+                    detailedAddressInformation = data.getStringExtra("detailedAddressInformation");
+                    expressDelivery = data.getIntExtra("expressDelivery", 0);
+                    img_cargoReceipt.setImageResource(R.mipmap.switch_btn_on);
+                    break;
+            }
+        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
+//            vehicleModel = data.getStringExtra("vehicleModel");
+//            vehicleLength = data.getStringExtra("vehicleLength");
+//            tv_vehicleRequirements.setText(getString(R.string.vehicleModel) + vehicleModel + "  " + getString(R.string.vehicleLength) + vehicleLength);
+//            m = data.getStringExtra("init_kilometres");
+//            initiatePrice = data.getStringExtra("init_price");
+//            kmFee = data.getStringExtra("over_metres_price");
+//            freight = data.getStringExtra("weight_price");
+            vehicleModelId = data.getIntExtra("vehicleModelId", 0);
+            vehicleLengthId = data.getIntExtra("vehicleLengthId", 0);
+        }
     }
 }

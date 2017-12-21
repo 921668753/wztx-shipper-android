@@ -7,21 +7,13 @@ import com.ruitukeji.zwbh.common.BasePresenter;
  * Created by Administrator on 2017/2/15.
  */
 
-public interface AddCargoInformationContract {
+public interface FillCargoReceiptFormContract {
 
     interface Presenter extends BasePresenter {
-
         /**
-         * 获取驾车距离
-         * http://lbs.amap.com/api/webservice/guide/api/direction#driving
+         * 填写货物签收单
          */
-        void getDistance(String origins, String destination);
-
-        /**
-         * 检验添加货物信息参数是否正确
-         */
-        void getAddCargoInformation();
-
+        void postFillCargoReceiptForm(String contactPerson, String contactInformation, String inArea, String detailedAddressInformation, int expressDelivery);
     }
 
     interface View extends BaseNewView<Presenter, String> {
