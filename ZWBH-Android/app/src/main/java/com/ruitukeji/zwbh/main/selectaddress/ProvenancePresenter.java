@@ -20,20 +20,30 @@ public class ProvenancePresenter implements ProvenanceContract.Presenter {
         mView.setPresenter(this);
     }
 
+
     @Override
-    public void postAddress(int addressId) {
+    public void postAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int isOff) {
+        if (isOff == 0) {
+            mView.getSuccess("", 0);
+            return;
+        }
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("page", addressId);
+//        httpParams.put("page", addressId);
+//        httpParams.put("page", addressId);
+//        httpParams.put("page", addressId);
+//        httpParams.put("page", addressId);
+//        httpParams.put("page", addressId);
+//        httpParams.put("page", addressId);
         RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
+                mView.errorMsg(msg, 0);
             }
         });
     }

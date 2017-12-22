@@ -261,6 +261,9 @@
     <string name="transportationEstimated">预计运输费用总额</string>
     <string name="containsDistribution">(包含配送点费用)</string>
     <string name="actualPayment">实际支付费用</string>
+    <string name="confirmationOrder">确定提交订单？</string>
+
+
 
     <!--填写货物签收单-->
     <string name="fillCargoReceipt">填写货物签收单</string>

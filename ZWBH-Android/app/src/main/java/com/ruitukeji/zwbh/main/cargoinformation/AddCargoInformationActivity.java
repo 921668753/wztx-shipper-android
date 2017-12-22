@@ -1,18 +1,29 @@
 package com.ruitukeji.zwbh.main.cargoinformation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.entity.DistanceBean;
+import com.ruitukeji.zwbh.main.LogisticsContract;
 import com.ruitukeji.zwbh.main.cargoinformation.selectvehicle.SelectVehicleActivity;
+import com.ruitukeji.zwbh.main.dialog.AssignedVehicleBouncedDialog;
+import com.ruitukeji.zwbh.main.dialog.SubmitOrdersBouncedDialog;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.MathUtil;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
@@ -22,7 +33,7 @@ import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PR
  * Created by Administrator on 2017/12/12.
  */
 
-public class AddCargoInformationActivity extends BaseActivity implements AddCargoInformationContract.View {
+public class AddCargoInformationActivity extends BaseActivity implements TextWatcher, AddCargoInformationContract.View {
 
     /**
      * 货物名称
@@ -95,19 +106,59 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
     private EditText et_actualPayment;
 
     /**
-     * 提交
+     * 提交订单
      */
-    @BindView(id = R.id.tv_submit, click = true)
-    private TextView tv_submit;
+    @BindView(id = R.id.tv_submitOrders, click = true)
+    private TextView tv_submitOrders;
+
+    /**
+     * 指派车辆
+     */
+    @BindView(id = R.id.tv_assignedVehicle, click = true)
+    private TextView tv_assignedVehicle;
 
     private String contactPerson = "";
     private String contactInformation = "";
     private String inArea = "";
     private String detailedAddressInformation = "";
     private int expressDelivery = 0;
+
     private int vehicleModelId = 0;
     private int vehicleLengthId = 0;
-    private String totalMileage = "";
+    private String provenanceLat;
+    private String provenanceLongi;
+    private String provenanceDistrict;
+    private String provenancePlaceName;
+    private String provenanceDetailedAddress;
+    private String provenanceDeliveryCustomer;
+    private String provenanceShipper;
+    private String provenancePhone;
+    private String provenanceEixedTelephone;
+    private String destinationLat;
+    private String destinationLongi;
+    private String destinationDistrict;
+    private String destinationPlaceName;
+    private String destinationDetailedAddress;
+    private String destinationDeliveryCustomer;
+    private String destinationShipper;
+    private String destinationPhone;
+    private String destinationEixedTelephone;
+
+    private String card_number = "";
+
+    private int driverCargo = 1;
+    private String vehicleModel;
+    private String vehicleLength;
+    private String m;
+    private String initiatePrice;
+    private String kmFee;
+    private String freight;
+    private String kilometres = "";
+    private int tran_type = 0;
+    private String type = "often";
+    private String appoint_at = "0";
+    private AssignedVehicleBouncedDialog assignedVehicleBouncedDialog = null;
+    private SubmitOrdersBouncedDialog submitOrdersBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -117,9 +168,29 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
     @Override
     public void initData() {
         super.initData();
+        tran_type = getIntent().getIntExtra("tran_type", 0);
+        type = getIntent().getStringExtra("type");
+        appoint_at = getIntent().getStringExtra("appoint_at");
 
+        provenanceLat = getIntent().getStringExtra("provenanceLat");
+        provenanceLongi = getIntent().getStringExtra("provenanceLongi");
+        provenanceDistrict = getIntent().getStringExtra("provenanceDistrict");
+        provenancePlaceName = getIntent().getStringExtra("provenancePlaceName");
+        provenanceDetailedAddress = getIntent().getStringExtra("provenanceDetailedAddress");
+        provenanceDeliveryCustomer = getIntent().getStringExtra("provenanceDeliveryCustomer");
+        provenanceShipper = getIntent().getStringExtra("provenanceShipper");
+        provenancePhone = getIntent().getStringExtra("provenancePhone");
+        provenanceEixedTelephone = getIntent().getStringExtra("provenanceEixedTelephone");
 
-
+        destinationLat = getIntent().getStringExtra("destinationLat");
+        destinationLongi = getIntent().getStringExtra("destinationLongi");
+        destinationDistrict = getIntent().getStringExtra("destinationDistrict");
+        destinationPlaceName = getIntent().getStringExtra("destinationPlaceName");
+        destinationDetailedAddress = getIntent().getStringExtra("destinationDetailedAddress");
+        destinationDeliveryCustomer = getIntent().getStringExtra("destinationDeliveryCustomer");
+        destinationShipper = getIntent().getStringExtra("destinationShipper");
+        destinationPhone = getIntent().getStringExtra("destinationPhone");
+        destinationEixedTelephone = getIntent().getStringExtra("destinationEixedTelephone");
 
         mPresenter = new AddCargoInformationPresenter(this);
     }
@@ -127,6 +198,9 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
     @Override
     public void initWidget() {
         super.initWidget();
+        et_goodsWeight.addTextChangedListener(this);
+        et_peiSongDian.addTextChangedListener(this);
+        et_costDistribution.addTextChangedListener(this);
         ActivityTitleUtils.initToolbar(aty, getString(R.string.addCargoInformation), true, R.id.titlebar);
     }
 
@@ -146,15 +220,39 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
                 startActivityForResult(selectVehicleIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.img_driverCargo:
-                if (true) {
+                if (driverCargo == 1) {
                     img_driverCargo.setImageResource(R.mipmap.switch_btn_off);
+                    driverCargo = 0;
                 } else {
+                    driverCargo = 1;
                     img_driverCargo.setImageResource(R.mipmap.switch_btn_on);
                 }
                 break;
-            case R.id.tv_submit:
-
-
+            case R.id.tv_submitOrders:
+                ((AddCargoInformationContract.Presenter) mPresenter).postAddCargoInformation(submitOrdersBouncedDialog, type, appoint_at, "", "", (provenanceLongi + "," + provenanceLat),
+                        provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
+                        (destinationLongi + "," + destinationLat), destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone,
+                        et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
+                        StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), cargoReceipt, tv_transportationEstimated.getText().toString(),
+                        tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
+                        driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery);
+                break;
+            case R.id.tv_assignedVehicle:
+                assignedVehicleBouncedDialog = null;
+                assignedVehicleBouncedDialog = new AssignedVehicleBouncedDialog(this) {
+                    @Override
+                    public void confirm(String pleaseLicensePlateNumber) {
+                        card_number = pleaseLicensePlateNumber;
+                        ((AddCargoInformationContract.Presenter) mPresenter).postAddCargoInformation(submitOrdersBouncedDialog, type, appoint_at, "", "", (provenanceLongi + "," + provenanceLat),
+                                provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
+                                (destinationLongi + "," + destinationLat), destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone,
+                                et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
+                                StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), cargoReceipt, tv_transportationEstimated.getText().toString(),
+                                tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
+                                driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery);
+                    }
+                };
+                assignedVehicleBouncedDialog.show();
                 break;
         }
     }
@@ -166,15 +264,24 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
 
     @Override
     public void getSuccess(String success, int flag) {
-
-
+        if (flag == 0) {
+            DistanceBean distanceBean = (DistanceBean) JsonUtil.getInstance().json2Obj(success, DistanceBean.class);
+            if (!(distanceBean.getStatus().equals("1"))) {
+                ViewInject.toast(getString(R.string.distanceErr));
+            }
+            kilometres = String.valueOf(StringUtils.toDouble(distanceBean.getResults().get(0).getDistance()) / 1000);
+            systemPrice(distanceBean.getResults().get(0).getDistance());
+            dismissLoadingDialog();
+        }
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
         ViewInject.toast(msg);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -196,15 +303,94 @@ public class AddCargoInformationActivity extends BaseActivity implements AddCarg
                     break;
             }
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
-//            vehicleModel = data.getStringExtra("vehicleModel");
-//            vehicleLength = data.getStringExtra("vehicleLength");
-//            tv_vehicleRequirements.setText(getString(R.string.vehicleModel) + vehicleModel + "  " + getString(R.string.vehicleLength) + vehicleLength);
-//            m = data.getStringExtra("init_kilometres");
-//            initiatePrice = data.getStringExtra("init_price");
-//            kmFee = data.getStringExtra("over_metres_price");
-//            freight = data.getStringExtra("weight_price");
+            vehicleModel = data.getStringExtra("vehicleModel");
+            vehicleLength = data.getStringExtra("vehicleLength");
+            tv_selectVehicle.setText(getString(R.string.vehicleModel) + vehicleModel + "  " + getString(R.string.vehicleLength) + vehicleLength);
+            m = data.getStringExtra("init_kilometres");
+            initiatePrice = data.getStringExtra("init_price");
+            kmFee = data.getStringExtra("over_metres_price");
+            freight = data.getStringExtra("weight_price");
             vehicleModelId = data.getIntExtra("vehicleModelId", 0);
             vehicleLengthId = data.getIntExtra("vehicleLengthId", 0);
+            distance();
         }
     }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        et_goodsWeight.addTextChangedListener(this);
+        et_peiSongDian.addTextChangedListener(this);
+        et_costDistribution.addTextChangedListener(this);
+        if (et_goodsWeight.getText().toString().trim().length() <= 0) {
+            return;
+        }
+        distance();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+
+    /**
+     * 计算距离
+     */
+    private void distance() {
+        Log.d("tag", "distance");
+        if (StringUtils.toDouble(kilometres) > 0) {
+            systemPrice(kilometres);
+            return;
+        }
+        tv_transportationEstimated.setText("0.00");
+        if (StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceLongi) || StringUtils.isEmpty(destinationLat) || StringUtils.isEmpty(destinationLongi)) {
+            Log.d("tag", "distance1");
+            return;
+        }
+        if (StringUtils.isEmpty(et_goodsWeight.getText().toString().trim()) || StringUtils.isEmpty(m) || StringUtils.isEmpty(initiatePrice) || StringUtils.isEmpty(kmFee) || StringUtils.isEmpty(freight)) {
+            Log.d("tag", "distance2");
+            return;
+        }
+        Log.d("tag", "distance3");
+//        LatLng latLng1 = new LatLng(StringUtils.toDouble(originLat), StringUtils.toDouble(originLongi));
+//        LatLng latLng2 = new LatLng(StringUtils.toDouble(originLat1), StringUtils.toDouble(originLongi1));
+        //    double distance = (double) AMapUtils.calculateLineDistance(latLng1, latLng2);
+        ((AddCargoInformationContract.Presenter) mPresenter).getDistance(provenanceLongi + "," + provenanceLat, destinationLongi + "," + destinationLat);
+    }
+
+    /**
+     * 计算系统价
+     */
+    private void systemPrice(String distanc) {
+        double distance = StringUtils.toDouble(distanc) / 1000;
+        if (distance <= 0) {
+            ViewInject.toast(getString(R.string.distanceErr));
+            return;
+        }
+        if (StringUtils.isEmpty(et_goodsWeight.getText().toString().trim()) || StringUtils.isEmpty(m) || StringUtils.isEmpty(initiatePrice) || StringUtils.isEmpty(kmFee) || StringUtils.isEmpty(freight)) {
+            return;
+        }
+        double distance1 = distance - StringUtils.toDouble(m);
+        if (distance1 <= 0) {
+            distance1 = 0;
+        }
+        double weight = StringUtils.toDouble(et_goodsWeight.getText().toString().trim());
+        if (weight <= 0) {
+            return;
+        }
+        double systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(kmFee) * (distance1) + StringUtils.toDouble(freight) * (distance1) * weight
+                + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
+        Log.d("tag", "initiatePrice" + initiatePrice);
+        Log.d("tag", "kmFee" + kmFee);
+        Log.d("tag", "distance1" + distance1);
+        Log.d("tag", "freight" + freight);
+        Log.d("tag", "weight" + weight);
+        tv_transportationEstimated.setText(MathUtil.keepTwo(systemPrice));
+    }
+
 }

@@ -15,7 +15,7 @@ public class URLConstants {
     /**
      * 测试服务器地址URL
      */
-    public static String SERVERURL1 = "http://wztx.shp.api.zenmechi.cc/";
+    public static String SERVERURL1 = "http://wuzaishipper.wuzaitianxia56.com/";
 
     /**
      * 请求地址URL

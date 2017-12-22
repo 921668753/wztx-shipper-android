@@ -9,7 +9,7 @@
     <include layout="@layout/common_title" />
 
     <ScrollView
-        style="@style/MatchMatch"
+        style="@style/MatchAuto"
         android:scrollbars="none">
 
         <LinearLayout
@@ -61,18 +61,16 @@
                 android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/white" />
 
-            <TextView
-                android:id="@+id/tv_submit"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen50"
-                android:layout_marginTop="@dimen/dimen58"
-                android:background="@color/announcementCloseColors"
-                android:gravity="center"
-                android:text="@string/submit"
-                android:textColor="@color/mainColor"
-                android:textSize="@dimen/textsize16" />
 
         </LinearLayout>
     </ScrollView>
 
+    <TextView
+        android:id="@+id/tv_submit"
+        style="@style/Match50"
+        android:background="@color/announcementCloseColors"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/mainColor"
+        android:textSize="@dimen/textsize16" />
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.main.selectaddress;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
 /**
  * 始发地/目的地
@@ -88,6 +91,8 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     private String phone = "";
     private String eixedTelephone = "";
 
+    private int isOff = 0;
+    private int isProvenance = 0;
 
     @Override
     public void setRootView() {
@@ -102,7 +107,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         district = getIntent().getStringExtra("district");
         placeName = getIntent().getStringExtra("placeName");
         type = getIntent().getIntExtra("type", 0);
-
+        isProvenance = getIntent().getIntExtra("isProvenance", 0);
         detailedAddress = getIntent().getStringExtra("detailedAddress");
         deliveryCustomer = getIntent().getStringExtra("deliveryCustomer");
         shipper = getIntent().getStringExtra("shipper");
@@ -120,7 +125,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         mPresenter = new ProvenancePresenter(this);
         title = getIntent().getStringExtra("title");
         ActivityTitleUtils.initToolbar(aty, title, true, R.id.titlebar);
-        tv_address.setText(district);
+        tv_address.setText(placeName);
         setView();
         if (type == 0) {
             tv_deliveryCustomer.setText(getString(R.string.deliveryCustomer));
@@ -157,34 +162,27 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-//            case R.id.tv_address:
-//                Intent intent = new Intent();
-//                intent.putExtra("lat", lat);
-//                intent.putExtra("longi", longi);
-//                intent.putExtra("district", district);
-//                intent.putExtra("placeName", placeName);
-//                intent.putExtra("type", getIntent().getIntExtra("type", 0));
-//                intent.putExtra("title", title);
-//                intent.putExtra("detailedAddress", et_detailedAddress.getText().toString().trim());
-//                intent.putExtra("deliveryCustomer", et_deliveryCustomer.getText().toString().trim());
-//                intent.putExtra("shipper", et_shipper.getText().toString().trim());
-//                intent.putExtra("phone", et_phone.getText().toString().trim());
-//                intent.putExtra("eixedTelephone", et_eixedTelephone.getText().toString().trim());
-//                setResult(RESULT_OK, intent);
-//                // 结束该activity 结束之后，前面的activity才可以处理结果
-//                aty.finish();
-//                break;
+            case R.id.tv_address:
+                if (isProvenance != 1) {
+                    break;
+                }
+                Intent intent = new Intent(aty, SelectAddressActivity.class);
+                intent.putExtra("isProvenance", isProvenance);
+                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+                break;
             case R.id.img_off:
-                if (true) {
-                    img_off.setImageResource(R.mipmap.switch_btn_off);
-                } else {
+                if (isOff == 0) {
                     img_off.setImageResource(R.mipmap.switch_btn_on);
+                    isOff = 1;
+                } else {
+                    img_off.setImageResource(R.mipmap.switch_btn_off);
+                    isOff = 0;
                 }
                 break;
             case R.id.tv_determine:
-
-
-
+                ((ProvenanceContract.Presenter) mPresenter).postAddress(longi, lat, district, placeName, et_detailedAddress.getText().toString().trim(),
+                        et_deliveryCustomer.getText().toString().trim(),
+                        et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(), et_eixedTelephone.getText().toString().trim(), isOff);
                 break;
         }
     }
@@ -196,21 +194,37 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
 
     @Override
     public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
+        Intent intent = new Intent();
+        intent.putExtra("lat", lat);
+        intent.putExtra("longi", longi);
+        intent.putExtra("district", district);
+        intent.putExtra("placeName", placeName);
+        intent.putExtra("type", getIntent().getIntExtra("type", 0));
+        intent.putExtra("title", title);
+        intent.putExtra("detailedAddress", et_detailedAddress.getText().toString().trim());
+        intent.putExtra("deliveryCustomer", et_deliveryCustomer.getText().toString().trim());
+        intent.putExtra("shipper", et_shipper.getText().toString().trim());
+        intent.putExtra("phone", et_phone.getText().toString().trim());
+        intent.putExtra("eixedTelephone", et_eixedTelephone.getText().toString().trim());
+        setResult(RESULT_OK, intent);
+        finish();
+
         if (flag == 0) {
+
 
         } else if (flag == 1) {
 
-        } else if (flag == 2) {
 
         }
-        dismissLoadingDialog();
+        //    dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             dismissLoadingDialog();
-            skipActivity(aty, LoginActivity.class);
+            showActivity(aty, LoginActivity.class);
             return;
         }
         dismissLoadingDialog();
@@ -238,5 +252,18 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            lat = data.getStringExtra("lat");
+            longi = data.getStringExtra("longi");
+            district = data.getStringExtra("district");
+            placeName = data.getStringExtra("placeName");
+            tv_address.setText(placeName);
+        }
     }
 }

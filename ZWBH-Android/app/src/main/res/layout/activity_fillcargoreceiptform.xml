@@ -25,7 +25,7 @@
 
         <EditText
             android:id="@+id/et_contactPerson"
-            style="@style/AutoWrap"
+            style="@style/AutoMatch"
             android:layout_marginLeft="@dimen/dimen50"
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"
@@ -55,7 +55,7 @@
 
         <EditText
             android:id="@+id/et_contactInformation"
-            style="@style/AutoWrap"
+            style="@style/AutoMatch"
             android:layout_marginLeft="@dimen/dimen34"
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"

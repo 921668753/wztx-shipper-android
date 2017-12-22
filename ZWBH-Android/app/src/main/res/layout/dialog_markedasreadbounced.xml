@@ -13,7 +13,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
         <TextView
             android:id="@+id/tv_content"
             style="@style/MatchWrap"
@@ -60,7 +59,6 @@
                 android:text="@string/determine"
                 android:textColor="@color/aFF007Colors"
                 android:textSize="@dimen/textsize15" />
-
 
         </LinearLayout>
 

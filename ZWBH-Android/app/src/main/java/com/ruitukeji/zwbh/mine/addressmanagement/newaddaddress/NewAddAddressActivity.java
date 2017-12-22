@@ -136,8 +136,8 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         Intent intent = new Intent(aty, NewAddAddress1Activity.class);
         intent.putExtra("lat", String.valueOf(tip.getPoint().getLatitude()));
         intent.putExtra("longi", String.valueOf(tip.getPoint().getLongitude()));
-        intent.putExtra("district", tip.getDistrict() + tip.getAddress());
-        intent.putExtra("placeName", tip.getName());
+        intent.putExtra("district", tip.getDistrict());
+        intent.putExtra("placeName", tip.getDistrict() + tip.getAddress() + tip.getName());
         intent.putExtra("type", getIntent().getIntExtra("type", 0));
         intent.putExtra("title", title);
         intent.putExtra("detailedAddress", detailedAddress);

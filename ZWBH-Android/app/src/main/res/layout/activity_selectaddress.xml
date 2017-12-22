@@ -21,7 +21,7 @@
 
 
         <TextView
-            android:id="@+id/tv_cityName"
+            android:id="@+id/tv_city"
             style="@style/WrapWrap"
             android:gravity="center"
             android:maxWidth="@dimen/dimen100"
@@ -72,7 +72,6 @@
         android:dividerHeight="@dimen/dimen0.5"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"
-        android:visibility="gone"
         tools:listitem="@layout/item_selectaddress" />
 
     <TextView

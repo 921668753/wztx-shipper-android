@@ -13,7 +13,7 @@ public interface ProvenanceContract {
         /**
          * 提交地址信息
          */
-        void postAddress(int addressId);
+        void postAddress(String longi, String lat, String provincialLevel,String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int isOff);
 
     }
 

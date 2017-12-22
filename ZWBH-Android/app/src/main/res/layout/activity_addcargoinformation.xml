@@ -36,7 +36,7 @@
 
                 <EditText
                     android:id="@+id/et_descriptionGoods"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen90"
                     android:layout_marginRight="@dimen/dimen15"
                     android:background="@android:color/transparent"
@@ -68,10 +68,11 @@
 
                 <EditText
                     android:id="@+id/et_goodsWeight"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen90"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
+                    android:inputType="numberDecimal"
                     android:singleLine="true"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
@@ -106,10 +107,11 @@
 
                 <EditText
                     android:id="@+id/et_volumeGoods"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen90"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
+                    android:inputType="numberDecimal"
                     android:singleLine="true"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
@@ -232,10 +234,11 @@
 
                 <EditText
                     android:id="@+id/et_hour"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen90"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
@@ -252,9 +255,10 @@
 
                 <EditText
                     android:id="@+id/et_minute"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
@@ -288,7 +292,7 @@
 
                 <EditText
                     android:id="@+id/et_peiSongDian"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen105"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
@@ -327,10 +331,11 @@
 
                 <EditText
                     android:id="@+id/et_costDistribution"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen76"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
+                    android:inputType="numberDecimal"
                     android:singleLine="true"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
@@ -366,9 +371,15 @@
                     android:id="@+id/tv_transportationEstimated"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen30"
+                    android:maxWidth="@dimen/dimen60"
+                    android:text="0.00"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <TextView
+                    style="@style/WrapWrap"
                     android:layout_marginRight="@dimen/dimen10"
-                    android:maxWidth="@dimen/dimen80"
-                    android:text="500000元"
+                    android:text="元"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
 
@@ -398,10 +409,11 @@
 
                 <EditText
                     android:id="@+id/et_actualPayment"
-                    style="@style/AutoWrap"
+                    style="@style/AutoMatch"
                     android:layout_marginLeft="@dimen/dimen61"
                     android:background="@android:color/transparent"
                     android:hint="@string/pleaseFillOut"
+                    android:inputType="numberDecimal"
                     android:singleLine="true"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
