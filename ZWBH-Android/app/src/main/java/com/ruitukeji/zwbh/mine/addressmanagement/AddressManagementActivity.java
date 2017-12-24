@@ -19,7 +19,6 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 public class AddressManagementActivity extends BaseActivity {
 
-
     /**
      * 发货地址
      */

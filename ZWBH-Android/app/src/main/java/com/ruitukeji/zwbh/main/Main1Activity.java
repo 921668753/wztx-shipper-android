@@ -389,14 +389,14 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
-//                if (StringUtils.isEmpty(provenanceDistrict)) {
-//                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
-//                    break;
-//                }
-//                if (StringUtils.isEmpty(destinationDistrict)) {
-//                    ViewInject.toast(getString(R.string.enterDestination));
-//                    break;
-//                }
+                if (StringUtils.isEmpty(provenanceDistrict)) {
+                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
+                    break;
+                }
+                if (StringUtils.isEmpty(destinationDistrict)) {
+                    ViewInject.toast(getString(R.string.enterDestination));
+                    break;
+                }
                 Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
                 cargoInformationIntent.putExtra("tran_type", tran_type);
                 cargoInformationIntent.putExtra("type", type1);

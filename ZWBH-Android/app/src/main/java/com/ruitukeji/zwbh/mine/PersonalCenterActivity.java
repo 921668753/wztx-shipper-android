@@ -187,7 +187,8 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(3);
                 break;
             case R.id.ll_addressManagement:
-                ((PersonalCenterContract.Presenter) mPresenter).isLogin(4);
+                //   ((PersonalCenterContract.Presenter) mPresenter).isLogin(4);
+                getSuccess("", 4);
                 break;
             case R.id.ll_driverManagement:
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(5);

@@ -41,7 +41,7 @@
 
         <EditText
             android:id="@+id/et_enterDeliveryLocation"
-            style="@style/AutoWrap"
+            style="@style/AutoMatch"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:hint="@string/pleaseEnterDeliveryLocation"

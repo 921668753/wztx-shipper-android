@@ -42,19 +42,31 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
     }
 
     @Override
-    public void postAddress(int addressId) {
+    public void postAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int type) {
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("page", addressId);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        httpParams.put("address_maps", longi + "," + lat);
+        httpParams.put("city", provincialLevel);
+        httpParams.put("address_name", address);
+        httpParams.put("address_detail", detailedAddress);
+        httpParams.put("client", deliveryCustomer);
+        httpParams.put("client_name", shipper);
+        httpParams.put("phone", phone);
+        httpParams.put("telphone", eixedTelephone);
+        if (type == 0 || type == 1) {
+            httpParams.put("type", 0);
+        } else if (type == 2 || type == 3) {
+            httpParams.put("type", 1);
+        }
+        RequestClient.postAddress(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
+                mView.errorMsg(msg, 0);
             }
         });
     }

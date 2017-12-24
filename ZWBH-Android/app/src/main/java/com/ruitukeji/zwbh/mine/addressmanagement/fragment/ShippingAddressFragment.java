@@ -11,14 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.addressmanagement.AddressViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddress1Activity;
 import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddressActivity;
@@ -26,6 +24,9 @@ import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static android.app.Activity.RESULT_OK;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
 
 /**
  * 收货地址
@@ -130,10 +131,10 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
                 break;
             case R.id.tv_newAddress:
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
-                intent.putExtra("title", getString(R.string.newAddress));
-                intent.putExtra("type", 1);
-                intent.putExtra("hintText", getString(R.string.pleaseEnterReceivingPlace));
-                aty.showActivity(aty, intent);
+                //  intent.putExtra("title", getString(R.string.newAddress));
+                intent.putExtra("type", 0);
+                //  intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
+                aty.startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
         }
     }
@@ -157,16 +158,6 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-        if (isRefreshOrder) {
-            mRefreshLayout.beginRefreshing();
-        }
-    }
-
-
-    @Override
     public void setPresenter(AddressContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -174,8 +165,6 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
@@ -218,18 +207,6 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
         dismissLoadingDialog();
     }
 
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-//        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
-//        if (isRefreshAllOrder1) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -244,9 +221,18 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
         } else if (view.getId() == R.id.ll_edit) {
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
             intent.putExtra("address_id", mAdapter.getItem(i).getOrder_id());
-            aty.showActivity(aty, intent);
+            intent.putExtra("type", 3);
+            aty.startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
         } else if (view.getId() == R.id.ll_delete) {
             ((AddressContract.Presenter) mPresenter).postDeleteAddress(i);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
+            mRefreshLayout.beginRefreshing();
         }
     }
 }

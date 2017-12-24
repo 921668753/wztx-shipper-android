@@ -27,6 +27,9 @@ import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
+import static android.app.Activity.RESULT_OK;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+
 /**
  * 发货地址
  * Created by Administrator on 2017/12/15.
@@ -95,7 +98,7 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
         lv_address.setAdapter(mAdapter);
         lv_address.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
-        mRefreshLayout.beginRefreshing();
+        //  mRefreshLayout.beginRefreshing();
     }
 
 
@@ -128,10 +131,10 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
                 break;
             case R.id.tv_newAddress:
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
-                intent.putExtra("title", getString(R.string.newAddress));
+                //  intent.putExtra("title", getString(R.string.newAddress));
                 intent.putExtra("type", 0);
-                intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
-                aty.showActivity(aty, intent);
+                //  intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
+                aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
         }
     }
@@ -155,16 +158,6 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-        if (isRefreshOrder) {
-            mRefreshLayout.beginRefreshing();
-        }
-    }
-
-
-    @Override
     public void setPresenter(AddressContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -172,8 +165,6 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
@@ -217,18 +208,6 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
         dismissLoadingDialog();
     }
 
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-//        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
-//        if (isRefreshAllOrder1) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -243,9 +222,19 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
         } else if (view.getId() == R.id.ll_edit) {
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
             intent.putExtra("address_id", mAdapter.getItem(i).getOrder_id());
-            aty.showActivity(aty, intent);
+            intent.putExtra("type", 1);
+            aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
         } else if (view.getId() == R.id.ll_delete) {
             ((AddressContract.Presenter) mPresenter).postDeleteAddress(i);
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            mRefreshLayout.beginRefreshing();
         }
     }
 }
