@@ -185,6 +185,30 @@ public class RequestClient {
         HttpRequest.requestPostHttp(URLConstants.USERREG, httpParams, listener);
     }
 
+
+    /**
+     * 得到全部城市
+     */
+    public static void getAllCityByCountryId(HttpParams httpParams, int countryId, final ResponseListener<String> listener) {
+        if (countryId == 0) {
+            HttpRequest.requestGetHttp(URLConstants.GETALLCOUNTRYCITY, httpParams, listener);
+        } else {
+            HttpRequest.requestGetHttp(URLConstants.GETALLCITYBYCOUNTRY + "&countryId=" + countryId, httpParams, listener);
+        }
+    }
+
+    /**
+     * 得到热门城市
+     */
+    public static void getHotCityByCountryId(HttpParams httpParams, int countryId, final ResponseListener<String> listener) {
+        if (countryId == 0) {
+            HttpRequest.requestGetHttp(URLConstants.GETHOTCITYBYCOUNTRY, httpParams, listener);
+        } else {
+            HttpRequest.requestGetHttp(URLConstants.GETHOTCITYBYCOUNTRY + "&countryId=" + countryId, httpParams, listener);
+        }
+    }
+
+
     /**
      * 个人认证----基本信息
      *
@@ -250,6 +274,27 @@ public class RequestClient {
         }
         HttpRequest.requestGetHttp(URLConstants.HOME, httpParams, listener);
     }
+
+
+    /**
+     * 始发地目的地信息管理
+     */
+    public static void postAddress(HttpParams httpParams, final ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.ADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 获取周边司机
@@ -532,12 +577,6 @@ public class RequestClient {
             }
         }, listener);
     }
-
-
-
-
-
-
 
 
     /**
@@ -986,8 +1025,6 @@ public class RequestClient {
     }
 
 
-
-
     /**
      * 帮助中心
      */
@@ -1024,10 +1061,6 @@ public class RequestClient {
             }
         }, listener);
     }
-
-
-
-
 
 
     /**

@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.adapter.message;
+package com.ruitukeji.zwbh.adapter.main.message;
 
 import android.content.Context;
 import android.view.View;
@@ -18,24 +18,23 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 import cn.bingoogolapple.swipeitemlayout.BGASwipeItemLayout;
 
 /**
- * 系统消息列表适配器
+ * 订单消息列表适配器
  * Created by Administrator on 2017/2/13.
  */
-public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
+public class OrderMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
 
     /**
      * 当前处于打开状态的item
      */
     private List<BGASwipeItemLayout> mOpenedSil = new ArrayList<>();
 
-    public SystemMessageViewAdapter(Context context) {
-        super(context, R.layout.item_systemmessage);
+    public OrderMessageViewAdapter(Context context) {
+        super(context, R.layout.item_ordermessage);
     }
-
 
     @Override
     protected void setItemChildListener(BGAViewHolderHelper viewHolderHelper) {
-        BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.item_systemMessage);
+        BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.item_orderMessage);
         swipeItemLayout.setDelegate(new BGASwipeItemLayout.BGASwipeItemLayoutDelegate() {
             @Override
             public void onBGASwipeItemLayoutOpened(BGASwipeItemLayout swipeItemLayout) {
@@ -57,13 +56,12 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         viewHolderHelper.setItemChildLongClickListener(R.id.tv_delete);
     }
 
-
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
         /**
-         * 姓名
+         *姓名
          */
-        viewHolderHelper.setText(R.id.tv_title, listBean.getTitle());
+        viewHolderHelper.setText(R.id.tv_name, listBean.getPushTime());
         /**
          * 标记
          */
@@ -78,11 +76,17 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             }
         }
         /**
+         *订单编号
+         */
+        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getPushTime());
+
+        /**
          *时间
          */
         viewHolderHelper.setText(R.id.tv_time, listBean.getPushTime());
 
-        BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.item_systemMessage);
+
+        BGASwipeItemLayout swipeItemLayout = viewHolderHelper.getView(R.id.item_orderMessage);
         if (position % 3 == 0) {
             swipeItemLayout.setSwipeAble(false);
         } else {
@@ -103,5 +107,4 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         }
         mOpenedSil.clear();
     }
-
 }

@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.adapter.message;
+package com.ruitukeji.zwbh.adapter.main.message;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,6 @@ import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
-import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.MessageBean.ResultBean.ListBean;
 

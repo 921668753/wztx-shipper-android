@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.adapter;
+package com.ruitukeji.zwbh.adapter.mine.invitefriends;
 
 import android.content.Context;
 

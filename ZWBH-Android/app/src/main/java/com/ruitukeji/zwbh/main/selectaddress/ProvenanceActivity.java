@@ -93,6 +93,8 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
 
     private int isOff = 0;
     private int isProvenance = 0;
+    private int tran_type = 0;
+    private String city = "";
 
     @Override
     public void setRootView() {
@@ -112,7 +114,9 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         deliveryCustomer = getIntent().getStringExtra("deliveryCustomer");
         shipper = getIntent().getStringExtra("shipper");
         phone = getIntent().getStringExtra("phone");
+        tran_type = getIntent().getIntExtra("tran_type", 0);
         eixedTelephone = getIntent().getStringExtra("eixedTelephone");
+        city = getIntent().getStringExtra("cityName");
         et_detailedAddress.addTextChangedListener(this);
         et_deliveryCustomer.addTextChangedListener(this);
         et_shipper.addTextChangedListener(this);
@@ -168,6 +172,8 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 }
                 Intent intent = new Intent(aty, SelectAddressActivity.class);
                 intent.putExtra("isProvenance", isProvenance);
+                intent.putExtra("tran_type", tran_type);
+                intent.putExtra("cityName", city);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.img_off:
@@ -181,8 +187,8 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 break;
             case R.id.tv_determine:
                 ((ProvenanceContract.Presenter) mPresenter).postAddress(longi, lat, district, placeName, et_detailedAddress.getText().toString().trim(),
-                        et_deliveryCustomer.getText().toString().trim(),
-                        et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(), et_eixedTelephone.getText().toString().trim(), isOff);
+                        et_deliveryCustomer.getText().toString().trim(), et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(),
+                        et_eixedTelephone.getText().toString().trim(), isOff, type);
                 break;
         }
     }

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -41,8 +40,8 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.dialog.LocationBouncedDialog;
 import com.ruitukeji.zwbh.entity.BaseResult;
-import com.ruitukeji.zwbh.entity.HomeBean;
-import com.ruitukeji.zwbh.entity.HomeBean.ResultBean.ListBean;
+import com.ruitukeji.zwbh.entity.main.HomeBean;
+import com.ruitukeji.zwbh.entity.main.HomeBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.announcement.AnnouncementActivity;
@@ -52,12 +51,6 @@ import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
 import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
-import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
-import com.ruitukeji.zwbh.mine.mypublishedorder.MyPublishedGoodsActivity;
-import com.ruitukeji.zwbh.mine.mywallet.MyWalletActivity;
-import com.ruitukeji.zwbh.mine.personaldata.PersonalDataActivity;
-import com.ruitukeji.zwbh.mine.invitefriends.SharePoliteActivity;
-import com.ruitukeji.zwbh.mine.setting.SettingsActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
@@ -250,6 +243,9 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     private String destinationShipper;
     private String destinationPhone;
     private String destinationEixedTelephone;
+    /**
+     * 物流类型
+     */
     private String type1 = "often";
     private int tran_type = 0;
 
@@ -355,8 +351,10 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 }
                 provenanceIntent.putExtra("type", type);
                 provenanceIntent.putExtra("title", getString(R.string.provenance));
+                provenanceIntent.putExtra("tran_type", tran_type);
                 provenanceIntent.putExtra("lat", provenanceLat);
                 provenanceIntent.putExtra("longi", provenanceLongi);
+                provenanceIntent.putExtra("cityName", city);
                 provenanceIntent.putExtra("district", provenanceDistrict);
                 provenanceIntent.putExtra("placeName", provenancePlaceName);
                 provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
@@ -379,6 +377,8 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 destinationIntent.putExtra("longi", destinationLongi);
                 destinationIntent.putExtra("district", destinationDistrict);
                 destinationIntent.putExtra("placeName", destinationPlaceName);
+                destinationIntent.putExtra("tran_type", tran_type);
+                destinationIntent.putExtra("cityName", city);
                 destinationIntent.putExtra("type", type);
                 destinationIntent.putExtra("title", getString(R.string.destination));
                 destinationIntent.putExtra("detailedAddress", destinationDetailedAddress);
@@ -389,14 +389,14 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
-                if (StringUtils.isEmpty(provenanceDistrict)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
-                    break;
-                }
-                if (StringUtils.isEmpty(destinationDistrict)) {
-                    ViewInject.toast(getString(R.string.enterDestination));
-                    break;
-                }
+//                if (StringUtils.isEmpty(provenanceDistrict)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
+//                    break;
+//                }
+//                if (StringUtils.isEmpty(destinationDistrict)) {
+//                    ViewInject.toast(getString(R.string.enterDestination));
+//                    break;
+//                }
                 Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
                 cargoInformationIntent.putExtra("tran_type", tran_type);
                 cargoInformationIntent.putExtra("type", type1);
@@ -464,6 +464,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         }
     }
 
+
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
     private void choiceLocationWrapper() {
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};
@@ -517,16 +518,13 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 mlocationClient.stopLocation();
                 province = amapLocation.getProvince();
                 city = amapLocation.getCity();
-                //    district = amapLocation.getDistrict();
-                Log.d("AmapErr", amapLocation.getProvider());
-                Log.d("AmapErr", amapLocation.getAddress());
                 aoiName = amapLocation.getAoiName();
-//                lat = String.valueOf(amapLocation.getLatitude());
-//                longi = String.valueOf(amapLocation.getLongitude());
-                Log.d("AmapErr", amapLocation.getPoiName());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", city);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationProvince",province);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationCity",city);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationArea",amapLocation.getDistrict());
+                Log.d("AmapErr", amapLocation.getDistrict());
                 Log.d("AmapErr", amapLocation.getStreet());
-                //              showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-                //             ((MainContract.Presenter) mPresenter).getNearbySearch(amapLocation.getLatitude(), amapLocation.getLongitude());
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
                 // 设置中心点及检索范围
                 CloudSearch.SearchBound bound = new CloudSearch.SearchBound(new LatLonPoint(
@@ -540,13 +538,13 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                     ((MainContract.Presenter) mPresenter).getHome();
                 }
             } else {
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 mlocationClient.startLocation();
                 if (amapLocation.getErrorCode() == 12) {
                     if (isTost) {
                         ViewInject.toast("请打开GPS定位");
                         isTost = false;
                     }
-                    //  return;
                 }
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);

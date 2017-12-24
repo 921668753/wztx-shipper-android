@@ -7,6 +7,8 @@
     <color name="transparent">#00000000</color>
     <color name="transparent_1">#40000000</color>
 
+    <color name="partTranslucent">#39000000</color>
+
     <color name="mainColor">#FFFFFF</color>
     <color name="hintcolors">#999999</color>
     <color name="black">#000000</color>

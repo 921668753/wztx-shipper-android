@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_localize"
+    style="@style/MatchWrap"
+    android:background="@color/background"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen28"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/currentPositioningCity"
+        android:textColor="@color/hintcolors"
+        android:textSize="@dimen/textsize13" />
+
+    <TextView
+        android:id="@+id/tvCurrent"
+        style="@style/Match45"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="上海"
+        android:textColor="@color/titletextcolors"
+        android:textSize="@dimen/textsize15" />
+
+    <TextView
+        android:id="@+id/tv_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:text=""
+        android:textColor="@color/hintcolors"
+        android:textSize="@dimen/textsize15"
+        android:visibility="gone" />
+
+</LinearLayout>

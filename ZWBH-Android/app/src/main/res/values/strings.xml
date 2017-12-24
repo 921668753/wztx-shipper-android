@@ -191,7 +191,6 @@
 
 
     <!--主界面-->
-
     <string name="exitProcedureAgain">再按一次退出程序</string>
     <string name="locationPermissions">定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限</string>
     <string name="locationPermissions1">您拒绝了「定位」所需要的相关权限!</string>
@@ -231,6 +230,17 @@
     <string name="commonlyAddress">常用地址</string>
     <string name="setCommonAddress">设为常用地址</string>
 
+    <!--城市选择-->
+    <string name="selectCity">选择城市</string>
+    <string name="china">中国</string>
+    <string name="currentPositioningCity">当前定位城市</string>
+    <string name="recentVisitCity">最近访问城市</string>
+    <string name="recent">最近</string>
+    <string name="hotCity">热门城市</string>
+    <string name="hot">热门</string>
+    <string name="locateFailure">定位失败请重新定位！</string>
+
+
     <!--始发地-->
     <string name="provenance">始发地</string>
     <string name="pleaseDetailedAddress">请输入详细地址，如街道、楼牌号等</string>
@@ -263,8 +273,6 @@
     <string name="actualPayment">实际支付费用</string>
     <string name="confirmationOrder">确定提交订单？</string>
 
-
-
     <!--填写货物签收单-->
     <string name="fillCargoReceipt">填写货物签收单</string>
     <string name="contactPerson">联系人</string>
@@ -295,7 +303,6 @@
     <string name="shareError">分享失败啦</string>
     <string name="shareError1">没有安装应用,请安装相应应用</string>
     <string name="shareCancel">分享取消了</string>
-
 
     <!--选择车辆-->
     <string name="vehicleLength">车长</string>

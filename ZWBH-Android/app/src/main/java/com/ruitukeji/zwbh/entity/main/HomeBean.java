@@ -1,6 +1,7 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.main;
 
 import com.google.gson.annotations.SerializedName;
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 import java.util.List;
 

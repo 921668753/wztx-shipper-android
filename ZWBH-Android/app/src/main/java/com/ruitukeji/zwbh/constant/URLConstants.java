@@ -16,6 +16,24 @@ public class URLConstants {
      * 测试服务器地址URL
      */
     public static String SERVERURL1 = "http://wuzaishipper.wuzaitianxia56.com/";
+//    public static String SERVERURL1 = "http://wztx.drv.api.zenmechi.cc/";
+
+
+    /**
+     * 得到国内全部城市
+     */
+    public static String SERVERURL2= "http://user.api.shahaizi.shop/";
+    public static String APIURL1 = SERVERURL2 + "index.php?";
+    /**
+     * 得到全部城市
+     */
+    public static String GETALLCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getAllCityByCountryId";
+    public static String GETALLCOUNTRYCITY = APIURL1 + "m=Api&c=Region&a=getAllCountryCity";
+
+    /**
+     * 得到热门城市
+     */
+    public static String GETHOTCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getHotCityByCountryId";
 
     /**
      * 请求地址URL
@@ -41,6 +59,11 @@ public class URLConstants {
      * 首页
      */
     public static String HOME = APIURL + "index/home";
+
+    /**
+     * 地址
+     */
+    public static String ADDRESS = APIURL + "Address/spAddressManageInsert";
 
     /**
      * 获取文章内容

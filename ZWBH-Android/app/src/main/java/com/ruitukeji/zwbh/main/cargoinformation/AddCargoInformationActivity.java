@@ -211,6 +211,11 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
             case R.id.img_cargoReceipt:
                 Intent intent = new Intent(aty, FillCargoReceiptFormActivity.class);
                 intent.putExtra("cargoReceipt", cargoReceipt);
+                intent.putExtra("contactPerson", contactPerson);
+                intent.putExtra("contactInformation", contactInformation);
+                intent.putExtra("inArea", inArea);
+                intent.putExtra("detailedAddressInformation", detailedAddressInformation);
+                intent.putExtra("expressDelivery", expressDelivery);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.ll_selectVehicle:

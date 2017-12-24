@@ -18,6 +18,7 @@ import com.ruitukeji.zwbh.adapter.mine.addressmanagement.PioAddressViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.main.selectaddress.selectioncity.SelectionCityActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
@@ -26,6 +27,7 @@ import java.util.List;
 import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW2;
 
 /**
@@ -69,6 +71,8 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
     private String district;
     private String placeName;
     private int type = 0;
+    private int tran_type = 0;
+    private String city = "";
 
     @Override
     public void setRootView() {
@@ -91,6 +95,8 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         longi = getIntent().getStringExtra("longi");
         district = getIntent().getStringExtra("district");
         placeName = getIntent().getStringExtra("placeName");
+        tran_type = getIntent().getIntExtra("tran_type", 0);
+        city = getIntent().getStringExtra("cityName");
     }
 
     @Override
@@ -115,6 +121,24 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.selectAddress), getString(R.string.commonlyAddress), R.id.titlebar, simpleDelegate);
+        tv_city.setText(city);
+    }
+
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_city:
+                if (tran_type == 0) {
+                    return;
+                }
+                Intent intent = new Intent(aty, SelectionCityActivity.class);
+//                intent.putExtra("lat", lat);
+//                intent.putExtra("longi", longi);
+//                intent.putExtra("district", district);
+                startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
+                break;
+        }
     }
 
     @Override
@@ -227,6 +251,12 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             setResult(RESULT_OK, intent);
             // 结束该activity 结束之后，前面的activity才可以处理结果
             finish();
+        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
+            String selectCity = data.getStringExtra("selectCity");
+            int selectCityId = data.getIntExtra("selectCityId", 0);
+            String selectCountry = data.getStringExtra("selectCountry");
+            int selectCountryId = data.getIntExtra("selectCountryId", 0);
+            tv_city.setText(selectCity);
         }
 
     }

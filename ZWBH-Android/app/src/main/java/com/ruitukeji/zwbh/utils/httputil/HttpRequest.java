@@ -124,6 +124,10 @@ public class HttpRequest {
             listener.onFailure(KJActivityStack.create().bottomActivity().getString(R.string.jsonError));
             return false;
         }
+        if (baseResult.getMsg().equals("成功")) {
+            listener.onSuccess(s);
+            return true;
+        }
         if (baseResult.getCode() != NumericConstants.SUCCESS) {
             if (baseResult.getCode() == 4011 || baseResult.getCode() == 4012 || baseResult.getCode() == 4013 || baseResult.getCode() == 4015) {
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);

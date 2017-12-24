@@ -104,6 +104,12 @@
             android:name=".main.selectaddress.SelectAddressActivity"
             android:screenOrientation="portrait" />
 
+
+        <!--主界面  城市选择-->
+        <activity
+            android:name=".main.selectaddress.selectioncity.SelectionCityActivity"
+            android:screenOrientation="portrait" />
+
         <!--主界面  地址选择  始发地/目的地-->
         <activity
             android:name=".main.selectaddress.ProvenanceActivity"

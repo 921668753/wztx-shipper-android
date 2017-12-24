@@ -1,13 +1,8 @@
 package com.ruitukeji.zwbh.main;
 
-import android.app.Notification;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.MyLocationStyle;
@@ -25,12 +20,6 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.MathUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
-
-import cn.jpush.android.api.BasicPushNotificationBuilder;
-import cn.jpush.android.api.JPushInterface;
-
-import static com.ruitukeji.zwbh.main.Main1Activity.*;
-
 
 /**
  * Created by Administrator on 2017/2/20.

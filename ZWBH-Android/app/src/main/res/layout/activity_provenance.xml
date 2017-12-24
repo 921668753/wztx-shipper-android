@@ -179,8 +179,10 @@
         <ImageView
             android:id="@+id/img_off"
             android:layout_width="@dimen/dimen50"
-            android:layout_height="@dimen/dimen28"
+            android:layout_height="@dimen/dimen38"
             android:layout_marginRight="@dimen/dimen15"
+            android:paddingBottom="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen5"
             android:src="@mipmap/switch_btn_off" />
 
 

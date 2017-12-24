@@ -7,7 +7,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.RecommendedRecordViewAdapter;
+import com.ruitukeji.zwbh.adapter.mine.invitefriends.RecommendedRecordViewAdapter;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;

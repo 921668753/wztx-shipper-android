@@ -13,8 +13,8 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
-
-import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
+import com.ruitukeji.zwbh.utils.PickerViewUtil;
+import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 
 /**
  * 填写货物签收单
@@ -64,6 +64,12 @@ public class FillCargoReceiptFormActivity extends BaseActivity implements FillCa
     private int cargoReceipt = 0;
     private int expressDelivery = 0;
 
+    private PickerViewUtil pickerViewUtil;
+    private String contactPerson = "";
+    private String contactInformation = "";
+    private String inArea = "";
+    private String detailedAddressInformation = "";
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_fillcargoreceiptform);
@@ -73,26 +79,57 @@ public class FillCargoReceiptFormActivity extends BaseActivity implements FillCa
     public void initData() {
         super.initData();
         cargoReceipt = getIntent().getIntExtra("cargoReceipt", 0);
+        contactPerson = getIntent().getStringExtra("contactPerson");
+        contactInformation = getIntent().getStringExtra("contactInformation");
+        inArea = getIntent().getStringExtra("inArea");
+        detailedAddressInformation = getIntent().getStringExtra("detailedAddressInformation");
+        expressDelivery = getIntent().getIntExtra("expressDelivery", 0);
         mPresenter = new FillCargoReceiptFormPresenter(this);
+        initPickerView();
+    }
+
+
+    /**
+     * 选项选择器
+     */
+    private void initPickerView() {
+        if (pickerViewUtil == null) {
+            pickerViewUtil = new PickerViewUtil(this, 0) {
+                @Override
+                public void getAddress(String address) {
+                    tv_inArea.setText(address);
+                }
+            };
+        }
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        SimpleDelegate simpleDelegate = new SimpleDelegate() {
-            @Override
-            public void onClickLeftCtv() {
-                super.onClickLeftCtv();
-                backParameter();
-            }
-
-            @Override
-            public void onClickRightCtv() {
-                super.onClickRightCtv();
-
-            }
-        };
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.fillCargoReceipt), "", R.id.titlebar, simpleDelegate);
+//        SimpleDelegate simpleDelegate = new SimpleDelegate() {
+//            @Override
+//            public void onClickLeftCtv() {
+//                super.onClickLeftCtv();
+//                backParameter();
+//            }
+//
+//            @Override
+//            public void onClickRightCtv() {
+//                super.onClickRightCtv();
+//
+//            }
+//        };
+//        ActivityTitleUtils.initToolbar(aty, getString(R.string.fillCargoReceipt), "", R.id.titlebar, simpleDelegate);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.fillCargoReceipt), true, R.id.titlebar);
+        et_contactPerson.setText(contactPerson);
+        et_contactInformation.setText(contactInformation);
+        tv_inArea.setText(inArea);
+        et_detailedAddressInformation.setText(detailedAddressInformation);
+        if (expressDelivery == 0) {
+            img_off.setImageResource(R.mipmap.switch_btn_off);
+            return;
+        }
+        img_off.setImageResource(R.mipmap.switch_btn_on);
     }
 
     @Override
@@ -100,8 +137,9 @@ public class FillCargoReceiptFormActivity extends BaseActivity implements FillCa
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_inArea:
-
-
+                SoftKeyboardUtils.packUpKeyboard(this);
+                //点击弹出选项选择器
+                pickerViewUtil.onoptionsSelectListener();
                 break;
             case R.id.img_off:
                 if (expressDelivery == 0) {
@@ -113,6 +151,7 @@ public class FillCargoReceiptFormActivity extends BaseActivity implements FillCa
                 img_off.setImageResource(R.mipmap.switch_btn_off);
                 break;
             case R.id.tv_determine:
+                cargoReceipt = 1;
                 ((FillCargoReceiptFormContract.Presenter) mPresenter).postFillCargoReceiptForm(et_contactPerson.getText().toString().trim(),
                         et_contactInformation.getText().toString().trim(), tv_inArea.getText().toString().trim(), et_detailedAddressInformation.getText().toString().trim(), expressDelivery);
                 break;
@@ -142,10 +181,26 @@ public class FillCargoReceiptFormActivity extends BaseActivity implements FillCa
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (pickerViewUtil != null && pickerViewUtil.isShowing()) {
+//                img_start.setRotation(360);
+//                img_stop.setRotation(360);
+                pickerViewUtil.onDismiss();
+                return true;
+            }
             backParameter();
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (pickerViewUtil != null && pickerViewUtil.isShowing()) {
+            pickerViewUtil.onDismiss();
+        }
+        pickerViewUtil = null;
     }
 
     /**
