@@ -233,9 +233,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             Log.d("tag111", openid);
             from = share_media.toString();
             if (from != null && from.equals("WEIXIN")) {
-                from = "wx";
+                from = "1";
             } else {
-                from = "qq";
+                from = "2";
             }
             nickname = map.get("name");
             head_pic = map.get("iconurl");

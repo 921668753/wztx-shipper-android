@@ -207,7 +207,9 @@
     <string name="appointmentTime1">预约时间</string>
     <string name="appointmentTime2">请选择预约时间</string>
     <string name="pleaseEnterDeparturePoint">请输入出发地</string>
+    <string name="pleaseEnterInformationShipper">请输入发货人相关信息</string>
     <string name="enterDestination">请输入目的地</string>
+    <string name="pleaseEnterConsigneeInformation">请输入收货人相关信息</string>
     <string name="cargoInformation">货物信息</string>
     <string name="submitOrders">提交订单</string>
     <string name="assignedVehicle">指派车辆</string>

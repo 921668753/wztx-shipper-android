@@ -6,6 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
@@ -20,8 +23,16 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
+import com.amap.api.maps2d.model.BitmapDescriptor;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.Circle;
+import com.amap.api.maps2d.model.CircleOptions;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.services.cloud.CloudItemDetail;
 import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
@@ -54,6 +65,7 @@ import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
+import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
 import com.sunfusheng.marqueeview.MarqueeView;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
@@ -248,6 +260,13 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
      */
     private String type1 = "often";
     private int tran_type = 0;
+    private String pioName = "";
+
+    private boolean mFirstFix = false;
+
+    private Marker mLocMarker;
+    private SensorEventHelper mSensorHelper;
+    private Circle mCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -389,14 +408,26 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
                 startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
-                if (StringUtils.isEmpty(provenanceDistrict)) {
+                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
                     ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
                     break;
                 }
+
+                if (StringUtils.isEmpty(provenanceDetailedAddress) || StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
+                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
+                    break;
+                }
+
                 if (StringUtils.isEmpty(destinationDistrict)) {
                     ViewInject.toast(getString(R.string.enterDestination));
                     break;
                 }
+
+                if (StringUtils.isEmpty(destinationDetailedAddress) || StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
+                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
+                    break;
+                }
+
                 Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
                 cargoInformationIntent.putExtra("tran_type", tran_type);
                 cargoInformationIntent.putExtra("type", type1);
@@ -450,7 +481,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             //获取一次定位结果：
             //该方法默认为false。
-            mLocationOption.setOnceLocation(true);
+            //    mLocationOption.setOnceLocation(true);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
             // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
             // 在定位结束后，在合适的生命周期调用onDestroy()方法
@@ -514,30 +545,55 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
             if (amapLocation.getErrorCode() == 0) {
+                LatLng location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                if (!mFirstFix) {
+                    mFirstFix = true;
+                    addCircle(location, amapLocation.getAccuracy());//添加定位精度圆
+                    addMarker(location);//添加定位图标
+                    mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
+
+                } else {
+                    mCircle.setCenter(location);
+                    mCircle.setRadius(amapLocation.getAccuracy());
+                    mLocMarker.setPosition(location);
+                }
+                mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18));
                 isTost = true;
                 mlocationClient.stopLocation();
                 province = amapLocation.getProvince();
                 city = amapLocation.getCity();
                 aoiName = amapLocation.getAoiName();
+                pioName = amapLocation.getPoiName();
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", city);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationProvince",province);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationCity",city);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationArea",amapLocation.getDistrict());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationProvince", province);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationCity", city);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationArea", amapLocation.getDistrict());
                 Log.d("AmapErr", amapLocation.getDistrict());
-                Log.d("AmapErr", amapLocation.getStreet());
+                Log.d("AmapErr", amapLocation.getAddress());
+                provenanceLat = String.valueOf(amapLocation.getLatitude());
+                provenanceLongi = String.valueOf(amapLocation.getLongitude());
+                provenanceDistrict = province + city + amapLocation.getDistrict();
+                provenancePlaceName = amapLocation.getAddress();
+                tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
+                isProvenance = 1;
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                // 设置中心点及检索范围
-                CloudSearch.SearchBound bound = new CloudSearch.SearchBound(new LatLonPoint(
-                        amapLocation.getLatitude(), amapLocation.getLongitude()), 10000);
-                //设置查询条件 mTableID是将数据存储到数据管理台后获得。
-                try {
-                    mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
-                    mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
-                } catch (AMapException e) {
-                    e.printStackTrace();
-                    ((MainContract.Presenter) mPresenter).getHome();
-                }
+//                // 设置中心点及检索范围
+//                CloudSearch.SearchBound bound = new CloudSearch.SearchBound(new LatLonPoint(
+//                        amapLocation.getLatitude(), amapLocation.getLongitude()), 10000);
+//                //设置查询条件 mTableID是将数据存储到数据管理台后获得。
+//                try {
+//                    mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
+//                    mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
+//                } catch (AMapException e) {
+//                    e.printStackTrace();
+//                    ((MainContract.Presenter) mPresenter).getHome();
+//                }
             } else {
+                provenanceLat = "";
+                provenanceLongi = "";
+                city = "";
+                provenanceDistrict = "";
+                provenancePlaceName = "";
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 mlocationClient.startLocation();
                 if (amapLocation.getErrorCode() == 12) {
@@ -569,9 +625,16 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     private void init(Bundle savedInstanceState) {
         mMapView = (MapView) findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
-        mAmap = mMapView.getMap();
+        if (mAmap == null) {
+            mAmap = mMapView.getMap();
+            mAmap.setLocationSource(this);// 设置定位监听
+            ((MainContract.Presenter) mPresenter).setupLocationStyle(mAmap);
+        }
+        mSensorHelper = new SensorEventHelper(this);
+        if (mSensorHelper != null) {
+            mSensorHelper.registerSensorListener();
+        }
         choiceLocationWrapper();
-        ((MainContract.Presenter) mPresenter).setupLocationStyle(mAmap);
     }
 
 
@@ -611,6 +674,9 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mMapView.onResume();
         marqueeView.startFlipping();
+        if (mSensorHelper != null) {
+            mSensorHelper.registerSensorListener();
+        }
         isForeground = true;
     }
 
@@ -620,8 +686,14 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
         marqueeView.stopFlipping();
+        if (mSensorHelper != null) {
+            mSensorHelper.unRegisterSensorListener();
+            mSensorHelper.setCurrentMarker(null);
+            mSensorHelper = null;
+        }
         mMapView.onPause();
         deactivate();
+        mFirstFix = false;
         isForeground = true;
     }
 
@@ -932,5 +1004,34 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             destinationEixedTelephone = "";
             tv_enterDestination.setText(destinationPlaceName);
         }
+    }
+
+
+    private void addCircle(LatLng latlng, double radius) {
+        CircleOptions options = new CircleOptions();
+        options.strokeWidth(2f);
+        int FILL_COLOR = Color.argb(10, 0, 0, 180);
+        options.fillColor(FILL_COLOR);
+        int STROKE_COLOR = Color.argb(180, 3, 145, 255);
+        options.strokeColor(STROKE_COLOR);
+        options.center(latlng);
+        options.radius(radius);
+        mCircle = mAmap.addCircle(options);
+    }
+
+    private void addMarker(LatLng latlng) {
+        if (mLocMarker != null) {
+            return;
+        }
+        Bitmap bMap = BitmapFactory.decodeResource(this.getResources(),
+                R.mipmap.ic_map_mylocation);
+        BitmapDescriptor des = BitmapDescriptorFactory.fromBitmap(bMap);
+        MarkerOptions options = new MarkerOptions();
+        options.icon(des);
+        options.anchor(2f, 2f);
+        options.position(latlng);
+        options.draggable(true);//设置Marker可拖动
+        mLocMarker = mAmap.addMarker(options);
+
     }
 }
