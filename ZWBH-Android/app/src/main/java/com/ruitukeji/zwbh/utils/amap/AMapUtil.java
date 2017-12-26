@@ -181,5 +181,11 @@ public class AMapUtil {
         return new LatLng(latLonPoint.getLatitude(), latLonPoint.getLongitude());
     }
 
+    /**
+     * 把LatLon对象转化为LatLonPoint对象
+     */
+    public static LatLonPoint convertToLatLonPoint(LatLng latLon) {
+        return new LatLonPoint(latLon.latitude, latLon.longitude);
+    }
 }
   

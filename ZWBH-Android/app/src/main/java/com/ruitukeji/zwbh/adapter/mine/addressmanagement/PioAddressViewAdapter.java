@@ -2,7 +2,9 @@ package com.ruitukeji.zwbh.adapter.mine.addressmanagement;
 
 import android.content.Context;
 
-import com.amap.api.services.help.Tip;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.core.SuggestionCity;
+import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 
@@ -14,7 +16,7 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
  * Created by Administrator on 2017/2/16.
  */
 
-public class PioAddressViewAdapter extends BGAAdapterViewAdapter<Tip> {
+public class PioAddressViewAdapter extends BGAAdapterViewAdapter<PoiItem> {
 
 
     public PioAddressViewAdapter(Context context) {
@@ -23,10 +25,15 @@ public class PioAddressViewAdapter extends BGAAdapterViewAdapter<Tip> {
 
 
     @Override
-    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, Tip model) {
-        if (model.getPoint() != null && !StringUtils.isEmpty(String.valueOf(model.getPoint().getLatitude()))) {
-            viewHolderHelper.setText(R.id.tv_placeName, model.getName());
-            viewHolderHelper.setText(R.id.tv_district, model.getDistrict() + model.getAddress());
+    public void fillData(BGAViewHolderHelper viewHolderHelper, int position, PoiItem model) {
+        if (model.getLatLonPoint() != null && !StringUtils.isEmpty(String.valueOf(model.getLatLonPoint().getLongitude()))) {
+            viewHolderHelper.setText(R.id.tv_placeName, model.getTitle());
+            Log.d("tag", model.getProvinceName());
+            Log.d("tag", model.getCityName());
+            Log.d("tag", model.getAdName());
+            Log.d("tag", model.getSnippet());
+            Log.d("tag", model.getTitle());
+            viewHolderHelper.setText(R.id.tv_district, model.getProvinceName() + model.getCityName() + model.getAdName() + model.getSnippet());
         } else {
             removeItem(position);
         }

@@ -4,6 +4,7 @@
     <solid android:color="@color/mainColor" />
     <!-- 圆角 -->
     <corners android:radius="@dimen/dimen15.5" />
+
     <stroke
         android:width="@dimen/dimen0.5"
         android:color="@color/e5E5E5olors" />

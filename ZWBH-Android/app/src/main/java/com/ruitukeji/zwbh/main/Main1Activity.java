@@ -28,6 +28,7 @@ import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.BitmapDescriptor;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.Circle;
 import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
@@ -37,7 +38,7 @@ import com.amap.api.services.cloud.CloudItemDetail;
 import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
-import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeSearch;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
@@ -69,6 +70,7 @@ import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
 import com.sunfusheng.marqueeview.MarqueeView;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
+import com.amap.api.maps2d.AMap.OnCameraChangeListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,7 +88,7 @@ import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_P
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
 
-public class Main1Activity extends BaseActivity implements EasyPermissions.PermissionCallbacks, LocationSource, AMapLocationListener, MainContract.View, CloudSearch.OnCloudSearchListener {
+public class Main1Activity extends BaseActivity implements EasyPermissions.PermissionCallbacks, MainContract.View, CloudSearch.OnCloudSearchListener, OnCameraChangeListener {
 
     private long firstTime = 0;
     public static boolean isForeground = false;
@@ -101,7 +103,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 
     private AMap mAmap;
 
-    OnLocationChangedListener mListener;
+  //  OnLocationChangedListener mListener;
     AMapLocationClient mlocationClient;
     AMapLocationClientOption mLocationOption;
 
@@ -267,6 +269,8 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     private Marker mLocMarker;
     private SensorEventHelper mSensorHelper;
     private Circle mCircle;
+    private GeocodeSearch geocoderSearch;
+    private LatLng location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -298,7 +302,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //            }
 //        });
         //    timer = new Timer();
-        registerMessageReceiver();
+      //  registerMessageReceiver();
         mCloudSearch = new CloudSearch(this);// 初始化查询类
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
         boolean isUpdate = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isUpdate", false);
@@ -313,187 +317,187 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //        ll_cityDistribution.setOnClickListener(this);
 //        ll_longTrunk.setOnClickListener(this);
         //   locationBouncedDialog.show();
-        ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+    //    ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
         tv_appointmentTime.setVisibility(View.GONE);
         ll_appointmentTime.setVisibility(View.GONE);
     }
 
-    @Override
-    public void widgetClick(View v) {
-        super.widgetClick(v);
-        switch (v.getId()) {
-            case R.id.img_user:
-                showActivity(aty, PersonalCenterActivity.class);
-                break;
-            case R.id.img_message:
-                //   tv_tag.setVisibility(View.GONE);
-                showActivity(aty, MessageCenterActivity.class);
-                break;
-            case R.id.ll_appointmentTime:
-
-                break;
-            case R.id.ll_cityDistribution:
-                tran_type = 0;
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
-                break;
-            case R.id.ll_longTrunk:
-                tran_type = 1;
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
-                break;
-            case R.id.tv_realTime:
-                type1 = "often";
-                ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
-                tv_appointmentTime.setVisibility(View.GONE);
-                ll_appointmentTime.setVisibility(View.GONE);
-                break;
-            case R.id.tv_urgent:
-                type1 = "urgent";
-                ((MainContract.Presenter) mPresenter).settingType(this, 1, tv_realTime, tv_urgent, tv_makeAppointment);
-                tv_appointmentTime.setVisibility(View.GONE);
-                ll_appointmentTime.setVisibility(View.GONE);
-                break;
-            case R.id.tv_makeAppointment:
-                type1 = "appoint";
-                ((MainContract.Presenter) mPresenter).settingType(this, 2, tv_realTime, tv_urgent, tv_makeAppointment);
-                tv_appointmentTime.setVisibility(View.VISIBLE);
-                ll_appointmentTime.setVisibility(View.VISIBLE);
-                tv_appointmentTime1.setText(getString(R.string.appointmentTime2));
-                break;
-            case R.id.tv_pleaseEnterDeparturePoint:
-                type = 0;
-                Intent provenanceIntent = new Intent(this, SelectAddressActivity.class);
-                if (isProvenance == 0) {
-                    provenanceIntent.setClass(this, SelectAddressActivity.class);
-                } else {
-                    provenanceIntent.setClass(this, ProvenanceActivity.class);
-                    provenanceIntent.putExtra("isProvenance", isProvenance);
-                }
-                provenanceIntent.putExtra("type", type);
-                provenanceIntent.putExtra("title", getString(R.string.provenance));
-                provenanceIntent.putExtra("tran_type", tran_type);
-                provenanceIntent.putExtra("lat", provenanceLat);
-                provenanceIntent.putExtra("longi", provenanceLongi);
-                provenanceIntent.putExtra("cityName", city);
-                provenanceIntent.putExtra("district", provenanceDistrict);
-                provenanceIntent.putExtra("placeName", provenancePlaceName);
-                provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
-                provenanceIntent.putExtra("deliveryCustomer", provenanceDeliveryCustomer);
-                provenanceIntent.putExtra("shipper", provenanceShipper);
-                provenanceIntent.putExtra("phone", provenancePhone);
-                provenanceIntent.putExtra("eixedTelephone", provenanceEixedTelephone);
-                startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
-                break;
-            case R.id.tv_enterDestination:
-                type = 1;
-                Intent destinationIntent = new Intent();
-                if (isDestination == 0) {
-                    destinationIntent.setClass(this, SelectAddressActivity.class);
-                } else {
-                    destinationIntent.setClass(this, ProvenanceActivity.class);
-                    destinationIntent.putExtra("isProvenance", isDestination);
-                }
-                destinationIntent.putExtra("lat", destinationLat);
-                destinationIntent.putExtra("longi", destinationLongi);
-                destinationIntent.putExtra("district", destinationDistrict);
-                destinationIntent.putExtra("placeName", destinationPlaceName);
-                destinationIntent.putExtra("tran_type", tran_type);
-                destinationIntent.putExtra("cityName", city);
-                destinationIntent.putExtra("type", type);
-                destinationIntent.putExtra("title", getString(R.string.destination));
-                destinationIntent.putExtra("detailedAddress", destinationDetailedAddress);
-                destinationIntent.putExtra("deliveryCustomer", destinationDeliveryCustomer);
-                destinationIntent.putExtra("shipper", destinationShipper);
-                destinationIntent.putExtra("phone", destinationPhone);
-                destinationIntent.putExtra("eixedTelephone", destinationEixedTelephone);
-                startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
-                break;
-            case R.id.rl_cargoInformation:
-                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
-                    break;
-                }
-
-                if (StringUtils.isEmpty(provenanceDetailedAddress) || StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
-                    break;
-                }
-
-                if (StringUtils.isEmpty(destinationDistrict)) {
-                    ViewInject.toast(getString(R.string.enterDestination));
-                    break;
-                }
-
-                if (StringUtils.isEmpty(destinationDetailedAddress) || StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
-                    break;
-                }
-
-                Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
-                cargoInformationIntent.putExtra("tran_type", tran_type);
-                cargoInformationIntent.putExtra("type", type1);
-                //  cargoInformationIntent.putExtra("appoint_at", appoint_at);
-                cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
-                cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
-                cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
-                cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
-                cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
-                cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
-                cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
-                cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
-                cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
-                cargoInformationIntent.putExtra("destinationLat", destinationLat);
-                cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
-                cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
-                cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
-                cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
-                cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
-                cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
-                cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
-                cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
-                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
-                break;
-            case R.id.tv_assignedVehicle:
-                AssignedVehicleBouncedDialog assignedVehicleBouncedDialog = new AssignedVehicleBouncedDialog(this) {
-                    @Override
-                    public void confirm(String pleaseLicensePlateNumber) {
-
-                    }
-                };
-                assignedVehicleBouncedDialog.show();
-                break;
-        }
-    }
+//    @Override
+//    public void widgetClick(View v) {
+//        super.widgetClick(v);
+//        switch (v.getId()) {
+//            case R.id.img_user:
+//                showActivity(aty, PersonalCenterActivity.class);
+//                break;
+//            case R.id.img_message:
+//                //   tv_tag.setVisibility(View.GONE);
+//                showActivity(aty, MessageCenterActivity.class);
+//                break;
+//            case R.id.ll_appointmentTime:
+//
+//                break;
+//            case R.id.ll_cityDistribution:
+//                tran_type = 0;
+//                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+//                break;
+//            case R.id.ll_longTrunk:
+//                tran_type = 1;
+//                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+//                break;
+//            case R.id.tv_realTime:
+//                type1 = "often";
+//                ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+//                tv_appointmentTime.setVisibility(View.GONE);
+//                ll_appointmentTime.setVisibility(View.GONE);
+//                break;
+//            case R.id.tv_urgent:
+//                type1 = "urgent";
+//                ((MainContract.Presenter) mPresenter).settingType(this, 1, tv_realTime, tv_urgent, tv_makeAppointment);
+//                tv_appointmentTime.setVisibility(View.GONE);
+//                ll_appointmentTime.setVisibility(View.GONE);
+//                break;
+//            case R.id.tv_makeAppointment:
+//                type1 = "appoint";
+//                ((MainContract.Presenter) mPresenter).settingType(this, 2, tv_realTime, tv_urgent, tv_makeAppointment);
+//                tv_appointmentTime.setVisibility(View.VISIBLE);
+//                ll_appointmentTime.setVisibility(View.VISIBLE);
+//                tv_appointmentTime1.setText(getString(R.string.appointmentTime2));
+//                break;
+//            case R.id.tv_pleaseEnterDeparturePoint:
+//                type = 0;
+//                Intent provenanceIntent = new Intent(this, SelectAddressActivity.class);
+//                if (isProvenance == 0) {
+//                    provenanceIntent.setClass(this, SelectAddressActivity.class);
+//                } else {
+//                    provenanceIntent.setClass(this, ProvenanceActivity.class);
+//                    provenanceIntent.putExtra("isProvenance", isProvenance);
+//                }
+//                provenanceIntent.putExtra("type", type);
+//                provenanceIntent.putExtra("title", getString(R.string.provenance));
+//                provenanceIntent.putExtra("tran_type", tran_type);
+//                provenanceIntent.putExtra("lat", provenanceLat);
+//                provenanceIntent.putExtra("longi", provenanceLongi);
+//                provenanceIntent.putExtra("cityName", city);
+//                provenanceIntent.putExtra("district", provenanceDistrict);
+//                provenanceIntent.putExtra("placeName", provenancePlaceName);
+//                provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
+//                provenanceIntent.putExtra("deliveryCustomer", provenanceDeliveryCustomer);
+//                provenanceIntent.putExtra("shipper", provenanceShipper);
+//                provenanceIntent.putExtra("phone", provenancePhone);
+//                provenanceIntent.putExtra("eixedTelephone", provenanceEixedTelephone);
+//                startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
+//                break;
+//            case R.id.tv_enterDestination:
+//                type = 1;
+//                Intent destinationIntent = new Intent();
+//                if (isDestination == 0) {
+//                    destinationIntent.setClass(this, SelectAddressActivity.class);
+//                } else {
+//                    destinationIntent.setClass(this, ProvenanceActivity.class);
+//                    destinationIntent.putExtra("isProvenance", isDestination);
+//                }
+//                destinationIntent.putExtra("lat", destinationLat);
+//                destinationIntent.putExtra("longi", destinationLongi);
+//                destinationIntent.putExtra("district", destinationDistrict);
+//                destinationIntent.putExtra("placeName", destinationPlaceName);
+//                destinationIntent.putExtra("tran_type", tran_type);
+//                destinationIntent.putExtra("cityName", city);
+//                destinationIntent.putExtra("type", type);
+//                destinationIntent.putExtra("title", getString(R.string.destination));
+//                destinationIntent.putExtra("detailedAddress", destinationDetailedAddress);
+//                destinationIntent.putExtra("deliveryCustomer", destinationDeliveryCustomer);
+//                destinationIntent.putExtra("shipper", destinationShipper);
+//                destinationIntent.putExtra("phone", destinationPhone);
+//                destinationIntent.putExtra("eixedTelephone", destinationEixedTelephone);
+//                startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
+//                break;
+//            case R.id.rl_cargoInformation:
+//                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
+//                    break;
+//                }
+//
+//                if (StringUtils.isEmpty(provenanceDetailedAddress) || StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
+//                    break;
+//                }
+//
+//                if (StringUtils.isEmpty(destinationDistrict)) {
+//                    ViewInject.toast(getString(R.string.enterDestination));
+//                    break;
+//                }
+//
+//                if (StringUtils.isEmpty(destinationDetailedAddress) || StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
+//                    break;
+//                }
+//
+//                Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
+//                cargoInformationIntent.putExtra("tran_type", tran_type);
+//                cargoInformationIntent.putExtra("type", type1);
+//                //  cargoInformationIntent.putExtra("appoint_at", appoint_at);
+//                cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
+//                cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
+//                cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
+//                cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
+//                cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
+//                cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
+//                cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
+//                cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
+//                cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
+//                cargoInformationIntent.putExtra("destinationLat", destinationLat);
+//                cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
+//                cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
+//                cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
+//                cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
+//                cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
+//                cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
+//                cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
+//                cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
+//                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
+//                break;
+//            case R.id.tv_assignedVehicle:
+//                AssignedVehicleBouncedDialog assignedVehicleBouncedDialog = new AssignedVehicleBouncedDialog(this) {
+//                    @Override
+//                    public void confirm(String pleaseLicensePlateNumber) {
+//
+//                    }
+//                };
+//                assignedVehicleBouncedDialog.show();
+//                break;
+//        }
+//    }
 
     /**
      * 激活定位
      */
-    @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
-        mListener = onLocationChangedListener;
-        if (mlocationClient == null) {
-            //初始化定位
-            mlocationClient = new AMapLocationClient(this);
-            //初始化定位参数
-            mLocationOption = new AMapLocationClientOption();
-            //设置定位回调监听
-            mlocationClient.setLocationListener(this);
-            //设置为高精度定位模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-            //获取一次定位结果：
-            //该方法默认为false。
-            //    mLocationOption.setOnceLocation(true);
-            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
-            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
-            // 在定位结束后，在合适的生命周期调用onDestroy()方法
-            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
-            //关闭缓存机制
-//            mLocationOption.setLocationCacheEnable(false);
-            //给定位客户端对象设置定位参数
-            //设置定位参数
-            mlocationClient.setLocationOption(mLocationOption);
-            mlocationClient.startLocation();//启动定位
-        }
-    }
+//    @Override
+//    public void activate(OnLocationChangedListener onLocationChangedListener) {
+//        mListener = onLocationChangedListener;
+//        if (mlocationClient == null) {
+//            //初始化定位
+//            mlocationClient = new AMapLocationClient(this);
+//            //初始化定位参数
+//            mLocationOption = new AMapLocationClientOption();
+//            //设置定位回调监听
+//            mlocationClient.setLocationListener(this);
+//            //设置为高精度定位模式
+//            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+//            //获取一次定位结果：
+//            //该方法默认为false。
+//            mLocationOption.setOnceLocation(true);
+//            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+//            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+//            // 在定位结束后，在合适的生命周期调用onDestroy()方法
+//            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+//            //关闭缓存机制
+////            mLocationOption.setLocationCacheEnable(false);
+//            //给定位客户端对象设置定位参数
+//            //设置定位参数
+//            mlocationClient.setLocationOption(mLocationOption);
+//            mlocationClient.startLocation();//启动定位
+//        }
+//    }
 
 
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
@@ -501,9 +505,9 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             // 设置定位监听
-            mAmap.setLocationSource(this);
+       //     mAmap.setLocationSource(this);
 // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-            mAmap.setMyLocationEnabled(true);
+       //     mAmap.setMyLocationEnabled(true);
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.locationPermissions), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
         }
@@ -531,82 +535,81 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
     /**
      * 停止定位
      */
-    @Override
-    public void deactivate() {
-        mListener = null;
-        if (mlocationClient != null) {
-            mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
-        }
-        mlocationClient = null;
-    }
+//    @Override
+//    public void deactivate() {
+//        mListener = null;
+//        if (mlocationClient != null) {
+//            mlocationClient.stopLocation();
+//            mlocationClient.onDestroy();
+//        }
+//        mlocationClient = null;
+//    }
 
-    @Override
-    public void onLocationChanged(AMapLocation amapLocation) {
-        if (mListener != null && amapLocation != null) {
-            if (amapLocation.getErrorCode() == 0) {
-                LatLng location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
-                if (!mFirstFix) {
-                    mFirstFix = true;
-                    addCircle(location, amapLocation.getAccuracy());//添加定位精度圆
-                    addMarker(location);//添加定位图标
-                    mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
-
-                } else {
-                    mCircle.setCenter(location);
-                    mCircle.setRadius(amapLocation.getAccuracy());
-                    mLocMarker.setPosition(location);
-                }
-                mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18));
-                isTost = true;
-                mlocationClient.stopLocation();
-                province = amapLocation.getProvince();
-                city = amapLocation.getCity();
-                aoiName = amapLocation.getAoiName();
-                pioName = amapLocation.getPoiName();
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", city);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationProvince", province);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationCity", city);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationArea", amapLocation.getDistrict());
-                Log.d("AmapErr", amapLocation.getDistrict());
-                Log.d("AmapErr", amapLocation.getAddress());
-                provenanceLat = String.valueOf(amapLocation.getLatitude());
-                provenanceLongi = String.valueOf(amapLocation.getLongitude());
-                provenanceDistrict = province + city + amapLocation.getDistrict();
-                provenancePlaceName = amapLocation.getAddress();
-                tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
-                isProvenance = 1;
-                mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-//                // 设置中心点及检索范围
-//                CloudSearch.SearchBound bound = new CloudSearch.SearchBound(new LatLonPoint(
-//                        amapLocation.getLatitude(), amapLocation.getLongitude()), 10000);
-//                //设置查询条件 mTableID是将数据存储到数据管理台后获得。
-//                try {
-//                    mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
-//                    mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
-//                } catch (AMapException e) {
-//                    e.printStackTrace();
-//                    ((MainContract.Presenter) mPresenter).getHome();
+//    @Override
+//    public void onLocationChanged(AMapLocation amapLocation) {
+//        if (mListener != null && amapLocation != null) {
+//            if (amapLocation.getErrorCode() == 0) {
+//                location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+//                if (!mFirstFix) {
+//                    mFirstFix = true;
+//                    addCircle(location, amapLocation.getAccuracy());//添加定位精度圆
+//                    addMarker(location, R.mipmap.ic_map_mylocation);//添加定位图标
+//                    mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
+//                } else {
+//                    mCircle.setCenter(location);
+//                    mCircle.setRadius(amapLocation.getAccuracy());
+//                    mLocMarker.setPosition(location);
 //                }
-            } else {
-                provenanceLat = "";
-                provenanceLongi = "";
-                city = "";
-                provenanceDistrict = "";
-                provenancePlaceName = "";
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
-                mlocationClient.startLocation();
-                if (amapLocation.getErrorCode() == 12) {
-                    if (isTost) {
-                        ViewInject.toast("请打开GPS定位");
-                        isTost = false;
-                    }
-                }
-                String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
-                Log.e("AmapErr", errText);
-            }
-        }
-    }
+//                mAmap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18));
+//                isTost = true;
+//                mlocationClient.stopLocation();
+//                province = amapLocation.getProvince();
+//                city = amapLocation.getCity();
+//                aoiName = amapLocation.getAoiName();
+//                pioName = amapLocation.getPoiName();
+//                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", city);
+//                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationProvince", province);
+//                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationCity", city);
+//                PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationArea", amapLocation.getDistrict());
+//                Log.d("AmapErr", amapLocation.getDistrict());
+//                Log.d("AmapErr", amapLocation.getAddress());
+//                provenanceLat = String.valueOf(amapLocation.getLatitude());
+//                provenanceLongi = String.valueOf(amapLocation.getLongitude());
+//                provenanceDistrict = province + city + amapLocation.getDistrict();
+//                provenancePlaceName = amapLocation.getAddress();
+//                tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
+//                isProvenance = 1;
+//                //    mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+////                // 设置中心点及检索范围
+////                CloudSearch.SearchBound bound = new CloudSearch.SearchBound(new LatLonPoint(
+////                        amapLocation.getLatitude(), amapLocation.getLongitude()), 10000);
+////                //设置查询条件 mTableID是将数据存储到数据管理台后获得。
+////                try {
+////                    mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
+////                    mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
+////                } catch (AMapException e) {
+////                    e.printStackTrace();
+////                    ((MainContract.Presenter) mPresenter).getHome();
+////                }
+//            } else {
+//                provenanceLat = "";
+//                provenanceLongi = "";
+//                city = "";
+//                provenanceDistrict = "";
+//                provenancePlaceName = "";
+//                PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
+//                mlocationClient.startLocation();
+//                if (amapLocation.getErrorCode() == 12) {
+//                    if (isTost) {
+//                        ViewInject.toast("请打开GPS定位");
+//                        isTost = false;
+//                    }
+//                }
+//                String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
+//                Log.e("AmapErr", errText);
+//            }
+//        }
+//    }
 
 
     @AfterPermissionGranted(NumericConstants.READ_AND_WRITE_CODE)
@@ -627,13 +630,14 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         mMapView.onCreate(savedInstanceState);
         if (mAmap == null) {
             mAmap = mMapView.getMap();
-            mAmap.setLocationSource(this);// 设置定位监听
-            ((MainContract.Presenter) mPresenter).setupLocationStyle(mAmap);
+            //    mAmap.setLocationSource(this);// 设置定位监听
+            mAmap.setOnCameraChangeListener(this);// 对amap添加移动地图事件监听器，会回调onCameraChange（）和onCameraChangeFinish（）
+            //   ((MainContract.Presenter) mPresenter).setupLocationStyle(mAmap);
         }
-        mSensorHelper = new SensorEventHelper(this);
-        if (mSensorHelper != null) {
-            mSensorHelper.registerSensorListener();
-        }
+//        mSensorHelper = new SensorEventHelper(this);
+//        if (mSensorHelper != null) {
+//            mSensorHelper.registerSensorListener();
+//        }
         choiceLocationWrapper();
     }
 
@@ -674,9 +678,9 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 //        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mMapView.onResume();
         marqueeView.startFlipping();
-        if (mSensorHelper != null) {
-            mSensorHelper.registerSensorListener();
-        }
+//        if (mSensorHelper != null) {
+//            mSensorHelper.registerSensorListener();
+//        }
         isForeground = true;
     }
 
@@ -692,7 +696,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
             mSensorHelper = null;
         }
         mMapView.onPause();
-        deactivate();
+ //       deactivate();
         mFirstFix = false;
         isForeground = true;
     }
@@ -721,7 +725,7 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         timer = null;
     }
 
-    public void registerMessageReceiver() {
+      public void registerMessageReceiver() {
         mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
@@ -887,6 +891,44 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
 
     }
 
+    /***
+     *  对正在移动地图事件回调
+     */
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+    }
+
+    /*
+    *对移动地图结束事件回调
+     */
+
+    @Override
+    public void onCameraChangeFinish(CameraPosition cameraPosition) {
+        LatLng latLng = cameraPosition.target;
+//泥逆地理
+//        geocoderSearch = new GeocodeSearch(this);
+//        geocoderSearch.setOnGeocodeSearchListener( this);
+//// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+//        RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latLng.latitude, latLng.longitude), 200, GeocodeSearch.AMAP);
+//        geocoderSearch.getFromLocationAsyn(query);
+//清除上一次的定位Marker
+        mAmap.clear();
+        Log.d("tag", "1111");
+        mAmap.addMarker(new MarkerOptions().position(cameraPosition.target).icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                .decodeResource(getResources(), R.mipmap.icon_pin))));
+        mAmap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(latLng.latitude, latLng.longitude)));
+        // 设置中心点及检索范围
+//                CloudSearch.SearchBound bound = new CloudSearch.SearchBound(new LatLonPoint(
+//                        amapLocation.getLatitude(), amapLocation.getLongitude()), 10000);
+//                //设置查询条件 mTableID是将数据存储到数据管理台后获得。
+//                try {
+//                    mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
+//                    mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
+//                } catch (AMapException e) {
+//                    e.printStackTrace();
+//                }
+    }
+
 
     public class MessageReceiver extends BroadcastReceiver {
 
@@ -1019,18 +1061,17 @@ public class Main1Activity extends BaseActivity implements EasyPermissions.Permi
         mCircle = mAmap.addCircle(options);
     }
 
-    private void addMarker(LatLng latlng) {
+    private void addMarker(LatLng latlng, int mipmap) {
         if (mLocMarker != null) {
             return;
         }
         Bitmap bMap = BitmapFactory.decodeResource(this.getResources(),
-                R.mipmap.ic_map_mylocation);
+                mipmap);
         BitmapDescriptor des = BitmapDescriptorFactory.fromBitmap(bMap);
         MarkerOptions options = new MarkerOptions();
         options.icon(des);
         options.anchor(2f, 2f);
         options.position(latlng);
-        options.draggable(true);//设置Marker可拖动
         mLocMarker = mAmap.addMarker(options);
 
     }

@@ -6,6 +6,10 @@
     android:fitsSystemWindows="true"
     tools:context=".main.Main1Activity">
 
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/map"
+        style="@style/MatchMatch" />
+
 
     <RelativeLayout
         android:id="@+id/rl_title"
@@ -125,11 +129,6 @@
         android:layout_below="@id/ll_logisticsType" />
 
 
-    <com.amap.api.maps2d.MapView
-        android:id="@+id/map"
-        style="@style/MatchMatch"
-        android:layout_below="@id/tv_divider" />
-
     <LinearLayout
         android:id="@+id/ll_ad"
         android:layout_width="match_parent"
@@ -176,7 +175,16 @@
     </LinearLayout>
 
 
+    <ImageView
+        style="@style/WrapWrap"
+        android:layout_below="@id/ll_ad"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen75"
+        android:src="@mipmap/icon_pin" />
+
+
     <LinearLayout
+        android:id="@+id/ll_bt"
         style="@style/MatchWrap"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dimen10"
@@ -234,8 +242,8 @@
             <TextView
                 android:id="@+id/tv_appointmentTime"
                 style="@style/MatchWrap"
-                android:layout_marginTop="@dimen/dimen16"
                 android:gravity="center"
+                android:paddingTop="@dimen/dimen12"
                 android:text="@string/appointmentTime1"
                 android:textColor="@color/hintcolors"
                 android:textSize="@dimen/textsize12" />
@@ -246,8 +254,8 @@
                 style="@style/MatchWrap"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen14"
-                android:paddingTop="@dimen/dimen8">
+                android:paddingBottom="@dimen/dimen12"
+                android:paddingTop="@dimen/dimen2">
 
                 <TextView
                     android:id="@+id/tv_appointmentTime1"
@@ -259,13 +267,12 @@
 
                 <ImageView
                     android:layout_width="@dimen/dimen6"
-                    android:layout_height="@dimen/dimen10"
+                    android:layout_height="@dimen/dimen11"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen8"
                     android:src="@mipmap/ic_arrow" />
 
-
             </LinearLayout>
-
 
             <TextView style="@style/DividerWidth" />
 

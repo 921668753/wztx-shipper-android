@@ -117,7 +117,7 @@ public class MainPresenter implements MainContract.Presenter {
      * 清除颜色，并添加颜色
      */
     @Override
-    public void chooseLogisticsType(Main1Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
+    public void chooseLogisticsType(Main2Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
         tv_cityDistribution.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_cityDistribution1.setBackgroundResource(R.color.mainColor);
         tv_longTrunk.setTextColor(activity.getResources().getColor(R.color.typecolors));
@@ -135,13 +135,15 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void settingType(Main1Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
+    public void settingType(Main2Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
         tv_realTime.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_realTime.setBackgroundResource(R.color.mainColor);
+        tv_realTime.setBackgroundResource(R.drawable.shape_main_type2);
         tv_urgent.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_urgent.setBackgroundResource(R.color.mainColor);
         tv_makeAppointment.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_makeAppointment.setBackgroundResource(R.color.mainColor);
+        tv_makeAppointment.setBackgroundResource(R.drawable.shape_main_type2);
         if (type == 0) {
             tv_realTime.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
             tv_realTime.setBackgroundResource(R.drawable.shape_main_type1);
@@ -231,8 +233,8 @@ public class MainPresenter implements MainContract.Presenter {
         // myLocationStyle.anchor(int,int)//设置小蓝点的锚点
         myLocationStyle.strokeWidth(1.0f);// 设置圆形的边框粗细
         // 设置圆形的填充颜色
-          int FILL_COLOR = Color.argb(10, 0, 0, 180);
-          myLocationStyle.radiusFillColor(FILL_COLOR);
+        int FILL_COLOR = Color.argb(10, 0, 0, 180);
+        myLocationStyle.radiusFillColor(FILL_COLOR);
         aMap.setMyLocationStyle(myLocationStyle);
         aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false

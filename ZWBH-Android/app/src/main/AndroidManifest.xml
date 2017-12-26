@@ -89,7 +89,7 @@
             android:screenOrientation="portrait" />
         <!--主界面-->
         <activity
-            android:name=".main.Main1Activity"
+            android:name=".main.Main2Activity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

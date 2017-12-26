@@ -9,9 +9,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amap.api.maps2d.overlay.PoiOverlay;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.addressmanagement.PioAddressViewAdapter;
@@ -35,7 +41,7 @@ import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PR
  * Created by Administrator on 2017/12/12.
  */
 
-public class SelectAddressActivity extends BaseActivity implements TextWatcher, AdapterView.OnItemClickListener, Inputtips.InputtipsListener {
+public class SelectAddressActivity extends BaseActivity implements TextWatcher, AdapterView.OnItemClickListener, PoiSearch.OnPoiSearchListener {
 
     /**
      * 城市
@@ -73,6 +79,8 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
     private int type = 0;
     private int tran_type = 0;
     private String city = "";
+    private PoiSearch.Query query;
+    private PoiSearch poiSearch;
 
     @Override
     public void setRootView() {
@@ -148,32 +156,40 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        //第二个参数传入null或者“”代表在全国进行检索，否则按照传入的city进行检索
-        InputtipsQuery inputquery = new InputtipsQuery(s.toString().trim(), tv_city.getText().toString());
-        inputquery.setCityLimit(true);//限制在当前城市
-        //   构造 Inputtips 对象，并设置监听。
-        Inputtips inputTips = new Inputtips(this, inputquery);
-        inputTips.setInputtipsListener(this);
-        //  调用 PoiSearch 的 requestInputtipsAsyn() 方法发送请求。
-        inputTips.requestInputtipsAsyn();
+//        //第二个参数传入null或者“”代表在全国进行检索，否则按照传入的city进行检索
+//        InputtipsQuery inputquery = new InputtipsQuery(s.toString().trim(), tv_city.getText().toString());
+//        inputquery.setCityLimit(true);//限制在当前城市
+//        //   构造 Inputtips 对象，并设置监听。
+//        Inputtips inputTips = new Inputtips(this, inputquery);
+//        inputTips.setInputtipsListener(this);
+//        //  调用 PoiSearch 的 requestInputtipsAsyn() 方法发送请求。
+//        inputTips.requestInputtipsAsyn();
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        query = new PoiSearch.Query(et_enterDeliveryLocation.getText().toString().trim(), "", tv_city.getText().toString());
+//keyWord表示搜索字符串，
+//第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
+//cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+        query.setPageSize(10000);// 设置每页最多返回多少条poiitem
+        query.setPageNum(1);//设置查询页码
+        poiSearch = new PoiSearch(this, query);
+        poiSearch.setOnPoiSearchListener(this);
+        poiSearch.searchPOIAsyn();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (StringUtils.isEmpty(pioAddressViewAdapter.getItem(position).getDistrict())) {
+        if (StringUtils.isEmpty(pioAddressViewAdapter.getItem(position).getSnippet())) {
             ViewInject.toast(getString(R.string.enterDestination1));
             return;
         }
-        Tip tip = pioAddressViewAdapter.getItem(position);
-        lat = String.valueOf(tip.getPoint().getLatitude());
-        longi = String.valueOf(tip.getPoint().getLongitude());
-        district = tip.getDistrict();
-        placeName = tip.getDistrict() + tip.getAddress() + tip.getName();
+        PoiItem poiItem = pioAddressViewAdapter.getItem(position);
+        lat = String.valueOf(poiItem.getLatLonPoint().getLatitude());
+        longi = String.valueOf(poiItem.getLatLonPoint().getLongitude());
+        district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
+        placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
 
         if (getIntent().getIntExtra("isProvenance", 0) == 1) {
             Intent intent = new Intent();
@@ -201,19 +217,19 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
     }
 
-    @Override
-    public void onGetInputtips(List<Tip> list, int rCode) {
-        if (rCode == 1000) {
-            //通过tipList获取Tip信息
-            tv_divider.setVisibility(View.VISIBLE);
-            tv_divider1.setVisibility(View.VISIBLE);
-            pioAddressViewAdapter.addNewData(list);
-        } else {
-            tv_divider.setVisibility(View.GONE);
-            tv_divider1.setVisibility(View.GONE);
-            pioAddressViewAdapter.clear();
-        }
-    }
+//    @Override
+//    public void onGetInputtips(List<Tip> list, int rCode) {
+//        if (rCode == 1000) {
+//            //通过tipList获取Tip信息
+//            tv_divider.setVisibility(View.VISIBLE);
+//            tv_divider1.setVisibility(View.VISIBLE);
+//            pioAddressViewAdapter.addNewData(list);
+//        } else {
+//            tv_divider.setVisibility(View.GONE);
+//            tv_divider1.setVisibility(View.GONE);
+//            pioAddressViewAdapter.clear();
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -258,6 +274,30 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             int selectCountryId = data.getIntExtra("selectCountryId", 0);
             tv_city.setText(selectCity);
         }
+
+    }
+
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int rCode) {
+        //解析result获取POI信息
+        if (rCode == AMapException.CODE_AMAP_SUCCESS && poiResult != null && poiResult.getQuery() != null && poiResult.getQuery().equals(query) && poiResult.getPois() != null && poiResult.getPois().size() > 0) {// 搜索poi的结果
+            poiResult = poiResult;
+            // 取得搜索到的poiitems有多少页
+            // 取得第一页的poiitem数据，页数从数字0开始
+            pioAddressViewAdapter.clear();
+            pioAddressViewAdapter.addNewData(poiResult.getPois());
+            tv_divider.setVisibility(View.VISIBLE);
+            tv_divider1.setVisibility(View.VISIBLE);
+        } else {
+            ViewInject.toast(getString(R.string.no_result));
+            tv_divider.setVisibility(View.GONE);
+            tv_divider1.setVisibility(View.GONE);
+            pioAddressViewAdapter.clear();
+        }
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
 
     }
 }

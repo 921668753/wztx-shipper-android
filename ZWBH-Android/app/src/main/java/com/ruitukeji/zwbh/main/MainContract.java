@@ -55,12 +55,12 @@ public interface MainContract {
         /**
          * 选择物流类型
          */
-        void chooseLogisticsType(Main1Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
+        void chooseLogisticsType(Main2Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
 
         /**
          * 设置状态：实时，加急，预约
          */
-        void settingType(Main1Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
+        void settingType(Main2Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
     }
 
     interface View extends BaseNewView<Presenter, String> {
