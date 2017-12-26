@@ -87,6 +87,72 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.vehicleRequirements), 0);
             return;
         }
+        if (!StringUtils.isEmpty(card_number)) {
+            mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
+            HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("type", type);
+            map.put("appoint_at", appoint_at);
+            map.put("premium_amount", premium_amount);
+            map.put("insured_amount", insured_amount);
+            map.put("org_address_maps", org_address_maps);
+            map.put("org_city", org_city);
+            map.put("org_address_name", org_address_name);
+            map.put("org_address_detail", org_address_detail);
+            map.put("org_send_client", org_send_client);
+            map.put("org_send_name", org_send_name);
+            map.put("org_phone", org_phone);
+            map.put("org_telphone", org_telphone);
+            map.put("dest_address_maps", dest_address_maps);
+            map.put("dest_city", dest_city);
+            map.put("dest_address_name", dest_address_name);
+            map.put("dest_address_detail", dest_address_detail);
+            map.put("dest_receive_client", dest_receive_client);
+            map.put("dest_receive_name", dest_receive_name);
+            map.put("dest_phone", dest_phone);
+            map.put("dest_telphone", dest_telphone);
+            map.put("goods_name", goods_name);
+            map.put("volume", volume);
+            map.put("weight", weight);
+            map.put("car_style_type", car_style_type);
+            map.put("car_style_type_id", car_style_type_id);
+            map.put("car_style_length", car_style_length);
+
+            map.put("car_style_length_id", car_style_length_id);
+            map.put("effective_time", effective_time);
+            map.put("is_receipt", is_receipt);
+            map.put("system_price", system_price);
+            map.put("tran_type", tran_type);
+            map.put("kilometres", kilometres);
+
+            map.put("spot", spot);
+            map.put("spot_cost", spot_cost);
+            map.put("card_number", card_number);
+            map.put("is_driver_dock", is_driver_dock);
+            map.put("fact_pay", fact_pay);
+            map.put("is_cargo_receipt", is_cargo_receipt);
+            map.put("cargo_man", cargo_man);
+
+            map.put("cargo_tel", cargo_tel);
+            map.put("cargo_address", cargo_address);
+            map.put("cargo_address_detail", cargo_address_detail);
+            map.put("cargo_is_express", cargo_is_express);
+
+            Log.d("tag1111", "11111");
+            httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+            RequestClient.postLogistics(httpParams, new ResponseListener<String>() {
+                @Override
+                public void onSuccess(String response) {
+                    mView.getSuccess(response, 1);
+                }
+
+                @Override
+                public void onFailure(String msg) {
+                    mView.errorMsg(msg, 0);
+                }
+            });
+            return;
+        }
         submitOrdersBouncedDialog = null;
         submitOrdersBouncedDialog = new SubmitOrdersBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override

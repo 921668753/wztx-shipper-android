@@ -231,15 +231,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             //openid = map.get("uid");
             openid = map.get("openid");
             Log.d("tag111", openid);
-            from = share_media.toString();
-            if (from != null && from.equals("WEIXIN")) {
-                from = "1";
-            } else {
-                from = "2";
-            }
             nickname = map.get("name");
             head_pic = map.get("iconurl");
-            ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
+            from = share_media.toString();
+            if (from != null && from.equals("WEIXIN")) {
+                ((LoginContract.Presenter) mPresenter).postThirdToLogin("", openid, nickname, head_pic, sex, "");
+            } else {
+                ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, "", nickname, head_pic, sex, "");
+            }
         }
 
         /**
@@ -293,6 +292,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void getSuccess(String s, int flag) {
+
         LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
         PreferenceHelper.write(this, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
         PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime() + "");

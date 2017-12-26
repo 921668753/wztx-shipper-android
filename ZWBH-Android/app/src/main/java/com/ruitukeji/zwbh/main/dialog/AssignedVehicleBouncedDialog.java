@@ -3,6 +3,8 @@ package com.ruitukeji.zwbh.main.dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
     private EditText et_pleaseLicensePlateNumber;
 
     public AssignedVehicleBouncedDialog(Context context) {
-        super(context, R.style.MyDialog);
+        super(context, R.style.dialog);
         this.context = context;
     }
 
@@ -33,6 +35,11 @@ public abstract class AssignedVehicleBouncedDialog extends BaseDialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_assignedvehiclebounced);
+        Window dialogWindow = getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialogWindow.setAttributes(lp);
         initView();
     }
 

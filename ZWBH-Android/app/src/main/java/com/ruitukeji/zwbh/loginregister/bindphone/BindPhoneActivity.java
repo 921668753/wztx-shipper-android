@@ -12,7 +12,9 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 /**
@@ -203,19 +205,26 @@ public class BindPhoneActivity extends BaseActivity implements BindPhoneContract
 
     @Override
     public void getSuccess(String s, int flag) {
-        dismissLoadingDialog();
         if (flag == 0) {
+            dismissLoadingDialog();
             tv_determine.setEnabled(false);
             //    CodeBean bean = (CodeBean) JsonUtil.getInstance().json2Obj(s, CodeBean.class);
             ViewInject.toast(getString(R.string.testget));
             time.start();
-        } else if (flag == 2) {
+        } else if (flag == 1) {
             time.cancel();
             time = null;
             ViewInject.toast(getString(R.string.bindPhoneSuccessfully));
-            ((BindPhoneContract.Presenter) mPresenter).postThirdToLogin(openid, from, nickname, head_pic, sex);
-
+            if (from != null && from.equals("WEIXIN")) {
+                ((BindPhoneContract.Presenter) mPresenter).postThirdToLogin("", openid, nickname, head_pic, sex, et_phone.getText().toString().trim());
+            } else {
+                ((BindPhoneContract.Presenter) mPresenter).postThirdToLogin(openid, "", nickname, head_pic, sex, et_phone.getText().toString().trim());
+            }
             // finish();
+        } else if (flag == 2) {
+            dismissLoadingDialog();
+            KJActivityStack.create().finishActivity(LoginActivity.class);
+            finish();
         }
     }
 

@@ -23,7 +23,7 @@ interface BindPhoneContract {
         /**
          * 第三方账号登录
          */
-        void postThirdToLogin(String openid, String from, String nickname, String head_pic, int sex);
+        void postThirdToLogin(String qq_openid, String we_openid, String nickname, String avatar, int sex, String tel);
 
     }
 

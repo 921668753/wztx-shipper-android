@@ -172,6 +172,13 @@ public class RequestClient {
     }
 
     /**
+     * 第三方登录
+     */
+    public static void postThirdLogin(HttpParams httpParams, final ResponseListener<String> listener) {
+        HttpRequest.requestPostHttp(URLConstants.THIRDLOGIN, httpParams, listener);
+    }
+
+    /**
      * 发送验证码
      */
     public static void postCaptcha(HttpParams httpParams, final ResponseListener<String> listener) {

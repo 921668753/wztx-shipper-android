@@ -91,6 +91,12 @@ public class URLConstants {
     public static String USERLOGIN = APIURL + "User/login";
 
     /**
+     * 第三方登录
+     */
+    public static String THIRDLOGIN = APIURL + "User/thirdLogin";
+
+
+    /**
      * 发送验证码
      * reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
      */

@@ -234,6 +234,10 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                 }
                 break;
             case R.id.tv_submitOrders:
+                if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) > 60 && StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
+                    ViewInject.toast(getString(R.string.correctNumberMinutes));
+                    return;
+                }
                 ((AddCargoInformationContract.Presenter) mPresenter).postAddCargoInformation(submitOrdersBouncedDialog, type, appoint_at, "", "", (provenanceLongi + "," + provenanceLat),
                         provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
                         (destinationLongi + "," + destinationLat), destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone,
@@ -243,6 +247,10 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                         driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery);
                 break;
             case R.id.tv_assignedVehicle:
+                if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) > 60 && StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
+                    ViewInject.toast(getString(R.string.correctNumberMinutes));
+                    return;
+                }
                 assignedVehicleBouncedDialog = null;
                 assignedVehicleBouncedDialog = new AssignedVehicleBouncedDialog(this) {
                     @Override
