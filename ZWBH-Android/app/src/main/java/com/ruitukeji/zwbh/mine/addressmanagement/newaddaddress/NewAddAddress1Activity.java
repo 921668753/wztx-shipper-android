@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
@@ -65,6 +66,12 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private EditText et_eixedTelephone;
 
     /**
+     * 固定电话
+     */
+    @BindView(id = R.id.img_on, click = true)
+    private ImageView img_on;
+
+    /**
      * 确定
      */
     @BindView(id = R.id.tv_determine, click = true)
@@ -81,7 +88,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private String shipper = "";
     private String phone = "";
     private String eixedTelephone = "";
-
+    private int is_default = 1;
 
     @Override
     public void setRootView() {
@@ -141,11 +148,19 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 intent.putExtra("type", type);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
+            case R.id.img_on:
+                if (is_default == 1) {
+                    img_on.setImageResource(R.mipmap.switch_btn_off);
+                    is_default = 0;
+                } else {
+                    img_on.setImageResource(R.mipmap.switch_btn_on);
+                    is_default = 1;
+                }
+                break;
             case R.id.tv_determine:
                 ((NewAddAddress1Contract.Presenter) mPresenter).postAddress(longi, lat, district, placeName, et_detailedAddress.getText().toString().trim(),
                         et_deliveryCustomer.getText().toString().trim(), et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(),
-                        et_eixedTelephone.getText().toString().trim(), type);
-
+                        et_eixedTelephone.getText().toString().trim(), type, is_default);
                 break;
         }
     }

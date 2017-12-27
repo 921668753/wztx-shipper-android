@@ -11,45 +11,45 @@ import java.util.List;
 
 public class TimeChooseBean extends BaseResult<TimeChooseBean.ResultBean> {
 
-    public class ResultBean {
-        private List<TripChooseBean> trip_choose;
-        private List<RestaurantChooseBean> restaurant_choose;
-        private List<SleepChooseBean> sleep_choose;
+    public static class ResultBean {
+        private List<DateChooseBean> date_choose;
+        private List<HoursChooseBean> hours_choose;
+        private List<MinutesChooseBean> minutes_choose;
 
-        public List<TripChooseBean> getTrip_choose() {
-            return trip_choose;
+        public List<DateChooseBean> getDate_choose() {
+            return date_choose;
         }
 
-        public void setTrip_choose(List<TripChooseBean> trip_choose) {
-            this.trip_choose = trip_choose;
+        public void setDate_choose(List<DateChooseBean> date_choose) {
+            this.date_choose = date_choose;
         }
 
-        public List<RestaurantChooseBean> getRestaurant_choose() {
-            return restaurant_choose;
+        public List<HoursChooseBean> getHours_choose() {
+            return hours_choose;
         }
 
-        public void setRestaurant_choose(List<RestaurantChooseBean> restaurant_choose) {
-            this.restaurant_choose = restaurant_choose;
+        public void setHours_choose(List<HoursChooseBean> hours_choose) {
+            this.hours_choose = hours_choose;
         }
 
-        public List<SleepChooseBean> getSleep_choose() {
-            return sleep_choose;
+        public List<MinutesChooseBean> getSleep_choose() {
+            return minutes_choose;
         }
 
-        public void setSleep_choose(List<SleepChooseBean> sleep_choose) {
-            this.sleep_choose = sleep_choose;
+        public void setSleep_choose(List<MinutesChooseBean> minutes_choose) {
+            this.minutes_choose = minutes_choose;
         }
 
-        public class TripChooseBean implements IPickerViewData {
+        public static class DateChooseBean implements IPickerViewData {
             /**
              * id : 1
-             * name : 悠闲2
-             * description : 少量景点 深1
-             * sorting : 1
+             * dateStr : 少量景点 深1
+             * dateLong : 1
              */
 
             private int id;
-            private String description;
+            private String dateStr;
+            private String dateLong;
 
             public int getId() {
                 return id;
@@ -59,60 +59,37 @@ public class TimeChooseBean extends BaseResult<TimeChooseBean.ResultBean> {
                 this.id = id;
             }
 
-            public String getDescription() {
-                return description;
+            public String getDateStr() {
+                return dateStr;
             }
 
-            public void setDescription(String description) {
-                this.description = description;
+            public void setDateStr(String dateStr) {
+                this.dateStr = dateStr;
             }
 
-
-            @Override
-            public String getPickerViewText() {
-                return description;
-            }
-        }
-
-        public class RestaurantChooseBean implements IPickerViewData {
-            /**
-             * id : 1
-             * name : 0-100
-             */
-
-            private int id;
-            private String description;
-
-            public int getId() {
-                return id;
+            public String getDateLong() {
+                return dateLong;
             }
 
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
+            public void setDateLong(String dateLong) {
+                this.dateLong = dateLong;
             }
 
             @Override
             public String getPickerViewText() {
-                return description;
+                return dateStr;
             }
         }
 
-        public class SleepChooseBean implements IPickerViewData {
+        public static class HoursChooseBean implements IPickerViewData {
             /**
              * id : 1
              * name : 0-100
              */
 
             private int id;
-            private String description;
+            private String hoursStr;
+            private int hoursLong;
 
             public int getId() {
                 return id;
@@ -122,17 +99,65 @@ public class TimeChooseBean extends BaseResult<TimeChooseBean.ResultBean> {
                 this.id = id;
             }
 
-            public String getDescription() {
-                return description;
+            public String getHoursStr() {
+                return hoursStr;
             }
 
-            public void setDescription(String description) {
-                this.description = description;
+            public void setHoursStr(String hoursStr) {
+                this.hoursStr = hoursStr;
+            }
+
+            public int getHoursLong() {
+                return hoursLong;
+            }
+
+            public void setHoursLong(int hoursLong) {
+                this.hoursLong = hoursLong;
             }
 
             @Override
             public String getPickerViewText() {
-                return description;
+                return hoursStr;
+            }
+        }
+
+        public static class MinutesChooseBean implements IPickerViewData {
+            /**
+             * id : 1
+             * name : 0-100
+             */
+
+            private int id;
+            private String minutesStr;
+            private int minutesLong;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public String getMinutesStr() {
+                return minutesStr;
+            }
+
+            public void setMinutesStr(String minutesStr) {
+                this.minutesStr = minutesStr;
+            }
+
+            public int getMinutesLong() {
+                return minutesLong;
+            }
+
+            public void setMinutesLong(int minutesLong) {
+                this.minutesLong = minutesLong;
+            }
+
+            @Override
+            public String getPickerViewText() {
+                return minutesStr;
             }
         }
     }

@@ -87,6 +87,12 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.vehicleRequirements), 0);
             return;
         }
+        if (!type.equals("appoint")) {
+            appoint_at = String.valueOf(System.currentTimeMillis() / 1000);
+        }
+        if (StringUtils.isEmpty(fact_pay)) {
+            fact_pay = system_price;
+        }
         if (!StringUtils.isEmpty(card_number)) {
             mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
             HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
@@ -154,6 +160,8 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             return;
         }
         submitOrdersBouncedDialog = null;
+        String finalAppoint_at = appoint_at;
+        String finalFact_pay = fact_pay;
         submitOrdersBouncedDialog = new SubmitOrdersBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
             public void confirm() {
@@ -162,7 +170,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("type", type);
-                map.put("appoint_at", appoint_at);
+                map.put("appoint_at", finalAppoint_at);
                 map.put("premium_amount", premium_amount);
                 map.put("insured_amount", insured_amount);
                 map.put("org_address_maps", org_address_maps);
@@ -199,7 +207,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                 map.put("spot_cost", spot_cost);
                 map.put("card_number", card_number);
                 map.put("is_driver_dock", is_driver_dock);
-                map.put("fact_pay", fact_pay);
+                map.put("fact_pay", finalFact_pay);
                 map.put("is_cargo_receipt", is_cargo_receipt);
                 map.put("cargo_man", cargo_man);
 

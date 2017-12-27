@@ -17,7 +17,7 @@ public interface LoginContract {
         /**
          * 第三方账号登录
          */
-        void postThirdToLogin(String qq_openid, String we_openid, String nickname, String avatar, int sex, String tel);
+        void postThirdToLogin(String qq_openid, String wx_openid, String nickname, String avatar, int sex);
 
     }
 

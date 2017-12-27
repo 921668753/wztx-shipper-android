@@ -235,9 +235,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             head_pic = map.get("iconurl");
             from = share_media.toString();
             if (from != null && from.equals("WEIXIN")) {
-                ((LoginContract.Presenter) mPresenter).postThirdToLogin("", openid, nickname, head_pic, sex, "");
+                ((LoginContract.Presenter) mPresenter).postThirdToLogin("", openid, nickname, head_pic, sex);
             } else {
-                ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, "", nickname, head_pic, sex, "");
+                ((LoginContract.Presenter) mPresenter).postThirdToLogin(openid, "", nickname, head_pic, sex);
             }
         }
 
@@ -292,11 +292,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void getSuccess(String s, int flag) {
-
         LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
         PreferenceHelper.write(this, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
-        PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime() + "");
+        PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
         PreferenceHelper.write(this, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
+        PreferenceHelper.write(this, StringConstants.FILENAME, "userId", bean.getResult().getUserId());
         PreferenceHelper.write(this, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
         /**
          * 发送消息
@@ -315,7 +315,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if (flag == 1) {
+        if (flag == 1 && msg.equals("4001")) {
             Intent intent = new Intent(aty, BindPhoneActivity.class);
             intent.putExtra("openid", openid);
             intent.putExtra("from", from);

@@ -215,7 +215,6 @@
     <string name="assignedVehicle">指派车辆</string>
 
 
-
     <!--公告通知-->
     <string name="close">关闭</string>
 
@@ -225,6 +224,10 @@
     <string name="confirmAssigned">确认指派</string>
 
     <!--选择地址-->
+    <string name="dateStr">yyyy年MM月dd日</string>
+    <string name="hoursStr">HH时</string>
+    <string name="minutesStr">mm分</string>
+    <string name="timeStr">yyyy年MM月dd日HH时mm分</string>
     <string name="selectAddress">选择地址</string>
     <string name="cancel">取消</string>
     <string name="pleaseEnterDeliveryLocation">请输入发货地点</string>
@@ -574,8 +577,6 @@
     <string name="thisWeek">本周</string>
 
 
-
-
     <!--我的银行卡-->
     <string name="addBankCard">添加银行卡</string>
 
@@ -681,6 +682,7 @@
     <string name="cargoInsurance">货物保险</string>
     <string name="cargoInsurance1">货物保险说明</string>
     <string name="inTransitTime">在途时效</string>
+    <string name="dian">点</string>
     <string name="hour">时</string>
     <string name="hour1">请填写小时数（选填）</string>
     <string name="minute">分</string>

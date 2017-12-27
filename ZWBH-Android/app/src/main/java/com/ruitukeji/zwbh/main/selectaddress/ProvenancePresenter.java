@@ -4,8 +4,12 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/2/13.
@@ -29,15 +33,18 @@ public class ProvenancePresenter implements ProvenanceContract.Presenter {
         }
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("address_maps", longi + "," + lat);
-        httpParams.put("city", provincialLevel);
-        httpParams.put("address_name", address);
-        httpParams.put("address_detail", detailedAddress);
-        httpParams.put("client", deliveryCustomer);
-        httpParams.put("client_name", shipper);
-        httpParams.put("phone", phone);
-        httpParams.put("telphone", eixedTelephone);
-        httpParams.put("type", type);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("address_maps", longi + "," + lat);
+        map.put("city", provincialLevel);
+        map.put("address_name", address);
+        map.put("address_detail", detailedAddress);
+        map.put("client", deliveryCustomer);
+        map.put("client_name", shipper);
+        map.put("phone", phone);
+        map.put("telphone", eixedTelephone);
+        map.put("type", type);
+        map.put("is_default", 0);
+        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postAddress(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

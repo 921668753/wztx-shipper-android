@@ -15,15 +15,15 @@ interface BindPhoneContract {
          */
         void postCode(String phone, String type);
 
-        /**
-         * 绑定手机号
-         */
-        void postBindPhone(String phone, String code);
+//        /**
+//         * 绑定手机号
+//         */
+//        void postBindPhone(String phone, String code);
 
         /**
-         * 第三方账号登录
+         * 第三方账号登录绑定手机号
          */
-        void postThirdToLogin(String qq_openid, String we_openid, String nickname, String avatar, int sex, String tel);
+        void postThirdLoginAdd(String openid, String from, String nickname, String avatar, int sex, String captcha, String tel, String recomm_code);
 
     }
 

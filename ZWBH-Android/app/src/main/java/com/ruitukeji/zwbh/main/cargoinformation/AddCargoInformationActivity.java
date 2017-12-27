@@ -200,6 +200,9 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         super.initWidget();
         et_goodsWeight.addTextChangedListener(this);
         et_peiSongDian.addTextChangedListener(this);
+        et_goodsWeight.addTextChangedListener(this);
+        et_peiSongDian.addTextChangedListener(this);
+        et_costDistribution.addTextChangedListener(this);
         et_costDistribution.addTextChangedListener(this);
         ActivityTitleUtils.initToolbar(aty, getString(R.string.addCargoInformation), true, R.id.titlebar);
     }
@@ -234,7 +237,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                 }
                 break;
             case R.id.tv_submitOrders:
-                if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) > 60 && StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
+                if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) >= 60 || StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
                     ViewInject.toast(getString(R.string.correctNumberMinutes));
                     return;
                 }
@@ -247,7 +250,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                         driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery);
                 break;
             case R.id.tv_assignedVehicle:
-                if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) > 60 && StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
+                if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) >= 60 || StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
                     ViewInject.toast(getString(R.string.correctNumberMinutes));
                     return;
                 }
@@ -283,9 +286,15 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                 ViewInject.toast(getString(R.string.distanceErr));
             }
             kilometres = String.valueOf(StringUtils.toDouble(distanceBean.getResults().get(0).getDistance()) / 1000);
-            systemPrice(distanceBean.getResults().get(0).getDistance());
-            dismissLoadingDialog();
+            systemPrice(kilometres);
+        } else if (flag == 1) {
+            ViewInject.toast(getString(R.string.submittedSuccessfully));
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+            finish();
         }
+        dismissLoadingDialog();
     }
 
     @Override
@@ -336,18 +345,15 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        et_goodsWeight.addTextChangedListener(this);
-        et_peiSongDian.addTextChangedListener(this);
-        et_costDistribution.addTextChangedListener(this);
-        if (et_goodsWeight.getText().toString().trim().length() <= 0) {
-            return;
-        }
-        distance();
+
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        if (et_goodsWeight.getText().toString().trim().length() <= 0) {
+            return;
+        }
+        distance();
     }
 
 
@@ -380,7 +386,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
      * 计算系统价
      */
     private void systemPrice(String distanc) {
-        double distance = StringUtils.toDouble(distanc) / 1000;
+        double distance = StringUtils.toDouble(distanc);
         if (distance <= 0) {
             ViewInject.toast(getString(R.string.distanceErr));
             return;

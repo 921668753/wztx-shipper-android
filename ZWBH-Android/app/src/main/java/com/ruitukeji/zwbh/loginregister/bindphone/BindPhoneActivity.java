@@ -8,14 +8,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.LoginBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 绑定手机号
@@ -62,7 +69,7 @@ public class BindPhoneActivity extends BaseActivity implements BindPhoneContract
     /**
      * 验证码类型 reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
      */
-    private String type = "resetpwd";
+    private String type = "bind";
 
     private String openid;
     private String from;
@@ -126,7 +133,7 @@ public class BindPhoneActivity extends BaseActivity implements BindPhoneContract
             case R.id.tv_determine:
                 tv_determine.setEnabled(false);
                 showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
-                ((BindPhoneContract.Presenter) mPresenter).postBindPhone(et_phone.getText().toString(), et_code.getText().toString());
+                ((BindPhoneContract.Presenter) mPresenter).postThirdLoginAdd(openid, from, nickname, head_pic, sex, et_phone.getText().toString(), et_code.getText().toString(), "");
                 break;
             default:
                 break;
@@ -215,15 +222,24 @@ public class BindPhoneActivity extends BaseActivity implements BindPhoneContract
             time.cancel();
             time = null;
             ViewInject.toast(getString(R.string.bindPhoneSuccessfully));
-            if (from != null && from.equals("WEIXIN")) {
-                ((BindPhoneContract.Presenter) mPresenter).postThirdToLogin("", openid, nickname, head_pic, sex, et_phone.getText().toString().trim());
+            LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
+            PreferenceHelper.write(this, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "userId", bean.getResult().getUserId());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
+            /**
+             * 发送消息
+             */
+            if (type != null && type.equals("personalCenter")) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
             } else {
-                ((BindPhoneContract.Presenter) mPresenter).postThirdToLogin(openid, "", nickname, head_pic, sex, et_phone.getText().toString().trim());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
             }
-            // finish();
-        } else if (flag == 2) {
-            dismissLoadingDialog();
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            MobclickAgent.onProfileSignIn(openid);
             KJActivityStack.create().finishActivity(LoginActivity.class);
+            dismissLoadingDialog();
             finish();
         }
     }

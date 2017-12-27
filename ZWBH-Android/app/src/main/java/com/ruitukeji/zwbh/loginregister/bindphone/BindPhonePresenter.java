@@ -62,54 +62,71 @@ public class BindPhonePresenter implements BindPhoneContract.Presenter {
         });
     }
 
+//    @Override
+//    public void postBindPhone(String phone, String code) {
+//        if (StringUtils.isEmpty(phone)) {
+//            mView.error(MyApplication.getContext().getString(R.string.hintAccountText));
+//            return;
+//        }
+//        if (phone.length() != 11) {
+//            mView.error(MyApplication.getContext().getString(R.string.inputPhone));
+//            return;
+//        }
+//        if (StringUtils.isEmpty(code)) {
+//            mView.error(MyApplication.getContext().getString(R.string.errorCode));
+//            return;
+//        }
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("account", phone);
+//        map.put("captcha", code);
+//        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+//        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.error(msg);
+//            }
+//        });
+//    }
+
     @Override
-    public void postBindPhone(String phone, String code) {
-        if (StringUtils.isEmpty(phone)) {
+    public void postThirdLoginAdd(String openid, String from, String nickname, String avatar, int sex, String captcha, String tel, String recomm_code) {
+        if (StringUtils.isEmpty(tel)) {
             mView.error(MyApplication.getContext().getString(R.string.hintAccountText));
             return;
         }
-        if (phone.length() != 11) {
+        if (tel.length() != 11) {
             mView.error(MyApplication.getContext().getString(R.string.inputPhone));
             return;
         }
-        if (StringUtils.isEmpty(code)) {
+        if (StringUtils.isEmpty(captcha)) {
             mView.error(MyApplication.getContext().getString(R.string.errorCode));
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("account", phone);
-        map.put("captcha", code);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg);
-            }
-        });
-    }
-
-    @Override
-    public void postThirdToLogin(String qq_openid, String we_openid, String nickname, String avatar, int sex, String tel) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        httpParams.put("qq_openid", qq_openid);
-        httpParams.put("we_openid", we_openid);
+        if (from != null && from.equals("WEIXIN")) {
+            httpParams.put("wx_openid", openid);
+        } else {
+            httpParams.put("qq_openid", openid);
+        }
         httpParams.put("nickname", nickname);
         httpParams.put("avatar", avatar);
         httpParams.put("sex", sex);
+        httpParams.put("captcha", captcha);
         httpParams.put("tel", tel);
+        httpParams.put("recomm_code", recomm_code);
         httpParams.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postThirdLogin(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
+                mView.getSuccess(response, 1);
             }
 
             @Override

@@ -1,13 +1,11 @@
 package com.ruitukeji.zwbh.mine;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
@@ -17,11 +15,9 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideApp;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
-import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.entity.UserInfoBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
@@ -41,8 +37,6 @@ import com.ruitukeji.zwbh.utils.GlideCircleTransform;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
-import java.net.URL;
-
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
@@ -57,7 +51,6 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      */
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
-
 
     /**
      * 资料

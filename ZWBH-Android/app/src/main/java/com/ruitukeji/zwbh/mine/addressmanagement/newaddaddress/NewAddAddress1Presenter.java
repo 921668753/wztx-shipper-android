@@ -4,8 +4,12 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/2/13.
@@ -42,22 +46,25 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
     }
 
     @Override
-    public void postAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int type) {
+    public void postAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int type, int is_default) {
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("address_maps", longi + "," + lat);
-        httpParams.put("city", provincialLevel);
-        httpParams.put("address_name", address);
-        httpParams.put("address_detail", detailedAddress);
-        httpParams.put("client", deliveryCustomer);
-        httpParams.put("client_name", shipper);
-        httpParams.put("phone", phone);
-        httpParams.put("telphone", eixedTelephone);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("address_maps", longi + "," + lat);
+        map.put("city", provincialLevel);
+        map.put("address_name", address);
+        map.put("address_detail", detailedAddress);
+        map.put("client", deliveryCustomer);
+        map.put("client_name", shipper);
+        map.put("phone", phone);
+        map.put("telphone", eixedTelephone);
         if (type == 0 || type == 1) {
-            httpParams.put("type", 0);
+            map.put("type", 0);
         } else if (type == 2 || type == 3) {
-            httpParams.put("type", 1);
+            map.put("type", 1);
         }
+        map.put("is_default", is_default);
+        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postAddress(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {

@@ -84,7 +84,7 @@
 
         <EditText
             android:id="@+id/et_pwd"
-            style="@style/AutoWrap"
+            style="@style/AutoMatch"
             android:layout_marginLeft="@dimen/dimen55"
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"

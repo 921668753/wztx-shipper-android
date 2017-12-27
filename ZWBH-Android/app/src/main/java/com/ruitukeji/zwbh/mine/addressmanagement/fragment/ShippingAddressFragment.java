@@ -132,7 +132,7 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
             case R.id.tv_newAddress:
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
                 //  intent.putExtra("title", getString(R.string.newAddress));
-                intent.putExtra("type", 0);
+                intent.putExtra("type", 2);
                 //  intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
                 aty.startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;

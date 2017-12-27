@@ -397,17 +397,32 @@
             android:name=".mine.mypublishedorder.publishedorderfragment.QuotationListActivity"
             android:screenOrientation="portrait" />
 
-
         <!--在线客服-->
         <activity
             android:name=".mine.onlineservice.OnlineServiceActivity"
             android:screenOrientation="portrait" />
 
-
         <!--登录-->
         <activity
             android:name=".loginregister.LoginActivity"
             android:screenOrientation="portrait" />
+
+
+        <!--登录  绑定手机号 -->
+        <activity
+            android:name=".loginregister.bindphone.BindPhoneActivity"
+            android:screenOrientation="portrait" />
+
+        <!--登录  注册 -->
+        <activity
+            android:name=".loginregister.registerretrievepassword.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <!--登录  忘记密码 -->
+        <activity
+            android:name=".loginregister.registerretrievepassword.RetrievePasswordActivity"
+            android:screenOrientation="portrait" />
+
 
         <!--选择注册类型-->
         <activity

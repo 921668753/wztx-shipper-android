@@ -100,7 +100,7 @@ public class URLConstants {
      * 发送验证码
      * reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
      */
-    public static String SENDCAPTCHA = APIURL + "index/sendCaptcha";
+    public static String SENDCAPTCHA =  "http://wztx.shp.api.zenmechi.cc/index/sendCaptcha";
 
     /**
      * 用户注册

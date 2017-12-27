@@ -183,6 +183,17 @@
         android:src="@mipmap/icon_pin" />
 
 
+    <ImageView
+        android:id="@+id/img_gps"
+        android:layout_width="@dimen/dimen35"
+        android:layout_height="@dimen/dimen35"
+        android:layout_above="@id/ll_bt"
+        android:layout_marginBottom="@dimen/dimen9"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:background="@color/white"
+        android:padding="@dimen/dimen8"
+        android:src="@mipmap/map_icon_gps" />
+
     <LinearLayout
         android:id="@+id/ll_bt"
         style="@style/MatchWrap"

@@ -170,7 +170,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             case R.id.tv_agreement:
                 // 注册协议
                 Intent intent = new Intent(aty, AboutUsActivity.class);
-                intent.putExtra("type", "driver_registration_protocol");
+                intent.putExtra("type", "shipper_registration_protocol");
                 showActivity(aty, intent);
                 break;
             default:

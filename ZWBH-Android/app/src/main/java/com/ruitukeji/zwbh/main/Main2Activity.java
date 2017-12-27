@@ -47,6 +47,7 @@ import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.lib.WheelView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -59,6 +60,11 @@ import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.dialog.LocationBouncedDialog;
 import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.entity.main.HomeBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.announcement.AnnouncementActivity;
 import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
@@ -66,6 +72,7 @@ import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
 import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
+import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
@@ -76,8 +83,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
@@ -132,6 +139,12 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private LinearLayout ll_ad;
     @BindView(id = R.id.marqueeView)
     private MarqueeView marqueeView;
+
+    /**
+     * 定位
+     */
+    @BindView(id = R.id.img_gps, click = true)
+    private ImageView img_gps;
 
     /**
      * 实时
@@ -266,6 +279,16 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private SensorEventHelper mSensorHelper;
     private Circle mCircle;
     private GeocodeSearch geocoderSearch;
+    private LatLng location;
+    private String dateStr;
+    private String hoursStr;
+    private String minutesStr;
+    private List<DateChooseBean> date_choose;
+    private List<HoursChooseBean> hours_choose;
+    private List<MinutesChooseBean> minutes_choose;
+    private int day = 0;
+    private int hours = 0;
+    private int minutes = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -312,7 +335,6 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
         mSensorHelper = new SensorEventHelper(this);
         geocoderSearch = new GeocodeSearch(this);
         mCloudSearch = new CloudSearch(this);// 初始化查询类
-        appointmentTime();
         ((MainContract.Presenter) mPresenter).getHome();
     }
 
@@ -344,7 +366,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.ll_appointmentTime:
                 SoftKeyboardUtils.packUpKeyboard(this);
-            //    pvOptions.setSelectOptions();
+                pvOptions.setSelectOptions(day, hours, minutes);
                 pvOptions.show(tv_appointmentTime1);
                 break;
             case R.id.ll_cityDistribution:
@@ -354,6 +376,13 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             case R.id.ll_longTrunk:
                 tran_type = 1;
                 ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+                break;
+            case R.id.img_gps:
+                if (location == null) {
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.319688, 121.062545), 18));
+                    break;
+                }
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude - 0.0005, location.longitude), 18));
                 break;
             case R.id.tv_realTime:
                 type1 = "often";
@@ -373,6 +402,8 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 tv_appointmentTime.setVisibility(View.VISIBLE);
                 ll_appointmentTime.setVisibility(View.VISIBLE);
                 tv_appointmentTime1.setText(getString(R.string.appointmentTime2));
+                pvOptions = null;
+                appointmentTime();
                 break;
             case R.id.tv_pleaseEnterDeparturePoint:
                 type = 0;
@@ -442,11 +473,20 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                     ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
                     break;
                 }
-
+                if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
+                    ViewInject.toast(getString(R.string.appointmentTime2));
+                    return;
+                }
+                if (type1.equals("appoint") && DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) < System.currentTimeMillis()) {
+                    ViewInject.toast(getString(R.string.greateThanCurrentTime));
+                    return;
+                }
                 Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
                 cargoInformationIntent.putExtra("tran_type", tran_type);
                 cargoInformationIntent.putExtra("type", type1);
-                //  cargoInformationIntent.putExtra("appoint_at", appoint_at);
+                if (type1.equals("appoint")) {
+                    cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) / 1000 + "");
+                }
                 cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
                 cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
                 cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
@@ -478,30 +518,96 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                //  ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
+                day = options1;
+                hours = option2;
+                minutes = options3;
+                ((TextView) v).setText(date_choose.get(options1).getDateStr().trim() + hours_choose.get(option2).getHoursStr() + minutes_choose.get(options3).getMinutesStr());
             }
         })
                 .setCancelColor(getResources().getColor(R.color.hintcolors))
                 .setSubmitColor(getResources().getColor(R.color.announcementCloseColors))
                 .setSubCalSize(15)
-                .setContentTextSize(17)
+                .setContentTextSize(14)
+                .setLineSpacingMultiplier(1.6f)
                 .setTextColorCenter(getResources().getColor(R.color.titletextcolors))
                 .build();
 
+        dateStr = DataUtil.formatData(System.currentTimeMillis() / 1000, getString(R.string.dateStr));
+        date_choose = new ArrayList<DateChooseBean>();
+        hours_choose = new ArrayList<HoursChooseBean>();
+        minutes_choose = new ArrayList<MinutesChooseBean>();
+        DateChooseBean dateChooseBean = new DateChooseBean();
+        dateChooseBean.setDateStr(" " + dateStr);
+        DateChooseBean dateChooseBean1 = new DateChooseBean();
+        dateChooseBean1.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 24 * 60 * 60, getString(R.string.dateStr)));
+        DateChooseBean dateChooseBean2 = new DateChooseBean();
+        dateChooseBean2.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 2 * 24 * 60 * 60, getString(R.string.dateStr)));
+        DateChooseBean dateChooseBean3 = new DateChooseBean();
+        dateChooseBean3.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 3 * 24 * 60 * 60, getString(R.string.dateStr)));
+        DateChooseBean dateChooseBean4 = new DateChooseBean();
+        dateChooseBean4.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 4 * 24 * 60 * 60, getString(R.string.dateStr)));
+        DateChooseBean dateChooseBean5 = new DateChooseBean();
+        dateChooseBean5.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 5 * 24 * 60 * 60, getString(R.string.dateStr)));
+        DateChooseBean dateChooseBean6 = new DateChooseBean();
+        dateChooseBean6.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 6 * 24 * 60 * 60, getString(R.string.dateStr)));
+        date_choose.add(dateChooseBean);
+        date_choose.add(dateChooseBean1);
+        date_choose.add(dateChooseBean2);
+        date_choose.add(dateChooseBean3);
+        date_choose.add(dateChooseBean4);
+        date_choose.add(dateChooseBean5);
+        date_choose.add(dateChooseBean6);
+        for (int i = 0; i < 24; i++) {
+            HoursChooseBean hoursChooseBean = new HoursChooseBean();
+            if (i < 10) {
+                hoursChooseBean.setHoursStr("0" + i + getString(R.string.dian));
+            } else {
+                hoursChooseBean.setHoursStr(i + getString(R.string.dian));
+            }
+            hours_choose.add(hoursChooseBean);
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-      //  pvOptions.setNPicker();
+        MinutesChooseBean minutesChooseBean = new MinutesChooseBean();
+        minutesChooseBean.setMinutesStr("00" + getString(R.string.minute));
+        MinutesChooseBean minutesChooseBean1 = new MinutesChooseBean();
+        minutesChooseBean1.setMinutesStr("10" + getString(R.string.minute));
+        MinutesChooseBean minutesChooseBean2 = new MinutesChooseBean();
+        minutesChooseBean2.setMinutesStr("20" + getString(R.string.minute));
+        MinutesChooseBean minutesChooseBean3 = new MinutesChooseBean();
+        minutesChooseBean3.setMinutesStr("30" + getString(R.string.minute));
+        MinutesChooseBean minutesChooseBean4 = new MinutesChooseBean();
+        minutesChooseBean4.setMinutesStr("40" + getString(R.string.minute));
+        MinutesChooseBean minutesChooseBean5 = new MinutesChooseBean();
+        minutesChooseBean5.setMinutesStr("50" + getString(R.string.minute));
+        minutes_choose.add(minutesChooseBean);
+        minutes_choose.add(minutesChooseBean1);
+        minutes_choose.add(minutesChooseBean2);
+        minutes_choose.add(minutesChooseBean3);
+        minutes_choose.add(minutesChooseBean4);
+        minutes_choose.add(minutesChooseBean5);
+        pvOptions.setNPicker(date_choose, hours_choose, minutes_choose);
+        day = 0;
+        hours = (new Date()).getHours();
+        minutes = (new Date()).getMinutes();
+        if (minutes <= 10 && minutes >= 0) {
+            minutes = 1;
+        } else if (minutes <= 20 && minutes > 10) {
+            minutes = 2;
+        } else if (minutes <= 30 && minutes > 20) {
+            minutes = 3;
+        } else if (minutes <= 40 && minutes > 30) {
+            minutes = 4;
+        } else if (minutes <= 50 && minutes > 40) {
+            minutes = 5;
+        } else {
+            minutes = 0;
+            hours = hours + 1;
+            if (hours > 23) {
+                hours = 0;
+                day = 1;
+            }
+        }
+        pvOptions.setSelectOptions(day, hours, minutes);
     }
 
     /**
@@ -618,16 +724,6 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             destinationEixedTelephone = data.getStringExtra("eixedTelephone");
             tv_enterDestination.setText(destinationPlaceName);
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
-            provenanceDetailedAddress = "";
-            provenanceDeliveryCustomer = "";
-            provenanceShipper = "";
-            provenancePhone = "";
-            provenanceEixedTelephone = "";
-            provenanceLat = "";
-            provenanceLongi = "";
-            provenanceDistrict = "";
-            provenancePlaceName = "";
-            tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
             /**
              * 目的地信息
              */
@@ -714,7 +810,8 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null
                     && amapLocation.getErrorCode() == 0) {
-                LatLng location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                Log.d("tag", location.latitude + "," + location.longitude);
                 if (!mFirstFix) {
                     mFirstFix = true;
                     addCircle(location, amapLocation.getAccuracy());//添加定位精度圆

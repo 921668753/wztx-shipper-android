@@ -158,6 +158,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/Match45"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:text="@string/setDefaultAddress"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView style="@style/AutoWrap" />
+
+        <ImageView
+            android:id="@+id/img_on"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen38"
+            android:layout_marginRight="@dimen/dimen15"
+            android:paddingBottom="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen5"
+            android:src="@mipmap/switch_btn_on" />
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_determine"

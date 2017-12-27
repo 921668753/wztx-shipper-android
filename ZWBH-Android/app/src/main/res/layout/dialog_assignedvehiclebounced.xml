@@ -57,12 +57,13 @@
 
             <EditText
                 android:id="@+id/et_pleaseLicensePlateNumber"
-                style="@style/AutoWrap"
+                style="@style/AutoMatch"
                 android:background="@android:color/transparent"
                 android:hint="@string/pleaseLicensePlateNumber"
                 android:paddingLeft="@dimen/dimen34"
                 android:textColor="@color/titletextcolors"
                 android:textColorHint="@color/cDCDCDColors"
+                android:textCursorDrawable="@drawable/shape_cursor"
                 android:textSize="@dimen/textsize16" />
 
         </LinearLayout>
