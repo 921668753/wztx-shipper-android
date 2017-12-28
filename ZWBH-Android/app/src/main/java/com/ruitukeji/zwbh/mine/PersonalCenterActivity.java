@@ -158,7 +158,6 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void initData() {
         super.initData();
         mPresenter = new PersonalCenterPresenter(this);
-        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -169,6 +168,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         titlebar.getTitleCtv().setTextColor(getResources().getColor(R.color.white));
         titlebar.setBackgroundResource(R.color.announcementCloseColors);
         titlebar.setLeftDrawable(R.mipmap.mine_back);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
