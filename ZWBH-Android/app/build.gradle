@@ -165,15 +165,15 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.3.1'
     //图片加载框架
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
-    compile 'com.google.zxing:core:latest.release'
+    compile 'com.google.zxing:core:3.3.1'
     //创建二维码图片
-    compile 'cn.bingoogolapple:bga-qrcodecore:latest.release'
+    compile 'cn.bingoogolapple:bga-qrcodecore:1.1.9@aar'
     //创建二维码图片
     compile 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
     //创建二维码图片
     compile 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     //bga  adapter
-    compile 'cn.bingoogolapple:bga-imageview:latest.release'
+    compile 'cn.bingoogolapple:bga-imageview:1.0.0@aar'
     //BGAImageView-Android   imgview框架
     compile 'cn.bingoogolapple:bga-titlebar:1.0.8@aar'
     //UINavigationBar 风格的 Titlebar
