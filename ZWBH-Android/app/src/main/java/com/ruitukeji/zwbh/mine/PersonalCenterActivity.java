@@ -35,8 +35,10 @@ import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.GlideCircleTransform;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
@@ -44,7 +46,10 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  * Created by Administrator on 2017/12/13.
  */
 
-public class PersonalCenterActivity extends BaseActivity implements PersonalCenterContract.View {
+public class PersonalCenterActivity extends BaseActivity implements PersonalCenterContract.View, BGARefreshLayout.BGARefreshLayoutDelegate {
+
+    @BindView(id = R.id.mRefreshLayout)
+    private BGARefreshLayout mRefreshLayout;
 
     /**
      * 标题
@@ -153,13 +158,13 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void initData() {
         super.initData();
         mPresenter = new PersonalCenterPresenter(this);
-        showLoadingDialog(getString(R.string.dataLoad));
-        ((PersonalCenterContract.Presenter) mPresenter).getInfo();
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, this, false);
         ActivityTitleUtils.initToolbar(aty, getString(R.string.app_name), true, R.id.titlebar);
         titlebar.getTitleCtv().setTextColor(getResources().getColor(R.color.white));
         titlebar.setBackgroundResource(R.color.announcementCloseColors);
@@ -311,6 +316,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             dismissLoadingDialog();
+            mRefreshLayout.setPullDownRefreshEnable(false);
             tv_name.setText(getString(R.string.loginregister));
             img_headPortrait.setImageResource(R.mipmap.avatar);
             ll_incompleteCertification.setVisibility(View.GONE);
@@ -321,6 +327,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             }
             return;
         }
+        mRefreshLayout.setPullDownRefreshEnable(true);
         dismissLoadingDialog();
         ViewInject.toast(msg);
     }
@@ -332,12 +339,24 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
-            showLoadingDialog(getString(R.string.dataLoad));
-            ((PersonalCenterContract.Presenter) mPresenter).getInfo();
+            mRefreshLayout.beginRefreshing();
         }
 //        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
 ////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
 //            GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
 //        }
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((PersonalCenterContract.Presenter) mPresenter).getInfo();
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endLoadingMore();
+        return false;
     }
 }

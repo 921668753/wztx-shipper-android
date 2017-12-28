@@ -182,7 +182,7 @@ public class URLConstants {
     /**
      * 获取用户信息
      */
-    public static String USERINFO = APIURL + "user/info";
+    public static String USERINFO = APIURL + "User/info";
 
     /**
      * 显示货源列表
