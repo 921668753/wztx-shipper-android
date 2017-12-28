@@ -95,6 +95,11 @@ public class URLConstants {
      */
     public static String THIRDLOGIN = APIURL + "User/thirdLogin";
 
+    /**
+     * 第三方登录绑定手机号
+     */
+    public static String THIRDLOGINADD = APIURL + "User/thirdLoginAdd";
+
 
     /**
      * 发送验证码

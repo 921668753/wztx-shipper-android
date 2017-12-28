@@ -22,6 +22,8 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 import com.umeng.analytics.MobclickAgent;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
@@ -220,6 +222,17 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             PreferenceHelper.write(this, StringConstants.FILENAME, "userId", bean.getResult().getUserId());
             PreferenceHelper.write(this, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
             KJActivityStack.create().finishActivity(LoginActivity.class);
+            /**
+             * 发送消息
+             */
+            if (type != null && type.equals("personalCenter")) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
+            } else {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
+            }
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+            MobclickAgent.onProfileSignIn(et_phone.getText().toString().trim());
+            finish();
             //  skipActivity(aty, IdentityAuthenticationActivity.class);
         }
     }

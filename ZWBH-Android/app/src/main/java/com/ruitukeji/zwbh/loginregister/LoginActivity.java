@@ -21,6 +21,7 @@ import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.LoginBean;
 import com.ruitukeji.zwbh.loginregister.bindphone.BindPhoneActivity;
 import com.ruitukeji.zwbh.loginregister.registerretrievepassword.RegisterActivity;
+import com.ruitukeji.zwbh.loginregister.registerretrievepassword.RetrievePasswordActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;

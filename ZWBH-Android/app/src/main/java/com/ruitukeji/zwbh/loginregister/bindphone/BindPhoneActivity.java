@@ -133,7 +133,7 @@ public class BindPhoneActivity extends BaseActivity implements BindPhoneContract
             case R.id.tv_determine:
                 tv_determine.setEnabled(false);
                 showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
-                ((BindPhoneContract.Presenter) mPresenter).postThirdLoginAdd(openid, from, nickname, head_pic, sex, et_phone.getText().toString(), et_code.getText().toString(), "");
+                ((BindPhoneContract.Presenter) mPresenter).postThirdLoginAdd(openid, from, nickname, head_pic, sex, et_code.getText().toString(),et_phone.getText().toString(), "");
                 break;
             default:
                 break;
@@ -248,7 +248,7 @@ public class BindPhoneActivity extends BaseActivity implements BindPhoneContract
     public void error(String msg) {
         dismissLoadingDialog();
         ViewInject.toast(msg);
-        tv_determine.setEnabled(false);
+        tv_determine.setEnabled(true);
     }
 
     @Override

@@ -111,19 +111,19 @@ public class BindPhonePresenter implements BindPhoneContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         if (from != null && from.equals("WEIXIN")) {
-            httpParams.put("wx_openid", openid);
+            map.put("wx_openid", openid);
         } else {
-            httpParams.put("qq_openid", openid);
+            map.put("qq_openid", openid);
         }
-        httpParams.put("nickname", nickname);
-        httpParams.put("avatar", avatar);
-        httpParams.put("sex", sex);
-        httpParams.put("captcha", captcha);
-        httpParams.put("tel", tel);
-        httpParams.put("recomm_code", recomm_code);
-        httpParams.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        map.put("nickname", nickname);
+        map.put("avatar", avatar);
+        map.put("sex", sex);
+        map.put("captcha", captcha);
+        map.put("tel", tel);
+        map.put("recomm_code", recomm_code);
+        map.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postThirdLogin(httpParams, new ResponseListener<String>() {
+        RequestClient.postThirdLoginAdd(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);

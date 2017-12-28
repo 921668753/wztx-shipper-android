@@ -71,15 +71,15 @@ public class LoginPresenter implements LoginContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         if (!StringUtils.isEmpty(qq_openid)) {
-            httpParams.put("qq_openid", qq_openid);
+            map.put("qq_openid", qq_openid);
         }
         if (!StringUtils.isEmpty(wx_openid)) {
-            httpParams.put("wx_openid", wx_openid);
+            map.put("wx_openid", wx_openid);
         }
-        httpParams.put("nickname", nickname);
-        httpParams.put("avatar", avatar);
-        httpParams.put("sex", sex);
-        httpParams.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
+        map.put("nickname", nickname);
+        map.put("avatar", avatar);
+        map.put("sex", sex);
+        map.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postThirdLogin(httpParams, new ResponseListener<String>() {
             @Override
