@@ -292,9 +292,9 @@ public class RequestClient {
     /**
      * 公告详情
      */
-    public static void getAnnouncement(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getAnnouncement(HttpParams httpParams, int id, final ResponseListener<String> listener) {
         Log.d("tag", "getAnnouncement");
-        HttpRequest.requestGetHttp(URLConstants.ANNOUNCEMENT, httpParams, listener);
+        HttpRequest.requestGetHttp(URLConstants.ANNOUNCEMENT + "/" + id, httpParams, listener);
     }
 
     /**
@@ -366,7 +366,7 @@ public class RequestClient {
         if (!StringUtils.isEmpty(accessToken)) {
             httpParams.putHeaders("authorization-token", accessToken);
         }
-        HttpRequest.requestGetHttp(URLConstants.MESSAGE, httpParams, listener);
+        HttpRequest.requestGetHttp(URLConstants.MESSAGE+"/system", httpParams, listener);
     }
 
     /**

@@ -130,6 +130,18 @@
             android:name=".main.cargoinformation.selectvehicle.SelectVehicleActivity"
             android:screenOrientation="portrait" />
 
+        <!--主界面  系统消息-->
+        <activity
+            android:name=".main.message.SystemMessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <!--主界面  订单消息-->
+        <activity
+            android:name=".main.message.OrderMessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <!--首页轮播图-->
         <activity
             android:name=".main.BannerDetailsActivity"

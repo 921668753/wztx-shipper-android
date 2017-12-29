@@ -238,6 +238,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             ll_incompleteCertification.setVisibility(View.VISIBLE);
+            mRefreshLayout.setPullDownRefreshEnable(true);
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());

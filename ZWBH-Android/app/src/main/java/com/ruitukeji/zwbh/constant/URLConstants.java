@@ -63,7 +63,7 @@ public class URLConstants {
     /**
      * 公告详情
      */
-    public static String ANNOUNCEMENT = APIURL + "index/home";
+    public static String ANNOUNCEMENT = APIURL + "index/getAdverDetail";
 
     /**
      * 地址

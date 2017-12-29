@@ -8,9 +8,8 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
-import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.entity.main.announcement.AnnouncementBean;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.myview.WebViewLayout;
 
 /**
@@ -62,7 +61,7 @@ public class AnnouncementActivity extends BaseActivity implements AnnouncementCo
         id = getIntent().getIntExtra("id", 0);
         mPresenter = new AnnouncementPresenter(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AnnouncementContract.Presenter) mPresenter).getAnnouncement(id);
+        ((AnnouncementContract.Presenter) mPresenter).getAnnouncement(0);
     }
 
     @Override
@@ -93,9 +92,9 @@ public class AnnouncementActivity extends BaseActivity implements AnnouncementCo
     }
 
     @Override
-    public void getSuccess(String s, int flag) {
-
-
+    public void getSuccess(String success, int flag) {
+        AnnouncementBean announcementBean = (AnnouncementBean) JsonUtil.getInstance().json2Obj(success, AnnouncementBean.class);
+        initView(announcementBean.getResult().getTitle(), announcementBean.getResult().getAd_content());
         dismissLoadingDialog();
     }
 
@@ -107,18 +106,15 @@ public class AnnouncementActivity extends BaseActivity implements AnnouncementCo
 
 
     public void initView(String title, String content) {
+        dismissLoadingDialog();
         if (StringUtils.isEmpty(title)) {
             tv_title.setText(getString(R.string.announcement));
-        } else {
-            tv_title.setText(title);
-        }
-        dismissLoadingDialog();
-        if (StringUtils.isEmpty(content)) {
             webViewLayout.setVisibility(View.GONE);
             ll_commonError.setVisibility(View.VISIBLE);
             tv_hintText.setText(content);
             return;
         }
+        tv_title.setText(title);
         ll_commonError.setVisibility(View.GONE);
         webViewLayout.setVisibility(View.VISIBLE);
         String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title>" + title + "</title></head><body>" + content

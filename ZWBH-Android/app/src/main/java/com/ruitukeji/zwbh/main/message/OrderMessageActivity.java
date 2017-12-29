@@ -2,14 +2,18 @@ package com.ruitukeji.zwbh.main.message;
 
 
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.adapter.MessageCenterViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
 /**
@@ -41,6 +45,24 @@ public class OrderMessageActivity extends BaseActivity {
     private TextView tv_orderMessage;
     @BindView(id = R.id.tv_orderMessage1)
     private TextView tv_orderMessage1;
+
+    @BindView(id = R.id.mRefreshLayout)
+    private BGARefreshLayout mRefreshLayout;
+
+
+    @BindView(id = R.id.lv_messagecenter)
+    private ListView lv_messagecenter;
+
+    /**
+     * 错误提示页
+     */
+    @BindView(id = R.id.ll_commonError)
+    private LinearLayout ll_commonError;
+    @BindView(id = R.id.tv_hintText, click = true)
+    private TextView tv_hintText;
+
+    private MessageCenterViewAdapter messageCenterViewAdapter;
+
 
     @Override
     public void setRootView() {

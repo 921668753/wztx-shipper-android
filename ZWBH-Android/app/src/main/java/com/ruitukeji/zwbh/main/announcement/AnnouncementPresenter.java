@@ -29,8 +29,7 @@ public class AnnouncementPresenter implements AnnouncementContract.Presenter {
     public void getAnnouncement(int id) {
         mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("id", id);
-        RequestClient.getAnnouncement(httpParams, new ResponseListener<String>() {
+        RequestClient.getAnnouncement(httpParams,id, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

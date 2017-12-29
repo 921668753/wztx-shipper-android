@@ -69,6 +69,7 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.announcement.AnnouncementActivity;
 import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
 import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
+import com.ruitukeji.zwbh.main.message.SystemMessageActivity;
 import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
@@ -361,8 +362,8 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 showActivity(aty, PersonalCenterActivity.class);
                 break;
             case R.id.img_message:
-                //   tv_tag.setVisibility(View.GONE);
-                showActivity(aty, MessageCenterActivity.class);
+                showActivity(aty, SystemMessageActivity.class);
+                tv_message.setVisibility(View.GONE);
                 break;
             case R.id.ll_appointmentTime:
                 SoftKeyboardUtils.packUpKeyboard(this);
@@ -1007,7 +1008,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             @Override
             public void onItemClick(int position, TextView textView) {
                 Intent intent = new Intent(aty, AnnouncementActivity.class);
-                intent.getIntExtra("id", list.get(position).getId());
+                intent.putExtra("id", list.get(position).getId());
                 showActivity(aty, intent);
             }
         });
