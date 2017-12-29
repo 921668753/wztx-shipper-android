@@ -566,21 +566,21 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             FileNewUtil.installApkFile(this, path.getAbsolutePath());
             dismissLoadingDialog();
         } else if (flag == 3) {
-            HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(s, HomeBean.class);
-            if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
-                tv_tag.setVisibility(View.GONE);
-            } else {
-                tv_tag.setVisibility(View.VISIBLE);
-                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    tv_tag.setVisibility(View.GONE);
-                }
-                // tv_tag.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
-            }
-            processLogic(homeBean.getResult().getList());
-            if (timer != null) {
-                timer.schedule(new Task(), 2000);
-            }
+//            HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(s, HomeBean.class);
+//            if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
+//                tv_tag.setVisibility(View.GONE);
+//            } else {
+//                tv_tag.setVisibility(View.VISIBLE);
+//                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+//                if (StringUtils.isEmpty(accessToken)) {
+//                    tv_tag.setVisibility(View.GONE);
+//                }
+//                // tv_tag.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
+//            }
+//            processLogic(homeBean.getResult().getList());
+//            if (timer != null) {
+//                timer.schedule(new Task(), 2000);
+//            }
             // ((MainContract.Presenter) mPresenter).getInfo();
             dismissLoadingDialog();
         } else if (flag == 4) {
@@ -755,17 +755,17 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     //  监听广告 item 的单击事件
     @Override
     public void fillBannerItem(BGABanner banner, ImageView itemView, ListBean model, int position) {
-        GlideImageLoader.glideOrdinaryLoader(this, model.getSrc(), itemView);
+       // GlideImageLoader.glideOrdinaryLoader(this, model.getSrc(), itemView);
     }
 
     @Override
     public void onBannerItemClick(BGABanner banner, ImageView itemView, ListBean model, int position) {
-        if (StringUtils.isEmpty(model.getUrl())) {
-            return;
-        }
-        Intent bannerDetails = new Intent(this, BannerDetailsActivity.class);
-        bannerDetails.putExtra("url", model.getUrl());
-        showActivity(aty, bannerDetails);
+//        if (StringUtils.isEmpty(model.getUrl())) {
+//            return;
+//        }
+//        Intent bannerDetails = new Intent(this, BannerDetailsActivity.class);
+//        bannerDetails.putExtra("url", model.getUrl());
+//        showActivity(aty, bannerDetails);
     }
 
     /**

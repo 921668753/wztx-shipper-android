@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_commonError"
-    style="@style/MatchWrap"
+    style="@style/MatchAuto"
     android:layout_marginBottom="@dimen/dimen10"
     android:gravity="center"
     android:orientation="vertical"

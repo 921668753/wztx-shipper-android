@@ -22,7 +22,7 @@ public class URLConstants {
     /**
      * 得到国内全部城市
      */
-    public static String SERVERURL2= "http://user.api.shahaizi.shop/";
+    public static String SERVERURL2 = "http://user.api.shahaizi.shop/";
     public static String APIURL1 = SERVERURL2 + "index.php?";
     /**
      * 得到全部城市
@@ -59,6 +59,11 @@ public class URLConstants {
      * 首页
      */
     public static String HOME = APIURL + "index/home";
+
+    /**
+     * 公告详情
+     */
+    public static String ANNOUNCEMENT = APIURL + "index/home";
 
     /**
      * 地址
@@ -105,7 +110,7 @@ public class URLConstants {
      * 发送验证码
      * reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
      */
-    public static String SENDCAPTCHA =  "http://wztx.shp.api.zenmechi.cc/index/sendCaptcha";
+    public static String SENDCAPTCHA = "http://wztx.shp.api.zenmechi.cc/index/sendCaptcha";
 
     /**
      * 用户注册

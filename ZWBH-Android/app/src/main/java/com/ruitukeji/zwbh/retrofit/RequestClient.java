@@ -289,6 +289,13 @@ public class RequestClient {
         HttpRequest.requestGetHttp(URLConstants.HOME, httpParams, listener);
     }
 
+    /**
+     * 公告详情
+     */
+    public static void getAnnouncement(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getAnnouncement");
+        HttpRequest.requestGetHttp(URLConstants.ANNOUNCEMENT, httpParams, listener);
+    }
 
     /**
      * 始发地目的地信息管理

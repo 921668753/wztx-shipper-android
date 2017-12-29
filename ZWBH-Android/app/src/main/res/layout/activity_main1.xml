@@ -59,9 +59,10 @@
                 android:layout_marginTop="@dimen/dimen10"
                 android:background="@drawable/shape_dot"
                 android:gravity="center"
-                android:text="6"
+                android:text="0"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSize_10" />
+                android:textSize="@dimen/textSize_10"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

@@ -48,6 +48,26 @@ public class AboutUsActivity extends BaseActivity implements AboutUsContract.Vie
         ((AboutUsContract.Presenter) mPresenter).getArticle(type);
     }
 
+
+    @Override
+    public void setPresenter(AboutUsContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String s) {
+        AboutUsBean aboutUsBean = (AboutUsBean) JsonUtil.json2Obj(s, AboutUsBean.class);
+        initView(aboutUsBean.getResult().getTitle(), aboutUsBean.getResult().getContent());
+        dismissLoadingDialog();
+    }
+
+
+    @Override
+    public void error(String msg) {
+        initView("", msg);
+        dismissLoadingDialog();
+    }
+
     public void initView(String title, String content) {
         webViewLayout.setTitleVisibility(true);
         webViewLayout.setWebViewCallBack(new WebViewLayout.WebViewCallBack() {
@@ -67,27 +87,10 @@ public class AboutUsActivity extends BaseActivity implements AboutUsContract.Vie
             ActivityTitleUtils.initToolbar(aty, title, true, R.id.titlebar);
         }
         if (!StringUtils.isEmpty(content)) {
-            String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title>" + title + "</title></head><body>" + content
+            String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"></head><body>" + content
                     + "</body></html>";
             webViewLayout.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
         }
     }
 
-    @Override
-    public void setPresenter(AboutUsContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void getSuccess(String s) {
-        AboutUsBean aboutUsBean = (AboutUsBean) JsonUtil.json2Obj(s, AboutUsBean.class);
-        initView(aboutUsBean.getResult().getTitle(), aboutUsBean.getResult().getContent());
-        dismissLoadingDialog();
-    }
-
-    @Override
-    public void error(String msg) {
-        initView("", msg);
-        dismissLoadingDialog();
-    }
 }

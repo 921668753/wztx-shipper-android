@@ -969,16 +969,16 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             dismissLoadingDialog();
         } else if (flag == 3) {
             HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(success, HomeBean.class);
-//            if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
-//                tv_tag.setVisibility(View.GONE);
-//            } else {
-//                tv_tag.setVisibility(View.VISIBLE);
-//                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
-//                if (StringUtils.isEmpty(accessToken)) {
-//                    tv_tag.setVisibility(View.GONE);
-//                }
-//                // tv_tag.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
-//            }
+            if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
+                tv_message.setVisibility(View.GONE);
+            } else {
+                tv_message.setVisibility(View.VISIBLE);
+                String accessToken = PreferenceHelper.readString(this, StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    tv_message.setVisibility(View.GONE);
+                }
+                tv_message.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
+            }
             processLogic(homeBean.getResult().getList());
             dismissLoadingDialog();
         }
@@ -991,15 +991,14 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
 
     @SuppressWarnings("unchecked")
     private void processLogic(List<HomeBean.ResultBean.ListBean> list) {
-//        if (list == null || list.size() == 0) {
-//            ll_ad.setVisibility(View.GONE);
-//            return;
-//        }
-        tips.add("2. 欢迎大家关注我哦！");
-        tips.add("3. GitHub帐号：sfsheng0322");
-        tips.add("4. 新浪微博：孙福生微博");
-        tips.add("5. 个人博客：sunfusheng.com");
-        tips.add("6. 微信公众号：孙福生");
+        if (list == null || list.size() == 0) {
+            ll_ad.setVisibility(View.GONE);
+            return;
+        }
+        tips.clear();
+        for (int i = 0; i < list.size(); i++) {
+            tips.add(list.get(i).getAd_content());
+        }
         marqueeView.startWithList(tips);
 // 在代码里设置自己的动画
         //   marqueeView.startWithList(tips, R.anim.anim_bottom_in, R.anim.anim_top_out);
@@ -1008,6 +1007,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             @Override
             public void onItemClick(int position, TextView textView) {
                 Intent intent = new Intent(aty, AnnouncementActivity.class);
+                intent.getIntExtra("id", list.get(position).getId());
                 showActivity(aty, intent);
             }
         });

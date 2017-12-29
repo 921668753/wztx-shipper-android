@@ -216,6 +216,7 @@
 
 
     <!--公告通知-->
+    <string name="announcement">公告通知</string>
     <string name="close">关闭</string>
 
     <!--指派车辆-->

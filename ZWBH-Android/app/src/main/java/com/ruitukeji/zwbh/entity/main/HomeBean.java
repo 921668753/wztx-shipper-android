@@ -15,8 +15,8 @@ public class HomeBean extends BaseResult<HomeBean.ResultBean> {
 
     public class ResultBean {
         /**
-         * list : [{"id":2,"position":1,"src":"http://ot090bmn8.bkt.clouddn.com/2b04df3ecc1d94af/ddff082d139c6f15.jpg","url":"http://www.baidu.com67"}]
-         * unreadMsg : {"msg":3}
+         * list : [{"id":1,"position":1,"ad_content":"15秒钟急速响应，随时随地找车配送","endtime":"2018-02-28 11:06:04"},{"id":2,"position":2,"ad_content":"货物随时随地拉，有货请联系货某","endtime":"2017-12-29 11:06:14"}]
+         * unreadMsg : {"msg":0}
          */
 
         private UnreadMsgBean unreadMsg;
@@ -40,7 +40,7 @@ public class HomeBean extends BaseResult<HomeBean.ResultBean> {
 
         public class UnreadMsgBean {
             /**
-             * msg : 3
+             * msg : 0
              */
 
             @SerializedName("msg")
@@ -57,16 +57,16 @@ public class HomeBean extends BaseResult<HomeBean.ResultBean> {
 
         public class ListBean {
             /**
-             * id : 2
+             * id : 1
              * position : 1
-             * src : http://ot090bmn8.bkt.clouddn.com/2b04df3ecc1d94af/ddff082d139c6f15.jpg
-             * url : http://www.baidu.com67
+             * ad_content : 15秒钟急速响应，随时随地找车配送
+             * endtime : 2018-02-28 11:06:04
              */
 
             private int id;
             private int position;
-            private String src;
-            private String url;
+            private String ad_content;
+            private String endtime;
 
             public int getId() {
                 return id;
@@ -84,20 +84,20 @@ public class HomeBean extends BaseResult<HomeBean.ResultBean> {
                 this.position = position;
             }
 
-            public String getSrc() {
-                return src;
+            public String getAd_content() {
+                return ad_content;
             }
 
-            public void setSrc(String src) {
-                this.src = src;
+            public void setAd_content(String ad_content) {
+                this.ad_content = ad_content;
             }
 
-            public String getUrl() {
-                return url;
+            public String getEndtime() {
+                return endtime;
             }
 
-            public void setUrl(String url) {
-                this.url = url;
+            public void setEndtime(String endtime) {
+                this.endtime = endtime;
             }
         }
     }
