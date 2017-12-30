@@ -280,6 +280,11 @@
             android:name=".mine.mywallet.withdrawal.WithdrawalActivity"
             android:screenOrientation="portrait" />
 
+        <!--个人中心  我的钱包  提现 提现记录-->
+        <activity
+            android:name=".mine.mywallet.withdrawal.WithdrawalRecordActivity"
+            android:screenOrientation="portrait" />
+
         <!--个人中心  我的钱包  我的银行卡-->
         <activity
             android:name=".mine.mywallet.mybankcard.MyBankCardActivity"

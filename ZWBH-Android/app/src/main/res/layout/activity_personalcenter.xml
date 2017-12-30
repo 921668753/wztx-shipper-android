@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/MatchMatch"
     android:background="@color/background"
     android:fitsSystemWindows="true"
@@ -9,9 +9,11 @@
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mRefreshLayout"
-        style="@style/MatchMatch">
+        style="@style/MatchMatch"
+        android:layout_below="@id/titlebarl">
 
         <ScrollView
+            android:id="@+id/sv_mine"
             style="@style/MatchWrap"
             android:scrollbars="none">
 
@@ -404,4 +406,159 @@
 
         </ScrollView>
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
-</LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_personalData1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen101"
+        android:layout_below="@id/titlebarl"
+        android:background="@color/announcementCloseColors"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/img_headPortrait1"
+            android:layout_width="@dimen/dimen60"
+            android:layout_height="@dimen/dimen60"
+            android:layout_marginLeft="@dimen/dimen20"
+            android:scaleType="fitXY"
+            android:src="@mipmap/avatar" />
+
+
+        <LinearLayout
+            style="@style/AutoWrap"
+            android:layout_width="280dp"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dimen18"
+            android:paddingRight="@dimen/dimen15">
+
+            <TextView
+                android:id="@+id/tv_name1"
+                style="@style/WrapWrap"
+                android:singleLine="true"
+                android:text="戴志豪"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize18" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_incompleteCertification1"
+                android:layout_width="@dimen/dimen80"
+                android:layout_height="@dimen/dimen18"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_personalcenter"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_incompleteCertification1"
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen9"
+                    android:gravity="center"
+                    android:text="@string/incompleteCertification"
+                    android:textColor="@color/fA4343Colors"
+                    android:textSize="@dimen/textsize11" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen4"
+                    android:layout_height="@dimen/dimen6"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/mine_arrow" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dimen9"
+            android:layout_height="@dimen/dimen13"
+            android:layout_marginRight="@dimen/dimen15"
+            android:scaleType="fitXY"
+            android:src="@mipmap/avatar_arrow" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_order1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen85"
+        android:layout_below="@id/ll_personalData1"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_myOrder1"
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen43"
+                android:layout_height="@dimen/dimen43"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_order" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/myOrder"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize14" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_addressManagement1"
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen43"
+                android:layout_height="@dimen/dimen43"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_address" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/addressManagement"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize14" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_driverManagement1"
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/dimen43"
+                android:layout_height="@dimen/dimen43"
+                android:scaleType="fitXY"
+                android:src="@mipmap/ic_driver" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/driverManagement"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize14" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_dividerWidth"
+        style="@style/DividerWidth"
+        android:layout_below="@id/ll_order1" />
+
+</RelativeLayout>

@@ -1,9 +1,12 @@
 package com.ruitukeji.zwbh.mine;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -46,10 +49,14 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  * Created by Administrator on 2017/12/13.
  */
 
-public class PersonalCenterActivity extends BaseActivity implements PersonalCenterContract.View, BGARefreshLayout.BGARefreshLayoutDelegate {
+@SuppressLint("NewApi")
+public class PersonalCenterActivity extends BaseActivity implements PersonalCenterContract.View, View.OnScrollChangeListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
+
+    @BindView(id = R.id.sv_mine)
+    private ScrollView sv_mine;
 
     /**
      * 标题
@@ -62,18 +69,24 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      */
     @BindView(id = R.id.ll_personalData, click = true)
     private LinearLayout ll_personalData;
+    @BindView(id = R.id.ll_personalData1, click = true)
+    private LinearLayout ll_personalData1;
 
     /**
      * 头像
      */
     @BindView(id = R.id.img_headPortrait)
     private ImageView img_headPortrait;
+    @BindView(id = R.id.img_headPortrait1)
+    private ImageView img_headPortrait1;
 
     /**
      * 姓名
      */
     @BindView(id = R.id.tv_name)
     private TextView tv_name;
+    @BindView(id = R.id.tv_name1)
+    private TextView tv_name1;
 
     /**
      * 未完成认证
@@ -82,18 +95,29 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     private LinearLayout ll_incompleteCertification;
     @BindView(id = R.id.tv_incompleteCertification)
     private TextView tv_incompleteCertification;
+    @BindView(id = R.id.ll_incompleteCertification1, click = true)
+    private LinearLayout ll_incompleteCertification1;
+    @BindView(id = R.id.tv_incompleteCertification1)
+    private TextView tv_incompleteCertification1;
+
+    @BindView(id = R.id.ll_order1)
+    private LinearLayout ll_order1;
 
     /**
      * 我的订单
      */
     @BindView(id = R.id.ll_myOrder, click = true)
     private LinearLayout ll_myOrder;
+    @BindView(id = R.id.ll_myOrder1, click = true)
+    private LinearLayout ll_myOrder1;
 
     /**
      * 地址管理
      */
     @BindView(id = R.id.ll_addressManagement, click = true)
     private LinearLayout ll_addressManagement;
+    @BindView(id = R.id.ll_addressManagement1, click = true)
+    private LinearLayout ll_addressManagement1;
 
     /**
      * 司机管理
@@ -112,6 +136,9 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      */
     @BindView(id = R.id.ll_invoiceManagement, click = true)
     private LinearLayout ll_invoiceManagement;
+
+    @BindView(id = R.id.tv_dividerWidth)
+    private TextView tv_dividerWidth;
 
     /**
      * 异常记录
@@ -168,6 +195,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         titlebar.getTitleCtv().setTextColor(getResources().getColor(R.color.white));
         titlebar.setBackgroundResource(R.color.announcementCloseColors);
         titlebar.setLeftDrawable(R.mipmap.mine_back);
+        sv_mine.setOnScrollChangeListener(this);
         mRefreshLayout.beginRefreshing();
     }
 
@@ -178,16 +206,31 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             case R.id.ll_personalData:
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(1);
                 break;
+            case R.id.ll_personalData1:
+                ((PersonalCenterContract.Presenter) mPresenter).isLogin(1);
+                break;
             case R.id.ll_incompleteCertification:
+                ((PersonalCenterContract.Presenter) mPresenter).isLogin(2);
+                break;
+            case R.id.ll_incompleteCertification1:
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(2);
                 break;
             case R.id.ll_myOrder:
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(3);
                 break;
+            case R.id.ll_myOrder1:
+                ((PersonalCenterContract.Presenter) mPresenter).isLogin(3);
+                break;
             case R.id.ll_addressManagement:
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(4);
                 break;
+            case R.id.ll_addressManagement1:
+                ((PersonalCenterContract.Presenter) mPresenter).isLogin(4);
+                break;
             case R.id.ll_driverManagement:
+                ((PersonalCenterContract.Presenter) mPresenter).isLogin(5);
+                break;
+            case R.id.ll_driverManagement1:
                 ((PersonalCenterContract.Presenter) mPresenter).isLogin(5);
                 break;
             case R.id.ll_identityAuthentication:
@@ -237,6 +280,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             ll_incompleteCertification.setVisibility(View.VISIBLE);
+            ll_incompleteCertification1.setVisibility(View.VISIBLE);
             mRefreshLayout.setPullDownRefreshEnable(true);
             UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
@@ -253,6 +297,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             PreferenceHelper.write(aty, StringConstants.FILENAME, "bond", userInfoBean.getResult().getBond());
             if (StringUtils.isEmpty(userInfoBean.getResult().getAvatar())) {
                 img_headPortrait.setImageResource(R.mipmap.avatar);
+                img_headPortrait1.setImageResource(R.mipmap.avatar);
             } else {
                 GlideApp.with(this)
                         .load(userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70")
@@ -262,26 +307,41 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                         .transform(new GlideCircleTransform(this))
                         .dontAnimate()//没有任何淡入淡出效果
                         .into(img_headPortrait);
+                GlideApp.with(this)
+                        .load(userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70")
+                        .placeholder(R.mipmap.avatar)
+                        .error(R.mipmap.arrow)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .transform(new GlideCircleTransform(this))
+                        .dontAnimate()//没有任何淡入淡出效果
+                        .into(img_headPortrait1);
             }
             tv_name.setVisibility(View.VISIBLE);
+            tv_name1.setVisibility(View.VISIBLE);
             if (StringUtils.isEmpty(userInfoBean.getResult().getReal_name())) {
                 tv_name.setText(userInfoBean.getResult().getPhone());
+                tv_name1.setText(userInfoBean.getResult().getPhone());
             } else {
                 tv_name.setText(userInfoBean.getResult().getReal_name());
+                tv_name1.setText(userInfoBean.getResult().getReal_name());
             }
             if (auth_status != null && auth_status.equals("pass")) {
                 tv_incompleteCertification.setText(getString(R.string.certified));
+                tv_incompleteCertification1.setText(getString(R.string.certified));
             } else if (auth_status != null && auth_status.equals("check")) {
                 tv_incompleteCertification.setText(getString(R.string.inAuthentication));
+                tv_incompleteCertification1.setText(getString(R.string.inAuthentication));
             } else if (auth_status != null && auth_status.equals("refuse")) {
                 tv_incompleteCertification.setText(getString(R.string.refuse));
+                tv_incompleteCertification1.setText(getString(R.string.refuse));
             } else {
                 tv_incompleteCertification.setText(getString(R.string.incompleteCertification));
+                tv_incompleteCertification1.setText(getString(R.string.incompleteCertification));
             }
         } else if (flag == 1) {
             showActivity(aty, PersonalDataActivity.class);
         } else if (flag == 2) {
-            String auth_status = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "auth_status");
+            String auth_status = PreferenceHelper.readString(this, StringConstants.FILENAME, "auth_status");
             if (auth_status != null && auth_status.equals("check")) {
                 ViewInject.toast(getString(R.string.inAuthentication) + "," + getString(R.string.pleaseWait));
                 return;
@@ -320,6 +380,9 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             tv_name.setText(getString(R.string.loginregister));
             img_headPortrait.setImageResource(R.mipmap.avatar);
             ll_incompleteCertification.setVisibility(View.GONE);
+            tv_name1.setText(getString(R.string.loginregister));
+            img_headPortrait1.setImageResource(R.mipmap.avatar);
+            ll_incompleteCertification1.setVisibility(View.GONE);
             if (flag != 0) {
                 Intent intent = new Intent(aty, LoginActivity.class);
                 intent.putExtra("type", "personalCenter");
@@ -358,5 +421,20 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endLoadingMore();
         return false;
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        Log.d("tag", "scrollY" + scrollY);
+        Log.d("tag", "oldScrollY" + oldScrollY);
+        if (scrollY == 0) {
+            tv_dividerWidth.setVisibility(View.GONE);
+            ll_personalData1.setVisibility(View.GONE);
+            ll_order1.setVisibility(View.GONE);
+        } else {
+            tv_dividerWidth.setVisibility(View.VISIBLE);
+            ll_personalData1.setVisibility(View.VISIBLE);
+            ll_order1.setVisibility(View.VISIBLE);
+        }
     }
 }
