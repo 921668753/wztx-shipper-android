@@ -1,11 +1,13 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.main.message;
+
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 /**
  * 消息詳情
  * Created by Administrator on 2017/5/30.
  */
 
-public class MessageDetailsBean extends BaseResult<MessageDetailsBean.ResultBean> {
+public class SystemMessageDetailsBean extends BaseResult<SystemMessageDetailsBean.ResultBean> {
 
 
     public class ResultBean {

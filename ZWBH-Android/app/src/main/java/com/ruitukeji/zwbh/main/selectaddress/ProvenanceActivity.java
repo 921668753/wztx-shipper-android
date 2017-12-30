@@ -244,7 +244,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (et_detailedAddress.getText().length() > 0 && et_deliveryCustomer.getText().length() > 0 && et_shipper.getText().length() > 0 && et_phone.getText().length() > 0) {
+        if (et_deliveryCustomer.getText().length() > 0 && et_shipper.getText().length() > 0 && et_phone.getText().length() > 0) {
             tv_determine.setClickable(true);
             tv_determine.setBackgroundResource(R.drawable.shape_login);
             tv_determine.setTextColor(getResources().getColor(R.color.mainColor));

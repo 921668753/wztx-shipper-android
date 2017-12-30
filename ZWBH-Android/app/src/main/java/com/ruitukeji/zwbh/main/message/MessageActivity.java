@@ -30,7 +30,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/2/15.
  */
 
-public class MessageActivity extends BaseActivity implements MessageContract.View, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class MessageActivity extends BaseActivity implements SystemMessageContract.View, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
 
     @BindView(id = R.id.mRefreshLayout)
@@ -70,7 +70,7 @@ public class MessageActivity extends BaseActivity implements MessageContract.Vie
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new MessagePresenter(this);
+        mPresenter = new SystemMessagePresenter(this);
         mAdapter = new MessageViewAdapter(this);
     }
 
@@ -89,14 +89,14 @@ public class MessageActivity extends BaseActivity implements MessageContract.Vie
         lv_message.setOnItemClickListener(this);
         lv_message.setOnItemLongClickListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+        ((SystemMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         Intent intent = new Intent();
         intent.putExtra("messageId", mAdapter.getItem(position).getId());
-        intent.setClass(getApplicationContext(), MessageDetailsActivity.class);
+        intent.setClass(getApplicationContext(), SystemMessageDetailsActivity.class);
         showActivity(aty, intent);
     }
 
@@ -105,7 +105,7 @@ public class MessageActivity extends BaseActivity implements MessageContract.Vie
         DialogUtil.showAlertDialog(this, R.string.deleteMessage, new DialogUtil.OnDialogSelectListener() {
             @Override
             public void onDialogSelect() {
-                ((MessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getItem(position).getId());
+               // ((SystemMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getItem(position).getId());
             }
         });
         return true;
@@ -116,7 +116,7 @@ public class MessageActivity extends BaseActivity implements MessageContract.Vie
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+        ((SystemMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class MessageActivity extends BaseActivity implements MessageContract.Vie
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+        ((SystemMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
         return true;
     }
 
@@ -203,7 +203,7 @@ public class MessageActivity extends BaseActivity implements MessageContract.Vie
 
 
     @Override
-    public void setPresenter(MessageContract.Presenter presenter) {
+    public void setPresenter(SystemMessageContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

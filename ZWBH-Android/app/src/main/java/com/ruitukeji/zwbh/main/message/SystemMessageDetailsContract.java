@@ -7,7 +7,7 @@ import com.ruitukeji.zwbh.common.BaseView;
  * Created by Administrator on 2017/2/15.
  */
 
-public interface MessageDetailsContract {
+public interface SystemMessageDetailsContract {
 
     interface Presenter extends BasePresenter {
         /**

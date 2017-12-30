@@ -26,6 +26,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.AMap.OnCameraChangeListener;
+import com.amap.api.maps2d.AMapOptions;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
@@ -305,6 +306,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             aMap.setOnCameraChangeListener(this);// 对amap添加移动地图事件监听器，会回调onCameraChange（）和onCameraChangeFinish（）
             //设置成中文地图
             aMap.setMapLanguage(AMap.CHINESE);
+          //  aMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);// 设置地图logo显示在左下方
         }
         choiceLocationWrapper();
     }

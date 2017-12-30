@@ -3,27 +3,31 @@ package com.ruitukeji.zwbh.main.message;
 
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.MessageCenterViewAdapter;
 import com.ruitukeji.zwbh.adapter.main.message.SystemMessageViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.MessageBean;
-import com.ruitukeji.zwbh.entity.MessageCenterBean;
+import com.ruitukeji.zwbh.entity.main.message.SystemMessageBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
+import java.util.List;
+
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -32,20 +36,20 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  * Created by Administrator on 2017/12/12.
  */
 
-public class SystemMessageActivity extends BaseActivity implements MessageContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class SystemMessageActivity extends BaseActivity implements SystemMessageContract.View, AbsListView.OnScrollListener, AdapterView.OnItemClickListener, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
 
-    /**
-     * 系统消息
-     */
-    @BindView(id = R.id.ll_systemMessage, click = true)
-    private TextView ll_systemMessage;
-    @BindView(id = R.id.tv_systemMessage)
-    private TextView tv_systemMessage;
-    @BindView(id = R.id.tv_systemMessage1)
-    private TextView tv_systemMessage1;
+//    /**
+//     * 系统消息
+//     */
+//    @BindView(id = R.id.ll_systemMessage, click = true)
+//    private TextView ll_systemMessage;
+//    @BindView(id = R.id.tv_systemMessage)
+//    private TextView tv_systemMessage;
+//    @BindView(id = R.id.tv_systemMessage1)
+//    private TextView tv_systemMessage1;
 
     /**
      * 订单消息
@@ -62,8 +66,8 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
     private BGARefreshLayout mRefreshLayout;
 
 
-    @BindView(id = R.id.lv_messagecenter)
-    private ListView lv_messagecenter;
+    @BindView(id = R.id.lv_systemmessage)
+    private ListView lv_systemmessage;
 
     /**
      * 错误提示页
@@ -72,6 +76,21 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
+    /**
+     * 全选  标记已读
+     */
+    @BindView(id = R.id.ll_bottom)
+    private LinearLayout ll_bottom;
+
+    @BindView(id = R.id.tv_generalElection, click = true)
+    private TextView tv_generalElection;
+
+    @BindView(id = R.id.tv_markedRead, click = true)
+    private TextView tv_markedRead;
+
+    @BindView(id = R.id.tv_delete, click = true)
+    private TextView tv_delete;
 
     /**
      * 当前页码
@@ -88,7 +107,15 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
 
     private String push_type = "system";
 
-    private boolean isEdit = true;
+    /**
+     * 是否是编辑
+     */
+    private int isSelected = 0;
+
+    /**
+     * 是否是选中
+     */
+    private int isEdit = 0;
 
     private SystemMessageViewAdapter mAdapter;
 
@@ -101,7 +128,7 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new MessagePresenter(this);
+        mPresenter = new SystemMessagePresenter(this);
         mAdapter = new SystemMessageViewAdapter(this);
         tv_orderMessage.setTextColor(getResources().getColor(R.color.typecolors));
         tv_orderMessage1.setBackgroundResource(R.color.white);
@@ -110,6 +137,7 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
     @Override
     public void initWidget() {
         super.initWidget();
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, this, true);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {
@@ -121,12 +149,20 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
             @Override
             public void onClickRightCtv() {
                 super.onClickRightCtv();
-                if (isEdit) {
-                    isEdit = false;
+                if (isEdit == 0) {
+                    mAdapter.closeOpenedSwipeItemLayoutWithAnim();
+                    isEdit = 1;
+                    visibilityImg(isEdit, mAdapter.getData());
+                    mAdapter.notifyDataSetChanged();
                     titlebar.setRightText(getString(R.string.complete));
+                    ll_bottom.setVisibility(View.VISIBLE);
                 } else {
-                    isEdit = true;
+                    isEdit = 0;
+                    isSelected = 0;
+                    visibilityImg(isEdit, mAdapter.getData());
+                    mAdapter.notifyDataSetChanged();
                     titlebar.setRightText(getString(R.string.edit));
+                    ll_bottom.setVisibility(View.GONE);
                 }
 
 //                Intent intent = new Intent(aty, AboutUsActivity.class);
@@ -135,6 +171,11 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.message), getString(R.string.edit), R.id.titlebar, simpleDelegate);
+        lv_systemmessage.setAdapter(mAdapter);
+        lv_systemmessage.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
+        lv_systemmessage.setOnScrollListener(this);
+     //   mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -145,6 +186,19 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
                 showActivity(aty, OrderMessageActivity.class);
                 overridePendingTransition(0, 0);
                 break;
+            case R.id.tv_generalElection:
+                isSelected = 1;
+                visibilityImg(isEdit, mAdapter.getData());
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.tv_markedRead:
+                showLoadingDialog(getString(R.string.dataLoad));
+                ((SystemMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
+                break;
+            case R.id.tv_delete:
+                showLoadingDialog(getString(R.string.dataLoad));
+                ((SystemMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
+                break;
             case R.id.tv_hintText:
                 mRefreshLayout.beginRefreshing();
                 break;
@@ -153,7 +207,7 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
 
 
     @Override
-    public void setPresenter(MessageContract.Presenter presenter) {
+    public void setPresenter(SystemMessageContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -163,13 +217,14 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-            MessageBean messageBean = (MessageBean) JsonUtil.getInstance().json2Obj(s, MessageBean.class);
+            SystemMessageBean messageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(s, SystemMessageBean.class);
             mMorePageNumber = messageBean.getResult().getPage();
             totalPageNumber = messageBean.getResult().getPageTotal();
             if (messageBean.getResult().getList() == null || messageBean.getResult().getList().size() == 0) {
                 error(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
+            visibilityImg(isEdit, messageBean.getResult().getList());
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
                 mRefreshLayout.endRefreshing();
                 mAdapter.clear();
@@ -181,17 +236,29 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
                 mRefreshLayout.endLoadingMore();
             }
             dismissLoadingDialog();
-        } else if (flag == 1) {
+        } else if (flag == 1 || flag == 2) {
             mRefreshLayout.beginRefreshing();
         }
     }
 
     @Override
     public void error(String msg, int flag) {
+        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+            showActivity(aty, LoginActivity.class);
+            return;
+        }
         if (flag == 0) {
+            isShowLoadingMore = false;
             mRefreshLayout.setVisibility(View.GONE);
             ll_commonError.setVisibility(View.VISIBLE);
             tv_hintText.setText(msg + getString(R.string.clickRefresh));
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+            }
+        } else {
+            ViewInject.toast(msg);
         }
         dismissLoadingDialog();
     }
@@ -200,8 +267,41 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
         intent.putExtra("messageId", mAdapter.getItem(position).getId());
-        intent.setClass(getApplicationContext(), MessageDetailsActivity.class);
+        intent.setClass(getApplicationContext(), SystemMessageDetailsActivity.class);
         showActivity(aty, intent);
+    }
+
+    /**
+     * 是否显示
+     */
+    private void visibilityImg(int isEdit, List<SystemMessageBean.ResultBean.ListBean> list) {
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setIsSelected(isSelected);
+            list.get(i).setIsEdit(isEdit);
+        }
+    }
+
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.img_checkbox) {
+            ImageView img_checkbox = (ImageView) childView.findViewById(R.id.img_checkbox);
+            if (mAdapter.getItem(position).getIsSelected() == 0) {
+                img_checkbox.setImageResource(R.mipmap.ic_checkbox_select);
+                mAdapter.getItem(position).setIsSelected(1);
+                return;
+            }
+            img_checkbox.setImageResource(R.mipmap.ic_checkbox_unselect);
+            mAdapter.getItem(position).setIsSelected(0);
+        } else if (childView.getId() == R.id.tv_markedRead) {
+            showLoadingDialog(getString(R.string.dataLoad));
+            mAdapter.getItem(position).setIsSelected(1);
+            ((SystemMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
+        } else if (childView.getId() == R.id.tv_delete) {
+            showLoadingDialog(getString(R.string.dataLoad));
+            mAdapter.getItem(position).setIsSelected(1);
+            ((SystemMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
+        }
     }
 
     @Override
@@ -209,7 +309,7 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+        ((SystemMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
     }
 
     @Override
@@ -224,7 +324,7 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((MessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+        ((SystemMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
         return true;
     }
 
@@ -235,4 +335,32 @@ public class SystemMessageActivity extends BaseActivity implements MessageContra
         mAdapter.clear();
         mAdapter = null;
     }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL == scrollState) {
+            mAdapter.closeOpenedSwipeItemLayoutWithAnim();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusSystemMessageDetailsEvent")) {
+            mRefreshLayout.beginRefreshing();
+        }
+//        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
+//            GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+//        }
+    }
+
 }

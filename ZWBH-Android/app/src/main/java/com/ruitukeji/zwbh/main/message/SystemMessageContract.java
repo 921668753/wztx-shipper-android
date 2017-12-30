@@ -2,12 +2,15 @@ package com.ruitukeji.zwbh.main.message;
 
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
+import com.ruitukeji.zwbh.entity.main.message.SystemMessageBean.ResultBean.ListBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/2/15.
  */
 
-public interface MessageContract {
+public interface SystemMessageContract {
 
     interface Presenter extends BasePresenter {
         /**
@@ -18,7 +21,12 @@ public interface MessageContract {
         /**
          * 删除消息
          */
-        void postDeleteMessage(int masageId);
+        void postDeleteMessage(List<ListBean> masageList);
+
+        /**
+         * 标记已读
+         */
+        void postReadMessage(List<ListBean> masageList);
     }
 
     interface View extends BaseView<Presenter> {

@@ -69,11 +69,10 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.recommendedRecord), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.complaintCenter), true, R.id.titlebar);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_complaintCenter.setAdapter(mAdapter);
         lv_complaintCenter.setOnItemClickListener(this);
-        showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         mRefreshLayout.beginRefreshing();
     }
 
@@ -163,7 +162,6 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
     public void setPresenter(ComplaintCenterContract.Presenter presenter) {
         mPresenter = presenter;
     }
-
 
     @Override
     public void onDestroy() {

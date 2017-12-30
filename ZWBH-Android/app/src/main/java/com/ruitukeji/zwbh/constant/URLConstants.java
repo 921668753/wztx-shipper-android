@@ -164,6 +164,11 @@ public class URLConstants {
     public static String DELMESSAGE = APIURL + "message/delMessage";
 
     /**
+     * 标记已读消息
+     */
+    public static String READMESSAGE = APIURL + "message/delMessage1";
+
+    /**
      * 未读消息数量
      */
     public static String GETUNREAD = APIURL + "message/getUnRead";

@@ -326,6 +326,8 @@
     <string name="generalElection">全选</string>
     <string name="markedRead">标为已读</string>
     <string name="delete1">删除</string>
+    <string name="markedRead1">您还未选择任何信息！无法标记已读！</string>
+    <string name="delete2">您还未选择任何信息！无法删除消息！</string>
 
     <!--订单消息-->
     <string name="orderUser">下单用户：</string>
@@ -794,6 +796,7 @@
     <string name="complaintTelphone1">投诉电话</string>
     <string name="emailAddress">邮件地址</string>
     <string name="emailAddress1">邮件地址</string>
+
     <!--推荐有礼-->
     <string name="recommendedRecord">推荐记录</string>
     <string name="cash">每邀请一人订单支付成功后，即可获得现金奖励</string>
@@ -807,7 +810,6 @@
     <string name="circleFriends">朋友圈</string>
     <string name="QQFriends">QQ好友</string>
     <string name="Qzone">QQ空间</string>
-
 
     <!--评价-->
     <string name="share">分享</string>

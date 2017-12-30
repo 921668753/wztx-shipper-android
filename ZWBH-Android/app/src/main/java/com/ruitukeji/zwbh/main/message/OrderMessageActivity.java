@@ -1,18 +1,34 @@
 package com.ruitukeji.zwbh.main.message;
 
 
+import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.MessageCenterViewAdapter;
+import com.ruitukeji.zwbh.adapter.main.message.OrderMessageViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
+import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.main.message.OrderMessageBean;
+import com.ruitukeji.zwbh.entity.main.message.OrderMessageBean.ResultBean.ListBean;
+import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
+import java.util.List;
+
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -21,7 +37,7 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
  * Created by Administrator on 2017/12/12.
  */
 
-public class OrderMessageActivity extends BaseActivity {
+public class OrderMessageActivity extends BaseActivity implements OrderMessageContract.View, AbsListView.OnScrollListener, AdapterView.OnItemClickListener, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.titlebar)
     private BGATitleBar titlebar;
@@ -36,22 +52,23 @@ public class OrderMessageActivity extends BaseActivity {
     @BindView(id = R.id.tv_systemMessage1)
     private TextView tv_systemMessage1;
 
-    /**
-     * 订单消息
-     */
-    @BindView(id = R.id.ll_orderMessage, click = true)
-    private TextView ll_orderMessage;
-    @BindView(id = R.id.tv_orderMessage)
-    private TextView tv_orderMessage;
-    @BindView(id = R.id.tv_orderMessage1)
-    private TextView tv_orderMessage1;
+//    /**
+//     * 订单消息
+//     */
+//    @BindView(id = R.id.ll_orderMessage, click = true)
+//    private TextView ll_orderMessage;
+//    @BindView(id = R.id.tv_orderMessage)
+//    private TextView tv_orderMessage;
+//    @BindView(id = R.id.tv_orderMessage1)
+//    private TextView tv_orderMessage1;
+
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
 
-    @BindView(id = R.id.lv_messagecenter)
-    private ListView lv_messagecenter;
+    @BindView(id = R.id.lv_orderMessage)
+    private ListView lv_orderMessage;
 
     /**
      * 错误提示页
@@ -61,8 +78,47 @@ public class OrderMessageActivity extends BaseActivity {
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
 
-    private MessageCenterViewAdapter messageCenterViewAdapter;
+    /**
+     * 全选  标记已读
+     */
+    @BindView(id = R.id.ll_bottom)
+    private LinearLayout ll_bottom;
 
+    @BindView(id = R.id.tv_generalElection, click = true)
+    private TextView tv_generalElection;
+
+    @BindView(id = R.id.tv_markedRead, click = true)
+    private TextView tv_markedRead;
+
+    @BindView(id = R.id.tv_delete, click = true)
+    private TextView tv_delete;
+
+    /**
+     * 当前页码
+     */
+    private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+    /**
+     * 总页码
+     */
+    private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+    /**
+     * 是否加载更多
+     */
+    private boolean isShowLoadingMore = false;
+
+    private String push_type = "order";
+
+    /**
+     * 是否是编辑
+     */
+    private int isSelected = 0;
+
+    /**
+     * 是否是选中
+     */
+    private int isEdit = 0;
+
+    private OrderMessageViewAdapter mAdapter;
 
     @Override
     public void setRootView() {
@@ -71,8 +127,18 @@ public class OrderMessageActivity extends BaseActivity {
 
 
     @Override
+    public void initData() {
+        super.initData();
+        mPresenter = new OrderMessagePresenter(this);
+        mAdapter = new OrderMessageViewAdapter(this);
+        tv_systemMessage.setTextColor(getResources().getColor(R.color.typecolors));
+        tv_systemMessage1.setBackgroundResource(R.color.white);
+    }
+
+    @Override
     public void initWidget() {
         super.initWidget();
+        RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, this, true);
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {
@@ -84,22 +150,34 @@ public class OrderMessageActivity extends BaseActivity {
             @Override
             public void onClickRightCtv() {
                 super.onClickRightCtv();
-                titlebar.setRightText(getString(R.string.complete));
+                if (isEdit == 0) {
+                    mAdapter.closeOpenedSwipeItemLayoutWithAnim();
+                    isEdit = 1;
+                    visibilityImg(isEdit, mAdapter.getData());
+                    mAdapter.notifyDataSetChanged();
+                    titlebar.setRightText(getString(R.string.complete));
+                    ll_bottom.setVisibility(View.VISIBLE);
+                } else {
+                    isEdit = 0;
+                    isSelected = 0;
+                    visibilityImg(isEdit, mAdapter.getData());
+                    mAdapter.notifyDataSetChanged();
+                    titlebar.setRightText(getString(R.string.edit));
+                    ll_bottom.setVisibility(View.GONE);
+                }
+
 //                Intent intent = new Intent(aty, AboutUsActivity.class);
 //                intent.putExtra("type", "type");
 //                showActivity(aty, intent);
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.message), getString(R.string.edit), R.id.titlebar, simpleDelegate);
+        lv_orderMessage.setAdapter(mAdapter);
+        lv_orderMessage.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
+        lv_orderMessage.setOnScrollListener(this);
+        mRefreshLayout.beginRefreshing();
     }
-
-    @Override
-    public void initData() {
-        super.initData();
-        tv_systemMessage.setTextColor(getResources().getColor(R.color.typecolors));
-        tv_systemMessage1.setBackgroundResource(R.color.white);
-    }
-
 
     @Override
     public void widgetClick(View v) {
@@ -109,8 +187,181 @@ public class OrderMessageActivity extends BaseActivity {
                 showActivity(aty, SystemMessageActivity.class);
                 overridePendingTransition(0, 0);
                 break;
+            case R.id.tv_generalElection:
+                isSelected = 1;
+                visibilityImg(isEdit, mAdapter.getData());
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.tv_markedRead:
+                showLoadingDialog(getString(R.string.dataLoad));
+                ((OrderMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
+                break;
+            case R.id.tv_delete:
+                showLoadingDialog(getString(R.string.dataLoad));
+                ((OrderMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
+                break;
+            case R.id.tv_hintText:
+                mRefreshLayout.beginRefreshing();
+                break;
         }
     }
 
+
+    @Override
+    public void setPresenter(OrderMessageContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String s, int flag) {
+        if (flag == 0) {
+            isShowLoadingMore = true;
+            ll_commonError.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            OrderMessageBean messageBean = (OrderMessageBean) JsonUtil.getInstance().json2Obj(s, OrderMessageBean.class);
+            mMorePageNumber = messageBean.getResult().getPage();
+            totalPageNumber = messageBean.getResult().getPageTotal();
+            if (messageBean.getResult().getList() == null || messageBean.getResult().getList().size() == 0) {
+                error(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            visibilityImg(isEdit, messageBean.getResult().getList());
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(messageBean.getResult().getList());
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(messageBean.getResult().getList());
+                mRefreshLayout.endLoadingMore();
+            }
+            dismissLoadingDialog();
+        } else if (flag == 1 || flag == 2) {
+            mRefreshLayout.beginRefreshing();
+        }
+    }
+
+    @Override
+    public void error(String msg, int flag) {
+        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+            showActivity(aty, LoginActivity.class);
+            return;
+        }
+        if (flag == 0) {
+            isShowLoadingMore = false;
+            mRefreshLayout.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setText(msg + getString(R.string.clickRefresh));
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+            }
+        } else {
+            ViewInject.toast(msg);
+        }
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent();
+        intent.putExtra("messageId", mAdapter.getItem(position).getId());
+        intent.setClass(getApplicationContext(), SystemMessageDetailsActivity.class);
+        showActivity(aty, intent);
+    }
+
+    /**
+     * 是否显示
+     */
+    private void visibilityImg(int isEdit, List<ListBean> list) {
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setIsSelected(isSelected);
+            list.get(i).setIsEdit(isEdit);
+        }
+    }
+
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.img_checkbox) {
+            ImageView img_checkbox = (ImageView) childView.findViewById(R.id.img_checkbox);
+            if (mAdapter.getItem(position).getIsSelected() == 0) {
+                img_checkbox.setImageResource(R.mipmap.ic_checkbox_select);
+                mAdapter.getItem(position).setIsSelected(1);
+                return;
+            }
+            img_checkbox.setImageResource(R.mipmap.ic_checkbox_unselect);
+            mAdapter.getItem(position).setIsSelected(0);
+        } else if (childView.getId() == R.id.tv_markedRead) {
+            showLoadingDialog(getString(R.string.dataLoad));
+            mAdapter.getItem(position).setIsSelected(1);
+            ((OrderMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
+        } else if (childView.getId() == R.id.tv_delete) {
+            showLoadingDialog(getString(R.string.dataLoad));
+            mAdapter.getItem(position).setIsSelected(1);
+            ((OrderMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
+        }
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+        mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((OrderMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        mRefreshLayout.endLoadingMore();
+        if (!isShowLoadingMore) {
+            return false;
+        }
+        mMorePageNumber++;
+        if (mMorePageNumber > totalPageNumber) {
+            ViewInject.toast(getString(R.string.noMoreData));
+            return false;
+        }
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((OrderMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
+        return true;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdapter.clear();
+        mAdapter = null;
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL == scrollState) {
+            mAdapter.closeOpenedSwipeItemLayoutWithAnim();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    }
+
+
+    /**
+     * 在接收消息的时候，选择性接收消息：
+     */
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusOrderMessageDetailsEvent")) {
+            mRefreshLayout.beginRefreshing();
+        }
+//        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
+//            GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+//        }
+    }
 
 }

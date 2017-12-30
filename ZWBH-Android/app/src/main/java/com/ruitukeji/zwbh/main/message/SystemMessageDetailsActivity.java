@@ -5,23 +5,23 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
-import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.MessageDetailsBean;
+import com.ruitukeji.zwbh.entity.main.message.SystemMessageDetailsBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 /**
- * 消息详情
+ * 系统消息详情
  * Created by Administrator on 2017/2/15.
  */
 
-public class MessageDetailsActivity extends BaseActivity implements MessageDetailsContract.View {
+public class SystemMessageDetailsActivity extends BaseActivity implements SystemMessageDetailsContract.View {
 
 
     /**
@@ -61,7 +61,7 @@ public class MessageDetailsActivity extends BaseActivity implements MessageDetai
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new MessageDetailsPresenter(this);
+        mPresenter = new SystemMessageDetailsPresenter(this);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MessageDetailsActivity extends BaseActivity implements MessageDetai
         ActivityTitleUtils.initToolbar(aty, getString(R.string.messageDetails), true, R.id.titlebar);
         messageId = getIntent().getIntExtra("messageId", 0);
         showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
-        ((MessageDetailsContract.Presenter) mPresenter).getMessageDetails(messageId);
+        ((SystemMessageDetailsContract.Presenter) mPresenter).getMessageDetails(messageId);
     }
 
     /**
@@ -82,7 +82,7 @@ public class MessageDetailsActivity extends BaseActivity implements MessageDetai
         switch (v.getId()) {
             case R.id.tv_hintText:
                 showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
-                ((MessageDetailsContract.Presenter) mPresenter).getMessageDetails(messageId);
+                ((SystemMessageDetailsContract.Presenter) mPresenter).getMessageDetails(messageId);
                 break;
         }
     }
@@ -90,12 +90,11 @@ public class MessageDetailsActivity extends BaseActivity implements MessageDetai
 
     @Override
     public void getSuccess(String s) {
-        PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshMessageActivity", true);
         ll_commonError.setVisibility(View.GONE);
         tv_title.setVisibility(View.VISIBLE);
         tv_time.setVisibility(View.VISIBLE);
         web_content.setVisibility(View.VISIBLE);
-        MessageDetailsBean messageDetailsBean = (MessageDetailsBean) JsonUtil.getInstance().json2Obj(s, MessageDetailsBean.class);
+        SystemMessageDetailsBean messageDetailsBean = (SystemMessageDetailsBean) JsonUtil.getInstance().json2Obj(s, SystemMessageDetailsBean.class);
         if (StringUtils.isEmpty(messageDetailsBean.getResult().getTitle())) {
             tv_title.setText("");
         } else {
@@ -116,6 +115,7 @@ public class MessageDetailsActivity extends BaseActivity implements MessageDetai
                     + "</body></html>";
             web_content.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
         }
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusSystemMessageDetailsEvent"));
         dismissLoadingDialog();
     }
 
@@ -130,7 +130,7 @@ public class MessageDetailsActivity extends BaseActivity implements MessageDetai
     }
 
     @Override
-    public void setPresenter(MessageDetailsContract.Presenter presenter) {
+    public void setPresenter(SystemMessageDetailsContract.Presenter presenter) {
         mPresenter = presenter;
     }
 }
