@@ -54,7 +54,7 @@ public class SystemMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         });
         viewHolderHelper.setItemChildClickListener(R.id.img_checkbox);
         viewHolderHelper.setItemChildClickListener(R.id.tv_markedRead);
-        viewHolderHelper.setItemChildLongClickListener(R.id.tv_delete);
+        viewHolderHelper.setItemChildClickListener(R.id.tv_delete);
     }
 
 

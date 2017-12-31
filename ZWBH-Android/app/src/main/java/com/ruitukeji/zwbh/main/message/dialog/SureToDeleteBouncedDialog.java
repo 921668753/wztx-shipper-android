@@ -1,42 +1,43 @@
 package com.ruitukeji.zwbh.main.message.dialog;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseDialog;
-import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.MessageBean;
-import com.ruitukeji.zwbh.loginregister.LoginActivity;
 
 /**
  * 确定删除
  * Created by Administrator on 2017/12/12.
  */
 
-public abstract class SureToDeleteBouncedDialog extends BaseDialog implements View.OnClickListener, MarkedAsReadBouncedContract.View {
+public class SureToDeleteBouncedDialog extends BaseDialog implements View.OnClickListener {
 
     private Context context;
     private TextView tv_content;
     private TextView tv_cancel;
     private TextView tv_determine;
-    private MessageBean.ResultBean.ListBean listBean;
-    private MarkedAsReadBouncedContract.Presenter mPresenter;
 
-    public SureToDeleteBouncedDialog(Context context, MessageBean.ResultBean.ListBean listBean) {
-        super(context, R.style.MyDialog);
+    private SureToDeleteDialogCallBack callBack;//回调
+
+    public SureToDeleteBouncedDialog(Context context) {
+        super(context, R.style.dialog);
         this.context = context;
-        this.listBean = listBean;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_markedasreadbounced);
+        Window dialogWindow = getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width= WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height= WindowManager.LayoutParams.MATCH_PARENT;
+        dialogWindow.setAttributes(lp);
         initView();
     }
 
@@ -47,7 +48,7 @@ public abstract class SureToDeleteBouncedDialog extends BaseDialog implements Vi
         tv_cancel.setOnClickListener(this);
         tv_determine = (TextView) findViewById(R.id.tv_determine);
         tv_determine.setOnClickListener(this);
-        mPresenter = new MarkedAsReadBouncedPresenter(this);
+        //  mPresenter = new MarkedAsReadBouncedPresenter(this);
     }
 
     @Override
@@ -57,39 +58,51 @@ public abstract class SureToDeleteBouncedDialog extends BaseDialog implements Vi
                 dismiss();
                 break;
             case R.id.tv_determine:
-//                if (listBean.getMind_price() == null || listBean.getMind_price().equals("0.00")) {
-//                    mPresenter.getQuoteAdd(listBean.getId(), listBean.getSystem_price(), 1);
-//                    break;
-//                }
-//                mPresenter.getQuoteAdd(listBean.getId(), listBean.getMind_price(), 1);
+                if (callBack != null) {
+                    callBack.confirm();
+                }
                 break;
         }
     }
 
-    @Override
-    public void getSuccess(String s, int flag) {
-        if (flag == 0) {
-            confirm();
-        }
-        dismissLoadingDialog();
+//    @Override
+//    public void getSuccess(String s, int flag) {
+//        if (flag == 0) {
+//            if (callBack != null) {
+//                callBack.confirm();
+//            }
+//        }
+//        dismissLoadingDialog();
+//    }
+//
+//    @Override
+//    public void setPresenter(MarkedAsReadBouncedContract.Presenter presenter) {
+//        mPresenter = presenter;
+//    }
+//
+//    @Override
+//    public void error(String msg) {
+//        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+//            dismissLoadingDialog();
+//            Intent intent = new Intent(context, LoginActivity.class);
+//            context.startActivity(intent);
+//            return;
+//        }
+//        dismissLoadingDialog();
+//        ViewInject.toast(msg);
+//    }
+
+
+    public void setSureToDeleteDialogCallBack(SureToDeleteDialogCallBack callBack) {
+        this.callBack = callBack;
     }
 
-    @Override
-    public void setPresenter(MarkedAsReadBouncedContract.Presenter presenter) {
-        mPresenter = presenter;
+
+    public interface SureToDeleteDialogCallBack {
+
+        void confirm();
+
     }
 
-    @Override
-    public void error(String msg) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            Intent intent = new Intent(context, LoginActivity.class);
-            context.startActivity(intent);
-            return;
-        }
-        dismissLoadingDialog();
-        ViewInject.toast(msg);
-    }
 
-    public abstract void confirm();
 }

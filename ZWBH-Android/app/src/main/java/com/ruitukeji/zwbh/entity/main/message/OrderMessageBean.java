@@ -10,7 +10,6 @@ import java.util.List;
 
 public class OrderMessageBean extends BaseResult<OrderMessageBean.ResultBean> {
 
-
     public class ResultBean {
         /**
          * list : [{"id":706,"type":"0","push_type":"all","title":"今天","summary":"载天下网络科技（苏州）有限公司（以下简称...","isRead":0,"pushTime":"2017-08-26  11:27"}]
@@ -78,13 +77,16 @@ public class OrderMessageBean extends BaseResult<OrderMessageBean.ResultBean> {
 
         public class ListBean {
             /**
-             * id : 706
+             * id : 291
              * type : 0
-             * push_type : all
-             * title : 今天
-             * summary : 载天下网络科技（苏州）有限公司（以下简称...
+             * push_type : single
+             * title : 认证信息审核通过
+             * summary : 的认证信息审核通过...
              * isRead : 0
-             * pushTime : 2017-08-26  11:27
+             * pushTime : 2017-12-13  19:16
+             * order_code : 2017123098545215
+             * dr_name : 王大富司机
+             * order_id : 291
              */
 
             private int id;
@@ -96,6 +98,9 @@ public class OrderMessageBean extends BaseResult<OrderMessageBean.ResultBean> {
             private int isSelected;
             private int isEdit;
             private String pushTime;
+            private String order_code;
+            private String dr_name;
+            private int order_id;
 
             public int getId() {
                 return id;
@@ -168,6 +173,32 @@ public class OrderMessageBean extends BaseResult<OrderMessageBean.ResultBean> {
             public void setPushTime(String pushTime) {
                 this.pushTime = pushTime;
             }
+
+            public String getOrder_code() {
+                return order_code;
+            }
+
+            public void setOrder_code(String order_code) {
+                this.order_code = order_code;
+            }
+
+            public String getDr_name() {
+                return dr_name;
+            }
+
+            public void setDr_name(String dr_name) {
+                this.dr_name = dr_name;
+            }
+
+            public int getOrder_id() {
+                return order_id;
+            }
+
+            public void setOrder_id(int order_id) {
+                this.order_id = order_id;
+            }
         }
     }
+
+
 }

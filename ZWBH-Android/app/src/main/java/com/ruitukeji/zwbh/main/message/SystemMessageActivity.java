@@ -2,6 +2,7 @@ package com.ruitukeji.zwbh.main.message;
 
 
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -175,7 +176,7 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
         lv_systemmessage.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
         lv_systemmessage.setOnScrollListener(this);
-     //   mRefreshLayout.beginRefreshing();
+        //   mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -192,11 +193,11 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.tv_markedRead:
-                showLoadingDialog(getString(R.string.dataLoad));
+              //  showLoadingDialog(getString(R.string.dataLoad));
                 ((SystemMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
                 break;
             case R.id.tv_delete:
-                showLoadingDialog(getString(R.string.dataLoad));
+              //  showLoadingDialog(getString(R.string.dataLoad));
                 ((SystemMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
                 break;
             case R.id.tv_hintText:
@@ -294,11 +295,11 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
             img_checkbox.setImageResource(R.mipmap.ic_checkbox_unselect);
             mAdapter.getItem(position).setIsSelected(0);
         } else if (childView.getId() == R.id.tv_markedRead) {
-            showLoadingDialog(getString(R.string.dataLoad));
+        //    showLoadingDialog(getString(R.string.dataLoad));
             mAdapter.getItem(position).setIsSelected(1);
             ((SystemMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
         } else if (childView.getId() == R.id.tv_delete) {
-            showLoadingDialog(getString(R.string.dataLoad));
+         //   showLoadingDialog(getString(R.string.dataLoad));
             mAdapter.getItem(position).setIsSelected(1);
             ((SystemMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
         }
@@ -363,4 +364,22 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
 //        }
     }
 
+
+    /**
+     * 关闭页面
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                KJActivityStack.create().finishActivity(OrderMessageActivity.class);
+                aty.finish();
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 }

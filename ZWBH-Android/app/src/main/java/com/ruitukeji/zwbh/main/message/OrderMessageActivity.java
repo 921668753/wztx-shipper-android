@@ -2,6 +2,9 @@ package com.ruitukeji.zwbh.main.message;
 
 
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -25,12 +28,14 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.titlebar.BGATitleBar;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 订单消息
@@ -193,11 +198,11 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.tv_markedRead:
-                showLoadingDialog(getString(R.string.dataLoad));
+              //  showLoadingDialog(getString(R.string.dataLoad));
                 ((OrderMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
                 break;
             case R.id.tv_delete:
-                showLoadingDialog(getString(R.string.dataLoad));
+              //  showLoadingDialog(getString(R.string.dataLoad));
                 ((OrderMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
                 break;
             case R.id.tv_hintText:
@@ -295,11 +300,11 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
             img_checkbox.setImageResource(R.mipmap.ic_checkbox_unselect);
             mAdapter.getItem(position).setIsSelected(0);
         } else if (childView.getId() == R.id.tv_markedRead) {
-            showLoadingDialog(getString(R.string.dataLoad));
+         //   showLoadingDialog(getString(R.string.dataLoad));
             mAdapter.getItem(position).setIsSelected(1);
             ((OrderMessageContract.Presenter) mPresenter).postReadMessage(mAdapter.getData());
         } else if (childView.getId() == R.id.tv_delete) {
-            showLoadingDialog(getString(R.string.dataLoad));
+         //   showLoadingDialog(getString(R.string.dataLoad));
             mAdapter.getItem(position).setIsSelected(1);
             ((OrderMessageContract.Presenter) mPresenter).postDeleteMessage(mAdapter.getData());
         }
@@ -362,6 +367,24 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
 ////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
 //            GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
 //        }
+    }
+
+
+    /**
+     * 关闭页面
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                KJActivityStack.create().finishActivity(SystemMessageActivity.class);
+                aty.finish();
+                break;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
 }

@@ -5,6 +5,9 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.entity.main.message.OrderMessageBean.ResultBean.ListBean;
+import com.ruitukeji.zwbh.main.message.dialog.MarkedAsReadBouncedDialog;
+import com.ruitukeji.zwbh.main.message.dialog.SureToDeleteBouncedDialog;
+import com.ruitukeji.zwbh.main.message.dialog.SureToDeleteBouncedDialog.SureToDeleteDialogCallBack;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
@@ -58,52 +61,69 @@ public class OrderMessagePresenter implements OrderMessageContract.Presenter {
      */
     @Override
     public void postDeleteMessage(List<ListBean> masageList) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         String msgStr = getMsgIdList(masageList);
         if (StringUtils.isEmpty(msgStr)) {
             mView.error(KJActivityStack.create().topActivity().getString(R.string.delete2), 1);
             return;
         }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map map = new HashMap();
-        map.put("msg_id", msgStr);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postDeleteMessage(httpParams, new ResponseListener<String>() {
+        SureToDeleteBouncedDialog sureToDeleteBouncedDialog = new SureToDeleteBouncedDialog(KJActivityStack.create().topActivity());
+        sureToDeleteBouncedDialog.setSureToDeleteDialogCallBack(new SureToDeleteDialogCallBack() {
             @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
+            public void confirm() {
+                sureToDeleteBouncedDialog.cancel();
+                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                Map map = new HashMap();
+                map.put("msg_id", msgStr);
+                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+                RequestClient.postDeleteMessage(httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 1);
+                    }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg, 1);
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.error(msg, 1);
+                    }
+                });
             }
         });
+        sureToDeleteBouncedDialog.show();
     }
+
 
     @Override
     public void postReadMessage(List<ListBean> masageList) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         String msgStr = getMsgIdList(masageList);
         if (StringUtils.isEmpty(msgStr)) {
             mView.error(KJActivityStack.create().topActivity().getString(R.string.markedRead1), 2);
             return;
         }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map map = new HashMap();
-        map.put("msg_id", msgStr);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postReadMessage(httpParams, new ResponseListener<String>() {
+        MarkedAsReadBouncedDialog markedAsReadBouncedDialog = new MarkedAsReadBouncedDialog(KJActivityStack.create().topActivity());
+        markedAsReadBouncedDialog.setMarkedAsReadDialogCallBack(new MarkedAsReadBouncedDialog.MarkedAsReadDialogCallBack() {
             @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
+            public void confirm() {
+                markedAsReadBouncedDialog.cancel();
+                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                Map map = new HashMap();
+                map.put("msg_id", msgStr);
+                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+                RequestClient.postReadMessage(httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 2);
+                    }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg, 2);
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.error(msg, 2);
+                    }
+                });
             }
         });
+        markedAsReadBouncedDialog.show();
     }
 
     /**

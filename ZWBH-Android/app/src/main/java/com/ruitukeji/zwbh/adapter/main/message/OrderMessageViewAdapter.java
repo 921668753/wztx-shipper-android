@@ -53,7 +53,7 @@ public class OrderMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         });
         viewHolderHelper.setItemChildClickListener(R.id.img_checkbox);
         viewHolderHelper.setItemChildClickListener(R.id.tv_markedRead);
-        viewHolderHelper.setItemChildLongClickListener(R.id.tv_delete);
+        viewHolderHelper.setItemChildClickListener(R.id.tv_delete);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class OrderMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          *姓名
          */
-        viewHolderHelper.setText(R.id.tv_name, listBean.getPushTime());
+        viewHolderHelper.setText(R.id.tv_name, listBean.getDr_name());
         /**
          * 标记
          */
@@ -92,7 +92,7 @@ public class OrderMessageViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          *订单编号
          */
-        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getPushTime());
+        viewHolderHelper.setText(R.id.tv_orderNumber, listBean.getOrder_code());
 
         /**
          *时间
