@@ -366,7 +366,7 @@ public class RequestClient {
         if (!StringUtils.isEmpty(accessToken)) {
             httpParams.putHeaders("authorization-token", accessToken);
         }
-        HttpRequest.requestGetHttp(URLConstants.MESSAGE + "/order", httpParams, listener);
+        HttpRequest.requestGetHttp(URLConstants.MESSAGE, httpParams, listener);
     }
 
     /**
