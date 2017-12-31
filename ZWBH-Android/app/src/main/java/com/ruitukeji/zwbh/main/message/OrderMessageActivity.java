@@ -227,7 +227,7 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
             mMorePageNumber = messageBean.getResult().getPage();
             totalPageNumber = messageBean.getResult().getPageTotal();
             if (messageBean.getResult().getList() == null || messageBean.getResult().getList().size() == 0) {
-                error(getString(R.string.serverReturnsDataNull), 0);
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             visibilityImg(isEdit, messageBean.getResult().getList());
@@ -248,7 +248,7 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
     }
 
     @Override
-    public void error(String msg, int flag) {
+    public void errorMsg(String msg, int flag) {
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             showActivity(aty, LoginActivity.class);
             return;

@@ -51,7 +51,7 @@ public class OrderMessagePresenter implements OrderMessageContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, 0);
+                mView.errorMsg(msg, 0);
             }
         });
     }
@@ -63,7 +63,7 @@ public class OrderMessagePresenter implements OrderMessageContract.Presenter {
     public void postDeleteMessage(List<ListBean> masageList) {
         String msgStr = getMsgIdList(masageList);
         if (StringUtils.isEmpty(msgStr)) {
-            mView.error(KJActivityStack.create().topActivity().getString(R.string.delete2), 1);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.delete2), 1);
             return;
         }
         SureToDeleteBouncedDialog sureToDeleteBouncedDialog = new SureToDeleteBouncedDialog(KJActivityStack.create().topActivity());
@@ -84,7 +84,7 @@ public class OrderMessagePresenter implements OrderMessageContract.Presenter {
 
                     @Override
                     public void onFailure(String msg) {
-                        mView.error(msg, 1);
+                        mView.errorMsg(msg, 1);
                     }
                 });
             }
@@ -97,7 +97,7 @@ public class OrderMessagePresenter implements OrderMessageContract.Presenter {
     public void postReadMessage(List<ListBean> masageList) {
         String msgStr = getMsgIdList(masageList);
         if (StringUtils.isEmpty(msgStr)) {
-            mView.error(KJActivityStack.create().topActivity().getString(R.string.markedRead1), 2);
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.markedRead1), 2);
             return;
         }
         MarkedAsReadBouncedDialog markedAsReadBouncedDialog = new MarkedAsReadBouncedDialog(KJActivityStack.create().topActivity());
@@ -118,7 +118,7 @@ public class OrderMessagePresenter implements OrderMessageContract.Presenter {
 
                     @Override
                     public void onFailure(String msg) {
-                        mView.error(msg, 2);
+                        mView.errorMsg(msg, 2);
                     }
                 });
             }

@@ -1,7 +1,7 @@
 package com.ruitukeji.zwbh.main.message;
 
+import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
-import com.ruitukeji.zwbh.common.BaseView;
 import com.ruitukeji.zwbh.entity.main.message.SystemMessageBean.ResultBean.ListBean;
 
 import java.util.List;
@@ -29,18 +29,8 @@ public interface SystemMessageContract {
         void postReadMessage(List<ListBean> masageList);
     }
 
-    interface View extends BaseView<Presenter> {
-        /**
-         * http请求正确
-         *
-         * @param s
-         */
-        void getSuccess(String s, int flag);
+    interface View extends BaseNewView<Presenter,String> {
 
-        /**
-         * http请求错误
-         */
-        void error(String msg, int flag);
     }
 
 }
