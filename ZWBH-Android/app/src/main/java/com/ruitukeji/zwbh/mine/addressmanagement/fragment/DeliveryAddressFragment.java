@@ -11,17 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.addressmanagement.AddressViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.mine.addressmanagement.AddressBean;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddress1Activity;
 import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddressActivity;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
@@ -65,18 +65,21 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 总页码
      */
     private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+
     /**
-     * 订单状态（all全部状态，quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
+     * 0 始发地 1目的地
      */
-    private String type = "all";
+    private String type = "0";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -98,16 +101,16 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
         lv_address.setAdapter(mAdapter);
         lv_address.setOnItemClickListener(this);
         mAdapter.setOnItemChildClickListener(this);
-        //  mRefreshLayout.beginRefreshing();
+        mRefreshLayout.beginRefreshing();
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //  PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "AllOrderFragment");
-//        Intent intent = new Intent(aty, NewAddAddress1Activity.class);
-//        intent.putExtra("address_id", mAdapter.getItem(i).getOrder_id());
-//        aty.showActivity(aty, intent);
+        Intent intent = new Intent(aty, NewAddAddress1Activity.class);
+        intent.putExtra("address_id", mAdapter.getItem(i).getId());
+        intent.putExtra("type", 1);
+        aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
     }
 
     @Override
@@ -168,21 +171,21 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-//        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
-//        mMorePageNumber = orderBean.getResult().getPage();
-//        totalPageNumber = orderBean.getResult().getPageTotal();
-//        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(orderBean.getResult().getList());
-//        } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(orderBean.getResult().getList());
-//        }
+            AddressBean orderBean = (AddressBean) JsonUtil.getInstance().json2Obj(success, AddressBean.class);
+            mMorePageNumber = orderBean.getResult().getPage();
+            totalPageNumber = orderBean.getResult().getPageTotal();
+            if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(orderBean.getResult().getList());
+            } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(orderBean.getResult().getList());
+            }
             dismissLoadingDialog();
         } else if (flag == 1) {
 
@@ -218,14 +221,14 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
         if (view.getId() == R.id.img_setDefaultAddress) {
-            ((AddressContract.Presenter) mPresenter).postSetDefaultAddress(i);
+            ((AddressContract.Presenter) mPresenter).postSetDefaultAddress(mAdapter.getItem(i).getId());
         } else if (view.getId() == R.id.ll_edit) {
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
-            intent.putExtra("address_id", mAdapter.getItem(i).getOrder_id());
+            intent.putExtra("address_id", mAdapter.getItem(i).getId());
             intent.putExtra("type", 1);
             aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
         } else if (view.getId() == R.id.ll_delete) {
-            ((AddressContract.Presenter) mPresenter).postDeleteAddress(i);
+            ((AddressContract.Presenter) mPresenter).postDeleteAddress(mAdapter.getItem(i).getId());
         }
     }
 

@@ -146,7 +146,7 @@ public class MessageActivity extends BaseActivity implements SystemMessageContra
             mMorePageNumber = messageBean.getResult().getPage();
             totalPageNumber = messageBean.getResult().getPageTotal();
             if (messageBean.getResult().getList() == null || messageBean.getResult().getList().size() == 0) {
-                error(getString(R.string.serverReturnsDataNull), 0);
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -166,7 +166,7 @@ public class MessageActivity extends BaseActivity implements SystemMessageContra
     }
 
     @Override
-    public void error(String msg, int flag) {
+    public void errorMsg(String msg, int flag) {
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             showActivity(aty, LoginActivity.class);
             return;

@@ -47,10 +47,9 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.dialog.LocationBouncedDialog;
 import com.ruitukeji.zwbh.entity.BaseResult;
-import com.ruitukeji.zwbh.entity.main.HomeBean;
 import com.ruitukeji.zwbh.entity.main.HomeBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
+import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.message.MessageCenterActivity;
 import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
@@ -584,7 +583,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             // ((MainContract.Presenter) mPresenter).getInfo();
             dismissLoadingDialog();
         } else if (flag == 4) {
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
+            PersonalCenterBean userInfoBean = (PersonalCenterBean) JsonUtil.getInstance().json2Obj(s, PersonalCenterBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", false);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());

@@ -52,7 +52,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //         PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -110,7 +110,7 @@ public class RequestClient {
                 if (baseResult.getCode() != NumericConstants.SUCCESS) {
                     unDoList.clear();
                     isRefresh = false;
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
                     PreferenceHelper.write(context, StringConstants.FILENAME, "accessToken", "");
                     PreferenceHelper.write(context, StringConstants.FILENAME, "refreshToken", "");
@@ -139,7 +139,7 @@ public class RequestClient {
                 Log.d("tag", "onSuccess");
                 unDoList.clear();
                 isRefresh = false;
-                PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                 PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
                 PreferenceHelper.write(context, StringConstants.FILENAME, "accessToken", "");
                 PreferenceHelper.write(context, StringConstants.FILENAME, "refreshToken", "");
@@ -236,7 +236,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -259,7 +259,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //      PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -306,7 +306,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -567,7 +567,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //  PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -576,6 +576,28 @@ public class RequestClient {
             }
         }, listener);
     }
+
+
+    /**
+     * 查询始发地目的地
+     */
+    public static void getAddress(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getAddress");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.INFOADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 改变广告状态
@@ -587,7 +609,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -607,7 +629,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -628,7 +650,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //  PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -648,7 +670,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -669,7 +691,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -689,7 +711,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -709,7 +731,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -729,7 +751,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //  PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -749,7 +771,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //  PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -769,7 +791,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -790,7 +812,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -811,7 +833,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -831,7 +853,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //  PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -851,7 +873,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -889,7 +911,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -909,7 +931,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -928,7 +950,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //       PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -951,7 +973,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -970,7 +992,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //         PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -993,7 +1015,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //        PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -1012,7 +1034,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //       PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -1031,7 +1053,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //        PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -1111,7 +1133,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //       PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -1154,7 +1176,7 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    //         PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
@@ -1179,7 +1201,7 @@ public class RequestClient {
         String accessToken = PreferenceHelper.readString(context, StringConstants.FILENAME, "accessToken", "");
         if (StringUtils.isEmpty(accessToken)) {
             Log.d("tag", "onFailure");
-            PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+            //     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
             PreferenceHelper.write(context, StringConstants.FILENAME, "userId", 0);
             PreferenceHelper.write(context, StringConstants.FILENAME, "accessToken", "");
             PreferenceHelper.write(context, StringConstants.FILENAME, "refreshToken", "");

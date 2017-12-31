@@ -28,7 +28,7 @@ public class AddressPresenter implements AddressContract.Presenter {
         httpParams.put("page", page);
         httpParams.put("type", type);
         httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        RequestClient.getAddress(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

@@ -195,6 +195,12 @@ public class URLConstants {
     public static String USERINFO = APIURL + "User/info";
 
     /**
+     * 查询始发地目的地
+     */
+    public static String INFOADDRESS = APIURL + "Address/InfoAddress";
+
+
+    /**
      * 显示货源列表
      */
     public static String GOODSLIST = APIURL + "goods/goodsList";

@@ -1,10 +1,12 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.mine;
+
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 /**
  * Created by Administrator on 2017/7/10.
  */
 
-public class UserInfoBean extends BaseResult<UserInfoBean.ResultBean> {
+public class PersonalCenterBean extends BaseResult<PersonalCenterBean.ResultBean> {
 
     public class ResultBean {
         /**

@@ -20,7 +20,7 @@ import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
+import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
@@ -281,7 +281,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             ll_incompleteCertification.setVisibility(View.VISIBLE);
             ll_incompleteCertification1.setVisibility(View.VISIBLE);
             mRefreshLayout.setPullDownRefreshEnable(true);
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(success, UserInfoBean.class);
+            PersonalCenterBean userInfoBean = (PersonalCenterBean) JsonUtil.getInstance().json2Obj(success, PersonalCenterBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());

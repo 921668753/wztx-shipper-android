@@ -16,7 +16,7 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.LoginBean;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
+import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -212,7 +212,7 @@ public class NewUserRegisterActivity extends BaseActivity implements RegisterCon
             PreferenceHelper.write(this, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
             ((RegisterContract.Presenter) mPresenter).getInfo();
         } else if (flag == 3) {
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
+            PersonalCenterBean userInfoBean = (PersonalCenterBean) JsonUtil.getInstance().json2Obj(s, PersonalCenterBean.class);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());

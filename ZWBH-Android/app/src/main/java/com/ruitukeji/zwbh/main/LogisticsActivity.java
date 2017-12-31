@@ -23,7 +23,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.DistanceBean;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
+import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
@@ -424,7 +424,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
             dismissLoadingDialog();
             finish();
         } else if (flag == 3) {
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
+            PersonalCenterBean userInfoBean = (PersonalCenterBean) JsonUtil.getInstance().json2Obj(s, PersonalCenterBean.class);
             PreferenceHelper.write(this, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
             PreferenceHelper.write(this, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());
             PreferenceHelper.write(this, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());
@@ -439,7 +439,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
             showDialog();
         } else if (flag == 4) {
             isRefresh = false;
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
+            PersonalCenterBean userInfoBean = (PersonalCenterBean) JsonUtil.getInstance().json2Obj(s, PersonalCenterBean.class);
             PreferenceHelper.write(this, StringConstants.FILENAME, "id", userInfoBean.getResult().getId());
             PreferenceHelper.write(this, StringConstants.FILENAME, "phone", userInfoBean.getResult().getPhone());
             PreferenceHelper.write(this, StringConstants.FILENAME, "sex", userInfoBean.getResult().getSex());

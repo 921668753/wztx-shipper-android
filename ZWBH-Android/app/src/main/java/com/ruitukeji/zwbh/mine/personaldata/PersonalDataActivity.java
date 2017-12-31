@@ -24,15 +24,12 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
-import com.ruitukeji.zwbh.entity.UserInfoBean;
+import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
-import com.ruitukeji.zwbh.utils.rx.MsgEvent;
-import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,7 +221,7 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
     @Override
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
-            UserInfoBean userInfoBean = (UserInfoBean) JsonUtil.getInstance().json2Obj(s, UserInfoBean.class);
+            PersonalCenterBean userInfoBean = (PersonalCenterBean) JsonUtil.getInstance().json2Obj(s, PersonalCenterBean.class);
             GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), userInfoBean.getResult().getAvatar() + "?imageView2/1/w/60/h/60", img_user, 0);
             tv_phone.setText(userInfoBean.getResult().getPhone());
             if (StringUtils.isEmpty(userInfoBean.getResult().getReal_name())) {
