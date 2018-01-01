@@ -1,9 +1,11 @@
 package com.ruitukeji.zwbh.mine.addressmanagement;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.Log;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
@@ -69,7 +71,7 @@ public class AddressManagementActivity extends BaseActivity {
             chageIcon = 1;
             cleanColors(1);
             changeFragment(contentFragment1);
-        }  else {
+        } else {
             chageIcon = 0;
             cleanColors(0);
             changeFragment(contentFragment);
@@ -114,9 +116,10 @@ public class AddressManagementActivity extends BaseActivity {
         } else if (chageIcon == 1) {
             tv_shippingAddress.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_shippingAddress1.setBackgroundResource(R.color.announcementCloseColors);
-        }  else {
+        } else {
             tv_deliveryAddress.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_deliveryAddress1.setBackgroundResource(R.color.announcementCloseColors);
         }
     }
+
 }

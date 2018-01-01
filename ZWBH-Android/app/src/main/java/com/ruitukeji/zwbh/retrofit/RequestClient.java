@@ -298,6 +298,67 @@ public class RequestClient {
     }
 
     /**
+     * 查询始发地目的地
+     */
+    public static void getAddress(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getAddress");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.INFOADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 查询始发地目的地
+     */
+    public static void getDelAddress(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getDelAddress");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.DELADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 是否默认地址
+     */
+    public static void getUpdateDefault(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getUpdateDefault");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.UPDATEDEFAULT, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 始发地目的地信息管理
      */
     public static void postAddress(HttpParams httpParams, final ResponseListener<String> listener) {
@@ -312,6 +373,45 @@ public class RequestClient {
                 }
                 httpParams.putHeaders("authorization-token", accessToken);
                 HttpRequest.requestPostHttp(URLConstants.ADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 获取单条信息
+     */
+    public static void getOneInfoAddress(HttpParams httpParams, final ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.GETONEINFOADDRESS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 修改始发地 目的地信息
+     */
+    public static void postUpdateAddress(HttpParams httpParams, final ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.UPDATEADDRESS, httpParams, listener);
             }
         }, listener);
     }
@@ -573,27 +673,6 @@ public class RequestClient {
                 }
                 httpParams.putHeaders("authorization-token", accessToken);
                 HttpRequest.requestGetHttp(URLConstants.UPDATEINFO, httpParams, listener);
-            }
-        }, listener);
-    }
-
-
-    /**
-     * 查询始发地目的地
-     */
-    public static void getAddress(HttpParams httpParams, final ResponseListener<String> listener) {
-        Log.d("tag", "getAddress");
-        doServer(new TokenCallback() {
-            @Override
-            public void execute() {
-                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    //PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
-                    listener.onFailure(NumericConstants.TOLINGIN + "");
-                    return;
-                }
-                httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestGetHttp(URLConstants.INFOADDRESS, httpParams, listener);
             }
         }, listener);
     }

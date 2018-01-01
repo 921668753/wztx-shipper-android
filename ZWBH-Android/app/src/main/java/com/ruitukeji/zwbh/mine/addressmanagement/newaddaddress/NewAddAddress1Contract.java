@@ -12,13 +12,19 @@ public interface NewAddAddress1Contract {
         /**
          * 获取地址信息
          */
-        void getAddress(int page, String type);
+        void getAddress(int id);
 
         /**
          * 提交地址信息
          */
         void postAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer,
-                         String shipper, String phone, String eixedTelephone, int type,int is_default);
+                         String shipper, String phone, String eixedTelephone, int type, int is_default);
+
+        /**
+         * 修改始发地 目的地信息
+         */
+        void postUpdateAddress(String address_maps, String provincialLevel, String address, String detailedAddress, String deliveryCustomer,
+                               String shipper, String phone, String eixedTelephone, int id, int type, int is_default);
 
     }
 

@@ -66,11 +66,6 @@ public class URLConstants {
     public static String ANNOUNCEMENT = APIURL + "index/getAdverDetail";
 
     /**
-     * 地址
-     */
-    public static String ADDRESS = APIURL + "Address/spAddressManageInsert";
-
-    /**
      * 获取文章内容
      */
     public static String GETARTICLE = APIURL + "index/getArticle";
@@ -199,6 +194,30 @@ public class URLConstants {
      */
     public static String INFOADDRESS = APIURL + "Address/InfoAddress";
 
+    /**
+     * 删除始发地目的地
+     */
+    public static String DELADDRESS = APIURL + "Address/DelAddress";
+
+    /**
+     * 是否默认地址
+     */
+    public static String UPDATEDEFAULT = APIURL + "Address/UpdateDefault";
+
+    /**
+     * 地址
+     */
+    public static String ADDRESS = APIURL + "Address/spAddressManageInsert";
+
+    /**
+     * 获取单条信息
+     */
+    public static String GETONEINFOADDRESS = APIURL + "Address/GetOneInfo";
+
+    /**
+     * 修改始发地 目的地信息
+     */
+    public static String UPDATEADDRESS = APIURL + "Address/UpdateAddress";
 
     /**
      * 显示货源列表

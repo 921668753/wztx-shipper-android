@@ -110,7 +110,7 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
         Intent intent = new Intent(aty, NewAddAddress1Activity.class);
         intent.putExtra("address_id", mAdapter.getItem(i).getId());
         intent.putExtra("type", 1);
-        aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+       startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
                 //  intent.putExtra("title", getString(R.string.newAddress));
                 intent.putExtra("type", 0);
                 //  intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
-                aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
         }
     }
@@ -187,10 +187,8 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
                 mAdapter.addMoreData(orderBean.getResult().getList());
             }
             dismissLoadingDialog();
-        } else if (flag == 1) {
-
-            dismissLoadingDialog();
-        } else if (flag == 2) {
+        } else if (flag == 1 || flag == 2) {
+            //   dismissLoadingDialog();
             mRefreshLayout.beginRefreshing();
         }
     }
@@ -226,7 +224,7 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
             intent.putExtra("address_id", mAdapter.getItem(i).getId());
             intent.putExtra("type", 1);
-            aty.startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
         } else if (view.getId() == R.id.ll_delete) {
             ((AddressContract.Presenter) mPresenter).postDeleteAddress(mAdapter.getItem(i).getId());
         }

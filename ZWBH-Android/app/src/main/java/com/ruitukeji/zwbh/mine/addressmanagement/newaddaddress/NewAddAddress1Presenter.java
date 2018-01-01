@@ -26,13 +26,11 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
 
 
     @Override
-    public void getAddress(int page, String type) {
+    public void getAddress(int id) {
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("page", page);
-        httpParams.put("type", type);
-        httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        httpParams.put("id", id);
+        RequestClient.getOneInfoAddress(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -69,6 +67,40 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+    @Override
+    public void postUpdateAddress(String address_maps, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int id, int type, int is_default) {
+        mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("address_maps", address_maps);
+        map.put("city", provincialLevel);
+        map.put("address_name", address);
+        map.put("address_detail", detailedAddress);
+        map.put("client", deliveryCustomer);
+        map.put("client_name", shipper);
+        map.put("phone", phone);
+        map.put("telphone", eixedTelephone);
+        if (type == 0 || type == 1) {
+            map.put("type", 0);
+        } else if (type == 2 || type == 3) {
+            map.put("type", 1);
+        }
+        map.put("id", id);
+        map.put("is_default", is_default);
+        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+        RequestClient.postUpdateAddress(httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 2);
             }
 
             @Override

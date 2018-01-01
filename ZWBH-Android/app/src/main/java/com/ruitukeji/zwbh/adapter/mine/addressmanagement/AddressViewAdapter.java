@@ -49,12 +49,16 @@ public class AddressViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setText(R.id.tv_address, listBean.getAddress_name() + listBean.getAddress_detail());
         }
 
-
         /**
          * 名字
          */
         viewHolderHelper.setText(R.id.tv_name, listBean.getClient_name());
 
+        if (listBean.getIs_default() == 0) {
+            viewHolderHelper.setImageResource(R.id.img_setDefaultAddress, R.mipmap.ic_checkbox_unselect);
+        } else {
+            viewHolderHelper.setImageResource(R.id.img_setDefaultAddress, R.mipmap.ic_checkbox_select);
+        }
 
     }
 

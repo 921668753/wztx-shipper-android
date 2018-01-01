@@ -92,8 +92,8 @@ public class AddressBean extends BaseResult<AddressBean.ResultBean> {
             private String client_name;
             private String phone;
             private String telphone;
-            private String is_default;
-            private String type;
+            private int is_default;
+            private int type;
 
             public int getId() {
                 return id;
@@ -175,19 +175,19 @@ public class AddressBean extends BaseResult<AddressBean.ResultBean> {
                 this.telphone = telphone;
             }
 
-            public String getIs_default() {
+            public int getIs_default() {
                 return is_default;
             }
 
-            public void setIs_default(String is_default) {
+            public void setIs_default(int is_default) {
                 this.is_default = is_default;
             }
 
-            public String getType() {
+            public int getType() {
                 return type;
             }
 
-            public void setType(String type) {
+            public void setType(int type) {
                 this.type = type;
             }
         }

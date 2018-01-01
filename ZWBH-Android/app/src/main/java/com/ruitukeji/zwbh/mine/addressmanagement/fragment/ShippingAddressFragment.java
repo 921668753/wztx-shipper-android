@@ -112,7 +112,7 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
         Intent intent = new Intent(aty, NewAddAddress1Activity.class);
         intent.putExtra("address_id", mAdapter.getItem(i).getId());
         intent.putExtra("type", 3);
-        aty.startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
+        startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
     }
 
     @Override
@@ -139,7 +139,7 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
                 //  intent.putExtra("title", getString(R.string.newAddress));
                 intent.putExtra("type", 2);
                 //  intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
-                aty.startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
+                startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
         }
     }
@@ -189,9 +189,9 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
                 mAdapter.addMoreData(orderBean.getResult().getList());
             }
             dismissLoadingDialog();
-        } else if (flag == 1) {
-            dismissLoadingDialog();
-        } else if (flag == 2) {
+        } else if (flag == 1 || flag == 2) {
+//            dismissLoadingDialog();
+//        } else if () {
             mRefreshLayout.beginRefreshing();
         }
     }
@@ -227,7 +227,7 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
             intent.putExtra("address_id", mAdapter.getItem(i).getId());
             intent.putExtra("type", 3);
-            aty.startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
+            startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
         } else if (view.getId() == R.id.ll_delete) {
             ((AddressContract.Presenter) mPresenter).postDeleteAddress(mAdapter.getItem(i).getId());
         }

@@ -8,13 +8,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.addressmanagement.NewAddAddress1Bean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
@@ -89,6 +92,8 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private String phone = "";
     private String eixedTelephone = "";
     private int is_default = 1;
+    private int id = 0;
+    private String address_maps = "";
 
     @Override
     public void setRootView() {
@@ -109,16 +114,16 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         et_shipper.addTextChangedListener(this);
         et_phone.addTextChangedListener(this);
         if (type == 1 || type == 3) {
+            id = getIntent().getIntExtra("address_id", 0);
             //获取地址信息
-
-
+            ((NewAddAddress1Contract.Presenter) mPresenter).getAddress(id);
         }
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        mPresenter = new NewAddAddress1Presenter(this);
+        tv_determine.setClickable(false);
         tv_address.setText(placeName);
         if (type == 0 || type == 1) {
             tv_deliveryCustomer.setText(getString(R.string.deliveryCustomer));
@@ -158,6 +163,12 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 }
                 break;
             case R.id.tv_determine:
+                if (type == 1 || type == 3) {
+                    ((NewAddAddress1Contract.Presenter) mPresenter).postUpdateAddress(address_maps, district, placeName, et_detailedAddress.getText().toString().trim(),
+                            et_deliveryCustomer.getText().toString().trim(), et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(),
+                            et_eixedTelephone.getText().toString().trim(), id, type, is_default);
+                    break;
+                }
                 ((NewAddAddress1Contract.Presenter) mPresenter).postAddress(longi, lat, district, placeName, et_detailedAddress.getText().toString().trim(),
                         et_deliveryCustomer.getText().toString().trim(), et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(),
                         et_eixedTelephone.getText().toString().trim(), type, is_default);
@@ -174,7 +185,27 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         if (flag == 0) {
-
+            NewAddAddress1Bean newAddAddress1Bean = (NewAddAddress1Bean) JsonUtil.getInstance().json2Obj(success, NewAddAddress1Bean.class);
+            address_maps = newAddAddress1Bean.getResult().getAddress_maps();
+            district = newAddAddress1Bean.getResult().getCity();
+            placeName = newAddAddress1Bean.getResult().getAddress_name();
+            tv_address.setText(placeName);
+            et_detailedAddress.setText(newAddAddress1Bean.getResult().getAddress_detail());
+            et_deliveryCustomer.setText(newAddAddress1Bean.getResult().getClient());
+            et_shipper.setText(newAddAddress1Bean.getResult().getClient_name());
+            et_phone.setText(newAddAddress1Bean.getResult().getPhone());
+            if (StringUtils.isEmpty(newAddAddress1Bean.getResult().getTelphone())) {
+                et_eixedTelephone.setText("");
+            } else {
+                et_eixedTelephone.setText(newAddAddress1Bean.getResult().getTelphone());
+            }
+            id = newAddAddress1Bean.getResult().getId();
+            is_default = newAddAddress1Bean.getResult().getIs_default();
+            if (is_default == 0) {
+                img_on.setImageResource(R.mipmap.switch_btn_off);
+            } else {
+                img_on.setImageResource(R.mipmap.switch_btn_on);
+            }
         } else if (flag == 1) {
             Intent intent = new Intent();
 //            intent.putExtra("lat", lat);
@@ -190,6 +221,10 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
 //            intent.putExtra("eixedTelephone", eixedTelephone);
             setResult(RESULT_OK, intent);
 //            // 结束该activity 结束之后，前面的activity才可以处理结果
+            finish();
+        } else if (flag == 2) {
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
             finish();
         }
     }
