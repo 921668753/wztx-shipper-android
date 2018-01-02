@@ -489,8 +489,8 @@
     <string name="newAddress">新增地址</string>
     <string name="setDefaultAddress">设为默认地址</string>
     <string name="changeAddress">修改地址</string>
-
-
+    <string name="areDeleteAddress">确定要删除该地址吗？</string>
+    <string name="informationKept">信息还未保存，确认现在返回吗？</string>
     <!--司机管理-->
     <string name="commonlyUsedDriver">常用司机</string>
     <string name="blacklist">黑名单</string>

@@ -148,6 +148,9 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
 
     @Override
     public void afterTextChanged(Editable s) {
+        if (StringUtils.isEmpty(et_enterDeliveryLocation.getText().toString().trim())) {
+            return;
+        }
         query = new PoiSearch.Query(et_enterDeliveryLocation.getText().toString().trim(), "", tv_city.getText().toString());
 //keyWord表示搜索字符串，
 //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）

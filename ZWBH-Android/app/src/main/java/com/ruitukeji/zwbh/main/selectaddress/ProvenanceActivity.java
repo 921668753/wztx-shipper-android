@@ -12,10 +12,10 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.dialog.InformationKeptBouncedDialog;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+
+import cn.bingoogolapple.titlebar.BGATitleBar;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
@@ -95,6 +95,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     private int isProvenance = 0;
     private int tran_type = 0;
     private String city = "";
+    private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -117,18 +118,40 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         tran_type = getIntent().getIntExtra("tran_type", 0);
         eixedTelephone = getIntent().getStringExtra("eixedTelephone");
         city = getIntent().getStringExtra("cityName");
-        et_detailedAddress.addTextChangedListener(this);
-        et_deliveryCustomer.addTextChangedListener(this);
-        et_shipper.addTextChangedListener(this);
-        et_phone.addTextChangedListener(this);
+        title = getIntent().getStringExtra("title");
+        mPresenter = new ProvenancePresenter(this);
+        informationKeptBouncedDialog = new InformationKeptBouncedDialog(aty);
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        mPresenter = new ProvenancePresenter(this);
-        title = getIntent().getStringExtra("title");
-        ActivityTitleUtils.initToolbar(aty, title, true, R.id.titlebar);
+        et_detailedAddress.addTextChangedListener(this);
+        et_deliveryCustomer.addTextChangedListener(this);
+        et_shipper.addTextChangedListener(this);
+        et_phone.addTextChangedListener(this);
+        informationKeptBouncedDialog.setInformationKeptDialogCallBack(new InformationKeptBouncedDialog.InformationKeptDialogCallBack() {
+            @Override
+            public void confirm() {
+                informationKeptBouncedDialog.cancel();
+                aty.finish();
+            }
+        });
+
+        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                informationKeptBouncedDialog.show();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+
+            }
+        };
+        ActivityTitleUtils.initToolbar(aty, title, "", R.id.titlebar, simpleDelegate);
         tv_address.setText(placeName);
         setView();
         if (type == 0) {

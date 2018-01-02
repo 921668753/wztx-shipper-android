@@ -4,6 +4,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.KJActivityStack;
+import com.ruitukeji.zwbh.mine.addressmanagement.dialog.AddressDeleteBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
@@ -68,21 +69,29 @@ public class AddressPresenter implements AddressContract.Presenter {
 
     @Override
     public void postDeleteAddress(int addressId) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("ad_id", addressId);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.getDelAddress(httpParams, new ResponseListener<String>() {
+        AddressDeleteBouncedDialog addressDeleteBouncedDialog = new AddressDeleteBouncedDialog(KJActivityStack.create().topActivity());
+        addressDeleteBouncedDialog.setAddressDeleteDialogCallBack(new AddressDeleteBouncedDialog.AddressDeleteDialogCallBack() {
             @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
+            public void confirm() {
+                addressDeleteBouncedDialog.cancel();
+                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("ad_id", addressId);
+                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+                RequestClient.getDelAddress(httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 2);
+                    }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 2);
+                    }
+                });
             }
         });
+        addressDeleteBouncedDialog.show();
     }
 }

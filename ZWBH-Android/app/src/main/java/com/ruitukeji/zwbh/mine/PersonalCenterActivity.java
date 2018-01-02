@@ -304,7 +304,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 GlideApp.with(this)
                         .load(userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70")
                         .placeholder(R.mipmap.avatar)
-                        .error(R.mipmap.arrow)
+                        .error(R.mipmap.avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .transform(new GlideCircleTransform(this))
                         .dontAnimate()//没有任何淡入淡出效果
@@ -312,7 +312,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 GlideApp.with(this)
                         .load(userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70")
                         .placeholder(R.mipmap.avatar)
-                        .error(R.mipmap.arrow)
+                        .error(R.mipmap.avatar)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .transform(new GlideCircleTransform(this))
                         .dontAnimate()//没有任何淡入淡出效果
@@ -412,9 +412,10 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    sv_mine.scrollTo(0, 1);
                     mRefreshLayout.beginRefreshing();
                 }
-            }, 800);
+            }, 600);
         }
 //        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
 ////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));

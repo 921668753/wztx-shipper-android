@@ -14,10 +14,13 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.dialog.InformationKeptBouncedDialog;
 import com.ruitukeji.zwbh.entity.mine.addressmanagement.NewAddAddress1Bean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+
+import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
@@ -94,6 +97,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private int is_default = 1;
     private int id = 0;
     private String address_maps = "";
+    private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -109,21 +113,30 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         district = getIntent().getStringExtra("district");
         placeName = getIntent().getStringExtra("placeName");
         type = getIntent().getIntExtra("type", 0);
-        et_detailedAddress.addTextChangedListener(this);
-        et_deliveryCustomer.addTextChangedListener(this);
-        et_shipper.addTextChangedListener(this);
-        et_phone.addTextChangedListener(this);
+
         if (type == 1 || type == 3) {
             id = getIntent().getIntExtra("address_id", 0);
             //获取地址信息
             ((NewAddAddress1Contract.Presenter) mPresenter).getAddress(id);
         }
+        informationKeptBouncedDialog = new InformationKeptBouncedDialog(aty);
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
+        et_detailedAddress.addTextChangedListener(this);
+        et_deliveryCustomer.addTextChangedListener(this);
+        et_shipper.addTextChangedListener(this);
+        et_phone.addTextChangedListener(this);
         tv_determine.setClickable(false);
+        informationKeptBouncedDialog.setInformationKeptDialogCallBack(new InformationKeptBouncedDialog.InformationKeptDialogCallBack() {
+            @Override
+            public void confirm() {
+                informationKeptBouncedDialog.cancel();
+                aty.finish();
+            }
+        });
         tv_address.setText(placeName);
         if (type == 0 || type == 1) {
             tv_deliveryCustomer.setText(getString(R.string.deliveryCustomer));
@@ -137,7 +150,20 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         } else if (type == 1 || type == 3) {
             title = getString(R.string.changeAddress);
         }
-        ActivityTitleUtils.initToolbar(aty, title, true, R.id.titlebar);
+        SimpleDelegate simpleDelegate = new SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                informationKeptBouncedDialog.show();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+
+            }
+        };
+        ActivityTitleUtils.initToolbar(aty, title, "", R.id.titlebar, simpleDelegate);
     }
 
 
