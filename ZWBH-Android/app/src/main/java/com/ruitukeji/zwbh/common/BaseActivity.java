@@ -116,9 +116,10 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
         }
         if (msg.equals("" + NumericConstants.TOLINGIN)) {
             dismissLoadingDialog();
-            skipActivity(aty, LoginActivity.class);
+            showActivity(aty, LoginActivity.class);
             return false;
         }
+        ViewInject.toast(msg);
         return true;
     }
 

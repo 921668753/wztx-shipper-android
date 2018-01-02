@@ -228,13 +228,15 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            showActivity(aty, LoginActivity.class);
+//        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
+//            dismissLoadingDialog();
+//            showActivity(aty, LoginActivity.class);
+//            return;
+//        }
+        dismissLoadingDialog();
+        if (toLigon1(msg)) {
             return;
         }
-        dismissLoadingDialog();
-        ViewInject.toast(msg);
     }
 
     @Override

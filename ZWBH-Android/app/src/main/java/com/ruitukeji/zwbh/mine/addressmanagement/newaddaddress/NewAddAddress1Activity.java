@@ -231,13 +231,10 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            skipActivity(aty, LoginActivity.class);
+        dismissLoadingDialog();
+        if (toLigon1(msg)) {
             return;
         }
-        dismissLoadingDialog();
-        ViewInject.toast(msg);
     }
 
     @Override

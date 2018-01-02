@@ -302,13 +302,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         /**
          * 发送消息
          */
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+        MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
         if (type != null && type.equals("personalCenter")) {
             PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
         } else {
             PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
         }
-        RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
-        MobclickAgent.onProfileSignIn(et_accountNumber.getText().toString());
         dismissLoadingDialog();
         finish();
     }

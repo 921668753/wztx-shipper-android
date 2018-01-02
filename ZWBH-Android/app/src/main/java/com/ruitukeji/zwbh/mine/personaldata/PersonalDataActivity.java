@@ -282,8 +282,10 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
 
     @Override
     public void error(String msg) {
-        toLigon(msg);
         dismissLoadingDialog();
+        if (toLigon1(msg)) {
+            return;
+        }
     }
 
 

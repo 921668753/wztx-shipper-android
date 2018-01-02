@@ -2,6 +2,7 @@ package com.ruitukeji.zwbh.mine;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -174,6 +175,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      */
     @BindView(id = R.id.ll_systemSettings, click = true)
     private LinearLayout ll_systemSettings;
+    private Handler handler = null;
 
     @Override
     public void setRootView() {
@@ -183,6 +185,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     @Override
     public void initData() {
         super.initData();
+        handler = new Handler();
         mPresenter = new PersonalCenterPresenter(this);
     }
 
@@ -401,7 +404,17 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
-            mRefreshLayout.beginRefreshing();
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshLayout.beginRefreshing();
+                }
+            }, 800);
         }
 //        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
 ////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
@@ -435,5 +448,11 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             ll_personalData1.setVisibility(View.VISIBLE);
             ll_order1.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler = null;
     }
 }

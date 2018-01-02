@@ -580,7 +580,7 @@ public class RequestClient {
     /**
      * 获取用户信息
      */
-    public static void getInfo(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getInfo(HttpParams httpParams,  ResponseListener<String> listener) {
         Log.d("tag", "getInfo");
         doServer(new TokenCallback() {
             @Override

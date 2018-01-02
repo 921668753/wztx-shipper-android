@@ -230,8 +230,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
             } else {
                 PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
             }
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             MobclickAgent.onProfileSignIn(et_phone.getText().toString().trim());
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
             finish();
             //  skipActivity(aty, IdentityAuthenticationActivity.class);
         }
