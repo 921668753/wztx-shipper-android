@@ -525,6 +525,7 @@
     <string name="fillAddressTelephoneNumber">请填写地址和电话</string>
     <string name="openingBankAccount">开户行和账号</string>
     <string name="fillOpeningBankAccount">请填写开户行和账号</string>
+    <string name="notSelectedOrder">您还未选择任何订单！无法提交！</string>
 
 
     <!--开票记录-->

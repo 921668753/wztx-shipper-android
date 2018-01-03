@@ -34,7 +34,7 @@ public class URLConstants {
     /**
      * 得到全部城市
      */
-  //  public static String GETALLCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getAllCityByCountryId";
+    //  public static String GETALLCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getAllCityByCountryId";
     public static String ALLCITY = APIURL + "Address/getAllCity";
 
     /**
@@ -228,7 +228,7 @@ public class URLConstants {
     public static String GETDRIVERINFO = APIURL + "car/GetDriverInfo";
 
     /**
-     *加入 移除 黑名单
+     * 加入 移除 黑名单
      */
     public static String DRIVERBACK = APIURL + "car/JoinDriverBack";
 
@@ -236,6 +236,16 @@ public class URLConstants {
      * 删除司机
      */
     public static String DELCOLLECTDRIVER = APIURL + "Car/DelCollectDriver";
+
+    /**
+     * 获取个人订单信息 发票
+     */
+    public static String INVOICEGETGOODSINFO = APIURL + "Invoice/GetGoodsInfo";
+
+    /**
+     * 申请个人和公司发票
+     */
+    public static String INVOICEAPPLYINVOICE = APIURL + "Invoice/ApplyInvoice";
 
     /**
      * 显示货源列表

@@ -467,6 +467,45 @@ public class RequestClient {
         }, listener);
     }
 
+    /**
+     * 获取个人订单信息 发票
+     */
+    public static void getApplicationInvoiceList(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.INVOICEGETGOODSINFO, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 申请个人和公司发票
+     */
+    public static void postApplicationInvoice(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.INVOICEAPPLYINVOICE, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 获取周边司机

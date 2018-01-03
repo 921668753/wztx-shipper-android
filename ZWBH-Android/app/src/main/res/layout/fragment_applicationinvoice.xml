@@ -85,7 +85,7 @@
                     android:id="@+id/tv_invoiceAmount"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen19"
-                    android:text="20000"
+                    android:text="0.00"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
 
@@ -351,7 +351,9 @@
                     android:id="@+id/et_contactPhoneNumber"
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
+                    android:digits="0123456789-"
                     android:hint="@string/pleaseFillOut"
+                    android:maxLength="18"
                     android:paddingLeft="@dimen/dimen46"
                     android:textColor="@color/titletextcolors"
                     android:textColorHint="@color/cDCDCDColors"
@@ -436,6 +438,7 @@
                 android:textSize="@dimen/textsize12" />
 
             <LinearLayout
+                android:id="@+id/ll_generalElection"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen40"
                 android:background="@color/white"
@@ -465,11 +468,11 @@
             <com.ruitukeji.zwbh.utils.myview.ChildLiistView
                 android:id="@+id/lv_applicationInvoice"
                 style="@style/MatchWrap"
+                android:layout_marginBottom="@dimen/dimen19"
                 android:background="@color/white"
                 android:divider="@color/e5E5E5olors"
                 android:dividerHeight="@dimen/dimen0.5"
                 android:overScrollMode="never"
-                android:paddingBottom="@dimen/dimen19"
                 android:paddingLeft="@dimen/dimen15"
                 android:scrollbars="none"
                 tools:listitem="@layout/item_applicationinvoice" />

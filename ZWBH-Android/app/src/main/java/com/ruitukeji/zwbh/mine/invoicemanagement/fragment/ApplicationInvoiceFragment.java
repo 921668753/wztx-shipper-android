@@ -9,22 +9,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.invoicemanagement.ApplicationInvoiceViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.invoicemanagement.ApplicationInvoiceBean;
+import com.ruitukeji.zwbh.entity.mine.invoicemanagement.ApplicationInvoiceBean.ResultBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.invoicemanagement.InvoiceManagementActivity;
+import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.MathUtil;
+import com.ruitukeji.zwbh.utils.PickerViewUtil;
+import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.myview.ChildLiistView;
+
+import java.util.List;
+
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 
 /**
  * 申请发票
  * Created by Administrator on 2017/12/15.
  */
 
-public class ApplicationInvoiceFragment extends BaseFragment implements ApplicationInvoiceContract.View {
+public class ApplicationInvoiceFragment extends BaseFragment implements ApplicationInvoiceContract.View, BGAOnItemChildClickListener {
 
     private InvoiceManagementActivity aty;
 
@@ -33,7 +44,7 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
      */
     @BindView(id = R.id.img_commercialInvoice, click = true)
     private ImageView img_commercialInvoice;
-
+    private int invoice_type = 0;
     /**
      * 增值税专用发票
      */
@@ -51,7 +62,7 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
      */
     @BindView(id = R.id.img_personal, click = true)
     private ImageView img_personal;
-
+    private int up_type = 0;
     /**
      * 公司
      */
@@ -73,6 +84,7 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
     private LinearLayout ll_ein;
     @BindView(id = R.id.et_ein)
     private EditText et_ein;
+
     /**
      * 发票内容
      */
@@ -120,6 +132,8 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
     @BindView(id = R.id.tv_inArea)
     private TextView tv_inArea;
 
+    private PickerViewUtil pickerViewUtil;
+
     /**
      * 详细地址
      */
@@ -129,9 +143,12 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
     /**
      * 全选
      */
-    @BindView(id = R.id.img_generalElection)
+    @BindView(id = R.id.ll_generalElection)
+    private LinearLayout ll_generalElection;
+    @BindView(id = R.id.img_generalElection, click = true)
     private ImageView img_generalElection;
 
+    private int isAllSelected = 0;
 
     /**
      * 账单列表
@@ -149,7 +166,6 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
     private TextView tv_submit;
 
     @Override
-
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (InvoiceManagementActivity) getActivity();
         return View.inflate(aty, R.layout.fragment_applicationinvoice, null);
@@ -159,40 +175,55 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
     protected void initData() {
         super.initData();
         mAdapter = new ApplicationInvoiceViewAdapter(aty);
+        mPresenter = new ApplicationInvoicePresenter(this);
+        initPickerView();
+    }
 
+    /**
+     * 选项选择器
+     */
+    private void initPickerView() {
+        if (pickerViewUtil == null) {
+            pickerViewUtil = new PickerViewUtil(aty, 0) {
+                @Override
+                public void getAddress(String address) {
+                    tv_inArea.setText(address);
+                }
+            };
+        }
     }
 
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-        selectHeadType("personal");
+        ((ApplicationInvoiceContract.Presenter) mPresenter).getApplicationInvoiceList();
+        selectHeadType(up_type);
+        lv_applicationInvoice.setAdapter(mAdapter);
+        mAdapter.setOnItemChildClickListener(this);
     }
 
     /**
      * 选择抬头类型
      */
-    private void selectHeadType(String headType) {
-        if (headType.equals("personal")) {
+    private void selectHeadType(int headType) {
+        if (headType == 0) {
             ll_einDividerWidth.setVisibility(View.GONE);
-            et_ein.setText("");
             ll_ein.setVisibility(View.GONE);
             ll_addressTelephoneNumberDivider.setVisibility(View.GONE);
-            et_addressTelephoneNumber.setText("");
             ll_addressTelephoneNumber.setVisibility(View.GONE);
             ll_openingBankAccountDivider.setVisibility(View.GONE);
-            et_openingBankAccount.setText("");
             ll_openingBankAccount.setVisibility(View.GONE);
-        } else if (headType.equals("company")) {
+        } else if (headType == 1) {
             ll_einDividerWidth.setVisibility(View.VISIBLE);
-            et_ein.setText("");
             ll_ein.setVisibility(View.VISIBLE);
             ll_addressTelephoneNumberDivider.setVisibility(View.VISIBLE);
-            et_addressTelephoneNumber.setText("");
             ll_addressTelephoneNumber.setVisibility(View.VISIBLE);
             ll_openingBankAccountDivider.setVisibility(View.VISIBLE);
-            et_openingBankAccount.setText("");
             ll_openingBankAccount.setVisibility(View.VISIBLE);
         }
+        et_ein.setText("");
+        et_addressTelephoneNumber.setText("");
+        et_openingBankAccount.setText("");
     }
 
 
@@ -201,30 +232,46 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_commercialInvoice:
+                invoice_type = 0;
                 img_commercialInvoice.setImageResource(R.mipmap.ic_checkbox_select);
                 img_specialVATInvoices.setImageResource(R.mipmap.ic_checkbox_unselect);
                 break;
             case R.id.img_specialVATInvoices:
+                invoice_type = 1;
                 img_commercialInvoice.setImageResource(R.mipmap.ic_checkbox_unselect);
                 img_specialVATInvoices.setImageResource(R.mipmap.ic_checkbox_select);
                 break;
             case R.id.img_personal:
+                up_type = 0;
                 img_personal.setImageResource(R.mipmap.ic_checkbox_select);
                 img_company.setImageResource(R.mipmap.ic_checkbox_unselect);
-                selectHeadType("personal");
+                selectHeadType(up_type);
                 break;
             case R.id.img_company:
+                up_type = 1;
                 img_personal.setImageResource(R.mipmap.ic_checkbox_unselect);
                 img_company.setImageResource(R.mipmap.ic_checkbox_select);
-                selectHeadType("company");
+                selectHeadType(up_type);
                 break;
             case R.id.ll_inArea:
-
-
+                SoftKeyboardUtils.packUpKeyboard(aty);
+                //点击弹出选项选择器
+                pickerViewUtil.onoptionsSelectListener();
+                break;
+            case R.id.img_generalElection:
+                if (isAllSelected == 0) {
+                    isAllSelected = 1;
+                    img_generalElection.setImageResource(R.mipmap.ic_checkbox_select);
+                } else if (isAllSelected == 1) {
+                    isAllSelected = 0;
+                    img_generalElection.setImageResource(R.mipmap.ic_checkbox_unselect);
+                }
+                selectOption(mAdapter.getData(), isAllSelected);
                 break;
             case R.id.tv_submit:
-
-
+                ((ApplicationInvoiceContract.Presenter) mPresenter).postApplicationInvoice(invoice_type, tv_invoiceAmount.getText().toString(), up_type, et_invoiceRise.getText().toString().trim(),
+                        et_invoiceContent.getText().toString().trim(), et_recipient.getText().toString().trim(), et_contactPhoneNumber.getText().toString().trim(), tv_inArea.getText().toString().trim(),
+                        et_detailedAddress.getText().toString().trim(), et_ein.getText().toString().trim(), et_addressTelephoneNumber.getText().toString().trim(), et_openingBankAccount.getText().toString().trim(), mAdapter.getData());
                 break;
         }
     }
@@ -237,9 +284,30 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+            dismissLoadingDialog();
+            ApplicationInvoiceBean applicationInvoiceBean = (ApplicationInvoiceBean) JsonUtil.json2Obj(success, ApplicationInvoiceBean.class);
+            if (applicationInvoiceBean.getResult() == null || applicationInvoiceBean.getResult().size() == 0) {
+                ll_generalElection.setVisibility(View.GONE);
+                // errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            ll_generalElection.setVisibility(View.VISIBLE);
+            mAdapter.clear();
+            mAdapter.addNewData(applicationInvoiceBean.getResult());
+            selectOption(applicationInvoiceBean.getResult(), 0);
         } else if (flag == 1) {
+            selectHeadType(up_type);
+            et_invoiceRise.setText("");
+            et_invoiceContent.setText("");
+            et_addressTelephoneNumber.setText("");
+            et_openingBankAccount.setText("");
+            et_recipient.setText("");
+            et_contactPhoneNumber.setText("");
+            tv_inArea.setText("");
+            et_detailedAddress.setText("");
+            ((ApplicationInvoiceContract.Presenter) mPresenter).getApplicationInvoiceList();
         }
-        dismissLoadingDialog();
+
     }
 
     @Override
@@ -252,4 +320,68 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
         dismissLoadingDialog();
         ViewInject.toast(msg);
     }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.img_applicationInvoice) {
+            ImageView img_applicationInvoice = (ImageView) childView.findViewById(R.id.img_applicationInvoice);
+            if (mAdapter.getItem(position).getIsSelected() == 0) {
+                img_applicationInvoice.setImageResource(R.mipmap.ic_checkbox_select);
+                mAdapter.getItem(position).setIsSelected(1);
+                calculatePrice(mAdapter.getData());
+                return;
+            }
+            img_applicationInvoice.setImageResource(R.mipmap.ic_checkbox_unselect);
+            mAdapter.getItem(position).setIsSelected(0);
+            calculatePrice(mAdapter.getData());
+        }
+    }
+
+    /**
+     * 计算价格
+     */
+    public void calculatePrice(List<ResultBean> list) {
+        double price = 0;
+        int j = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getIsSelected() == 1) {
+                price = price + StringUtils.toDouble(list.get(i).getClear_price());
+                j++;
+            } else {
+                list.get(i).setIsSelected(0);
+            }
+        }
+        if (list.size() == j) {
+            img_generalElection.setImageResource(R.mipmap.ic_checkbox_select);
+        } else {
+            img_generalElection.setImageResource(R.mipmap.ic_checkbox_unselect);
+        }
+        mAdapter.notifyDataSetChanged();
+        tv_invoiceAmount.setText(MathUtil.keepTwo(price));
+    }
+
+    /**
+     * 全选 取消
+     */
+    public void selectOption(List<ResultBean> list, int isSelected) {
+        double price = 0;
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setIsSelected(isSelected);
+            if (list.get(i).getIsSelected() == 1) {
+                price = price + StringUtils.toDouble(list.get(i).getClear_price());
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        tv_invoiceAmount.setText(MathUtil.keepTwo(price));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (pickerViewUtil != null && pickerViewUtil.isShowing()) {
+            pickerViewUtil.onDismiss();
+        }
+        pickerViewUtil = null;
+    }
+
 }

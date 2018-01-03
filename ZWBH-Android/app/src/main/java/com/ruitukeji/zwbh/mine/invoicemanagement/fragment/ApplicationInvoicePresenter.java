@@ -2,17 +2,18 @@ package com.ruitukeji.zwbh.mine.invoicemanagement.fragment;
 
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
-import com.nanchen.compresshelper.FileUtil;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.KJActivityStack;
-import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.mine.invoicemanagement.ApplicationInvoiceBean.ResultBean;
+import com.ruitukeji.zwbh.mine.invoicemanagement.fragment.dialog.ConfirmSubmitBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
-import com.ruitukeji.zwbh.utils.BitmapCoreUtil;
-import com.ruitukeji.zwbh.utils.DataCleanManager;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
-import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -20,6 +21,7 @@ import java.io.File;
  */
 
 public class ApplicationInvoicePresenter implements ApplicationInvoiceContract.Presenter {
+
     private ApplicationInvoiceContract.View mView;
 
     public ApplicationInvoicePresenter(ApplicationInvoiceContract.View view) {
@@ -30,8 +32,9 @@ public class ApplicationInvoicePresenter implements ApplicationInvoiceContract.P
 
     @Override
     public void getApplicationInvoiceList() {
+        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+        RequestClient.getApplicationInvoiceList(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -45,41 +48,112 @@ public class ApplicationInvoicePresenter implements ApplicationInvoiceContract.P
     }
 
     @Override
-    public void postApplicationInvoice(String path) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.crossLoad));
-        if (StringUtils.isEmpty(path)) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.noData), 1);
-            return;
-        }
-        File oldFile = new File(path);
-        if (!(FileUtil.isFileExists(oldFile))) {
-            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.imagePathError), 1);
-            return;
-        }
+    public void postApplicationInvoice(int invoice_type, String money, int up_type, String invoice_up, String content, String recipient_man, String recipient_tel,
+                                       String address, String address_detail, String ein_num, String address_phone, String bank_account, List<ResultBean> list) {
 
-        long fileSize = 0;
-        try {
-            fileSize = DataCleanManager.getFileSize(oldFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fileSize = 0;
+        if (StringUtils.isEmpty(invoice_up)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.invoiceRise), 1);
+            return;
         }
-        if (fileSize >= StringConstants.COMPRESSION_SIZE) {
-            oldFile = BitmapCoreUtil.customCompression(oldFile);
+        if (StringUtils.isEmpty(invoice_up)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.invoiceContent), 1);
+            return;
         }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("file", oldFile);
-        RequestClient.upLoadImg(httpParams, 0, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
+        if (up_type == 1) {
+            if (StringUtils.isEmpty(ein_num)) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.fillTaxpayerIdentificationNumber), 1);
+                return;
             }
+            if (StringUtils.isEmpty(address_phone)) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.fillAddressTelephoneNumber), 1);
+                return;
+            }
+            if (StringUtils.isEmpty(bank_account)) {
+                mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.fillOpeningBankAccount), 1);
+                return;
+            }
+        }
+        if (StringUtils.isEmpty(recipient_man)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.recipient), 1);
+            return;
+        }
+        if (StringUtils.isEmpty(recipient_tel)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.contactPhoneNumber), 1);
+            return;
+        }
+        if (StringUtils.isEmpty(address)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseSelect) + KJActivityStack.create().topActivity().getString(R.string.inArea), 1);
+            return;
+        }
+        if (StringUtils.isEmpty(address_detail)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.detailedAddress), 1);
+            return;
+        }
+        String idsStr = getIdList(list);
+        if (StringUtils.isEmpty(idsStr)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.notSelectedOrder), 1);
+            return;
+        }
 
+        ConfirmSubmitBouncedDialog confirmSubmitBouncedDialog = new ConfirmSubmitBouncedDialog(KJActivityStack.create().topActivity());
+        confirmSubmitBouncedDialog.setConfirmSubmitDialogCallBack(new ConfirmSubmitBouncedDialog.ConfirmSubmitDialogCallBack() {
             @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg,1);
+            public void confirm() {
+                confirmSubmitBouncedDialog.cancel();
+                mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.submissionLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("g_id", idsStr);
+                map.put("invoice_type", invoice_type);
+                map.put("money", money);
+                map.put("up_type", up_type);
+
+                map.put("invoice_up", invoice_up);
+                map.put("content", content);
+                map.put("recipient_man", recipient_man);
+
+                map.put("recipient_tel", recipient_tel);
+                map.put("address", address);
+                map.put("address_detail", address_detail);
+
+                map.put("ein_num", ein_num);
+                map.put("address_phone", address_phone);
+                map.put("bank_account", bank_account);
+
+                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+                RequestClient.postApplicationInvoice(httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 1);
+                    }
+
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 1);
+                    }
+                });
             }
         });
+        confirmSubmitBouncedDialog.show();
     }
+
+
+    /**
+     * 获取标记的id
+     */
+    private String getIdList(List<ResultBean> masageList) {
+        String msgIdStr = "";
+        for (int i = 0; i < masageList.size(); i++) {
+            if (masageList.get(i).getIsSelected() == 1) {
+                msgIdStr = msgIdStr + "," + masageList.get(i).getId();
+            }
+        }
+        if (StringUtils.isEmpty(msgIdStr)) {
+            return "";
+        }
+        msgIdStr = msgIdStr.substring(1);
+        return msgIdStr;
+    }
+
 
 }
