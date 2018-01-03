@@ -24,21 +24,23 @@ public class URLConstants {
      */
     public static String SERVERURL2 = "http://user.api.shahaizi.shop/";
     public static String APIURL1 = SERVERURL2 + "index.php?";
-    /**
-     * 得到全部城市
-     */
-    public static String GETALLCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getAllCityByCountryId";
-    public static String GETALLCOUNTRYCITY = APIURL1 + "m=Api&c=Region&a=getAllCountryCity";
 
-    /**
-     * 得到热门城市
-     */
-    public static String GETHOTCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getHotCityByCountryId";
 
     /**
      * 请求地址URL
      */
     public static String APIURL = SERVERURL1;
+
+    /**
+     * 得到全部城市
+     */
+  //  public static String GETALLCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getAllCityByCountryId";
+    public static String ALLCITY = APIURL + "Address/getAllCity";
+
+    /**
+     * 得到热门城市
+     */
+    public static String ALLHOTCITY = APIURL + "Address/getAllHotCity";
 
     /**
      * 应用配置参数
@@ -218,6 +220,22 @@ public class URLConstants {
      * 修改始发地 目的地信息
      */
     public static String UPDATEADDRESS = APIURL + "Address/UpdateAddress";
+
+
+    /**
+     * 获取常用司机信息
+     */
+    public static String GETDRIVERINFO = APIURL + "car/GetDriverInfo";
+
+    /**
+     *加入 移除 黑名单
+     */
+    public static String DRIVERBACK = APIURL + "car/JoinDriverBack";
+
+    /**
+     * 删除司机
+     */
+    public static String DELCOLLECTDRIVER = APIURL + "Car/DelCollectDriver";
 
     /**
      * 显示货源列表

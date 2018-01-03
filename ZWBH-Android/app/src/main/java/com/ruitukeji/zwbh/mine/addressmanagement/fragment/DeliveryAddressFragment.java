@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.addressmanagement.AddressViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
@@ -107,10 +108,26 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(aty, NewAddAddress1Activity.class);
-        intent.putExtra("address_id", mAdapter.getItem(i).getId());
-        intent.putExtra("type", 1);
-       startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+//        Intent intent = new Intent(aty, NewAddAddress1Activity.class);
+//        intent.putExtra("address_id", mAdapter.getItem(i).getId());
+//        intent.putExtra("type", 1);
+//       startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+        if (StringUtils.isEmpty(getActivity().getIntent().getStringExtra("cargoReceipt"))) {
+            return;
+        }
+        AddressBean.ResultBean.ListBean listBean = mAdapter.getItem(i);
+        Intent intent = new Intent();
+        intent.putExtra("lat", listBean.getAddress_maps().split(",")[0]);
+        intent.putExtra("longi", listBean.getAddress_maps().split(",")[1]);
+        intent.putExtra("district", listBean.getCity());
+        intent.putExtra("placeName", listBean.getAddress_name());
+        intent.putExtra("detailedAddress", listBean.getAddress_detail());
+        intent.putExtra("deliveryCustomer", listBean.getClient());
+        intent.putExtra("shipper", listBean.getClient_name());
+        intent.putExtra("phone", listBean.getPhone());
+        intent.putExtra("eixedTelephone", listBean.getTelphone());
+        aty.setResult(RESULT_OK, intent);
+        aty.finish();
     }
 
     @Override

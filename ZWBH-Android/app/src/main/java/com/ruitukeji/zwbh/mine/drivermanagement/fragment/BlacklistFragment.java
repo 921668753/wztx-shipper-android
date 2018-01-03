@@ -10,13 +10,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.mine.drivermanagement.BlacklistViewAdapter;
+import com.ruitukeji.zwbh.adapter.mine.drivermanagement.DriverManagementViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.mine.drivermanagement.DriverManagementBean;
 import com.ruitukeji.zwbh.mine.drivermanagement.DriverManagementActivity;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
@@ -35,7 +39,7 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    private BlacklistViewAdapter mAdapter;
+    private DriverManagementViewAdapter mAdapter;
 
     @BindView(id = R.id.lv_driver)
     private ListView lv_driver;
@@ -47,22 +51,26 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 总页码
      */
     private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+
     /**
      * 订单状态（all全部状态，quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
      */
-    private String type = "all";
+    private String type = "1";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -74,7 +82,7 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
     protected void initData() {
         super.initData();
         mPresenter = new DriverManagementPresenter(this);
-        mAdapter = new BlacklistViewAdapter(getActivity());
+        mAdapter = new DriverManagementViewAdapter(getActivity());
     }
 
     @Override
@@ -137,16 +145,6 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-//        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-//        if (isRefreshOrder) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
-
-
-    @Override
     public void setPresenter(DriverManagementContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -154,31 +152,30 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
             isShowLoadingMore = true;
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "isDriverManagement", false);
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-//        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
-//        mMorePageNumber = orderBean.getResult().getPage();
-//        totalPageNumber = orderBean.getResult().getPageTotal();
-//        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(orderBean.getResult().getList());
-//        } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(orderBean.getResult().getList());
-//        }
+            DriverManagementBean driverManagementBean = (DriverManagementBean) JsonUtil.getInstance().json2Obj(success, DriverManagementBean.class);
+            mMorePageNumber = driverManagementBean.getResult().getPage();
+            totalPageNumber = driverManagementBean.getResult().getPageTotal();
+            if (driverManagementBean.getResult().getList() == null || driverManagementBean.getResult().getList().size() == 0) {
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(driverManagementBean.getResult().getList());
+            } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(driverManagementBean.getResult().getList());
+            }
             dismissLoadingDialog();
-        } else if (flag == 1) {
-
-            dismissLoadingDialog();
-        } else if (flag == 2) {
+        } else if (flag == 1 || flag == 2) {
+            if (flag == 1) {
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isDriverManagement", true);
+            }
             mRefreshLayout.beginRefreshing();
         }
     }
@@ -205,10 +202,10 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
     @Override
     public void onChange() {
         super.onChange();
-//        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
-//        if (isRefreshAllOrder1) {
-//            mRefreshLayout.beginRefreshing();
-//        }
+        boolean isDriverManagement = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isDriverManagement", false);
+        if (isDriverManagement) {
+            mRefreshLayout.beginRefreshing();
+        }
     }
 
     @Override
@@ -221,9 +218,9 @@ public class BlacklistFragment extends BaseFragment implements DriverManagementC
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
         if (view.getId() == R.id.ll_joinBlacklist) {
-            ((DriverManagementContract.Presenter) mPresenter).postBlacklisting(i);
+            ((DriverManagementContract.Presenter) mPresenter).postDriverBack(mAdapter.getItem(i).getId(), 0);
         } else if (view.getId() == R.id.ll_delete) {
-            ((DriverManagementContract.Presenter) mPresenter).postDeleteDriver(i);
+            ((DriverManagementContract.Presenter) mPresenter).postDeleteDriver(mAdapter.getItem(i).getId());
         }
     }
 }

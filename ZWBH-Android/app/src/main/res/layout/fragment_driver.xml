@@ -6,8 +6,7 @@
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mRefreshLayout"
-        style="@style/MatchAuto"
-        android:paddingTop="@dimen/dimen10">
+        style="@style/MatchAuto">
 
         <ListView
             android:id="@+id/lv_driver"
@@ -15,6 +14,7 @@
             android:divider="@color/background"
             android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
+            android:paddingTop="@dimen/dimen10"
             android:scrollbars="none"
             tools:listitem="@layout/item_driver" />
 

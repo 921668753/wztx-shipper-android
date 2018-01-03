@@ -267,6 +267,9 @@
     <string name="goodsWeight">货物重量</string>
     <string name="volumeGoods">货物体积</string>
     <string name="cargoReceipt">货物签收单</string>
+    <string name="carType">用车类型</string>
+    <string name="temporaryCar">临时用车</string>
+    <string name="carLongTime">长期用车</string>
     <string name="selectVehicle">选择车辆</string>
     <string name="driverCargo">司机装卸货</string>
     <string name="transportTime1">运输时长</string>
@@ -491,12 +494,13 @@
     <string name="changeAddress">修改地址</string>
     <string name="areDeleteAddress">确定要删除该地址吗？</string>
     <string name="informationKept">信息还未保存，确认现在返回吗？</string>
+
     <!--司机管理-->
     <string name="commonlyUsedDriver">常用司机</string>
     <string name="blacklist">黑名单</string>
     <string name="joinBlacklist">加入黑名单</string>
     <string name="removeBlacklist">移除黑名单</string>
-
+    <string name="areDeleteDriver">确定要删除该司机吗？</string>
 
     <!--发票管理-->
     <string name="applicationInvoice">申请发票</string>

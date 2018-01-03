@@ -203,23 +203,15 @@ public class RequestClient {
     /**
      * 得到全部城市
      */
-    public static void getAllCityByCountryId(HttpParams httpParams, int countryId, final ResponseListener<String> listener) {
-        if (countryId == 0) {
-            HttpRequest.requestGetHttp(URLConstants.GETALLCOUNTRYCITY, httpParams, listener);
-        } else {
-            HttpRequest.requestGetHttp(URLConstants.GETALLCITYBYCOUNTRY + "&countryId=" + countryId, httpParams, listener);
-        }
+    public static void getAllCity(HttpParams httpParams, final ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(URLConstants.ALLCITY, httpParams, listener);
     }
 
     /**
      * 得到热门城市
      */
-    public static void getHotCityByCountryId(HttpParams httpParams, int countryId, final ResponseListener<String> listener) {
-        if (countryId == 0) {
-            HttpRequest.requestGetHttp(URLConstants.GETHOTCITYBYCOUNTRY, httpParams, listener);
-        } else {
-            HttpRequest.requestGetHttp(URLConstants.GETHOTCITYBYCOUNTRY + "&countryId=" + countryId, httpParams, listener);
-        }
+    public static void getHotCity(HttpParams httpParams, final ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(URLConstants.ALLHOTCITY, httpParams, listener);
     }
 
 
@@ -418,6 +410,65 @@ public class RequestClient {
 
 
     /**
+     * 获取常用司机信息
+     */
+    public static void getDriverList(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.GETDRIVERINFO, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 加入黑名单/移除黑名单
+     */
+    public static void postDriverBack(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.DRIVERBACK, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 删除司机
+     */
+    public static void postDeleteDriver(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.DELCOLLECTDRIVER, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
      * 获取周边司机
      * 经度
      * 纬度
@@ -580,7 +631,7 @@ public class RequestClient {
     /**
      * 获取用户信息
      */
-    public static void getInfo(HttpParams httpParams,  ResponseListener<String> listener) {
+    public static void getInfo(HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "getInfo");
         doServer(new TokenCallback() {
             @Override

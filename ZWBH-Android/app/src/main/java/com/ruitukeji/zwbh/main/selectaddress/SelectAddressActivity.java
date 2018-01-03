@@ -9,13 +9,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.amap.api.maps2d.overlay.PoiOverlay;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.core.SuggestionCity;
-import com.amap.api.services.help.Inputtips;
-import com.amap.api.services.help.InputtipsQuery;
-import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.kymjs.common.StringUtils;
@@ -28,13 +23,11 @@ import com.ruitukeji.zwbh.main.selectaddress.selectioncity.SelectionCityActivity
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
-import java.util.List;
-
 import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
-import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW2;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
 
 /**
  * 选择地址
@@ -123,9 +116,9 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 Intent intent = new Intent(aty, AddressManagementActivity.class);
-                intent.putExtra("chageIcon", 0);
-//                intent.putExtra("cargoReceipt", cargoReceipt);
-                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+                intent.putExtra("chageIcon", getIntent().getIntExtra("type", 0));
+                intent.putExtra("cargoReceipt", "cargoReceipt");
+                startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW1);
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.selectAddress), getString(R.string.commonlyAddress), R.id.titlebar, simpleDelegate);
@@ -273,8 +266,40 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             String selectCountry = data.getStringExtra("selectCountry");
             int selectCountryId = data.getIntExtra("selectCountryId", 0);
             tv_city.setText(selectCity);
+        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
+            /**
+             * 地址管理页面返回
+             */
+            // 如果等于1
+            // 说明是我们的那次请求
+            // 目的：区分请求，不同的请求要做不同的处理
+            lat = data.getStringExtra("lat");
+            longi = data.getStringExtra("longi");
+            district = data.getStringExtra("district");
+            placeName = data.getStringExtra("placeName");
+            type = data.getIntExtra("type", 0);
+            detailedAddress = data.getStringExtra("detailedAddress");
+            deliveryCustomer = data.getStringExtra("deliveryCustomer");
+            shipper = data.getStringExtra("shipper");
+            phone = data.getStringExtra("phone");
+            eixedTelephone = data.getStringExtra("eixedTelephone");
+            Intent intent = new Intent();
+            intent.putExtra("lat", lat);
+            intent.putExtra("longi", longi);
+            intent.putExtra("district", district);
+            intent.putExtra("placeName", placeName);
+            intent.putExtra("type", getIntent().getIntExtra("type", 0));
+            intent.putExtra("title", title);
+            intent.putExtra("isFinish", 1);
+            intent.putExtra("detailedAddress", detailedAddress);
+            intent.putExtra("deliveryCustomer", deliveryCustomer);
+            intent.putExtra("shipper", shipper);
+            intent.putExtra("phone", phone);
+            intent.putExtra("eixedTelephone", eixedTelephone);
+            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+            finish();
         }
-
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.dialog.InformationKeptBouncedDialog;
 import com.ruitukeji.zwbh.entity.DistanceBean;
 import com.ruitukeji.zwbh.main.LogisticsContract;
 import com.ruitukeji.zwbh.main.cargoinformation.selectvehicle.SelectVehicleActivity;
@@ -24,6 +25,8 @@ import com.ruitukeji.zwbh.main.dialog.SubmitOrdersBouncedDialog;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.MathUtil;
+
+import cn.bingoogolapple.titlebar.BGATitleBar;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
@@ -59,6 +62,19 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     @BindView(id = R.id.img_cargoReceipt, click = true)
     private ImageView img_cargoReceipt;
     private int cargoReceipt = 0;
+
+
+    /**
+     * 用车类型
+     */
+    @BindView(id = R.id.img_temporaryCar, click = true)
+    private ImageView img_temporaryCar;
+
+    private int isTemporaryCar = 0;
+
+    @BindView(id = R.id.img_carLongTime, click = true)
+    private ImageView img_carLongTime;
+
     /**
      * 选择车辆
      */
@@ -159,6 +175,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     private String appoint_at = "0";
     private AssignedVehicleBouncedDialog assignedVehicleBouncedDialog = null;
     private SubmitOrdersBouncedDialog submitOrdersBouncedDialog = null;
+    private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -191,7 +208,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         destinationShipper = getIntent().getStringExtra("destinationShipper");
         destinationPhone = getIntent().getStringExtra("destinationPhone");
         destinationEixedTelephone = getIntent().getStringExtra("destinationEixedTelephone");
-
+        informationKeptBouncedDialog = new InformationKeptBouncedDialog(aty);
         mPresenter = new AddCargoInformationPresenter(this);
     }
 
@@ -204,13 +221,50 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         et_peiSongDian.addTextChangedListener(this);
         et_costDistribution.addTextChangedListener(this);
         et_costDistribution.addTextChangedListener(this);
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.addCargoInformation), true, R.id.titlebar);
+        informationKeptBouncedDialog.setInformationKeptDialogCallBack(new InformationKeptBouncedDialog.InformationKeptDialogCallBack() {
+            @Override
+            public void confirm() {
+                informationKeptBouncedDialog.cancel();
+                aty.finish();
+            }
+        });
+        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                if (StringUtils.isEmpty(et_descriptionGoods.getText().toString().trim()) && StringUtils.isEmpty(et_goodsWeight.getText().toString().trim())
+                        && StringUtils.isEmpty(et_volumeGoods.getText().toString().trim()) && StringUtils.isEmpty(et_hour.getText().toString().trim())
+                        && StringUtils.isEmpty(et_minute.getText().toString().trim()) && StringUtils.isEmpty(et_peiSongDian.getText().toString().trim())
+                        && StringUtils.isEmpty(et_costDistribution.getText().toString().trim()) && StringUtils.isEmpty(et_actualPayment.getText().toString().trim())) {
+                    aty.finish();
+                    return;
+                }
+                informationKeptBouncedDialog.show();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+
+            }
+        };
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.addCargoInformation), "", R.id.titlebar, simpleDelegate);
     }
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
+            case R.id.img_temporaryCar:
+                isTemporaryCar = 0;
+                img_temporaryCar.setImageResource(R.mipmap.ic_checkbox_select);
+                img_carLongTime.setImageResource(R.mipmap.ic_checkbox_unselect);
+                break;
+            case R.id.img_carLongTime:
+                isTemporaryCar = 1;
+                img_carLongTime.setImageResource(R.mipmap.ic_checkbox_select);
+                img_temporaryCar.setImageResource(R.mipmap.ic_checkbox_unselect);
+                break;
             case R.id.img_cargoReceipt:
                 Intent intent = new Intent(aty, FillCargoReceiptFormActivity.class);
                 intent.putExtra("cargoReceipt", cargoReceipt);
@@ -247,7 +301,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                         et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
                         StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), cargoReceipt, tv_transportationEstimated.getText().toString(),
                         tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
-                        driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery);
+                        driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery,isTemporaryCar);
                 break;
             case R.id.tv_assignedVehicle:
                 if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) >= 60 || StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
@@ -265,7 +319,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                                 et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
                                 StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), cargoReceipt, tv_transportationEstimated.getText().toString(),
                                 tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
-                                driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery);
+                                driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery,isTemporaryCar);
                     }
                 };
                 assignedVehicleBouncedDialog.show();
@@ -412,4 +466,10 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         tv_transportationEstimated.setText(MathUtil.keepTwo(systemPrice));
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        informationKeptBouncedDialog = null;
+    }
 }

@@ -3,9 +3,15 @@ package com.ruitukeji.zwbh.mine.drivermanagement.fragment;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
+import com.ruitukeji.zwbh.common.KJActivityStack;
+import com.ruitukeji.zwbh.mine.drivermanagement.dialog.DriverManagementDeleteBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/2/13.
@@ -28,7 +34,7 @@ public class DriverManagementPresenter implements DriverManagementContract.Prese
         httpParams.put("page", page);
         httpParams.put("type", type);
         httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        RequestClient.getDriverList(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
@@ -41,15 +47,21 @@ public class DriverManagementPresenter implements DriverManagementContract.Prese
         });
     }
 
+    /**
+     * 加入黑名单
+     */
     @Override
-    public void postBlacklist(int addressId) {
+    public void postDriverBack(int dr_id, int type) {
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", dr_id);
+        map.put("type", type);
+        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+        RequestClient.postDriverBack(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 1);
             }
 
             @Override
@@ -59,39 +71,32 @@ public class DriverManagementPresenter implements DriverManagementContract.Prese
         });
     }
 
-    @Override
-    public void postBlacklisting(int addressId) {
-        mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
-    }
 
     @Override
-    public void postDeleteDriver(int addressId) {
-        mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+    public void postDeleteDriver(int dr_id) {
+        DriverManagementDeleteBouncedDialog addressDeleteBouncedDialog = new DriverManagementDeleteBouncedDialog(KJActivityStack.create().topActivity());
+        addressDeleteBouncedDialog.setDriverManagementDeleteDialogCallBack(new DriverManagementDeleteBouncedDialog.DriverManagementDeleteDialogCallBack() {
             @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
+            public void confirm() {
+                addressDeleteBouncedDialog.cancel();
+                mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("id", dr_id);
+                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+                RequestClient.postDeleteDriver(httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 2);
+                    }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 0);
+                    }
+                });
             }
         });
+        addressDeleteBouncedDialog.show();
     }
 }

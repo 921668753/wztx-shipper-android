@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.addressmanagement.dialog;
+package com.ruitukeji.zwbh.mine.drivermanagement.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,16 +15,16 @@ import com.ruitukeji.zwbh.common.BaseDialog;
  * Created by Administrator on 2017/12/12.
  */
 
-public class AddressDeleteBouncedDialog extends BaseDialog implements View.OnClickListener {
+public class DriverManagementDeleteBouncedDialog extends BaseDialog implements View.OnClickListener {
 
     private Context context;
     private TextView tv_content;
     private TextView tv_cancel;
     private TextView tv_determine;
 
-    private AddressDeleteDialogCallBack callBack;//回调
+    private DriverManagementDeleteDialogCallBack callBack;//回调
 
-    public AddressDeleteBouncedDialog(Context context) {
+    public DriverManagementDeleteBouncedDialog(Context context) {
         super(context, R.style.dialog);
         this.context = context;
     }
@@ -43,7 +43,7 @@ public class AddressDeleteBouncedDialog extends BaseDialog implements View.OnCli
 
     private void initView() {
         tv_content = (TextView) findViewById(R.id.tv_content);
-        tv_content.setText(context.getString(R.string.areDeleteAddress));
+        tv_content.setText(context.getString(R.string.areDeleteDriver));
         tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
         tv_determine = (TextView) findViewById(R.id.tv_determine);
@@ -93,12 +93,12 @@ public class AddressDeleteBouncedDialog extends BaseDialog implements View.OnCli
 //    }
 
 
-    public void setAddressDeleteDialogCallBack(AddressDeleteDialogCallBack callBack) {
+    public void setDriverManagementDeleteDialogCallBack(DriverManagementDeleteDialogCallBack callBack) {
         this.callBack = callBack;
     }
 
 
-    public interface AddressDeleteDialogCallBack {
+    public interface DriverManagementDeleteDialogCallBack {
 
         void confirm();
 

@@ -12,11 +12,8 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.dialog.InformationKeptBouncedDialog;
 import com.ruitukeji.zwbh.entity.mine.addressmanagement.NewAddAddress1Bean;
-import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
@@ -154,6 +151,12 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
             @Override
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
+                if (StringUtils.isEmpty(et_detailedAddress.getText().toString().trim()) && StringUtils.isEmpty(et_deliveryCustomer.getText().toString().trim())
+                        && StringUtils.isEmpty(et_shipper.getText().toString().trim()) && StringUtils.isEmpty(et_phone.getText().toString().trim())
+                        && StringUtils.isEmpty(et_eixedTelephone.getText().toString().trim())) {
+                    aty.finish();
+                    return;
+                }
                 informationKeptBouncedDialog.show();
             }
 
@@ -303,5 +306,9 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        informationKeptBouncedDialog = null;
+    }
 }

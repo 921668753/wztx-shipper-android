@@ -66,7 +66,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                                         int car_style_length_id, long effective_time, int is_receipt, String system_price, int tran_type,
                                         String kilometres, int spot, double spot_cost, String card_number, int is_driver_dock, String fact_pay,
                                         int is_cargo_receipt, String cargo_man, String cargo_tel, String cargo_address, String cargo_address_detail,
-                                        int cargo_is_express) {
+                                        int cargo_is_express, int isLongTimeCar) {
 
         if (StringUtils.isEmpty(goods_name)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseEnter) + MyApplication.getContext().getString(R.string.descriptionGoods), 0);
@@ -123,6 +123,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             map.put("car_style_type", car_style_type);
             map.put("car_style_type_id", car_style_type_id);
             map.put("car_style_length", car_style_length);
+            map.put("is_longtime_car", isLongTimeCar);
 
             map.put("car_style_length_id", car_style_length_id);
             map.put("effective_time", effective_time);

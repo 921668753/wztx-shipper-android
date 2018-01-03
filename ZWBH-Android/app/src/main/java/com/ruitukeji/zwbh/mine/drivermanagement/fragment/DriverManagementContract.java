@@ -15,14 +15,10 @@ public interface DriverManagementContract {
         void getDriverList(int page, String type);
 
         /**
-         * 加入黑名单
+         * 加入黑名单/移除黑名单
          */
-        void postBlacklist(int addressId);
+        void postDriverBack(int dr_id, int type);
 
-        /**
-         * 移除黑名单
-         */
-        void postBlacklisting(int addressId);
 
         /**
          * 删除司机

@@ -142,6 +142,12 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
             @Override
             public void onClickLeftCtv() {
                 super.onClickLeftCtv();
+                if (StringUtils.isEmpty(et_detailedAddress.getText().toString().trim()) && StringUtils.isEmpty(et_deliveryCustomer.getText().toString().trim())
+                        && StringUtils.isEmpty(et_shipper.getText().toString().trim()) && StringUtils.isEmpty(et_phone.getText().toString().trim())
+                        && StringUtils.isEmpty(et_eixedTelephone.getText().toString().trim())) {
+                    aty.finish();
+                    return;
+                }
                 informationKeptBouncedDialog.show();
             }
 
@@ -290,11 +296,49 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            if (data.getIntExtra("isFinish", 0) == 1) {
+                /**
+                 * 地址管理页面返回
+                 */
+                // 如果等于1
+                // 说明是我们的那次请求
+                // 目的：区分请求，不同的请求要做不同的处理
+                lat = data.getStringExtra("lat");
+                longi = data.getStringExtra("longi");
+                district = data.getStringExtra("district");
+                placeName = data.getStringExtra("placeName");
+                type = data.getIntExtra("type", 0);
+                detailedAddress = data.getStringExtra("detailedAddress");
+                deliveryCustomer = data.getStringExtra("deliveryCustomer");
+                shipper = data.getStringExtra("shipper");
+                phone = data.getStringExtra("phone");
+                eixedTelephone = data.getStringExtra("eixedTelephone");
+                Intent intent = new Intent();
+                intent.putExtra("lat", lat);
+                intent.putExtra("longi", longi);
+                intent.putExtra("district", district);
+                intent.putExtra("placeName", placeName);
+                intent.putExtra("detailedAddress", detailedAddress);
+                intent.putExtra("deliveryCustomer", deliveryCustomer);
+                intent.putExtra("shipper", shipper);
+                intent.putExtra("phone", phone);
+                intent.putExtra("eixedTelephone", eixedTelephone);
+                setResult(RESULT_OK, intent);
+                // 结束该activity 结束之后，前面的activity才可以处理结果
+                finish();
+                return;
+            }
             lat = data.getStringExtra("lat");
             longi = data.getStringExtra("longi");
             district = data.getStringExtra("district");
             placeName = data.getStringExtra("placeName");
             tv_address.setText(placeName);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        informationKeptBouncedDialog = null;
     }
 }

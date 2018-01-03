@@ -18,6 +18,7 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
  */
 
 public class InvoiceManagementActivity extends BaseActivity {
+
     /**
      * 申请发票
      */

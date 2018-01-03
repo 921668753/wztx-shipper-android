@@ -155,11 +155,59 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                style="@style/Match45"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@color/mainColor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:layout_marginLeft="@dimen/dimen15"
+                    android:text="@string/carType"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:id="@+id/img_temporaryCar"
+                    android:layout_width="@dimen/dimen26"
+                    android:layout_height="@dimen/dimen26"
+                    android:layout_marginLeft="@dimen/dimen90"
+                    android:padding="@dimen/dimen5"
+                    android:src="@mipmap/ic_checkbox_select" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/temporaryCar"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+                <ImageView
+                    android:id="@+id/img_carLongTime"
+                    android:layout_width="@dimen/dimen26"
+                    android:layout_height="@dimen/dimen26"
+                    android:layout_marginLeft="@dimen/dimen19"
+                    android:padding="@dimen/dimen5"
+                    android:src="@mipmap/ic_checkbox_unselect" />
+
+                <TextView
+                    style="@style/WrapWrap"
+                    android:text="@string/carLongTime"
+                    android:textColor="@color/titletextcolors"
+                    android:textSize="@dimen/textsize15" />
+
+
+            </LinearLayout>
+
+
+            <include layout="@layout/commom_dividerwidth1" />
+
 
             <LinearLayout
                 android:id="@+id/ll_selectVehicle"
                 style="@style/Match45"
-                android:layout_marginTop="@dimen/dimen10"
                 android:background="@color/mainColor"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
