@@ -157,6 +157,12 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                     aty.finish();
                     return;
                 }
+                if (tv_address.getText().toString().trim().equals(placeName) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
+                        && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
+                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone)) {
+                    aty.finish();
+                    return;
+                }
                 informationKeptBouncedDialog.show();
             }
 
