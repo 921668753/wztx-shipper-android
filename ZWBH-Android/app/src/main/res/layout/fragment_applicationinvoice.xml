@@ -352,6 +352,7 @@
                     style="@style/AutoMatch"
                     android:background="@android:color/transparent"
                     android:digits="0123456789-"
+                    android:inputType="phone"
                     android:hint="@string/pleaseFillOut"
                     android:maxLength="18"
                     android:paddingLeft="@dimen/dimen46"

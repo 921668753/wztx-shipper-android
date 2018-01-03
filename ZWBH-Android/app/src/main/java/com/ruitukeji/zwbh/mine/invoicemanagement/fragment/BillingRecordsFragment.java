@@ -46,14 +46,17 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 总页码
      */
     private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 是否加载更多
      */
@@ -79,7 +82,6 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, getActivity(), true);
         lv_billingRecords.setAdapter(mAdapter);
         lv_billingRecords.setOnItemClickListener(this);
-      //  mAdapter.setOnItemChildClickListener(this);
         mRefreshLayout.beginRefreshing();
     }
 
@@ -111,9 +113,6 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
         showLoadingDialog(getString(R.string.dataLoad));
         ((BillingRecordsContract.Presenter) mPresenter).getBillingRecordsList(mMorePageNumber);
     }
-
-
-
 
 
     @Override

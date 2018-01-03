@@ -288,7 +288,6 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
             ApplicationInvoiceBean applicationInvoiceBean = (ApplicationInvoiceBean) JsonUtil.json2Obj(success, ApplicationInvoiceBean.class);
             if (applicationInvoiceBean.getResult() == null || applicationInvoiceBean.getResult().size() == 0) {
                 ll_generalElection.setVisibility(View.GONE);
-                // errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             ll_generalElection.setVisibility(View.VISIBLE);
@@ -317,7 +316,12 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
             aty.showActivity(aty, LoginActivity.class);
             return;
         }
-        dismissLoadingDialog();
+        if (msg.equals(getString(R.string.requestedDataEmpty))) {
+            ll_generalElection.setVisibility(View.GONE);
+            mAdapter.clear();
+            dismissLoadingDialog();
+            return;
+        }
         ViewInject.toast(msg);
     }
 

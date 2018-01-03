@@ -545,7 +545,7 @@
     <string name="applyTime">申请时间</string>
     <string name="anInvoice">张发票，含</string>
     <string name="anOrder">个订单</string>
-
+    <string name="requestedDataEmpty">请求的数据为空</string>
 
     <!--所含订单-->
     <string name="containsOrder">所含订单</string>

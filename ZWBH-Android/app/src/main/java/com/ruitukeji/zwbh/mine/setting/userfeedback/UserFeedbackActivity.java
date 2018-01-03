@@ -46,6 +46,11 @@ public class UserFeedbackActivity extends BaseActivity implements UserFeedbackCo
         setContentView(R.layout.activity_userfeedback);
     }
 
+    @Override
+    public void initData() {
+        super.initData();
+        mPresenter = new UserFeedbackPresenter(this);
+    }
 
     @Override
     public void initWidget() {

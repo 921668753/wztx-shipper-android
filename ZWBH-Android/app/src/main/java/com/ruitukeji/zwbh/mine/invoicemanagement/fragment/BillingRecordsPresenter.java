@@ -25,7 +25,7 @@ public class BillingRecordsPresenter implements BillingRecordsContract.Presenter
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);
-        RequestClient.showMyRecommList(httpParams, new ResponseListener<String>() {
+        RequestClient.getBillingRecordsList(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
