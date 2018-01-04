@@ -8,39 +8,38 @@
     <cn.bingoogolapple.bgabanner.BGABanner
         android:id="@+id/banner_guide_foreground"
         style="@style/MatchMatch"
+        android:background="@color/white"
         app:banner_pageChangeDuration="1000"
         app:banner_pointAutoPlayAble="false"
         app:banner_pointContainerBackground="@android:color/transparent"
-        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow1"
         app:banner_pointTopBottomMargin="15dp"
         app:banner_transitionEffect="alpha" />
 
     <TextView
         android:id="@+id/tv_guide_skip"
-        style="@style/WrapWrap"
+        android:layout_width="@dimen/dimen51"
+        android:layout_height="@dimen/dimen25"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/dimen10"
-        android:layout_marginTop="8dp"
+        android:layout_marginRight="@dimen/dimen25"
+        android:layout_marginTop="@dimen/dimen37"
+        android:background="@drawable/shape_skip"
         android:clickable="true"
-        android:padding="4dp"
+        android:gravity="center"
         android:text="@string/skip"
-        android:textColor="@color/lonincolors"
-        android:textSize="@dimen/textsize16" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize15" />
 
     <Button
         android:id="@+id/btn_guide_enter"
-        style="@style/WrapWrap"
+        android:layout_width="@dimen/dimen140"
+        android:layout_height="@dimen/dimen45"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen50"
         android:background="@drawable/selector_btn_test"
-        android:paddingTop="@dimen/dimen8"
-        android:paddingBottom="@dimen/dimen8"
-        android:paddingLeft="@dimen/dimen10"
-        android:paddingRight="@dimen/dimen10"
         android:text="@string/experienceImmediately"
-        android:textColor="@color/mainColor"
-        android:textSize="@dimen/textsize16"
-        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize18"
         tools:visibility="visible" />
 </RelativeLayout>

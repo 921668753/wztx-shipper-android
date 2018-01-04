@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.invoicemanagement;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,7 +11,10 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.mine.invoicemanagement.fragment.ApplicationInvoiceFragment;
 import com.ruitukeji.zwbh.mine.invoicemanagement.fragment.BillingRecordsFragment;
+import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+
+import cn.bingoogolapple.titlebar.BGATitleBar.SimpleDelegate;
 
 /**
  * 发票管理
@@ -60,7 +64,24 @@ public class InvoiceManagementActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.invoiceManagement), true, R.id.titlebar);
+
+        SimpleDelegate simpleDelegate = new SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                aty.finish();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+                Intent intent = new Intent(aty, AboutUsActivity.class);
+                intent.putExtra("type", "shipper_registration_protocol");
+                showActivity(aty, intent);
+            }
+        };
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.invoiceManagement), getString(R.string.recommendedRecord), R.id.titlebar, simpleDelegate);
+
         if (chageIcon == 0) {
             chageIcon = 0;
             cleanColors(0);

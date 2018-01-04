@@ -12,6 +12,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.mine.mywallet.accountdetails.dialog.ClassificationBouncedDialog;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.PaidFragment;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.UnpaidFragment;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
@@ -22,7 +23,7 @@ import com.ruitukeji.zwbh.utils.rx.RxBus;
  * Created by Administrator on 2017/12/15.
  */
 
-public class AccountDetailsActivity extends BaseActivity {
+public class AccountDetailsActivity extends BaseActivity implements ClassificationBouncedDialog.ClassificationDialogCallBack {
 
 
     /**
@@ -36,8 +37,11 @@ public class AccountDetailsActivity extends BaseActivity {
 
     @BindView(id = R.id.tv_classification)
     private TextView tv_classification;
+//
+//    @BindView(id = R.id.img_down)
+//    private ImageView img_down;
 
-    private OptionsPickerView pvOptions;
+    // private OptionsPickerView pvOptions;
 
     /**
      * 已支付
@@ -62,6 +66,7 @@ public class AccountDetailsActivity extends BaseActivity {
     private BaseFragment contentFragment;
     private BaseFragment contentFragment1;
     private int chageIcon = 0;
+    private ClassificationBouncedDialog classificationBouncedDialog = null;
 
 
     @Override
@@ -109,7 +114,8 @@ public class AccountDetailsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_classification:
-                pvOptions.show(tv_classification);
+                //  img_down.setBackgroundResource(R.mipmap.icon_);
+                classificationBouncedDialog.show();
                 break;
             case R.id.ll_paid:
                 chageIcon = 0;
@@ -150,29 +156,42 @@ public class AccountDetailsActivity extends BaseActivity {
      * 选择分类
      */
     private void chooseClassification() {
-        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                //  car_type_id = carInfoBean.getResult().get(options1).getId();
-                // ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
-                /**
-                 * 发送消息
-                 */
-//                RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
-//                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
-//           //     msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
-//                RxBus.getInstance().post(msgEvent);
-            }
-        }).build();
+        classificationBouncedDialog = new ClassificationBouncedDialog(this);
+        classificationBouncedDialog.setClassificationDialogCallBack(this);
+
+//        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+//                //返回的分别是三个级别的选中位置
+//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
+//                // ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
+//                /**
+//                 * 发送消息
+//                 */
+////                RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
+////                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
+////           //     msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
+////                RxBus.getInstance().post(msgEvent);
+//            }
+//        }).build();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (pvOptions != null && pvOptions.isShowing()) {
-            pvOptions.dismiss();
+        classificationBouncedDialog = null;
+//        if (pvOptions != null && pvOptions.isShowing()) {
+//            pvOptions.dismiss();
+//        }
+//        pvOptions = null;
+    }
+
+    @Override
+    public void confirm() {
+        if (chageIcon == 0) {
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusPaidFragmentEvent"));
+            return;
         }
-        pvOptions = null;
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusUnpaidFragmentEvent"));
     }
 }

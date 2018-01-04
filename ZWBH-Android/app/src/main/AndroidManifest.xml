@@ -249,6 +249,16 @@
             android:name=".mine.invoicemanagement.InvoiceManagementActivity"
             android:screenOrientation="portrait" />
 
+        <!--个人中心  发票管理  开票详情-->
+        <activity
+            android:name=".mine.invoicemanagement.billingdetails.BillingDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心  发票管理  开票详情   所含订单-->
+        <activity
+            android:name=".mine.invoicemanagement.billingdetails.ContainsOrderActivity"
+            android:screenOrientation="portrait" />
+
         <!--个人中心  异常记录-->
         <activity
             android:name=".mine.abnormalrecords.AbnormalRecordsActivity"

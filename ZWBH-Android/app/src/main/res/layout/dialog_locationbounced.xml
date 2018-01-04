@@ -4,6 +4,7 @@
     android:background="@color/transparent_1">
 
     <ImageView
+        android:id="@+id/img"
         style="@style/MatchMatch"
         android:background="@color/white"
         android:src="@mipmap/startpage" />

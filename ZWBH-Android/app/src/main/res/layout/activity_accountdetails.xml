@@ -43,6 +43,7 @@
                 android:textSize="@dimen/textsize16" />
 
             <ImageView
+                android:id="@+id/img_down"
                 android:layout_width="@dimen/dimen8"
                 android:layout_height="@dimen/dimen5"
                 android:layout_marginLeft="@dimen/dimen5"

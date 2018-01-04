@@ -19,9 +19,10 @@ public class ContainsOrderPresenter implements ContainsOrderContract.Presenter {
     }
 
     @Override
-    public void getContainsOrder() {
+    public void getContainsOrder(String id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+        httpParams.put("g_id", id);
+        RequestClient.getContainsOrder(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

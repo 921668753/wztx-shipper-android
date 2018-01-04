@@ -96,6 +96,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     private int tran_type = 0;
     private String city = "";
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
+    private int isOff1 = 0;
 
     @Override
     public void setRootView() {
@@ -151,7 +152,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
 
                 if (tv_address.getText().toString().trim().equals(placeName) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
                         && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
-                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone)) {
+                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && isOff == isOff1) {
                     aty.finish();
                     return;
                 }
@@ -173,6 +174,14 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         } else {
             tv_deliveryCustomer.setText(getString(R.string.receivingCustomer));
             tv_shipper.setText(getString(R.string.consignee));
+        }
+        int isOff1 = getIntent().getIntExtra("isOff1", 0);
+        if (isOff1 == 1) {
+            img_off.setImageResource(R.mipmap.switch_btn_on);
+            isOff = 1;
+        } else {
+            img_off.setImageResource(R.mipmap.switch_btn_off);
+            isOff = 0;
         }
     }
 
@@ -222,6 +231,12 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 }
                 break;
             case R.id.tv_determine:
+                if (tv_address.getText().toString().trim().equals(placeName) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
+                        && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
+                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && isOff == isOff1) {
+                    aty.finish();
+                    return;
+                }
                 ((ProvenanceContract.Presenter) mPresenter).postAddress(longi, lat, district, placeName, et_detailedAddress.getText().toString().trim(),
                         et_deliveryCustomer.getText().toString().trim(), et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(),
                         et_eixedTelephone.getText().toString().trim(), isOff, type);
@@ -249,6 +264,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         intent.putExtra("shipper", et_shipper.getText().toString().trim());
         intent.putExtra("phone", et_phone.getText().toString().trim());
         intent.putExtra("eixedTelephone", et_eixedTelephone.getText().toString().trim());
+        intent.putExtra("isOff1", isOff);
         setResult(RESULT_OK, intent);
         finish();
 

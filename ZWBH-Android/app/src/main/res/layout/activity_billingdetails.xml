@@ -5,7 +5,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
     <include layout="@layout/common_title" />
 
     <ScrollView
@@ -48,7 +47,7 @@
                     android:id="@+id/tv_detailedAddress"
                     style="@style/MatchWrap"
                     android:layout_marginLeft="@dimen/dimen43"
-                    android:text="江苏省苏州市园区新平街388号腾飞江苏省苏州市园区新平街388号腾飞"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -76,7 +75,7 @@
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen58"
                     android:maxWidth="@dimen/dimen160"
-                    android:text="戴志豪"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -85,7 +84,7 @@
                     android:id="@+id/tv_phone"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen17"
-                    android:text="18362720300"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
             </LinearLayout>
@@ -124,7 +123,7 @@
                     android:id="@+id/tv_invoiceRise"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
-                    android:text="物载天下网络科技有限公司"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -132,6 +131,7 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_taxpayerIdentificationNumber"
                 style="@style/MatchWrap"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -150,7 +150,7 @@
                     android:id="@+id/tv_taxpayerIdentificationNumber"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen13"
-                    android:text="932626262MKT"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -177,7 +177,7 @@
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:maxWidth="@dimen/dimen160"
-                    android:text="货运服务费"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -204,7 +204,7 @@
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
                     android:maxWidth="@dimen/dimen233"
-                    android:text="500000.00"
+                    android:text="0.00"
                     android:textColor="@color/announcementCloseColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -236,7 +236,7 @@
                     android:id="@+id/tv_applyTime"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen43"
-                    android:text="2017-12-15 11:21:14"
+                    android:text="--"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize15" />
 
@@ -280,7 +280,7 @@
                         <TextView
                             android:id="@+id/tv_anOrder"
                             style="@style/WrapWrap"
-                            android:text="12"
+                            android:text="0"
                             android:textColor="@color/titletextcolors"
                             android:textSize="@dimen/textsize15" />
 
@@ -300,7 +300,7 @@
                         <TextView
                             android:id="@+id/tv_startTime"
                             style="@style/WrapWrap"
-                            android:text="2017.08.20 09：00"
+                            android:text="--"
                             android:textColor="@color/hintcolors"
                             android:textSize="@dimen/textsize12" />
 
@@ -313,7 +313,7 @@
                         <TextView
                             android:id="@+id/tv_endTime"
                             style="@style/WrapWrap"
-                            android:text="2017.10.20 12：00"
+                            android:text="--"
                             android:textColor="@color/hintcolors"
                             android:textSize="@dimen/textsize12" />
 

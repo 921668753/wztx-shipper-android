@@ -124,7 +124,6 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             map.put("car_style_type_id", car_style_type_id);
             map.put("car_style_length", car_style_length);
             map.put("is_longtime_car", isLongTimeCar);
-
             map.put("car_style_length_id", car_style_length_id);
             map.put("effective_time", effective_time);
             map.put("is_receipt", is_receipt);

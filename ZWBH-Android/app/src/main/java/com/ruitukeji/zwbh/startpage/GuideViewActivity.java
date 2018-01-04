@@ -1,5 +1,7 @@
 package com.ruitukeji.zwbh.startpage;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +27,6 @@ public class GuideViewActivity extends BaseActivity {
     @BindView(id = R.id.banner_guide_foreground)
     private BGABanner mForegroundBanner;
 
-
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_cuideview);
@@ -43,42 +44,31 @@ public class GuideViewActivity extends BaseActivity {
         mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
-                skipActivity(aty, Main2Activity.class);
-//                startActivity(new Intent(GuideViewActivity.this, MainActivity.class));
-//                finish();
+                Log.d("tag", mForegroundBanner.getCurrentItem() + "");
+                Intent intent = new Intent(aty, Main2Activity.class);
+                intent.setAction("android.intent.action.MAIN");
+                intent.addCategory("android.intent.category.LAUNCHER");
+                switch (mForegroundBanner.getCurrentItem()) {
+                    //  skipActivity(aty, Main2Activity.class);
+                    case 0:
+                        intent.putExtra("img", R.mipmap.guidepage);
+                        break;
+                    case 1:
+                        intent.putExtra("img", R.mipmap.guidepage1);
+                        break;
+                    case 2:
+                        intent.putExtra("img", R.mipmap.guidepage2);
+                        break;
+                }
+                skipActivity(aty, intent);
+                overridePendingTransition(0, 0);
             }
         });
-//        mForegroundBanner.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                if (position == mForegroundBanner.getItemCount() - 2) {
-//                    ViewCompat.setAlpha(mEnterBtn, positionOffset);
-//                    ViewCompat.setAlpha(mSkipTv, 1.0f - positionOffset);
-//
-//                    if (positionOffset > 0.5f) {
-//                        mEnterBtn.setVisibility(View.VISIBLE);
-//                        mSkipTv.setVisibility(View.GONE);
-//
-//                    } else {
-//                        mEnterBtn.setVisibility(View.GONE);
-//                        mSkipTv.setVisibility(View.VISIBLE);
-//                    }
-//                } else if (position == mForegroundBanner.getItemCount() - 1) {
-//                    mSkipTv.setVisibility(View.GONE);
-//                    mEnterBtn.setVisibility(View.VISIBLE);
-//                    ViewCompat.setAlpha(mEnterBtn, 1.0f);
-//                } else {
-//                    mSkipTv.setVisibility(View.VISIBLE);
-//                    ViewCompat.setAlpha(mSkipTv, 1.0f);
-//                    mEnterBtn.setVisibility(View.GONE);
-//                }
-//            }
-//        });
+
     }
 
     private void processLogic() {
-        mForegroundBanner.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
+        // mForegroundBanner.setOverScrollMode(View.OVER_SCROLL_NEVER);
         // 初始化方式1：通过传入数据模型并结合Adapter的方式初始化
         mForegroundBanner.setAdapter(new BGABanner.Adapter() {
             @Override
@@ -88,13 +78,6 @@ public class GuideViewActivity extends BaseActivity {
         });
         mForegroundBanner.setData(Arrays.asList(R.mipmap.guidepage, R.mipmap.guidepage1, R.mipmap.guidepage2), null);
 
-
-        // 初始化方式2：通过直接传入视图集合的方式初始化
-//        List<View> views = new ArrayList<>();
-//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.uoko_guide_foreground_1));
-//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.uoko_guide_foreground_2));
-//        views.add(BGABannerUtil.getItemImageView(this, R.drawable.uoko_guide_foreground_3));
-//        mForegroundBanner.setData(views);
     }
 
     @Override

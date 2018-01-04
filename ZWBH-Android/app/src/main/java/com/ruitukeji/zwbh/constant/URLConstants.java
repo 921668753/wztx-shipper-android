@@ -253,6 +253,16 @@ public class URLConstants {
     public static String INVOICERECORD = APIURL + "Invoice/InvoiceRecord";
 
     /**
+     * 开票详情
+     */
+    public static String INVOICEREINFO = APIURL + "Invoice/InvoiceInfo";
+
+    /**
+     * 所含订单
+     */
+    public static String CONTAINSORDER = APIURL + "Invoice/ContainsOrder";
+
+    /**
      * 显示货源列表
      */
     public static String GOODSLIST = APIURL + "goods/goodsList";

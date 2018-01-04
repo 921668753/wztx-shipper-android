@@ -1,6 +1,7 @@
 package com.ruitukeji.zwbh.mine.invoicemanagement.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,10 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.invoicemanagement.BillingRecordsBean;
 import com.ruitukeji.zwbh.mine.invoicemanagement.InvoiceManagementActivity;
+import com.ruitukeji.zwbh.mine.invoicemanagement.billingdetails.BillingDetailsActivity;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
@@ -27,7 +31,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/12/15.
  */
 
-public class BillingRecordsFragment extends BaseFragment implements BillingRecordsContract.View ,AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
+public class BillingRecordsFragment extends BaseFragment implements BillingRecordsContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate, BGAOnItemChildClickListener {
 
     private InvoiceManagementActivity aty;
 
@@ -100,10 +104,9 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //  PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "AllOrderFragment");
-//        Intent intent = new Intent(aty, NewAddAddress1Activity.class);
-//        intent.putExtra("address_id", mAdapter.getItem(i).getOrder_id());
-//        aty.showActivity(aty, intent);
+        Intent intent = new Intent(aty, BillingDetailsActivity.class);
+        intent.putExtra("id", mAdapter.getItem(i).getId());
+        aty.showActivity(aty, intent);
     }
 
     @Override
@@ -133,16 +136,6 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-//        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-//        if (isRefreshOrder) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
-
-
-    @Override
     public void setPresenter(BillingRecordsContract.Presenter presenter) {
         mPresenter = presenter;
     }
@@ -150,32 +143,25 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-//        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
-//        mMorePageNumber = orderBean.getResult().getPage();
-//        totalPageNumber = orderBean.getResult().getPageTotal();
-//        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(orderBean.getResult().getList());
-//        } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(orderBean.getResult().getList());
-//        }
+            BillingRecordsBean billingRecordsBean = (BillingRecordsBean) JsonUtil.getInstance().json2Obj(success, BillingRecordsBean.class);
+            mMorePageNumber = billingRecordsBean.getResult().getPage();
+            totalPageNumber = billingRecordsBean.getResult().getPageTotal();
+            if (billingRecordsBean.getResult().getList() == null || billingRecordsBean.getResult().getList().size() == 0) {
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(billingRecordsBean.getResult().getList());
+            } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(billingRecordsBean.getResult().getList());
+            }
             dismissLoadingDialog();
-        } else if (flag == 1) {
-
-            dismissLoadingDialog();
-        } else if (flag == 2) {
-            mRefreshLayout.beginRefreshing();
         }
     }
 
@@ -195,17 +181,6 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
         dismissLoadingDialog();
     }
 
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-//        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
-//        if (isRefreshAllOrder1) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
 
     @Override
     public void onDestroy() {

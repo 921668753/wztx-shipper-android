@@ -15,7 +15,6 @@
         android:divider="@color/e5E5E5olors"
         android:dividerHeight="@dimen/dimen0.5"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/dimen19"
         android:paddingLeft="@dimen/dimen15"
         android:scrollbars="none"
         tools:listitem="@layout/item_applicationinvoice" />

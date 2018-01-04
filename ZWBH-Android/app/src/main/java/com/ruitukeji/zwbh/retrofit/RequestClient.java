@@ -525,6 +525,41 @@ public class RequestClient {
         }, listener);
     }
 
+    /**
+     * 开票详情
+     */
+    public static void getBillingDetails(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.INVOICEREINFO, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 所含订单
+     */
+    public static void getContainsOrder(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.CONTAINSORDER, httpParams, listener);
+            }
+        }, listener);
+    }
 
     /**
      * 获取周边司机

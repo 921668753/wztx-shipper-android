@@ -14,7 +14,7 @@ public interface BillingDetailsContract {
         /**
          * 获取开票详情
          */
-        void getBillingDetails();
+        void getBillingDetails(int id);
 
 
         /**

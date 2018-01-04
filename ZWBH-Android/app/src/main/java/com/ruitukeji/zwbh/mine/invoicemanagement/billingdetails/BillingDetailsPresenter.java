@@ -20,10 +20,10 @@ public class BillingDetailsPresenter implements BillingDetailsContract.Presenter
     }
 
     @Override
-    public void getBillingDetails() {
+    public void getBillingDetails(int id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("pageSize", 10);
-        RequestClient.showMyRecommList(httpParams, new ResponseListener<String>() {
+        httpParams.put("id", id);
+        RequestClient.getBillingDetails(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

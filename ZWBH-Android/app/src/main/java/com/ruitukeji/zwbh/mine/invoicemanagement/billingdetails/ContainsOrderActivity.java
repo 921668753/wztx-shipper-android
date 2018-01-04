@@ -2,6 +2,7 @@ package com.ruitukeji.zwbh.mine.invoicemanagement.billingdetails;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,7 +11,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.invoicemanagement.ContainsOrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.entity.ConductorModelsBean;
+import com.ruitukeji.zwbh.entity.mine.invoicemanagement.ContainsOrderBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
@@ -19,7 +20,7 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
  * Created by Administrator on 2017/12/16.
  */
 
-public class ContainsOrderActivity extends BaseActivity implements ContainsOrderContract.View {
+public class ContainsOrderActivity extends BaseActivity implements ContainsOrderContract.View, AdapterView.OnItemClickListener {
 
     private ContainsOrderViewAdapter mAdapter;
 
@@ -33,6 +34,7 @@ public class ContainsOrderActivity extends BaseActivity implements ContainsOrder
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+    private String g_id = "";
 
 
     @Override
@@ -45,6 +47,9 @@ public class ContainsOrderActivity extends BaseActivity implements ContainsOrder
         super.initData();
         mPresenter = new ContainsOrderPresenter(this);
         mAdapter = new ContainsOrderViewAdapter(this);
+        g_id = getIntent().getStringExtra("g_id");
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((ContainsOrderContract.Presenter) mPresenter).getContainsOrder(g_id);
     }
 
     @Override
@@ -52,9 +57,8 @@ public class ContainsOrderActivity extends BaseActivity implements ContainsOrder
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.containsOrder), true, R.id.titlebar);
         lv_applicationInvoice.setAdapter(mAdapter);
-//        lv_applicationInvoice.setOnItemClickListener(this);
-        showLoadingDialog(getString(R.string.dataLoad));
-        ((ContainsOrderContract.Presenter) mPresenter).getContainsOrder();
+        lv_applicationInvoice.setOnItemClickListener(this);
+
     }
 
     /**
@@ -66,11 +70,15 @@ public class ContainsOrderActivity extends BaseActivity implements ContainsOrder
         switch (v.getId()) {
             case R.id.tv_hintText:
                 showLoadingDialog(getString(R.string.dataLoad));
-                ((ContainsOrderContract.Presenter) mPresenter).getContainsOrder();
+                ((ContainsOrderContract.Presenter) mPresenter).getContainsOrder(g_id);
                 break;
         }
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 
     @Override
     public void setPresenter(ContainsOrderContract.Presenter presenter) {
@@ -80,14 +88,13 @@ public class ContainsOrderActivity extends BaseActivity implements ContainsOrder
     @Override
     public void getSuccess(String success, int flag) {
         ll_commonError.setVisibility(View.GONE);
-        ConductorModelsBean recommendedRecordBean = (ConductorModelsBean) JsonUtil.json2Obj(success, ConductorModelsBean.class);
-        assert recommendedRecordBean != null;
-        if (recommendedRecordBean.getResult().getLength() == null || recommendedRecordBean.getResult().getLength().size() == 0) {
+        ContainsOrderBean containsOrderBean = (ContainsOrderBean) JsonUtil.json2Obj(success, ContainsOrderBean.class);
+        if (containsOrderBean.getResult() == null || containsOrderBean.getResult().size() == 0) {
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         mAdapter.clear();
-        mAdapter.addNewData(recommendedRecordBean.getResult().getLength());
+        mAdapter.addNewData(containsOrderBean.getResult());
         dismissLoadingDialog();
     }
 
@@ -106,5 +113,6 @@ public class ContainsOrderActivity extends BaseActivity implements ContainsOrder
         mAdapter.clear();
         mAdapter = null;
     }
+
 
 }

@@ -198,25 +198,15 @@ public class PaidFragment extends BaseFragment implements AccountDetailsContract
         dismissLoadingDialog();
     }
 
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-//        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
-//        if (isRefreshAllOrder1) {
-//            mRefreshLayout.beginRefreshing();
-//        }
-    }
 
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-//         if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
-////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
-//        mRefreshLayout.beginRefreshing();
-//        }
+        if (((String) msgEvent.getData()).equals("RxBusPaidFragmentEvent")) {
+
+
+            mRefreshLayout.beginRefreshing();
+        }
     }
 
     @Override

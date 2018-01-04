@@ -39,6 +39,12 @@
     <color name="certificationcolors">#dcdcdc</color>
     <color name="certificationcolors1">#62d405</color>
 
+
+    <!--引导页-->
+    <color name="c808080olors">#808080</color>
+    <color name="d9D9D9olors">#D9D9D9</color>
+
+
     <!--登录-->
     <color name="lonin1colors">#d7d7d7</color>
     <color name="lonincolors">#FF3D41</color>

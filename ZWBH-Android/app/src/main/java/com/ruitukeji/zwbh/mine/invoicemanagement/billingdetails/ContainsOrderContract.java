@@ -13,7 +13,7 @@ public interface ContainsOrderContract {
         /**
          * 获取订单金额列表
          */
-        void getContainsOrder();
+        void getContainsOrder(String id);
     }
 
     interface View extends BaseNewView<Presenter, String> {

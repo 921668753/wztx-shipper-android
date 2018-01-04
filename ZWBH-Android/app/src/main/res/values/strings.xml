@@ -48,7 +48,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--引导页-->
-    <string name="skip">跳过 ></string>
+    <string name="skip">跳过</string>
     <string name="experienceImmediately">立即体验</string>
 
 
@@ -201,8 +201,8 @@
     <string name="locationPermissions1">您拒绝了「定位」所需要的相关权限!</string>
     <string name="logisticsName">LogisticsName</string>
     <string name="location">location</string>
-    <string name="cityDistribution">同城物流</string>
-    <string name="longTrunk">全国物流</string>
+    <string name="cityDistribution">同城专车</string>
+    <string name="longTrunk">城际专车</string>
     <string name="locationFailure">定位失败</string>
     <string name="locationFailure1">定位失败，请手动输入</string>
     <string name="loginAg">请重新登录</string>

@@ -141,20 +141,20 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public void initData() {
         super.initData();
         mPresenter = new MainPresenter(this);
-        locationBouncedDialog = new LocationBouncedDialog(this);
-        locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss();
-                    dialog = null;
-                    finish();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
+//        locationBouncedDialog = new LocationBouncedDialog(this);
+//        locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//            @Override
+//            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    dialog.dismiss();
+//                    dialog = null;
+//                    finish();
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+//            }
+//        });
         initHeadView();
         timer = new Timer();
         registerMessageReceiver();

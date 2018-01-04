@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ruitukeji.zwbh.R;
@@ -15,11 +16,13 @@ import com.ruitukeji.zwbh.R;
 
 public class LocationBouncedDialog extends Dialog {
 
+    private int src;
     private Context context;
 
-    public LocationBouncedDialog(Context context) {
+    public LocationBouncedDialog(int src, Context context) {
         super(context, R.style.MyDialog);
         this.context = context;
+        this.src = src;
     }
 
     @Override
@@ -28,6 +31,8 @@ public class LocationBouncedDialog extends Dialog {
         setContentView(R.layout.dialog_locationbounced);
         getWindow().setLayout(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
         getWindow().setWindowAnimations(0);
+        ImageView img = (ImageView) findViewById(R.id.img);
+        img.setImageResource(src);
     }
 
 

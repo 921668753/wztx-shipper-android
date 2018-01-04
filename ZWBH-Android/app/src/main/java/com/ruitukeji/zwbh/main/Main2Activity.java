@@ -291,6 +291,8 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private int day = 0;
     private int hours = 0;
     private int minutes = 0;
+    private int isOff1 = 0;
+    private int isOff = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,7 +301,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     }
 
     private void init(Bundle savedInstanceState) {
-        locationBouncedDialog = new LocationBouncedDialog(this);
+        locationBouncedDialog = new LocationBouncedDialog(getIntent().getIntExtra("img", R.mipmap.startpage), this);
         locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -321,7 +323,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             aMap.setOnCameraChangeListener(this);// 对amap添加移动地图事件监听器，会回调onCameraChange（）和onCameraChangeFinish（）
             //设置成中文地图
             aMap.setMapLanguage(AMap.CHINESE);
-          //  aMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);// 设置地图logo显示在左下方
+            //  aMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);// 设置地图logo显示在左下方
         }
         choiceLocationWrapper();
     }
@@ -417,6 +419,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 } else {
                     provenanceIntent.setClass(this, ProvenanceActivity.class);
                     provenanceIntent.putExtra("isProvenance", isProvenance);
+                    provenanceIntent.putExtra("isOff1", isOff);
                 }
                 provenanceIntent.putExtra("type", type);
                 provenanceIntent.putExtra("title", getString(R.string.provenance));
@@ -441,6 +444,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 } else {
                     destinationIntent.setClass(this, ProvenanceActivity.class);
                     destinationIntent.putExtra("isProvenance", isDestination);
+                    destinationIntent.putExtra("isOff1", isOff1);
                 }
                 destinationIntent.putExtra("lat", destinationLat);
                 destinationIntent.putExtra("longi", destinationLongi);
@@ -710,6 +714,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             provenanceDeliveryCustomer = data.getStringExtra("deliveryCustomer");
             provenanceShipper = data.getStringExtra("shipper");
             provenancePhone = data.getStringExtra("phone");
+            isOff = data.getIntExtra("isOff1", 0);
             provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
@@ -725,6 +730,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             destinationDeliveryCustomer = data.getStringExtra("deliveryCustomer");
             destinationShipper = data.getStringExtra("shipper");
             destinationPhone = data.getStringExtra("phone");
+            isOff1 = data.getIntExtra("isOff1", 0);
             destinationEixedTelephone = data.getStringExtra("eixedTelephone");
             tv_enterDestination.setText(destinationPlaceName);
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
@@ -740,6 +746,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             destinationShipper = "";
             destinationPhone = "";
             destinationEixedTelephone = "";
+            isOff1 = 0;
             tv_enterDestination.setText(destinationPlaceName);
         }
     }

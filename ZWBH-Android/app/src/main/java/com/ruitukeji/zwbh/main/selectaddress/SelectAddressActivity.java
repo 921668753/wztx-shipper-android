@@ -245,6 +245,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             shipper = data.getStringExtra("shipper");
             phone = data.getStringExtra("phone");
             eixedTelephone = data.getStringExtra("eixedTelephone");
+            int isOff1 = data.getIntExtra("isOff1", 0);
             Intent intent = new Intent();
             intent.putExtra("lat", lat);
             intent.putExtra("longi", longi);
@@ -255,6 +256,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             intent.putExtra("detailedAddress", detailedAddress);
             intent.putExtra("deliveryCustomer", deliveryCustomer);
             intent.putExtra("shipper", shipper);
+            intent.putExtra("isOff1", isOff1);
             intent.putExtra("phone", phone);
             intent.putExtra("eixedTelephone", eixedTelephone);
             setResult(RESULT_OK, intent);
@@ -295,6 +297,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             intent.putExtra("deliveryCustomer", deliveryCustomer);
             intent.putExtra("shipper", shipper);
             intent.putExtra("phone", phone);
+            intent.putExtra("isOff1", 1);
             intent.putExtra("eixedTelephone", eixedTelephone);
             setResult(RESULT_OK, intent);
             // 结束该activity 结束之后，前面的activity才可以处理结果
