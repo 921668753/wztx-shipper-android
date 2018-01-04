@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.adapter.mine.mywallet;
+package com.ruitukeji.zwbh.adapter.mine.mywallet.accountdetails;
 
 import android.content.Context;
 

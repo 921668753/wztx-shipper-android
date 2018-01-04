@@ -299,6 +299,21 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     }
 
     private void init(Bundle savedInstanceState) {
+        locationBouncedDialog = new LocationBouncedDialog(this);
+        locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss();
+                    dialog = null;
+                    finish();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        locationBouncedDialog.show();
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         if (aMap == null) {
@@ -319,21 +334,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     public void initData() {
         super.initData();
-        locationBouncedDialog = new LocationBouncedDialog(this);
-        locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    dialog.dismiss();
-                    dialog = null;
-                    finish();
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-        locationBouncedDialog.show();
+
         mPresenter = new MainPresenter(this);
         mSensorHelper = new SensorEventHelper(this);
         geocoderSearch = new GeocodeSearch(this);

@@ -67,6 +67,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 
     public void initView() {
         ImageView image = new ImageView(aty);
+        image.setBackgroundResource(R.color.white);
         image.setImageResource(R.mipmap.startpage);
         Animation anim = AnimationUtils.loadAnimation(aty, R.anim.splash_start);
         anim.setAnimationListener(new Animation.AnimationListener() {
@@ -113,7 +114,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Have permissions, do the thing!
             RxVolley.setRequestQueue(RequestQueue.newRequestQueue(FileUtils.getSaveFolder(StringConstants.CACHEPATH), new OkHttpStack(new OkHttpClient())));
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", 0);
             ((StartPageContract.Presenter) mPresenter).getAppConfig();
         } else {
             // Ask for both permissions

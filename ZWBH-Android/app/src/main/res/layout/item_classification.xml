@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_classification"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen35"
+    android:gravity="center"
+    android:text="@string/thisWeek"
+    android:textColor="@color/titletextcolors"
+    android:textSize="@dimen/textsize14" />

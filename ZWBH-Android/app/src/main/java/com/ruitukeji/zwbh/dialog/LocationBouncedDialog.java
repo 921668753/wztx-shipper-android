@@ -27,6 +27,7 @@ public class LocationBouncedDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_locationbounced);
         getWindow().setLayout(RelativeLayout.LayoutParams.FILL_PARENT, RelativeLayout.LayoutParams.FILL_PARENT);
+        getWindow().setWindowAnimations(0);
     }
 
 

@@ -198,13 +198,17 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         titlebar.setBackgroundResource(R.color.announcementCloseColors);
         titlebar.setLeftDrawable(R.mipmap.mine_back);
         sv_mine.setOnScrollChangeListener(this);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                sv_mine.scrollTo(0, 1);
-                mRefreshLayout.beginRefreshing();
-            }
-        }, 600);
+        int personalCenterNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "personalCenterNum", 0);
+        if (personalCenterNum == 0) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    sv_mine.scrollTo(0, 2);
+                    mRefreshLayout.beginRefreshing();
+                }
+            }, 500);
+        }
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", personalCenterNum++);
     }
 
     @Override
