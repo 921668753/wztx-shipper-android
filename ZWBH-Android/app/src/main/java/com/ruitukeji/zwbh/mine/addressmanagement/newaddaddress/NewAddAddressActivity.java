@@ -166,12 +166,8 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         if (StringUtils.isEmpty(pioAddressViewAdapter.getItem(position).getSnippet())) {
             ViewInject.toast(getString(R.string.enterDestination1));
-            return;
-        }
-        if (type == 1 || type == 3) {
             return;
         }
         PoiItem poiItem = pioAddressViewAdapter.getItem(position);
@@ -179,6 +175,17 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         longi = String.valueOf(poiItem.getLatLonPoint().getLongitude());
         district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
         placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        if (type == 1 || type == 3) {
+            Intent intent = new Intent();
+            intent.putExtra("lat", String.valueOf(lat));
+            intent.putExtra("longi", String.valueOf(longi));
+            intent.putExtra("district", district);
+            intent.putExtra("placeName", placeName);
+            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+            finish();
+            return;
+        }
         Intent intent = new Intent(aty, NewAddAddress1Activity.class);
         intent.putExtra("lat", String.valueOf(lat));
         intent.putExtra("longi", String.valueOf(longi));

@@ -306,20 +306,18 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
             et_detailedAddress.setText("");
             ((ApplicationInvoiceContract.Presenter) mPresenter).getApplicationInvoiceList();
         }
-
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
             aty.showActivity(aty, LoginActivity.class);
             return;
         }
         if (msg.equals(getString(R.string.requestedDataEmpty))) {
             ll_generalElection.setVisibility(View.GONE);
             mAdapter.clear();
-            dismissLoadingDialog();
             return;
         }
         ViewInject.toast(msg);

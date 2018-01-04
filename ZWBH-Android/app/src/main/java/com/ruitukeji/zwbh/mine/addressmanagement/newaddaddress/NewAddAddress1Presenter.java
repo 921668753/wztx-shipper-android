@@ -78,11 +78,11 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
     }
 
     @Override
-    public void postUpdateAddress(String address_maps, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int id, int type, int is_default) {
+    public void postUpdateAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int id, int type, int is_default) {
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("address_maps", address_maps);
+        map.put("address_maps", longi + "," + lat);
         map.put("city", provincialLevel);
         map.put("address_name", address);
         map.put("address_detail", detailedAddress);

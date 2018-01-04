@@ -23,7 +23,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:padding="4dp"
-        android:text="跳过 >"
+        android:text="@string/skip"
         android:textColor="@color/lonincolors"
         android:textSize="@dimen/textsize16" />
 
@@ -32,12 +32,15 @@
         style="@style/WrapWrap"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="@dimen/dimen50"
         android:background="@drawable/selector_btn_test"
-        android:padding="8dp"
-        android:text="进入主界面"
+        android:paddingTop="@dimen/dimen8"
+        android:paddingBottom="@dimen/dimen8"
+        android:paddingLeft="@dimen/dimen10"
+        android:paddingRight="@dimen/dimen10"
+        android:text="@string/experienceImmediately"
         android:textColor="@color/mainColor"
-        android:textSize="20sp"
+        android:textSize="@dimen/textsize16"
         android:visibility="gone"
         tools:visibility="visible" />
 </RelativeLayout>

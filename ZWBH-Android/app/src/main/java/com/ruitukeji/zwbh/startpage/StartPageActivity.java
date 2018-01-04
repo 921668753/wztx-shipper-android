@@ -96,14 +96,14 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "firstOpen", true);
         Intent jumpIntent = new Intent();
         jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//        if (isFirst) {
-//            PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", false);
-//            jumpIntent.setClass(this, GuideViewActivity.class);
-//        } else {
+        if (isFirst) {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", false);
+            jumpIntent.setClass(this, GuideViewActivity.class);
+        } else {
         jumpIntent.setAction("android.intent.action.MAIN");
         jumpIntent.addCategory("android.intent.category.LAUNCHER");
         jumpIntent.setClass(this, Main2Activity.class);
-        //    }
+        }
         skipActivity(aty, jumpIntent);
         overridePendingTransition(0, 0);
     }

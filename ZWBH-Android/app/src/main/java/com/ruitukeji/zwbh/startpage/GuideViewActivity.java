@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.main.MainActivity;
+import com.ruitukeji.zwbh.main.Main2Activity;
 
 import java.util.Arrays;
 
@@ -43,7 +43,7 @@ public class GuideViewActivity extends BaseActivity {
         mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
-                skipActivity(aty, MainActivity.class);
+                skipActivity(aty, Main2Activity.class);
 //                startActivity(new Intent(GuideViewActivity.this, MainActivity.class));
 //                finish();
             }
@@ -86,7 +86,7 @@ public class GuideViewActivity extends BaseActivity {
                 ((ImageView) view).setImageResource((int) model);
             }
         });
-        mForegroundBanner.setData(Arrays.asList(R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher), null);
+        mForegroundBanner.setData(Arrays.asList(R.mipmap.guidepage, R.mipmap.guidepage1, R.mipmap.guidepage2), null);
 
 
         // 初始化方式2：通过直接传入视图集合的方式初始化
@@ -102,10 +102,10 @@ public class GuideViewActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.tv_guide_skip:
-                skipActivity(this, MainActivity.class);
+                skipActivity(this, Main2Activity.class);
                 break;
             case R.id.btn_guide_enter:
-                skipActivity(this, MainActivity.class);
+                skipActivity(this, Main2Activity.class);
                 break;
         }
     }

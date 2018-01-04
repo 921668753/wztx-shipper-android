@@ -23,7 +23,7 @@ public interface NewAddAddress1Contract {
         /**
          * 修改始发地 目的地信息
          */
-        void postUpdateAddress(String address_maps, String provincialLevel, String address, String detailedAddress, String deliveryCustomer,
+        void postUpdateAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer,
                                String shipper, String phone, String eixedTelephone, int id, int type, int is_default);
 
     }

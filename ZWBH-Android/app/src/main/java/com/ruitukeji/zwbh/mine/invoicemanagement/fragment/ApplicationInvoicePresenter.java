@@ -55,7 +55,7 @@ public class ApplicationInvoicePresenter implements ApplicationInvoiceContract.P
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.invoiceRise), 1);
             return;
         }
-        if (StringUtils.isEmpty(invoice_up)) {
+        if (StringUtils.isEmpty(content)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseFillOut) + KJActivityStack.create().topActivity().getString(R.string.invoiceContent), 1);
             return;
         }

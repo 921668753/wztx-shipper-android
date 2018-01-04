@@ -47,6 +47,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--引导页-->
+    <string name="skip">跳过 ></string>
+    <string name="experienceImmediately">立即体验</string>
+
+
 
     <!--登录-->
     <string name="alphanumeric">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>

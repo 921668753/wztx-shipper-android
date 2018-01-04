@@ -93,7 +93,6 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private String eixedTelephone = "";
     private int is_default = 1;
     private int id = 0;
-    private String address_maps = "";
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
 
     @Override
@@ -199,7 +198,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 break;
             case R.id.tv_determine:
                 if (type == 1 || type == 3) {
-                    ((NewAddAddress1Contract.Presenter) mPresenter).postUpdateAddress(address_maps, district, placeName, et_detailedAddress.getText().toString().trim(),
+                    ((NewAddAddress1Contract.Presenter) mPresenter).postUpdateAddress(longi, lat, district, placeName, et_detailedAddress.getText().toString().trim(),
                             et_deliveryCustomer.getText().toString().trim(), et_shipper.getText().toString().trim(), et_phone.getText().toString().trim(),
                             et_eixedTelephone.getText().toString().trim(), id, type, is_default);
                     break;
@@ -221,19 +220,26 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         dismissLoadingDialog();
         if (flag == 0) {
             NewAddAddress1Bean newAddAddress1Bean = (NewAddAddress1Bean) JsonUtil.getInstance().json2Obj(success, NewAddAddress1Bean.class);
-            address_maps = newAddAddress1Bean.getResult().getAddress_maps();
+            lat = newAddAddress1Bean.getResult().getAddress_maps().split(",")[0];
+            longi = newAddAddress1Bean.getResult().getAddress_maps().split(",")[1];
             district = newAddAddress1Bean.getResult().getCity();
             placeName = newAddAddress1Bean.getResult().getAddress_name();
             tv_address.setText(placeName);
-            et_detailedAddress.setText(newAddAddress1Bean.getResult().getAddress_detail());
-            et_deliveryCustomer.setText(newAddAddress1Bean.getResult().getClient());
-            et_shipper.setText(newAddAddress1Bean.getResult().getClient_name());
-            et_phone.setText(newAddAddress1Bean.getResult().getPhone());
+            detailedAddress = newAddAddress1Bean.getResult().getAddress_detail();
+            et_detailedAddress.setText(detailedAddress);
+            deliveryCustomer = newAddAddress1Bean.getResult().getClient();
+            et_deliveryCustomer.setText(deliveryCustomer);
+            shipper = newAddAddress1Bean.getResult().getClient_name();
+            et_shipper.setText(shipper);
+            phone = newAddAddress1Bean.getResult().getPhone();
+            et_phone.setText(phone);
+
             if (StringUtils.isEmpty(newAddAddress1Bean.getResult().getTelphone())) {
-                et_eixedTelephone.setText("");
+                eixedTelephone = "";
             } else {
-                et_eixedTelephone.setText(newAddAddress1Bean.getResult().getTelphone());
+                eixedTelephone = newAddAddress1Bean.getResult().getTelphone();
             }
+            et_eixedTelephone.setText(eixedTelephone);
             id = newAddAddress1Bean.getResult().getId();
             is_default = newAddAddress1Bean.getResult().getIs_default();
             if (is_default == 0) {
