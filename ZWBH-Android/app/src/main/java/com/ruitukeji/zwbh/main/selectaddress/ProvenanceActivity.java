@@ -97,6 +97,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     private String city = "";
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
     private int isOff1 = 0;
+    private String placeName1 = "";
 
     @Override
     public void setRootView() {
@@ -123,6 +124,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         if (StringUtils.isEmpty(detailedAddress)) {
             detailedAddress = "";
         }
+        placeName1 = placeName;
         if (StringUtils.isEmpty(eixedTelephone)) {
             eixedTelephone = "";
         }
@@ -156,7 +158,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                     return;
                 }
 
-                if (tv_address.getText().toString().trim().equals(placeName) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
+                if (tv_address.getText().toString().trim().equals(placeName1) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
                         && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
                         && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && isOff == isOff1) {
                     aty.finish();
@@ -224,6 +226,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 Intent intent = new Intent(aty, SelectAddressActivity.class);
                 intent.putExtra("isProvenance", isProvenance);
                 intent.putExtra("tran_type", tran_type);
+                intent.putExtra("type", type);
                 intent.putExtra("cityName", city);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
@@ -237,7 +240,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 }
                 break;
             case R.id.tv_determine:
-                if (tv_address.getText().toString().trim().equals(placeName) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
+                if (tv_address.getText().toString().trim().equals(placeName1) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
                         && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
                         && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && isOff == isOff1) {
                     aty.finish();
