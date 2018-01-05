@@ -235,7 +235,7 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
         if (view.getId() == R.id.img_setDefaultAddress) {
-            ((AddressContract.Presenter) mPresenter).postSetDefaultAddress(mAdapter.getItem(i).getId());
+            ((AddressContract.Presenter) mPresenter).postSetDefaultAddress(mAdapter.getItem(i).getId(), type);
         } else if (view.getId() == R.id.ll_edit) {
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
             intent.putExtra("address_id", mAdapter.getItem(i).getId());

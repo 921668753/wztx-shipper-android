@@ -339,7 +339,6 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     public void initData() {
         super.initData();
-
         mPresenter = new MainPresenter(this);
         mSensorHelper = new SensorEventHelper(this);
         geocoderSearch = new GeocodeSearch(this);
@@ -387,10 +386,10 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.img_gps:
                 if (location == null) {
-                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.319688, 121.062545), 18));
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.319687, 121.062545), 18));
                     break;
                 }
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude - 0.0005, location.longitude), 18));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude - 0.0004, location.longitude), 18));
                 break;
             case R.id.tv_realTime:
                 type1 = "often";
@@ -631,7 +630,45 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
         if (mSensorHelper != null) {
             mSensorHelper.registerSensorListener();
         }
+        readDefaultAddress();
     }
+
+    /**
+     * 读取默认发货地址
+     */
+    private void readDefaultAddress() {
+        boolean isDefaultAddress = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isDefaultAddress", false);
+        if (!isDefaultAddress) {
+            return;
+        }
+        PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", false);
+        provenanceLat = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceLat", "");
+        isOff = 1;
+        provenanceLongi = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceLongi", "");
+        provenanceDistrict = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceDistrict", "");
+        provenancePlaceName = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenancePlaceName", "");
+        tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
+        provenanceDetailedAddress = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceDetailedAddress", "");
+        provenanceDeliveryCustomer = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceDeliveryCustomer", "");
+        provenanceShipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceShipper", "");
+        provenancePhone = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenancePhone", "");
+        provenanceEixedTelephone = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceEixedTelephone", "");
+
+
+//        destinationLat = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationLat", "");
+//        destinationLongi = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationLongi", "");
+//        destinationDistrict = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationDistrict", "");
+//        destinationPlaceName = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationPlaceName", "");
+//        destinationDetailedAddress = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationDetailedAddress", "");
+//        destinationDeliveryCustomer = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationDeliveryCustomer", "");
+//        destinationShipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationShipper", "");
+//        destinationPhone = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationPhone", "");
+//        destinationEixedTelephone = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationEixedTelephone", "");
+//        if (!StringUtils.isEmpty(destinationLat)) {
+//            isOff1 = 1;
+//        }
+    }
+
 
     /**
      * 方法必须重写
@@ -838,7 +875,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
                 deactivate();
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0005, amapLocation.getLongitude()), 18));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 18));
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -993,7 +1030,33 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 }
                 tv_message.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
             }
+            HomeBean.ResultBean.StartAddressBean start_address = homeBean.getResult().getStart_address();
+            if (start_address != null && start_address.getCity() != null) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", true);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLat", start_address.getAddress_maps().split(",")[0]);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLongi", start_address.getAddress_maps().split(",")[1]);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDistrict", start_address.getCity());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePlaceName", start_address.getAddress_name());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDetailedAddress", start_address.getAddress_detail());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDeliveryCustomer", start_address.getClient());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceShipper", start_address.getClient_name());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePhone", start_address.getPhone());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceEixedTelephone", start_address.getTelphone());
+            }
+            HomeBean.ResultBean.EndAddressBean end_address = homeBean.getResult().getEnd_address();
+            if (end_address != null && end_address.getCity() != null) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLat", end_address.getAddress_maps().split(",")[0]);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLongi", end_address.getAddress_maps().split(",")[1]);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDistrict", end_address.getCity());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPlaceName", end_address.getAddress_name());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDetailedAddress", end_address.getAddress_detail());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDeliveryCustomer", end_address.getClient());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationShipper", end_address.getClient_name());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPhone", end_address.getPhone());
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationEixedTelephone", end_address.getTelphone());
+            }
             processLogic(homeBean.getResult().getList());
+            readDefaultAddress();
             dismissLoadingDialog();
         }
     }

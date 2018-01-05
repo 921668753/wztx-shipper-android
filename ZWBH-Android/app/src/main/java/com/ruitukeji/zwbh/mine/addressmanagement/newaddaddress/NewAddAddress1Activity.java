@@ -8,10 +8,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.dialog.InformationKeptBouncedDialog;
 import com.ruitukeji.zwbh.entity.mine.addressmanagement.NewAddAddress1Bean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
@@ -94,6 +96,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private int is_default = 1;
     private int id = 0;
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
+    private int is_default1 = 0;
 
     @Override
     public void setRootView() {
@@ -109,7 +112,6 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         district = getIntent().getStringExtra("district");
         placeName = getIntent().getStringExtra("placeName");
         type = getIntent().getIntExtra("type", 0);
-
         if (type == 1 || type == 3) {
             id = getIntent().getIntExtra("address_id", 0);
             //获取地址信息
@@ -158,7 +160,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 }
                 if (tv_address.getText().toString().trim().equals(placeName) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
                         && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
-                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone)) {
+                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && is_default1 == is_default) {
                     aty.finish();
                     return;
                 }
@@ -226,6 +228,9 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
             placeName = newAddAddress1Bean.getResult().getAddress_name();
             tv_address.setText(placeName);
             detailedAddress = newAddAddress1Bean.getResult().getAddress_detail();
+            if (StringUtils.isEmpty(detailedAddress)) {
+                detailedAddress = "";
+            }
             et_detailedAddress.setText(detailedAddress);
             deliveryCustomer = newAddAddress1Bean.getResult().getClient();
             et_deliveryCustomer.setText(deliveryCustomer);
@@ -233,14 +238,13 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
             et_shipper.setText(shipper);
             phone = newAddAddress1Bean.getResult().getPhone();
             et_phone.setText(phone);
-
-            if (StringUtils.isEmpty(newAddAddress1Bean.getResult().getTelphone())) {
+            eixedTelephone = newAddAddress1Bean.getResult().getTelphone();
+            if (StringUtils.isEmpty(eixedTelephone)) {
                 eixedTelephone = "";
-            } else {
-                eixedTelephone = newAddAddress1Bean.getResult().getTelphone();
             }
             et_eixedTelephone.setText(eixedTelephone);
             id = newAddAddress1Bean.getResult().getId();
+            is_default1 = newAddAddress1Bean.getResult().getIs_default();
             is_default = newAddAddress1Bean.getResult().getIs_default();
             if (is_default == 0) {
                 img_on.setImageResource(R.mipmap.switch_btn_off);
@@ -248,6 +252,28 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 img_on.setImageResource(R.mipmap.switch_btn_on);
             }
         } else if (flag == 1) {
+            if (type == 0 && is_default == 1 || type == 1 && is_default == 1) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", true);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLat", lat);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLongi", longi);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDistrict", district);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePlaceName", placeName);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDetailedAddress", detailedAddress);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDeliveryCustomer", deliveryCustomer);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceShipper", shipper);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePhone", phone);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceEixedTelephone", eixedTelephone);
+            } else if (type == 2 && is_default == 1 || type == 3 && is_default == 1) {
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLat", lat);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLongi", longi);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDistrict", district);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPlaceName", placeName);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDetailedAddress", detailedAddress);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDeliveryCustomer", deliveryCustomer);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationShipper", shipper);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPhone", phone);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationEixedTelephone", eixedTelephone);
+            }
             Intent intent = new Intent();
 //            intent.putExtra("lat", lat);
 //            intent.putExtra("longi", longi);

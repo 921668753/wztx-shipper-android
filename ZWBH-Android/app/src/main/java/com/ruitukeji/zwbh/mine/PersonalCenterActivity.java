@@ -210,7 +210,13 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             }, 500);
             return;
         }
-        readLocal();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sv_mine.scrollTo(0, 2);
+                readLocal();
+            }
+        }, 100);
     }
 
 
@@ -349,6 +355,11 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      * 读取本地
      */
     private void readLocal() {
+        String accessToken = PreferenceHelper.readString(aty, StringConstants.FILENAME, "accessToken");
+        if (StringUtils.isEmpty(accessToken)) {
+            errorMsg(String.valueOf(NumericConstants.TOLINGIN), 0);
+            return;
+        }
         String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar");
         if (StringUtils.isEmpty(avatar)) {
             img_headPortrait.setImageResource(R.mipmap.avatar);

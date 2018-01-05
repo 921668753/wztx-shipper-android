@@ -18,7 +18,7 @@ public interface AddressContract {
         /**
          * 设置默认地址
          */
-        void postSetDefaultAddress(int addressId);
+        void postSetDefaultAddress(int addressId, String type);
 
         /**
          * 刪除地址

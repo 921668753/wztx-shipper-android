@@ -120,6 +120,12 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         eixedTelephone = getIntent().getStringExtra("eixedTelephone");
         city = getIntent().getStringExtra("cityName");
         title = getIntent().getStringExtra("title");
+        if (StringUtils.isEmpty(detailedAddress)) {
+            detailedAddress = "";
+        }
+        if (StringUtils.isEmpty(eixedTelephone)) {
+            eixedTelephone = "";
+        }
         mPresenter = new ProvenancePresenter(this);
         informationKeptBouncedDialog = new InformationKeptBouncedDialog(aty);
     }
@@ -175,7 +181,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
             tv_deliveryCustomer.setText(getString(R.string.receivingCustomer));
             tv_shipper.setText(getString(R.string.consignee));
         }
-        int isOff1 = getIntent().getIntExtra("isOff1", 0);
+        isOff1 = getIntent().getIntExtra("isOff1", 0);
         if (isOff1 == 1) {
             img_off.setImageResource(R.mipmap.switch_btn_on);
             isOff = 1;

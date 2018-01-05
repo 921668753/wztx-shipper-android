@@ -48,11 +48,12 @@ public class AddressPresenter implements AddressContract.Presenter {
     }
 
     @Override
-    public void postSetDefaultAddress(int addressId) {
+    public void postSetDefaultAddress(int addressId, String type) {
         mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("id", addressId);
+        map.put("type", type);
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.getUpdateDefault(httpParams, new ResponseListener<String>() {
             @Override
