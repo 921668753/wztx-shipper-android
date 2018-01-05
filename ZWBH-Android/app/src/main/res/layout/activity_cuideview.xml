@@ -5,16 +5,29 @@
     style="@style/MatchMatch"
     android:fitsSystemWindows="true">
 
-    <cn.bingoogolapple.bgabanner.BGABanner
-        android:id="@+id/banner_guide_foreground"
-        style="@style/MatchMatch"
-        android:background="@color/white"
-        app:banner_pageChangeDuration="1000"
-        app:banner_pointAutoPlayAble="false"
-        app:banner_pointContainerBackground="@android:color/transparent"
-        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow1"
-        app:banner_pointTopBottomMargin="15dp"
-        app:banner_transitionEffect="alpha" />
+    <cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout style="@style/MatchMatch">
+        <!--<cn.bingoogolapple.bgabanner.BGABanner-->
+        <!--android:id="@+id/banner_guide_background"-->
+        <!--style="@style/MatchMatch"-->
+        <!--app:banner_pageChangeDuration="1000"-->
+        <!--app:banner_pointAutoPlayAble="false"-->
+        <!--app:banner_pointContainerBackground="@android:color/transparent"-->
+        <!--app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"-->
+        <!--app:banner_pointTopBottomMargin="15dp"-->
+        <!--app:banner_transitionEffect="fade"/>-->
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/banner_guide_foreground"
+            style="@style/MatchMatch"
+            android:background="@color/white"
+            app:banner_pageChangeDuration="1000"
+            app:banner_pointAutoPlayAble="false"
+            app:banner_pointContainerBackground="@android:color/transparent"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow1"
+            app:banner_pointTopBottomMargin="15dp"
+            app:banner_transitionEffect="alpha" />
+    </cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout>
+
 
     <TextView
         android:id="@+id/tv_guide_skip"

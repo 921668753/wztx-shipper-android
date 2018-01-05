@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.invoicemanagement.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.invoicemanagement.ApplicationInvoiceViewAdapter;
@@ -16,6 +18,7 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.invoicemanagement.ApplicationInvoiceBean;
 import com.ruitukeji.zwbh.entity.mine.invoicemanagement.ApplicationInvoiceBean.ResultBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
@@ -304,7 +307,11 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
             et_contactPhoneNumber.setText("");
             tv_inArea.setText("");
             et_detailedAddress.setText("");
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "RefreshBillingRecordsFragment", true);
             ((ApplicationInvoiceContract.Presenter) mPresenter).getApplicationInvoiceList();
+            Intent intent = new Intent(aty, InvoiceManagementActivity.class);
+            intent.putExtra("newChageIcon", 1);
+            aty.showActivity(aty, intent);
         }
     }
 

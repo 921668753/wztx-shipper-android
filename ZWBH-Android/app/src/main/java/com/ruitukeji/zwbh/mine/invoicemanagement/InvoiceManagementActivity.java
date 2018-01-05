@@ -1,10 +1,13 @@
 package com.ruitukeji.zwbh.mine.invoicemanagement;
 
 import android.content.Intent;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.Log;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
@@ -64,7 +67,6 @@ public class InvoiceManagementActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
-
         SimpleDelegate simpleDelegate = new SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {
@@ -80,7 +82,7 @@ public class InvoiceManagementActivity extends BaseActivity {
                 showActivity(aty, intent);
             }
         };
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.invoiceManagement), getString(R.string.recommendedRecord), R.id.titlebar, simpleDelegate);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.invoiceManagement), getString(R.string.descriptionInvoice), R.id.titlebar, simpleDelegate);
 
         if (chageIcon == 0) {
             chageIcon = 0;
@@ -96,6 +98,50 @@ public class InvoiceManagementActivity extends BaseActivity {
             changeFragment(contentFragment);
         }
     }
+
+
+    /**
+     * Activity的启动模式变为singleTask
+     * 调用onNewIntent(Intent intent)方法。
+     * Fragment调用的时候，一定要在onResume方法中。
+     *
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        int newChageIcon = intent.getIntExtra("newChageIcon", 4);
+        Log.d("newChageIcon", newChageIcon + "");
+        if (newChageIcon == 0) {
+            setSimulateClick(ll_applicationInvoice, 160, 100);
+        } else if (newChageIcon == 1) {
+            setSimulateClick(ll_billingRecords, 160, 100);
+        } else {
+            setSimulateClick(ll_applicationInvoice, 160, 100);
+        }
+    }
+
+    /**
+     * 模拟点击
+     *
+     * @param view
+     * @param x
+     * @param y
+     */
+    private void setSimulateClick(View view, float x, float y) {
+        long downTime = SystemClock.uptimeMillis();
+        final MotionEvent downEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_DOWN, x, y, 0);
+        downTime += 1000;
+        final MotionEvent upEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_UP, x, y, 0);
+        view.onTouchEvent(downEvent);
+        view.onTouchEvent(upEvent);
+        downEvent.recycle();
+        upEvent.recycle();
+    }
+
 
     public void changeFragment(BaseFragment targetFragment) {
         super.changeFragment(R.id.main_content, targetFragment);

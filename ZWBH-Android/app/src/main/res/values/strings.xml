@@ -510,6 +510,7 @@
     <!--发票管理-->
     <string name="applicationInvoice">申请发票</string>
     <string name="billingRecords">开票记录</string>
+    <string name="descriptionInvoice">开票说明</string>
 
     <!--申请发票-->
     <string name="invoiceType">发票类型</string>

@@ -11,12 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.invoicemanagement.BillingRecordsViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.invoicemanagement.BillingRecordsBean;
 import com.ruitukeji.zwbh.mine.invoicemanagement.InvoiceManagementActivity;
 import com.ruitukeji.zwbh.mine.invoicemanagement.billingdetails.BillingDetailsActivity;
@@ -181,6 +183,14 @@ public class BillingRecordsFragment extends BaseFragment implements BillingRecor
         dismissLoadingDialog();
     }
 
+    @Override
+    public void onChange() {
+        super.onChange();
+        boolean RefreshBillingRecordsFragment = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "RefreshBillingRecordsFragment", false);
+        if (RefreshBillingRecordsFragment) {
+            mRefreshLayout.beginRefreshing();
+        }
+    }
 
     @Override
     public void onDestroy() {

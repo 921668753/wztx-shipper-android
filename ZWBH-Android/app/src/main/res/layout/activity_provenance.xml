@@ -14,7 +14,7 @@
         style="@style/MatchWrap"
         android:background="@color/mainColor"
         android:padding="@dimen/dimen15"
-        android:text="苏州市昆山市"
+        android:text="--"
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize15" />
 
@@ -151,6 +151,7 @@
             android:background="@android:color/transparent"
             android:digits="1234567890-"
             android:hint="@string/pleaseFillOut"
+            android:inputType="phone"
             android:maxLength="17"
             android:singleLine="true"
             android:textColor="@color/titletextcolors"

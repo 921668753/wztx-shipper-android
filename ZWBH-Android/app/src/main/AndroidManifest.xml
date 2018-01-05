@@ -247,6 +247,7 @@
         <!--个人中心  发票管理-->
         <activity
             android:name=".mine.invoicemanagement.InvoiceManagementActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--个人中心  发票管理  开票详情-->

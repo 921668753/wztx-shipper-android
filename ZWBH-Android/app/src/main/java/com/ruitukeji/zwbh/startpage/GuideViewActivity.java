@@ -44,23 +44,24 @@ public class GuideViewActivity extends BaseActivity {
         mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
-                Log.d("tag", mForegroundBanner.getCurrentItem() + "");
-                Intent intent = new Intent(aty, Main2Activity.class);
-                intent.setAction("android.intent.action.MAIN");
-                intent.addCategory("android.intent.category.LAUNCHER");
-                switch (mForegroundBanner.getCurrentItem()) {
-                    //  skipActivity(aty, Main2Activity.class);
-                    case 0:
-                        intent.putExtra("img", R.mipmap.guidepage);
-                        break;
-                    case 1:
-                        intent.putExtra("img", R.mipmap.guidepage1);
-                        break;
-                    case 2:
-                        intent.putExtra("img", R.mipmap.guidepage2);
-                        break;
-                }
-                skipActivity(aty, intent);
+//                Log.d("tag", mForegroundBanner.getCurrentItem() + "");
+//                Intent intent = new Intent(aty, Main2Activity.class);
+//                intent.setAction("android.intent.action.MAIN");
+//                intent.addCategory("android.intent.category.LAUNCHER");
+//                switch (mForegroundBanner.getCurrentItem()) {
+//                    //  skipActivity(aty, Main2Activity.class);
+//                    case 0:
+//                        intent.putExtra("img", R.mipmap.guidepage);
+//                        break;
+//                    case 1:
+//                        intent.putExtra("img", R.mipmap.guidepage1);
+//                        break;
+//                    case 2:
+//                        intent.putExtra("img", R.mipmap.guidepage2);
+//                        break;
+//                }
+//                skipActivity(aty, intent);
+                finish();
                 overridePendingTransition(0, 0);
             }
         });

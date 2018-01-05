@@ -218,6 +218,7 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
+            mAdapter.closeOpenedSwipeItemLayoutWithAnim();
             SystemMessageBean messageBean = (SystemMessageBean) JsonUtil.getInstance().json2Obj(s, SystemMessageBean.class);
             mMorePageNumber = messageBean.getResult().getPage();
             totalPageNumber = messageBean.getResult().getPageTotal();

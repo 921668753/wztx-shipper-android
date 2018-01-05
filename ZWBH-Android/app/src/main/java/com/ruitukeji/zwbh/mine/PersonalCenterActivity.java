@@ -203,13 +203,16 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", personalCenterNum + 1);
                     sv_mine.scrollTo(0, 2);
                     mRefreshLayout.beginRefreshing();
                 }
             }, 500);
+            return;
         }
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", personalCenterNum++);
+        readLocal();
     }
+
 
     @Override
     public void widgetClick(View v) {
@@ -307,49 +310,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             PreferenceHelper.write(aty, StringConstants.FILENAME, "recomm_code", userInfoBean.getResult().getRecomm_code());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "bond_status", userInfoBean.getResult().getBond_status());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "bond", userInfoBean.getResult().getBond());
-            if (StringUtils.isEmpty(userInfoBean.getResult().getAvatar())) {
-                img_headPortrait.setImageResource(R.mipmap.avatar);
-                img_headPortrait1.setImageResource(R.mipmap.avatar);
-            } else {
-                GlideApp.with(this)
-                        .load(userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70")
-                        .placeholder(R.mipmap.avatar)
-                        .error(R.mipmap.avatar)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .transform(new GlideCircleTransform(this))
-                        .dontAnimate()//没有任何淡入淡出效果
-                        .into(img_headPortrait);
-                GlideApp.with(this)
-                        .load(userInfoBean.getResult().getAvatar() + "?imageView2/1/w/70/h/70")
-                        .placeholder(R.mipmap.avatar)
-                        .error(R.mipmap.avatar)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .transform(new GlideCircleTransform(this))
-                        .dontAnimate()//没有任何淡入淡出效果
-                        .into(img_headPortrait1);
-            }
-            tv_name.setVisibility(View.VISIBLE);
-            tv_name1.setVisibility(View.VISIBLE);
-            if (StringUtils.isEmpty(userInfoBean.getResult().getReal_name())) {
-                tv_name.setText(userInfoBean.getResult().getPhone());
-                tv_name1.setText(userInfoBean.getResult().getPhone());
-            } else {
-                tv_name.setText(userInfoBean.getResult().getReal_name());
-                tv_name1.setText(userInfoBean.getResult().getReal_name());
-            }
-            if (auth_status != null && auth_status.equals("pass")) {
-                tv_incompleteCertification.setText(getString(R.string.certified));
-                tv_incompleteCertification1.setText(getString(R.string.certified));
-            } else if (auth_status != null && auth_status.equals("check")) {
-                tv_incompleteCertification.setText(getString(R.string.inAuthentication));
-                tv_incompleteCertification1.setText(getString(R.string.inAuthentication));
-            } else if (auth_status != null && auth_status.equals("refuse")) {
-                tv_incompleteCertification.setText(getString(R.string.refuse));
-                tv_incompleteCertification1.setText(getString(R.string.refuse));
-            } else {
-                tv_incompleteCertification.setText(getString(R.string.incompleteCertification));
-                tv_incompleteCertification1.setText(getString(R.string.incompleteCertification));
-            }
+            readLocal();
         } else if (flag == 1) {
             showActivity(aty, PersonalDataActivity.class);
         } else if (flag == 2) {
@@ -382,6 +343,61 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         }
         dismissLoadingDialog();
     }
+
+
+    /**
+     * 读取本地
+     */
+    private void readLocal() {
+        String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar");
+        if (StringUtils.isEmpty(avatar)) {
+            img_headPortrait.setImageResource(R.mipmap.avatar);
+            img_headPortrait1.setImageResource(R.mipmap.avatar);
+        } else {
+            GlideApp.with(this)
+                    .load(avatar + "?imageView2/1/w/70/h/70")
+                    .placeholder(R.mipmap.avatar)
+                    .error(R.mipmap.avatar)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .transform(new GlideCircleTransform(this))
+                    .dontAnimate()//没有任何淡入淡出效果
+                    .into(img_headPortrait);
+            GlideApp.with(this)
+                    .load(avatar + "?imageView2/1/w/70/h/70")
+                    .placeholder(R.mipmap.avatar)
+                    .error(R.mipmap.avatar)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .transform(new GlideCircleTransform(this))
+                    .dontAnimate()//没有任何淡入淡出效果
+                    .into(img_headPortrait1);
+        }
+        tv_name.setVisibility(View.VISIBLE);
+        tv_name1.setVisibility(View.VISIBLE);
+        String real_name = PreferenceHelper.readString(aty, StringConstants.FILENAME, "real_name");
+        String phone = PreferenceHelper.readString(aty, StringConstants.FILENAME, "phone");
+        if (StringUtils.isEmpty(real_name)) {
+            tv_name.setText(phone);
+            tv_name1.setText(phone);
+        } else {
+            tv_name.setText(real_name);
+            tv_name1.setText(real_name);
+        }
+        String auth_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "auth_status");
+        if (auth_status != null && auth_status.equals("pass")) {
+            tv_incompleteCertification.setText(getString(R.string.certified));
+            tv_incompleteCertification1.setText(getString(R.string.certified));
+        } else if (auth_status != null && auth_status.equals("check")) {
+            tv_incompleteCertification.setText(getString(R.string.inAuthentication));
+            tv_incompleteCertification1.setText(getString(R.string.inAuthentication));
+        } else if (auth_status != null && auth_status.equals("refuse")) {
+            tv_incompleteCertification.setText(getString(R.string.refuse));
+            tv_incompleteCertification1.setText(getString(R.string.refuse));
+        } else {
+            tv_incompleteCertification.setText(getString(R.string.incompleteCertification));
+            tv_incompleteCertification1.setText(getString(R.string.incompleteCertification));
+        }
+    }
+
 
     @Override
     public void errorMsg(String msg, int flag) {

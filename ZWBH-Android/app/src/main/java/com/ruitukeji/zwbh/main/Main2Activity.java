@@ -74,6 +74,7 @@ import com.ruitukeji.zwbh.main.message.SystemMessageActivity;
 import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
+import com.ruitukeji.zwbh.startpage.GuideViewActivity;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -293,6 +294,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private int minutes = 0;
     private int isOff1 = 0;
     private int isOff = 0;
+    private boolean isFirst = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,7 +303,8 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     }
 
     private void init(Bundle savedInstanceState) {
-        locationBouncedDialog = new LocationBouncedDialog(getIntent().getIntExtra("img", R.mipmap.startpage), this);
+        isFirst = getIntent().getBooleanExtra("isFirst", false);
+        locationBouncedDialog = new LocationBouncedDialog(isFirst, this);
         locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -347,7 +350,6 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     @Override
     public void initWidget() {
         super.initWidget();
-
         registerMessageReceiver();
         geocoderSearch.setOnGeocodeSearchListener(this);
         if (mSensorHelper != null) {
@@ -521,6 +523,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     /**
      * 请选择预约时间
      */
+
     private void appointmentTime() {
         pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
@@ -1074,6 +1077,9 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
      */
     public void dismissDialog() {
         //实现页面跳转
+        if (isFirst) {
+            return;
+        }
         if (locationBouncedDialog != null && locationBouncedDialog.isShowing()) {
             locationBouncedDialog.dismiss();
         }

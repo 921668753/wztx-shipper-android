@@ -93,18 +93,18 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
 
     private void jumpTo() {
 //        startService(new Intent(aty, CommonService.class));
-        boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "firstOpen", true);
+        boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isFirst", true);
         Intent jumpIntent = new Intent();
         jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         if (isFirst) {
-            PreferenceHelper.write(this, StringConstants.FILENAME, "firstOpen", true);
-            jumpIntent.setClass(this, GuideViewActivity.class);
-        } else {
-            jumpIntent.setAction("android.intent.action.MAIN");
-            jumpIntent.addCategory("android.intent.category.LAUNCHER");
-            jumpIntent.putExtra("img", R.mipmap.startpage);
-            jumpIntent.setClass(this, Main2Activity.class);
+            PreferenceHelper.write(this, StringConstants.FILENAME, "isFirst", false);
+            //   jumpIntent.setClass(this, GuideViewActivity.class);
         }
+        jumpIntent.putExtra("isFirst", isFirst);
+        jumpIntent.setAction("android.intent.action.MAIN");
+        jumpIntent.addCategory("android.intent.category.LAUNCHER");
+        jumpIntent.putExtra("img", R.mipmap.startpage);
+        jumpIntent.setClass(this, Main2Activity.class);
         skipActivity(aty, jumpIntent);
         overridePendingTransition(0, 0);
     }

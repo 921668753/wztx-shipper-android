@@ -150,6 +150,7 @@
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"
             android:digits="1234567890-"
+            android:inputType="phone"
             android:hint="@string/pleaseFillOut"
             android:maxLength="17"
             android:singleLine="true"
