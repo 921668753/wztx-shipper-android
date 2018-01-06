@@ -468,17 +468,17 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                     break;
                 }
 
-                if (StringUtils.isEmpty(provenanceDetailedAddress) || StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
+                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
                     ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
                     break;
                 }
 
-                if (StringUtils.isEmpty(destinationDistrict)) {
+                if (StringUtils.isEmpty(destinationDistrict)|| StringUtils.isEmpty(destinationPlaceName)) {
                     ViewInject.toast(getString(R.string.enterDestination));
                     break;
                 }
 
-                if (StringUtils.isEmpty(destinationDetailedAddress) || StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
+                if ( StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
                     ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
                     break;
                 }

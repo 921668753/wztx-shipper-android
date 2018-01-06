@@ -301,7 +301,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                         et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
                         StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), cargoReceipt, tv_transportationEstimated.getText().toString(),
                         tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
-                        driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery,isTemporaryCar);
+                        driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery, isTemporaryCar);
                 break;
             case R.id.tv_assignedVehicle:
                 if (StringUtils.toInt(et_minute.getText().toString().trim(), 0) >= 60 || StringUtils.toInt(et_minute.getText().toString().trim(), 0) < 0) {
@@ -319,7 +319,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                                 et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
                                 StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), cargoReceipt, tv_transportationEstimated.getText().toString(),
                                 tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
-                                driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery,isTemporaryCar);
+                                driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery, isTemporaryCar);
                     }
                 };
                 assignedVehicleBouncedDialog.show();
