@@ -7,6 +7,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.AccountValidatorUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
@@ -34,8 +35,8 @@ public class LoginPresenter implements LoginContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.hintAccountText), 0);
             return;
         }
-        if (phone.length() != 11) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.inputPhone), 0);
+        if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
         if (StringUtils.isEmpty(pwd)) {

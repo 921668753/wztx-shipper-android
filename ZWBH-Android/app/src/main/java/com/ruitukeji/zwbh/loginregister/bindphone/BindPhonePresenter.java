@@ -7,6 +7,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.AccountValidatorUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
@@ -34,8 +35,8 @@ public class BindPhonePresenter implements BindPhoneContract.Presenter {
             mView.error(MyApplication.getContext().getString(R.string.hintAccountText));
             return;
         }
-        if (phone.length() != 11) {
-            mView.error(MyApplication.getContext().getString(R.string.inputPhone));
+        if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
+            mView.error(KJActivityStack.create().topActivity().getString(R.string.inputPhone));
             return;
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
@@ -100,8 +101,8 @@ public class BindPhonePresenter implements BindPhoneContract.Presenter {
             mView.error(MyApplication.getContext().getString(R.string.hintAccountText));
             return;
         }
-        if (tel.length() != 11) {
-            mView.error(MyApplication.getContext().getString(R.string.inputPhone));
+        if (tel.length() != 11 || !AccountValidatorUtil.isMobile(tel)) {
+            mView.error(KJActivityStack.create().topActivity().getString(R.string.inputPhone));
             return;
         }
         if (StringUtils.isEmpty(captcha)) {

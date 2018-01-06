@@ -61,7 +61,7 @@ public class AnnouncementActivity extends BaseActivity implements AnnouncementCo
         id = getIntent().getIntExtra("id", 0);
         mPresenter = new AnnouncementPresenter(this);
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AnnouncementContract.Presenter) mPresenter).getAnnouncement(0);
+        ((AnnouncementContract.Presenter) mPresenter).getAnnouncement(id);
     }
 
     @Override

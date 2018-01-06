@@ -52,7 +52,6 @@
     <string name="experienceImmediately">立即体验</string>
 
 
-
     <!--登录-->
     <string name="alphanumeric">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
     <string name="login">登录</string>
@@ -240,6 +239,9 @@
     <string name="pleaseEnterReceivingPlace">请输入收货地点</string>
     <string name="commonlyAddress">常用地址</string>
     <string name="setCommonAddress">设为常用地址</string>
+    <string name="enterAddressSameCity">请输入正确的同城地址</string>
+    <string name="enterIntercityAddress">请输入正确的城际地址</string>
+
 
     <!--城市选择-->
     <string name="selectCity">选择城市</string>

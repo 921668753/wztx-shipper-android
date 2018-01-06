@@ -467,55 +467,54 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                     ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
                     break;
                 }
-
-                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
-                    break;
-                }
-
-                if (StringUtils.isEmpty(destinationDistrict)|| StringUtils.isEmpty(destinationPlaceName)) {
-                    ViewInject.toast(getString(R.string.enterDestination));
-                    break;
-                }
-
-                if ( StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
-                    break;
-                }
-                if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
-                    ViewInject.toast(getString(R.string.appointmentTime2));
-                    return;
-                }
-                if (type1.equals("appoint") && DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) < System.currentTimeMillis()) {
-                    ViewInject.toast(getString(R.string.greateThanCurrentTime));
-                    return;
-                }
-                Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
-                cargoInformationIntent.putExtra("tran_type", tran_type);
-                cargoInformationIntent.putExtra("type", type1);
-                if (type1.equals("appoint")) {
-                    cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) / 1000 + "");
-                }
-                cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
-                cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
-                cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
-                cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
-                cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
-                cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
-                cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
-                cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
-                cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
-                cargoInformationIntent.putExtra("destinationLat", destinationLat);
-                cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
-                cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
-                cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
-                cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
-                cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
-                cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
-                cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
-                cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
-                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
+                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)){
+                ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
                 break;
+            }
+
+            if (StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
+                ViewInject.toast(getString(R.string.enterDestination));
+                break;
+            }
+
+            if (StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
+                ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
+                break;
+            }
+            if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
+                ViewInject.toast(getString(R.string.appointmentTime2));
+                return;
+            }
+            if (type1.equals("appoint") && DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) < System.currentTimeMillis()) {
+                ViewInject.toast(getString(R.string.greateThanCurrentTime));
+                return;
+            }
+            Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
+            cargoInformationIntent.putExtra("tran_type", tran_type);
+            cargoInformationIntent.putExtra("type", type1);
+            if (type1.equals("appoint")) {
+                cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) / 1000 + "");
+            }
+            cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
+            cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
+            cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
+            cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
+            cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
+            cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
+            cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
+            cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
+            cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
+            cargoInformationIntent.putExtra("destinationLat", destinationLat);
+            cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
+            cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
+            cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
+            cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
+            cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
+            cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
+            cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
+            cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
+            startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
+            break;
         }
     }
 
@@ -949,6 +948,9 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int rCode) {
         if (rCode == AMapException.CODE_AMAP_SUCCESS && regeocodeResult != null && regeocodeResult.getRegeocodeAddress() != null
                 && regeocodeResult.getRegeocodeAddress().getFormatAddress() != null) {
+            if (!StringUtils.isEmpty(provenanceDeliveryCustomer) && !StringUtils.isEmpty(provenanceShipper) && !StringUtils.isEmpty(provenancePhone)) {
+                return;
+            }
             province = regeocodeResult.getRegeocodeAddress().getProvince();
             city = regeocodeResult.getRegeocodeAddress().getCity();
             isProvenance = 1;

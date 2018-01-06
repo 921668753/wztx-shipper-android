@@ -2,7 +2,9 @@ package com.ruitukeji.zwbh.mine;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -216,7 +218,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 sv_mine.scrollTo(0, 2);
                 readLocal();
             }
-        }, 100);
+        }, 50);
     }
 
 
@@ -355,6 +357,16 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      * 读取本地
      */
     private void readLocal() {
+        Resources resources = this.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+//        float density = dm.density;
+//        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        if (height >= sv_mine.getHeight() + 45) {
+            tv_dividerWidth.setVisibility(View.GONE);
+            ll_personalData1.setVisibility(View.GONE);
+            ll_order1.setVisibility(View.GONE);
+        }
         String accessToken = PreferenceHelper.readString(aty, StringConstants.FILENAME, "accessToken");
         if (StringUtils.isEmpty(accessToken)) {
             errorMsg(String.valueOf(NumericConstants.TOLINGIN), 0);

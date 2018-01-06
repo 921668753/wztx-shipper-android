@@ -285,6 +285,14 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             shipper = data.getStringExtra("shipper");
             phone = data.getStringExtra("phone");
             eixedTelephone = data.getStringExtra("eixedTelephone");
+            if (!(tran_type == 0 && placeName.contains(city))) {
+                ViewInject.toast(getString(R.string.enterAddressSameCity));
+                return;
+            }
+            if (tran_type == 1 && placeName.contains(city)) {
+                ViewInject.toast(getString(R.string.enterIntercityAddress));
+                return;
+            }
             Intent intent = new Intent();
             intent.putExtra("lat", lat);
             intent.putExtra("longi", longi);
