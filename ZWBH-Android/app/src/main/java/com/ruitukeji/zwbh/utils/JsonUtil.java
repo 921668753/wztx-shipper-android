@@ -3,8 +3,6 @@ package com.ruitukeji.zwbh.utils;
 
 import com.google.gson.Gson;
 
-import java.util.Map;
-
 /**
  * Created by Administrator on 2016/5/27.
  */
