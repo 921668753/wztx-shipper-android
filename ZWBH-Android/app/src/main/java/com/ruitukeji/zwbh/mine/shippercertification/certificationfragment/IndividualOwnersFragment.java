@@ -134,7 +134,6 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     @BindView(id = R.id.tv_submit, click = true)
     private TextView tv_submit;
 
-
     private ImagePicker imagePicker;
     ArrayList<ImageItem> images = null;
 
@@ -410,10 +409,10 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
                 img_man.setImageResource(R.mipmap.ic_checkbox_select);
                 img_woman.setImageResource(R.mipmap.ic_checkbox_unselect);
             }
-            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd");
-            Long time=new Long(445555555);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Long time = new Long(445555555);
             String d = format.format(time);
-            Date date=format.parse(d);
+            Date date = format.parse(d);
             validityIdentityCard = date.getTime() / 1000;
             calendar.setTime(date);
             tv_validityIdentityCard.setText(d);
