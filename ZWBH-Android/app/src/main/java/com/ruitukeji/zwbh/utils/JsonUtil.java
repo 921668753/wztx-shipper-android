@@ -1,6 +1,5 @@
 package com.ruitukeji.zwbh.utils;
 
-
 import com.google.gson.Gson;
 
 /**
