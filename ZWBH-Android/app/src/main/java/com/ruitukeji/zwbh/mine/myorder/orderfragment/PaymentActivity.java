@@ -25,7 +25,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.AlipayBean;
-import com.ruitukeji.zwbh.entity.AppConfigBean;
+import com.ruitukeji.zwbh.entity.startpage.AppConfigBean;
 import com.ruitukeji.zwbh.entity.MyWalletBean;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.entity.WxPayBean;

@@ -19,7 +19,7 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.constant.URLConstants;
 import com.ruitukeji.zwbh.entity.BaseResult;
-import com.ruitukeji.zwbh.entity.LoginBean;
+import com.ruitukeji.zwbh.entity.loginregister.LoginBean;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpRequest;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;

@@ -22,7 +22,7 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.DistanceBean;
+import com.ruitukeji.zwbh.entity.main.cargoinformation.DistanceBean;
 import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;

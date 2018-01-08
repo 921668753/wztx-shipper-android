@@ -3,7 +3,7 @@ package com.ruitukeji.zwbh.adapter;
 import android.content.Context;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.entity.ConductorModelsBean.ResultBean.TypeBean;
+import com.ruitukeji.zwbh.entity.main.cargoinformation.selectvehicle.ConductorModelsBean.ResultBean.TypeBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;

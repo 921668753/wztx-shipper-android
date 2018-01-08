@@ -165,7 +165,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
         submitOrdersBouncedDialog = new SubmitOrdersBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
             public void confirm() {
-                this.dismiss();
+                this.cancel();
                 mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
                 Map<String, Object> map = new HashMap<String, Object>();

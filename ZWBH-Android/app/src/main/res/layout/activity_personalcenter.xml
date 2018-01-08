@@ -66,13 +66,13 @@
 
                             <TextView
                                 android:id="@+id/tv_incompleteCertification"
-                                style="@style/WrapWrap"
+                                android:layout_width="@dimen/dimen55"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen9"
                                 android:gravity="center"
                                 android:text="@string/incompleteCertification"
                                 android:textColor="@color/fA4343Colors"
                                 android:textSize="@dimen/textsize11" />
-
 
                             <ImageView
                                 android:layout_width="@dimen/dimen4"
@@ -184,6 +184,7 @@
                         android:textSize="@dimen/textsize15" />
 
                     <TextView
+                        android:id="@+id/tv_identityAuthentication"
                         style="@style/AutoWrap"
                         android:gravity="right"
                         android:text="@string/goCertification"
@@ -454,7 +455,8 @@
 
                 <TextView
                     android:id="@+id/tv_incompleteCertification1"
-                    style="@style/WrapWrap"
+                    android:layout_width="@dimen/dimen55"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen9"
                     android:gravity="center"
                     android:text="@string/incompleteCertification"

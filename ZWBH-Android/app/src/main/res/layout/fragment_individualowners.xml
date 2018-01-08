@@ -127,6 +127,8 @@
                     android:digits="@string/alphanumeric"
                     android:gravity="center_vertical"
                     android:hint="@string/pleaseFillOut"
+                    android:maxLength="18"
+                    android:inputType="number"
                     android:paddingLeft="@dimen/dimen73"
                     android:paddingRight="@dimen/dimen15"
                     android:textColor="@color/titletextcolors"

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -24,10 +25,13 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.IndividualOwnersBean;
+import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.mine.shippercertification.IndividualOwnersBean;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +72,7 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
      */
     @BindView(id = R.id.img_man, click = true)
     private ImageView img_man;
-
+    private int sex = 1;
     /**
      * 女
      */
@@ -123,6 +127,12 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     String uploudHoldingIdPhotoUrl = "";
     private boolean isUploudHoldingIdPhoto = true;
 
+    /**
+     * 提交
+     */
+    @BindView(id = R.id.tv_submit, click = true)
+    private TextView tv_submit;
+
 
     private ImagePicker imagePicker;
     ArrayList<ImageItem> images = null;
@@ -140,6 +150,12 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
         images = new ArrayList<>();
         initImagePicker();
         asOfTheDatePicker();
+        String auth_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "auth_status", "init");
+        if (auth_status != null && auth_status.equals("init")) {
+            return;
+        }
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((IndividualOwnersContract.Presenter) mPresenter).getIndividualOwners();
     }
 
 
@@ -192,7 +208,18 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
-
+        String auth_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "auth_status", "init");
+        if (auth_status != null && auth_status.equals("pass")) {
+            tv_unauthorized.setText(getString(R.string.authorized));
+        } else if (auth_status != null && auth_status.equals("check")) {
+            tv_unauthorized.setText(getString(R.string.inAuthentication));
+        } else if (auth_status != null && auth_status.equals("refuse")) {
+            tv_unauthorized.setText(getString(R.string.refuse));
+        } else {
+            tv_unauthorized.setText(getString(R.string.unauthorized));
+        }
+        String phone = PreferenceHelper.readString(aty, StringConstants.FILENAME, "phone");
+        tv_userPhone.setText(phone);
     }
 
     @Override
@@ -200,10 +227,12 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_man:
+                sex = 1;
                 img_man.setImageResource(R.mipmap.ic_checkbox_select);
                 img_woman.setImageResource(R.mipmap.ic_checkbox_unselect);
                 break;
             case R.id.img_woman:
+                sex = 2;
                 img_man.setImageResource(R.mipmap.ic_checkbox_unselect);
                 img_woman.setImageResource(R.mipmap.ic_checkbox_select);
                 break;
@@ -247,6 +276,10 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
                 images.add(imageItem2);
                 //打开预览
                 toImagePreviewDelActivity(img_uploudHoldingIdPhoto, images, NumericConstants.REQUEST_CODE_PREVIEW2);
+                break;
+            case R.id.tv_submit:
+                ((IndividualOwnersContract.Presenter) mPresenter).postIndividualOwners(et_userName.getText().toString().trim(), sex,
+                        et_IdNumber.getText().toString().trim(), tv_userPhone.getText().toString(), validityIdentityCard, uploadYourIdCardUrl, uploadClearYourIdCardUrl, uploudHoldingIdPhotoUrl);
                 break;
         }
     }
@@ -350,8 +383,16 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-
-
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "auth_status", "check");
+            ViewInject.toast(getString(R.string.submittedSuccessfully));
+            tv_unauthorized.setText(getString(R.string.inAuthentication));
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusShipperCertificationEvent"));
+            dismissLoadingDialog();
+            aty.finish();
+            return;
         } else if (flag == 1) {
             IndividualOwnersBean individualOwnersBean = (IndividualOwnersBean) JsonUtil.getInstance().json2Obj(success, IndividualOwnersBean.class);
 //            tv_realName.setText(individualOwnersBean.getResult().getReal_name());

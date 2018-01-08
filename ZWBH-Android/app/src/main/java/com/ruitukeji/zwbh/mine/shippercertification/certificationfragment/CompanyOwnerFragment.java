@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
@@ -22,10 +23,13 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.CompanyOwnerBean;
+import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.mine.shippercertification.CompanyOwnerBean;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,12 @@ import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PR
 public class CompanyOwnerFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, CompanyOwnerContract.View {
 
     private ShipperCertificationActivity aty;
+
+    /**
+     * 认证状态
+     */
+    @BindView(id = R.id.tv_unauthorized)
+    private TextView tv_unauthorized;
 
     /**
      * 公司名称
@@ -195,6 +205,16 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
     @Override
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
+        String auth_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "auth_status", "init");
+        if (auth_status != null && auth_status.equals("pass")) {
+            tv_unauthorized.setText(getString(R.string.authorized));
+        } else if (auth_status != null && auth_status.equals("check")) {
+            tv_unauthorized.setText(getString(R.string.inAuthentication));
+        } else if (auth_status != null && auth_status.equals("refuse")) {
+            tv_unauthorized.setText(getString(R.string.refuse));
+        } else {
+            tv_unauthorized.setText(getString(R.string.unauthorized));
+        }
     }
 
     @Override
@@ -299,9 +319,16 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-
-
-
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "auth_status", "check");
+            ViewInject.toast(getString(R.string.submittedSuccessfully));
+            tv_unauthorized.setText(getString(R.string.inAuthentication));
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusShipperCertificationEvent"));
+            dismissLoadingDialog();
+            aty.finish();
+            return;
         } else if (flag == 1) {
             CompanyOwnerBean companyOwnerBean = (CompanyOwnerBean) JsonUtil.getInstance().json2Obj(success, CompanyOwnerBean.class);
 //            tv_companyName.setText(companyOwnerBean.getResult().getCom_name());

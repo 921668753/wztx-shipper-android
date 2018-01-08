@@ -132,6 +132,9 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
      */
     @BindView(id = R.id.ll_identityAuthentication, click = true)
     private LinearLayout ll_identityAuthentication;
+    @BindView(id = R.id.tv_identityAuthentication)
+    private TextView tv_identityAuthentication;
+
 
     /**
      * 发票管理
@@ -327,7 +330,10 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 ViewInject.toast(getString(R.string.inAuthentication) + "," + getString(R.string.pleaseWait));
                 return;
             }
-            showActivity(aty, ShipperCertificationActivity.class);
+            String type = PreferenceHelper.readString(aty, StringConstants.FILENAME, "type", "person");
+            Intent intent = new Intent(aty, ShipperCertificationActivity.class);
+            intent.putExtra("type", type);
+            showActivity(aty, intent);
         } else if (flag == 3) {
             showActivity(aty, MyOrderActivity.class);
         } else if (flag == 4) {
@@ -409,12 +415,15 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         if (auth_status != null && auth_status.equals("pass")) {
             tv_incompleteCertification.setText(getString(R.string.certified));
             tv_incompleteCertification1.setText(getString(R.string.certified));
+            tv_identityAuthentication.setText(getString(R.string.certified));
         } else if (auth_status != null && auth_status.equals("check")) {
             tv_incompleteCertification.setText(getString(R.string.inAuthentication));
             tv_incompleteCertification1.setText(getString(R.string.inAuthentication));
+            tv_identityAuthentication.setText(getString(R.string.inAuthentication));
         } else if (auth_status != null && auth_status.equals("refuse")) {
             tv_incompleteCertification.setText(getString(R.string.refuse));
             tv_incompleteCertification1.setText(getString(R.string.refuse));
+            tv_identityAuthentication.setText(getString(R.string.refuse));
         } else {
             tv_incompleteCertification.setText(getString(R.string.incompleteCertification));
             tv_incompleteCertification1.setText(getString(R.string.incompleteCertification));
@@ -453,11 +462,6 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusLoginEvent")) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -465,11 +469,14 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                     mRefreshLayout.beginRefreshing();
                 }
             }, 600);
+        } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
+            //  img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
+            //   GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+        } else if (((String) msgEvent.getData()).equals("RxBusShipperCertificationEvent")) {
+            tv_incompleteCertification.setText(getString(R.string.inAuthentication));
+            tv_incompleteCertification1.setText(getString(R.string.inAuthentication));
+            tv_identityAuthentication.setText(getString(R.string.inAuthentication));
         }
-//        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
-////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
-//            GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
-//        }
     }
 
     @Override

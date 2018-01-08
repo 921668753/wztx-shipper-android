@@ -13,7 +13,7 @@ public interface IndividualOwnersContract {
         /**
          * 提交个人货主信息
          */
-        void postIndividualOwners(String real_name, int sex, String identity, String hold_pic, String front_pic, String back_pic, String tel, String pic_time);
+        void postIndividualOwners(String real_name, int sex, String identity, String tel, long pic_time, String front_pic, String back_pic, String hold_pic);
 
         /**
          * 获取个人货主信息

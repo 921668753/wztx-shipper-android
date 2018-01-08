@@ -15,7 +15,7 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.LoginBean;
+import com.ruitukeji.zwbh.entity.loginregister.LoginBean;
 import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
 import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;

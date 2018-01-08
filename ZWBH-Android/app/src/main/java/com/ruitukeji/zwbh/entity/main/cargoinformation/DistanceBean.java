@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.main.cargoinformation;
 
 import java.util.List;
 

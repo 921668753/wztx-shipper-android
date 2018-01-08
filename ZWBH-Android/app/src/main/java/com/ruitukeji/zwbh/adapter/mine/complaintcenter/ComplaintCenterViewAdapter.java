@@ -3,7 +3,7 @@ package com.ruitukeji.zwbh.adapter.mine.complaintcenter;
 import android.content.Context;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.entity.RecommendedRecordBean.ResultBean.ListBean;
+import com.ruitukeji.zwbh.entity.mine.invitefriends.RecommendedRecordBean.ResultBean.ListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;

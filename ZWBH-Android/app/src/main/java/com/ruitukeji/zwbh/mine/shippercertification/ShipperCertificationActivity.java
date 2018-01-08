@@ -5,10 +5,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.shippercertification.certificationfragment.CompanyOwnerFragment;
 import com.ruitukeji.zwbh.mine.shippercertification.certificationfragment.IndividualOwnersFragment;
 
@@ -64,7 +66,12 @@ public class ShipperCertificationActivity extends BaseActivity {
         super.initData();
         contentFragment = new IndividualOwnersFragment();
         contentFragment1 = new CompanyOwnerFragment();
-        chageIcon = getIntent().getIntExtra("chageIcon", 0);
+        String type = getIntent().getStringExtra("type");
+        if (type.equals("person")) {
+            chageIcon = 0;
+        } else {
+            chageIcon = 1;
+        }
     }
 
     @Override
@@ -98,14 +105,20 @@ public class ShipperCertificationActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ll_individualOwners:
-                chageIcon = 0;
-                cleanColors(0);
-                changeFragment(contentFragment);
+                String auth_status = PreferenceHelper.readString(this, StringConstants.FILENAME, "auth_status", "init");
+                if (auth_status != null && auth_status.equals("init")) {
+                    chageIcon = 0;
+                    cleanColors(0);
+                    changeFragment(contentFragment);
+                }
                 break;
             case R.id.ll_companyOwner:
-                chageIcon = 1;
-                cleanColors(1);
-                changeFragment(contentFragment1);
+                String auth_status1 = PreferenceHelper.readString(this, StringConstants.FILENAME, "auth_status", "init");
+                if (auth_status1 != null && auth_status1.equals("init")) {
+                    chageIcon = 1;
+                    cleanColors(1);
+                    changeFragment(contentFragment1);
+                }
                 break;
             default:
                 break;

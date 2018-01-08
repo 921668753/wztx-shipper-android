@@ -8,22 +8,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.kymjs.common.DensityUtils;
 import com.kymjs.common.FileUtils;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.okhttp3.OkHttpStack;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.http.RequestQueue;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseInstrumentedActivity;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.AppConfigBean;
-import com.ruitukeji.zwbh.main.Main1Activity;
+import com.ruitukeji.zwbh.entity.startpage.AppConfigBean;
 import com.ruitukeji.zwbh.main.Main2Activity;
-import com.ruitukeji.zwbh.main.MainActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
 import java.util.List;

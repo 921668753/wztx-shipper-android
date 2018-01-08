@@ -1,4 +1,6 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.loginregister;
+
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 /**
  * Created by ruitu on 2016/8/27.

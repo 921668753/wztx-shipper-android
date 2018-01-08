@@ -18,7 +18,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.LoginBean;
+import com.ruitukeji.zwbh.entity.loginregister.LoginBean;
 import com.ruitukeji.zwbh.loginregister.bindphone.BindPhoneActivity;
 import com.ruitukeji.zwbh.loginregister.registerretrievepassword.RegisterActivity;
 import com.ruitukeji.zwbh.loginregister.registerretrievepassword.RetrievePasswordActivity;
@@ -293,6 +293,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void getSuccess(String s, int flag) {
+        Log.d("tag", s);
         LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
         PreferenceHelper.write(this, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
         PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
@@ -350,7 +351,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                     if (view != null) {
                         view.setVisibility(View.VISIBLE);
                     }
-                    if (et_accountNumber.getText().length() > 0 && et_pwd.getText().length() > 0) {
+                    if (et_accountNumber.getText().length() == 11 && et_pwd.getText().length() >= 6) {
                         tv_login.setClickable(true);
                         tv_login.setBackgroundResource(R.drawable.shape_login);
                         tv_login.setTextColor(getResources().getColor(R.color.mainColor));

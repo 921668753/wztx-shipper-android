@@ -19,7 +19,7 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.IndividualOwnersBean;
+import com.ruitukeji.zwbh.entity.mine.shippercertification.IndividualOwnersBean;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;

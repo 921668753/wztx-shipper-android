@@ -1,4 +1,6 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.mine.shippercertification;
+
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 /**
  * Created by Admin on 2017/7/11.

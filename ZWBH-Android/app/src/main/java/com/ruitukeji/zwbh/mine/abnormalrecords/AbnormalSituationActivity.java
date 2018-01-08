@@ -217,5 +217,4 @@ public class AbnormalSituationActivity extends BaseActivity implements AbnormalS
         mAdapter = null;
     }
 
-
 }

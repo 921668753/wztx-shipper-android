@@ -3,7 +3,7 @@ package com.ruitukeji.zwbh.adapter.mine.mywallet;
 import android.content.Context;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.entity.ConductorModelsBean.ResultBean.LengthBean;
+import com.ruitukeji.zwbh.entity.main.cargoinformation.selectvehicle.ConductorModelsBean.ResultBean.LengthBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;

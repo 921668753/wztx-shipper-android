@@ -6,7 +6,7 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.entity.AboutUsBean;
+import com.ruitukeji.zwbh.entity.mine.setting.AboutUsBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.myview.WebViewLayout;

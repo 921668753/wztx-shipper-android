@@ -8,6 +8,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.mine.shippercertification.dialog.SubmitBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.BitmapCoreUtil;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
@@ -35,7 +36,7 @@ public class IndividualOwnersPresenter implements IndividualOwnersContract.Prese
     }
 
     @Override
-    public void postIndividualOwners(String real_name, int sex, String identity, String hold_pic, String front_pic, String back_pic, String tel, String pic_time) {
+    public void postIndividualOwners(String real_name, int sex, String identity, String tel, long pic_time, String front_pic, String back_pic, String hold_pic) {
         if (StringUtils.isEmpty(real_name)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.hintName), 0);
             return;
@@ -44,43 +45,63 @@ public class IndividualOwnersPresenter implements IndividualOwnersContract.Prese
             mView.errorMsg(MyApplication.getContext().getString(R.string.hintIDtext), 0);
             return;
         }
-       // hold_pic
-        if (StringUtils.isEmpty(front_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.uploudIdCardPhoto), 0);
+        if (identity.length() != 15 && identity.length() != 18) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.hintIDerrorText), 0);
             return;
         }
-        if (StringUtils.isEmpty(back_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.uploudIdCardPhotoBack), 0);
+        if (pic_time <= 0) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.validityIdentityCard), 0);
             return;
         }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("real_name", real_name);
-        map.put("sex", sex);
-        map.put("identity", identity);
-        map.put("hold_pic", hold_pic);
-        map.put("front_pic", front_pic);
-        map.put("back_pic", back_pic);
-        map.put("tel", tel);
-        map.put("pic_time", pic_time);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.getInfo(httpParams, new ResponseListener<String>() {
+//        if (StringUtils.isEmpty(front_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadYourIdCard), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(back_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadClearYourIdCard), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(hold_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploudHoldingIdPhoto), 0);
+//            return;
+//        }
+        SubmitBouncedDialog submitBouncedDialog = new SubmitBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
+            public void confirm() {
+                this.cancel();
+                mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
+                HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("real_name", real_name);
+                map.put("sex", sex);
+                map.put("identity", identity);
+                map.put("hold_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("front_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("back_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("tel", tel);
+                map.put("pic_time", pic_time);
+                httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+                RequestClient.postPersonalInformation(httpParams, new ResponseListener<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        mView.getSuccess(response, 0);
+                    }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                    @Override
+                    public void onFailure(String msg) {
+                        mView.errorMsg(msg, 0);
+                    }
+                });
             }
-        });
+        };
+        submitBouncedDialog.show();
     }
 
 
     @Override
     public void getIndividualOwners() {
-        RequestClient.isLogin(new ResponseListener<String>() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getPersonalCertificate(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
