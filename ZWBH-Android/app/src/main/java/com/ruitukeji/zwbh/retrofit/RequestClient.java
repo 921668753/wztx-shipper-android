@@ -160,8 +160,8 @@ public class RequestClient {
     /**
      * 获取文章内容
      */
-    public static void getArticle(HttpParams httpParams, final ResponseListener<String> listener) {
-        HttpRequest.requestGetHttp(URLConstants.GETARTICLE, httpParams, listener);
+    public static void getArticle(HttpParams httpParams, String type, final ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(URLConstants.GETARTICLE + "/" + type, httpParams, listener);
     }
 
     /**
