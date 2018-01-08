@@ -33,6 +33,7 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 import com.ruitukeji.zwbh.utils.rx.RxBus;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -381,7 +382,7 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     }
 
     @Override
-    public void getSuccess(String success, int flag) {
+    public void getSuccess(String success, int flag) throws ParseException {
         if (flag == 0) {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "auth_status", "check");
             ViewInject.toast(getString(R.string.submittedSuccessfully));
@@ -395,44 +396,55 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
             return;
         } else if (flag == 1) {
             IndividualOwnersBean individualOwnersBean = (IndividualOwnersBean) JsonUtil.getInstance().json2Obj(success, IndividualOwnersBean.class);
-//            tv_realName.setText(individualOwnersBean.getResult().getReal_name());
-//            tv_bindingMobilePhone.setText(individualOwnersBean.getResult().getPhone());
-//            tv_idNumber.setText(individualOwnersBean.getResult().getIdentity());
-//            if (individualOwnersBean.getResult().getSex() == 1) {
-//                tv_sex.setText(getString(R.string.man));
-//            } else if (individualOwnersBean.getResult().getSex() == 2) {
-//                tv_sex.setText(getString(R.string.woman));
-//            } else {
-//                tv_sex.setText(getString(R.string.unknown));
-//            }
-//            images.clear();
-//            imageViewAdapter.clear();
-//            ImageItem imageItem = new ImageItem();
-//            imageItem.path = individualOwnersBean.getResult().getFront_pic();
-//            images.add(imageItem);
-//            ImageItem imageItem1 = new ImageItem();
-//            imageItem1.path = individualOwnersBean.getResult().getBack_pic();
-//            images.add(imageItem1);
-//            imageViewAdapter.addMoreData(images);
+            et_userName.setText(individualOwnersBean.getResult().getReal_name());
+            et_IdNumber.setText(individualOwnersBean.getResult().getIdentity());
+            tv_userPhone.setText(individualOwnersBean.getResult().getPhone());
+            sex = individualOwnersBean.getResult().getSex();
+            if (sex == 1) {
+                img_man.setImageResource(R.mipmap.ic_checkbox_select);
+                img_woman.setImageResource(R.mipmap.ic_checkbox_unselect);
+            } else if (sex == 2) {
+                img_man.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_woman.setImageResource(R.mipmap.ic_checkbox_select);
+            } else {
+                img_man.setImageResource(R.mipmap.ic_checkbox_select);
+                img_woman.setImageResource(R.mipmap.ic_checkbox_unselect);
+            }
+            SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd");
+            Long time=new Long(445555555);
+            String d = format.format(time);
+            Date date=format.parse(d);
+            validityIdentityCard = date.getTime() / 1000;
+            calendar.setTime(date);
+            tv_validityIdentityCard.setText(d);
+            isUploadYourIdCard = false;
+            uploadYourIdCardUrl = individualOwnersBean.getResult().getFront_pic();
+            GlideImageLoader.glideOrdinaryLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", img_uploadYourIdCard);
+            isUploadClearYourIdCard = false;
+            uploadClearYourIdCardUrl = individualOwnersBean.getResult().getBack_pic();
+            GlideImageLoader.glideOrdinaryLoader(aty, uploadClearYourIdCardUrl + "?imageView2/1/w/161/h/103", img_uploadClearYourIdCard);
+            uploudHoldingIdPhotoUrl = individualOwnersBean.getResult().getHold_pic();
+            isUploudHoldingIdPhoto = false;
+            GlideImageLoader.glideOrdinaryLoader(aty, uploudHoldingIdPhotoUrl + "?imageView2/1/w/161/h/103", img_uploudHoldingIdPhoto);
         } else if (flag == REQUEST_CODE_CHOOSE_PHOTO) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
                 GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadYourIdCard);
-                uploadYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl();
                 isUploadYourIdCard = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
                 GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadClearYourIdCard);
-                uploadClearYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadClearYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl();
                 isUploadClearYourIdCard = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW1) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
                 GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploudHoldingIdPhoto);
-                uploudHoldingIdPhotoUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploudHoldingIdPhotoUrl = uploadImageBean.getResult().getFile().getUrl();
                 isUploudHoldingIdPhoto = false;
             }
         }

@@ -1,5 +1,7 @@
 package com.ruitukeji.zwbh.common;
 
+import java.text.ParseException;
+
 /**
  * Created by Administrator on 2017/11/27.
  */
@@ -16,7 +18,7 @@ public interface BaseNewView<T, E> extends LoadingDialogView {
      * @param flag    用于区别请求
      */
     @SuppressWarnings("unchecked")
-    void getSuccess(E success, int flag);
+    void getSuccess(E success, int flag) throws ParseException;
 
     /**
      * http请求错误
