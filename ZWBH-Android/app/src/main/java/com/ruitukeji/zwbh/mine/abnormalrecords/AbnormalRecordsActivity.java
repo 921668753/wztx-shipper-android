@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.abnormalrecords;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -7,12 +8,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.mine.invitefriends.RecommendedRecordViewAdapter;
+import com.ruitukeji.zwbh.adapter.mine.abnormalrecords.AbnormalRecordsViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.RecommendedRecordBean;
+import com.ruitukeji.zwbh.entity.mine.abnormalrecords.AbnormalRecordsBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -29,7 +30,7 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    private RecommendedRecordViewAdapter mAdapter;
+    private AbnormalRecordsViewAdapter mAdapter;
 
     @BindView(id = R.id.lv_abnormalRecords)
     private ListView lv_abnormalRecords;
@@ -65,7 +66,7 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
     public void initData() {
         super.initData();
         mPresenter = new AbnormalRecordsPresenter(this);
-        mAdapter = new RecommendedRecordViewAdapter(this);
+        mAdapter = new AbnormalRecordsViewAdapter(this);
     }
 
     @Override
@@ -105,7 +106,9 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //  ViewInject.toast("1");
+        Intent intent = new Intent(aty, AbnormalSituationActivity.class);
+        intent.putExtra("id", mAdapter.getItem(i).getId());
+        showActivity(aty, intent);
     }
 
     /**
@@ -126,20 +129,20 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
+        AbnormalRecordsBean abnormalRecordsBean = (AbnormalRecordsBean) JsonUtil.getInstance().json2Obj(s, AbnormalRecordsBean.class);
+        mMorePageNumber = abnormalRecordsBean.getResult().getPage();
+        totalPageNumber = abnormalRecordsBean.getResult().getPageTotal();
+        if (abnormalRecordsBean.getResult().getList() == null || abnormalRecordsBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
+            mAdapter.addNewData(abnormalRecordsBean.getResult().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
+            mAdapter.addMoreData(abnormalRecordsBean.getResult().getList());
         }
         dismissLoadingDialog();
     }

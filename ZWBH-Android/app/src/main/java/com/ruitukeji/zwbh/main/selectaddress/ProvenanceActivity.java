@@ -223,6 +223,11 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 if (isProvenance != 1) {
                     break;
                 }
+                int orgprovince = placeName1.indexOf("省");
+                int orgcity = placeName1.indexOf("市");
+                if (orgprovince != -1 && orgcity != -1) {
+                    city = placeName1.substring(orgprovince + 1, orgcity + 1);
+                }
                 Intent intent = new Intent(aty, SelectAddressActivity.class);
                 intent.putExtra("isProvenance", isProvenance);
                 intent.putExtra("tran_type", tran_type);

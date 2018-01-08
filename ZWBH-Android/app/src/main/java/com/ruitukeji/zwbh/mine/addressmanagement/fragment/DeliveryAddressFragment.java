@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.addressmanagement.AddressViewAdapter;
@@ -18,6 +19,7 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.addressmanagement.AddressBean;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.newaddaddress.NewAddAddress1Activity;
@@ -150,10 +152,10 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_newAddress:
+                String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "currentLocationCity");
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
-                //  intent.putExtra("title", getString(R.string.newAddress));
+                intent.putExtra("city", city);
                 intent.putExtra("type", 0);
-                //  intent.putExtra("hintText", getString(R.string.pleaseEnterDeliveryLocation));
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
         }
@@ -236,11 +238,13 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
         if (view.getId() == R.id.img_setDefaultAddress) {
-            ((AddressContract.Presenter) mPresenter).postSetDefaultAddress(mAdapter.getItem(i).getId(),type);
+            ((AddressContract.Presenter) mPresenter).postSetDefaultAddress(mAdapter.getItem(i).getId(), type);
         } else if (view.getId() == R.id.ll_edit) {
+            String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "currentLocationCity");
             Intent intent = new Intent(aty, NewAddAddress1Activity.class);
             intent.putExtra("address_id", mAdapter.getItem(i).getId());
             intent.putExtra("type", 1);
+            intent.putExtra("city", city);
             startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
         } else if (view.getId() == R.id.ll_delete) {
             ((AddressContract.Presenter) mPresenter).postDeleteAddress(mAdapter.getItem(i).getId());

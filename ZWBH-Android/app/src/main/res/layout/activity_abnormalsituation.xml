@@ -30,6 +30,7 @@
                 android:paddingRight="@dimen/dimen12">
 
                 <TextView
+                    android:id="@+id/tv_name"
                     style="@style/WrapWrap"
                     android:maxWidth="@dimen/dimen160"
                     android:singleLine="true"
@@ -38,6 +39,7 @@
                     android:textSize="@dimen/textsize16" />
 
                 <TextView
+                    android:id="@+id/tv_cardNumber"
                     style="@style/WrapWrap"
                     android:layout_gravity="bottom"
                     android:paddingLeft="@dimen/dimen13"
@@ -47,6 +49,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_carLength"
                     style="@style/WrapWrap"
                     android:layout_gravity="bottom"
                     android:paddingRight="@dimen/dimen5"
@@ -55,6 +58,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_carType"
                     style="@style/WrapWrap"
                     android:layout_gravity="bottom"
                     android:paddingRight="@dimen/dimen8"
@@ -63,6 +67,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <ImageView
+                    android:id="@+id/img_label"
                     android:layout_width="@dimen/dimen33"
                     android:layout_height="@dimen/dimen16"
                     android:layout_marginLeft="@dimen/dimen5"
@@ -74,6 +79,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_time"
                 style="@style/MatchWrap"
                 android:layout_marginBottom="@dimen/dimen10"
                 android:layout_marginTop="@dimen/dimen10"
@@ -98,6 +104,7 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_goodName"
                     style="@style/WrapWrap"
                     android:maxWidth="@dimen/dimen100"
                     android:text="快递"
@@ -112,13 +119,13 @@
                     android:textSize="@dimen/textsize13" />
 
                 <TextView
+                    android:id="@+id/tv_orderNumber"
                     style="@style/WrapWrap"
                     android:text="2017103140026"
                     android:textColor="@color/a959494Colors"
                     android:textSize="@dimen/textsize13" />
 
             </LinearLayout>
-
 
 
             <TextView style="@style/DividerWidth" />
@@ -137,9 +144,9 @@
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
-                    style="@style/WrapWrap"
+                    android:id="@+id/tv_thePlace"
+                    style="@style/MatchWrap"
                     android:layout_marginLeft="@dimen/dimen8"
-                    android:singleLine="true"
                     android:text="江苏省昆山市花桥镇"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize14" />
@@ -161,9 +168,9 @@
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
-                    style="@style/WrapWrap"
+                    android:id="@+id/tv_destination"
+                    style="@style/MatchWrap"
                     android:layout_marginLeft="@dimen/dimen8"
-                    android:singleLine="true"
                     android:text="江苏省苏州市工业园区"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize14" />
@@ -171,7 +178,6 @@
             </LinearLayout>
 
             <TextView style="@style/DividerWidth" />
-
 
             <TextView
                 style="@style/MatchWrap"
@@ -211,6 +217,7 @@
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
+                    android:id="@+id/tv_abnormalLocation"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen8"
                     android:text="江苏省苏州市工业园区"
@@ -235,6 +242,7 @@
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
+                    android:id="@+id/tv_abnormalTime"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen8"
                     android:singleLine="true"
@@ -259,9 +267,9 @@
                     android:textSize="@dimen/textsize14" />
 
                 <TextView
-                    style="@style/WrapWrap"
+                    android:id="@+id/tv_abnormalReason"
+                    style="@style/MatchWrap"
                     android:layout_marginLeft="@dimen/dimen8"
-                    android:singleLine="true"
                     android:text="堵车"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize14" />

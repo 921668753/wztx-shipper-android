@@ -97,6 +97,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     private int id = 0;
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
     private int is_default1 = 0;
+    private String city;
 
     @Override
     public void setRootView() {
@@ -117,6 +118,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
             //获取地址信息
             ((NewAddAddress1Contract.Presenter) mPresenter).getAddress(id);
         }
+        city = getIntent().getStringExtra("city");
         informationKeptBouncedDialog = new InformationKeptBouncedDialog(aty);
     }
 
@@ -185,8 +187,14 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 if (type == 0 || type == 2) {
                     return;
                 }
+                int orgprovince = placeName.indexOf("省");
+                int orgcity = placeName.indexOf("市");
+                if (orgprovince != -1 && orgcity != -1) {
+                    city = placeName.substring(orgprovince + 1, orgcity + 1);
+                }
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
                 intent.putExtra("type", type);
+                intent.putExtra("city", city);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.img_on:

@@ -23,7 +23,7 @@ public class AbnormalRecordsPresenter implements AbnormalRecordsContract.Present
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);
-        RequestClient.showMyRecommList(httpParams, new ResponseListener<String>() {
+        RequestClient.getAbnormalRecords(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response);

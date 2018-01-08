@@ -66,6 +66,7 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
 
     private PoiSearch.Query query;
     private PoiSearch poiSearch;
+    private String city;
 
     @Override
     public void setRootView() {
@@ -79,6 +80,7 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         lv_selectAddress.setAdapter(pioAddressViewAdapter);
         lv_selectAddress.setOnItemClickListener(this);
         et_enterDeliveryLocation.addTextChangedListener(this);
+        city = getIntent().getStringExtra("city");
         type = getIntent().getIntExtra("type", 0);
     }
 
@@ -111,6 +113,7 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         }
         et_enterDeliveryLocation.setHint(hintText);
         ActivityTitleUtils.initToolbar(aty, title, getString(R.string.cancel), R.id.titlebar, simpleDelegate);
+        tv_city.setText(city);
     }
 
 

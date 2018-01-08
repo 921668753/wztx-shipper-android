@@ -561,6 +561,44 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 获取异常信息
+     */
+    public static void getAbnormalRecords(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.GETABNORMAL, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
+     * 获取异常信息详情
+     */
+    public static void getAbnormalSituation(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.GETONEABNORMAL, httpParams, listener);
+            }
+        }, listener);
+    }
+
     /**
      * 获取周边司机
      * 经度

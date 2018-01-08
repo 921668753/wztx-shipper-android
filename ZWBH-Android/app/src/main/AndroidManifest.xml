@@ -265,6 +265,11 @@
             android:name=".mine.abnormalrecords.AbnormalRecordsActivity"
             android:screenOrientation="portrait" />
 
+        <!--个人中心  异常记录  异常情况-->
+        <activity
+            android:name=".mine.abnormalrecords.AbnormalSituationActivity"
+            android:screenOrientation="portrait" />
+
         <!--个人中心  我的钱包-->
         <activity
             android:name=".mine.mywallet.MyWalletActivity"

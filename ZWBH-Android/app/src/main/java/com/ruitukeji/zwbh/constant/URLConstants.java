@@ -263,6 +263,16 @@ public class URLConstants {
     public static String CONTAINSORDER = APIURL + "Invoice/ContainsOrder";
 
     /**
+     * 获取异常信息
+     */
+    public static String GETABNORMAL = APIURL + "Abnormal/GetAbnormal";
+
+    /**
+     *  获取单条异常信息
+     */
+    public static String GETONEABNORMAL = APIURL + "Abnormal/GetOneAbnormal";
+
+    /**
      * 显示货源列表
      */
     public static String GOODSLIST = APIURL + "goods/goodsList";
