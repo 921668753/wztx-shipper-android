@@ -150,7 +150,7 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_newAddress:
-                String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "currentLocationCity");
+                String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "locationCity", "苏州市");
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
                 intent.putExtra("city", city);
                 intent.putExtra("type", 2);

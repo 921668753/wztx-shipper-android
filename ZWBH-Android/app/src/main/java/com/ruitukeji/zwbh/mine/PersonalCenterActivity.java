@@ -38,7 +38,7 @@ import com.ruitukeji.zwbh.mine.personaldata.PersonalDataActivity;
 import com.ruitukeji.zwbh.mine.setting.SettingsActivity;
 import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
-import com.ruitukeji.zwbh.utils.GlideCircleTransform;
+import com.ruitukeji.zwbh.utils.picturerelated.GlideCircleTransform;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;

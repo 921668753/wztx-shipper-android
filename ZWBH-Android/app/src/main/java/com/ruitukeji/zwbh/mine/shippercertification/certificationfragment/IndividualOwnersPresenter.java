@@ -1,6 +1,5 @@
 package com.ruitukeji.zwbh.mine.shippercertification.certificationfragment;
 
-import com.kymjs.common.CipherUtils;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.nanchen.compresshelper.FileUtil;
@@ -10,7 +9,7 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.shippercertification.dialog.SubmitBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
-import com.ruitukeji.zwbh.utils.BitmapCoreUtil;
+import com.ruitukeji.zwbh.utils.picturerelated.BitmapCoreUtil;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
@@ -19,8 +18,6 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by Administrator on 2017/12/11.

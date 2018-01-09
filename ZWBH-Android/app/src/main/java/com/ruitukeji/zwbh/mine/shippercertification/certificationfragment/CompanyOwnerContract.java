@@ -13,7 +13,8 @@ public interface CompanyOwnerContract {
         /**
          * 提交公司货主信息
          */
-        void postCompanyOwner();
+        void postCompanyOwner(String com_name, String com_buss_num, String address, String phone, String buss_pic, String law_person, String identity, String hold_pic, String front_pic,
+                              String back_pic, String sp_identity_name, String sp_identity, String sp_hold_pic, String sp_front_pic, String sp_back_pic);
 
         /**
          * 获取公司货主信息

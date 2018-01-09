@@ -188,6 +188,12 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
         mPresenter = new CompanyOwnerPresenter(this);
         images = new ArrayList<>();
         initImagePicker();
+        String auth_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "auth_status", "init");
+        if (auth_status != null && auth_status.equals("init")) {
+            return;
+        }
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((CompanyOwnerContract.Presenter) mPresenter).getCompanyOwner();
     }
 
     /**
@@ -359,50 +365,50 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
         } else if (flag == REQUEST_CODE_CHOOSE_PHOTO) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadPictureBusinessLicense);
-                uploadPictureBusinessLicenseUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadPictureBusinessLicenseUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadPictureBusinessLicenseUrl + "?imageView2/1/w/161/h/103", 3, img_uploadPictureBusinessLicense, R.mipmap.default_image);
                 isUploadPictureBusinessLicense = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadYourIdCard);
-                uploadYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCard, R.mipmap.default_image);
                 isUploadYourIdCard = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW1) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadClearYourIdCard);
-                uploadClearYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadClearYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadClearYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadClearYourIdCard, R.mipmap.default_image);
                 isUploadClearYourIdCard = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW2) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploudHoldingIdPhoto);
-                uploudHoldingIdPhotoUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploudHoldingIdPhotoUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploudHoldingIdPhotoUrl + "?imageView2/1/w/161/h/103", 3, img_uploudHoldingIdPhoto, R.mipmap.default_image);
                 isUploudHoldingIdPhoto = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW3) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadYourIdCardOperation);
-                uploadYourIdCardOperationUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadYourIdCardOperationUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardOperationUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCardOperation, R.mipmap.default_image);
                 isUploadYourIdCardOperation = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW4) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadClearYourIdCardOperation);
-                uploadClearYourIdCardOperationUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploadClearYourIdCardOperationUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadClearYourIdCardOperationUrl + "?imageView2/1/w/161/h/103", 3, img_uploadClearYourIdCardOperation, R.mipmap.default_image);
                 isUploadClearYourIdCardOperation = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW5) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploudHoldingIdPhotoOperation);
-                uploudHoldingIdPhotoOperationUrl = uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103";
+                uploudHoldingIdPhotoOperationUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploudHoldingIdPhotoOperationUrl + "?imageView2/1/w/161/h/103", 3, img_uploudHoldingIdPhotoOperation, R.mipmap.default_image);
                 isUploudHoldingIdPhotoOperation = false;
             }
         }

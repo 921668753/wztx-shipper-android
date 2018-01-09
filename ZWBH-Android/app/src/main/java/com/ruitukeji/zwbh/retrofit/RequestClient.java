@@ -221,7 +221,7 @@ public class RequestClient {
      * @param httpParams
      * @param listener
      */
-    public static void postPersonalInformation(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postPersonalInformation(HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "postPersonalInformation");
         doServer(new TokenCallback() {
             @Override
@@ -244,7 +244,7 @@ public class RequestClient {
      * @param httpParams
      * @param listener
      */
-    public static void postEnterpriseInformation(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void postEnterpriseInformation(HttpParams httpParams, ResponseListener<String> listener) {
         Log.d("tag", "postEnterpriseInformation");
         doServer(new TokenCallback() {
             @Override

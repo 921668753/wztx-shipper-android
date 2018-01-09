@@ -8,7 +8,7 @@ import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
-import com.ruitukeji.zwbh.utils.BitmapCoreUtil;
+import com.ruitukeji.zwbh.utils.picturerelated.BitmapCoreUtil;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;

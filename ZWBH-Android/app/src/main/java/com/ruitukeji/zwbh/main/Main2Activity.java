@@ -382,6 +382,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.ll_longTrunk:
                 tran_type = 1;
+                cleanDestination();
                 ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
                 break;
             case R.id.img_gps:
@@ -414,7 +415,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.tv_pleaseEnterDeparturePoint:
                 type = 0;
-                Intent provenanceIntent = new Intent(this, SelectAddressActivity.class);
+                Intent provenanceIntent = new Intent();
                 if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
                     provenanceIntent.setClass(this, SelectAddressActivity.class);
                 } else {
@@ -438,6 +439,14 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.tv_enterDestination:
+                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
+                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
+                    break;
+                }
+                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
+                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
+                    break;
+                }
                 type = 1;
                 Intent destinationIntent = new Intent();
                 if (isDestination == 0 || StringUtils.isEmpty(destinationLat) || StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
@@ -471,15 +480,31 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                     ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
                     break;
                 }
-
                 if (StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
                     ViewInject.toast(getString(R.string.enterDestination));
                     break;
                 }
-
                 if (StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
                     ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
                     break;
+                }
+                if (tran_type == 0) {
+                    int orgprovince = provenancePlaceName.indexOf("省");
+                    int orgcity = provenancePlaceName.indexOf("市");
+                    String provenanceCity = null;
+                    if (orgprovince != -1 && orgcity != -1) {
+                        provenanceCity = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
+                    }
+                    int orgprovince1 = destinationPlaceName.indexOf("省");
+                    int orgcity1 = destinationPlaceName.indexOf("市");
+                    String destinationCity = null;
+                    if (orgprovince != -1 && orgcity != -1) {
+                        destinationCity = destinationPlaceName.substring(orgprovince1 + 1, orgcity1 + 1);
+                    }
+                    if (!provenanceCity.equals(destinationCity)) {
+                        ViewInject.toast(getString(R.string.enterAddressSameCity1));
+                        return;
+                    }
                 }
                 if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
                     ViewInject.toast(getString(R.string.appointmentTime2));
@@ -652,8 +677,12 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
         provenanceShipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceShipper", "");
         provenancePhone = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenancePhone", "");
         provenanceEixedTelephone = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceEixedTelephone", "");
-
-
+        int orgprovince = provenancePlaceName.indexOf("省");
+        int orgcity = provenancePlaceName.indexOf("市");
+        if (orgprovince != -1 && orgcity != -1) {
+            province = provenancePlaceName.substring(0, orgprovince + 1);
+            city = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
+        }
 //        destinationLat = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationLat", "");
 //        destinationLongi = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationLongi", "");
 //        destinationDistrict = PreferenceHelper.readString(this, StringConstants.FILENAME, "destinationDistrict", "");
@@ -756,6 +785,14 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             isOff = data.getIntExtra("isOff1", 0);
             provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
+            if (tran_type == 0) {
+                int orgprovince = provenancePlaceName.indexOf("省");
+                int orgcity = provenancePlaceName.indexOf("市");
+                if (orgprovince != -1 && orgcity != -1) {
+                    province = provenancePlaceName.substring(0, orgprovince + 1);
+                    city = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
+                }
+            }
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
             /**
              * 选择目的地页面返回
@@ -776,18 +813,25 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             /**
              * 目的地信息
              */
-            destinationLat = "";
-            destinationLongi = "";
-            destinationDistrict = "";
-            destinationPlaceName = "";
-            destinationDetailedAddress = "";
-            destinationDeliveryCustomer = "";
-            destinationShipper = "";
-            destinationPhone = "";
-            destinationEixedTelephone = "";
-            isOff1 = 0;
-            tv_enterDestination.setText(destinationPlaceName);
+            cleanDestination();
         }
+    }
+
+    /**
+     * 清除目的地信息
+     */
+    private void cleanDestination() {
+        destinationLat = "";
+        destinationLongi = "";
+        destinationDistrict = "";
+        destinationPlaceName = "";
+        destinationDetailedAddress = "";
+        destinationDeliveryCustomer = "";
+        destinationShipper = "";
+        destinationPhone = "";
+        destinationEixedTelephone = "";
+        isOff1 = 0;
+        tv_enterDestination.setText(destinationPlaceName);
     }
 
 
@@ -948,9 +992,12 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int rCode) {
         if (rCode == AMapException.CODE_AMAP_SUCCESS && regeocodeResult != null && regeocodeResult.getRegeocodeAddress() != null
                 && regeocodeResult.getRegeocodeAddress().getFormatAddress() != null) {
+            isProvenance = 1;
+            if (!StringUtils.isEmpty(provenanceDeliveryCustomer) && !StringUtils.isEmpty(provenanceShipper) && !StringUtils.isEmpty(provenancePhone)) {
+                return;
+            }
             province = regeocodeResult.getRegeocodeAddress().getProvince();
             city = regeocodeResult.getRegeocodeAddress().getCity();
-            isProvenance = 1;
             provenanceLat = String.valueOf(regeocodeResult.getRegeocodeQuery().getPoint().getLatitude());
             provenanceLongi = String.valueOf(regeocodeResult.getRegeocodeQuery().getPoint().getLongitude());
             provenanceDistrict = province + city + regeocodeResult.getRegeocodeAddress().getDistrict();
@@ -959,12 +1006,9 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationCity", city);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "currentLocationArea", regeocodeResult.getRegeocodeAddress().getDistrict());
             android.util.Log.d("tag", regeocodeResult.getRegeocodeAddress().getFormatAddress());
-            android.util.Log.d("tag", regeocodeResult.getRegeocodeAddress().getProvince());
-            android.util.Log.d("tag", regeocodeResult.getRegeocodeAddress().getCity());
+            android.util.Log.d("tag", province);
+            android.util.Log.d("tag", city);
             android.util.Log.d("tag", regeocodeResult.getRegeocodeAddress().getDistrict());
-            if (!StringUtils.isEmpty(provenanceDeliveryCustomer) && !StringUtils.isEmpty(provenanceShipper) && !StringUtils.isEmpty(provenancePhone)) {
-                return;
-            }
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         } else {
             isProvenance = 0;

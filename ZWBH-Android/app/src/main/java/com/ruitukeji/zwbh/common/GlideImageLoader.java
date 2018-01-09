@@ -9,9 +9,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.kymjs.common.StringUtils;
 import com.lzy.imagepicker.loader.ImageLoader;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.utils.GlideCatchUtil;
-import com.ruitukeji.zwbh.utils.GlideCircleTransform;
-import com.ruitukeji.zwbh.utils.GlideRoundTransform;
+import com.ruitukeji.zwbh.utils.picturerelated.GlideCatchUtil;
+import com.ruitukeji.zwbh.utils.picturerelated.GlideCircleTransform;
+import com.ruitukeji.zwbh.utils.picturerelated.GlideRoundTransform;
+import com.ruitukeji.zwbh.utils.picturerelated.RoundCornersTransformation;
 
 import java.io.File;
 
@@ -101,12 +102,12 @@ public class GlideImageLoader implements ImageLoader {
         if (0 == tag) {
             GlideApp.with(context)
                     .load(url)
-                //    .skipMemoryCache(true)//设置跳过内存缓存
+                    //    .skipMemoryCache(true)//设置跳过内存缓存
                     .placeholder(R.mipmap.loading)
                     .error(R.mipmap.headload)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .transform(new GlideCircleTransform(context))
-                      .dontAnimate()//没有任何淡入淡出效果
+                    .dontAnimate()//没有任何淡入淡出效果
                     //    .transition(withCrossFade().crossFade())//应用在淡入淡出
                     .into(imageView);
         } else if (1 == tag) {
@@ -139,5 +140,152 @@ public class GlideImageLoader implements ImageLoader {
                 .into(imageView);
     }
 
+    /**
+     * @param context
+     * @param url
+     * @param imageView 圆角矩形
+     */
+    public static void glideRoundRectangleLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.ALL))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+
+    /**
+     * 左上
+     */
+    public static void glideLeftTopLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.LEFT_TOP))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+    /**
+     * 左下
+     */
+    public static void glideLeftBottomLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.LEFT_BOTTOM))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+
+    /**
+     * 右上
+     */
+    public static void glideRightTopLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.RIGHT_TOP))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+    /**
+     * 右下
+     */
+    public static void glideRightBottomLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.RIGHT_BOTTOM))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+    /**
+     * 上侧
+     */
+    public static void glideTopLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.TOP))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+    /**
+     * 下侧
+     */
+    public static void glideBottomLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.BOTTOM))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+    /**
+     * 左侧
+     */
+    public static void glideLeftLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.LEFT))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
+
+    /**
+     * 右侧
+     */
+    public static void glideRightLoader(Context context, Object url, int radius, ImageView imageView, int default_image) {
+        GlideApp.with(context)
+                .load(url)
+                .placeholder(default_image)
+                .error(default_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .transform(new RoundCornersTransformation(context, radius, RoundCornersTransformation.CornerType.RIGHT))
+                //   .skipMemoryCache(true)//设置跳过内存缓存
+                .dontAnimate()//没有任何淡入淡出效果
+                //   .transition(withCrossFade().crossFade())//应用在淡入淡出
+                .into(imageView);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.utils;
+package com.ruitukeji.zwbh.utils.picturerelated;
 
 import android.content.Context;
 import android.content.res.Resources;

@@ -381,7 +381,7 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
     }
 
     @Override
-    public void getSuccess(String success, int flag) throws ParseException {
+    public void getSuccess(String success, int flag) {
         if (flag == 0) {
             PreferenceHelper.write(aty, StringConstants.FILENAME, "auth_status", "check");
             ViewInject.toast(getString(R.string.submittedSuccessfully));
@@ -412,38 +412,43 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Long time = new Long(445555555);
             String d = format.format(time);
-            Date date = format.parse(d);
+            Date date = null;
+            try {
+                date = format.parse(d);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             validityIdentityCard = date.getTime() / 1000;
             calendar.setTime(date);
             tv_validityIdentityCard.setText(d);
             isUploadYourIdCard = false;
             uploadYourIdCardUrl = individualOwnersBean.getResult().getFront_pic();
-            GlideImageLoader.glideOrdinaryLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", img_uploadYourIdCard);
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCard, R.mipmap.default_image);
             isUploadClearYourIdCard = false;
             uploadClearYourIdCardUrl = individualOwnersBean.getResult().getBack_pic();
-            GlideImageLoader.glideOrdinaryLoader(aty, uploadClearYourIdCardUrl + "?imageView2/1/w/161/h/103", img_uploadClearYourIdCard);
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadClearYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadClearYourIdCard, R.mipmap.default_image);
             uploudHoldingIdPhotoUrl = individualOwnersBean.getResult().getHold_pic();
             isUploudHoldingIdPhoto = false;
-            GlideImageLoader.glideOrdinaryLoader(aty, uploudHoldingIdPhotoUrl + "?imageView2/1/w/161/h/103", img_uploudHoldingIdPhoto);
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploudHoldingIdPhotoUrl + "?imageView2/1/w/161/h/103", 3, img_uploudHoldingIdPhoto, R.mipmap.default_image);
         } else if (flag == REQUEST_CODE_CHOOSE_PHOTO) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadYourIdCard);
                 uploadYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCard, R.mipmap.default_image);
                 isUploadYourIdCard = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploadClearYourIdCard);
                 uploadClearYourIdCardUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploadClearYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadClearYourIdCard, R.mipmap.default_image);
                 isUploadClearYourIdCard = false;
             }
         } else if (flag == REQUEST_CODE_PHOTO_PREVIEW1) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {
-                GlideImageLoader.glideOrdinaryLoader(aty, uploadImageBean.getResult().getFile().getUrl() + "?imageView2/1/w/161/h/103", img_uploudHoldingIdPhoto);
                 uploudHoldingIdPhotoUrl = uploadImageBean.getResult().getFile().getUrl();
+                GlideImageLoader.glideRoundRectangleLoader(aty, uploudHoldingIdPhotoUrl + "?imageView2/1/w/161/h/103", 3, img_uploudHoldingIdPhoto, R.mipmap.default_image);
                 isUploudHoldingIdPhoto = false;
             }
         }

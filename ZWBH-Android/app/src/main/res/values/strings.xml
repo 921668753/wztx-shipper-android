@@ -141,7 +141,7 @@
     <string name="uploudIdCardPhoto">请上传身份证正面照片</string>
     <string name="uploudIdCardPhotoBack">请上传身份证反面照片</string>
 
-    <!--个人认证  身份认证-->
+    <!--企业认证  身份认证-->
 
     <string name="qualification">资质认证</string>
 
@@ -151,9 +151,10 @@
     <string name="registrationNumber1">请填写组织机构代码/社会信用代码</string>
     <string name="registrationNumber2">请填写正确的组织机构代码/社会信用代码</string>
     <string name="legalPersonIdNumber">法人身份证号</string>
+    <string name="hintName2">请输入正确的法人姓名</string>
     <string name="legalPersonIdNumber1">请填写正确的法人身份证号</string>
     <string name="phoneNumber">企业联系电话</string>
-    <string name="phoneNumber1">请输入正确的企业联系电话</string>
+    <string name="phoneNumber1">请输入正确的公司电话</string>
     <string name="address">地址</string>
     <string name="accountName">开户名称</string>
     <string name="accountName1">请填写在银行开户的企业名字</string>
@@ -164,6 +165,7 @@
     <string name="front_pic">请上传企业法人身份证正面照片</string>
     <string name="back_pic">请上传企业法人身份证反面照片</string>
     <string name="businessLicense_pic">请上传企业营业执照照片</string>
+    <string name="hintName3">请输入正确的操作人姓名</string>
     <string name="operationIdNumber">操作人身份证号</string>
     <string name="operationIdNumber1">请填写正确的操作人身份证号</string>
     <string name="sp_hold_pic">请上传操作人身份证手持照片</string>
@@ -209,6 +211,7 @@
     <string name="urgent">加急</string>
     <string name="makeAppointment">预约</string>
     <string name="appointmentTime1">预约时间</string>
+    <string name="enterAddressSameCity1">您选择的是同城专线，请输入同城地址</string>
     <string name="appointmentTime2">请选择预约时间</string>
     <string name="pleaseEnterDeparturePoint">请输入出发地</string>
     <string name="pleaseEnterInformationShipper">请输入发货人相关信息</string>
@@ -387,8 +390,6 @@
     <string name="companyOwner">公司货主</string>
     <string name="unauthorized">未认证</string>
     <string name="authorized">已认证</string>
-
-
 
 
     <string name="confirmationInformation">确定提交认证信息？</string>
