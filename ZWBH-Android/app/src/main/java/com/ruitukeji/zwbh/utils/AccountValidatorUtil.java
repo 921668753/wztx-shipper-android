@@ -40,7 +40,7 @@ public class AccountValidatorUtil {
     /**
      * 正则表达式：验证URL
      */
-    // public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
+    public static final String REGEX_URL = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=]*)?";
 
     /**
      * 正则表达式：验证IP地址
