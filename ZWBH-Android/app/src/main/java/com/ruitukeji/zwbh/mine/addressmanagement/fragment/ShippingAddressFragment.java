@@ -117,8 +117,8 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
         }
         AddressBean.ResultBean.ListBean listBean = mAdapter.getItem(i);
         Intent intent = new Intent();
-        intent.putExtra("lat", listBean.getAddress_maps().split(",")[0]);
-        intent.putExtra("longi", listBean.getAddress_maps().split(",")[1]);
+        intent.putExtra("lat", listBean.getAddress_maps().split(",")[1]);
+        intent.putExtra("longi", listBean.getAddress_maps().split(",")[0]);
         intent.putExtra("district", listBean.getCity());
         intent.putExtra("placeName", listBean.getAddress_name());
         intent.putExtra("detailedAddress", listBean.getAddress_detail());

@@ -367,6 +367,11 @@
             android:name=".mine.helpcenter.HelpCenterActivity"
             android:screenOrientation="portrait" />
 
+        <!--个人中心 帮助中心  帮助详情-->
+        <activity
+            android:name=".mine.helpcenter.HelpCenterDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <!--个人中心 系统设置-->
         <activity
             android:name=".mine.setting.SettingsActivity"

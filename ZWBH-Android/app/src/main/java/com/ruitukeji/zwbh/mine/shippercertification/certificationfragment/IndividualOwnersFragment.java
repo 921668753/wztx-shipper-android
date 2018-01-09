@@ -29,6 +29,7 @@ import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.shippercertification.IndividualOwnersBean;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity;
+import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 import com.ruitukeji.zwbh.utils.rx.RxBus;
@@ -409,18 +410,11 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
                 img_man.setImageResource(R.mipmap.ic_checkbox_select);
                 img_woman.setImageResource(R.mipmap.ic_checkbox_unselect);
             }
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Long time = new Long(445555555);
-            String d = format.format(time);
-            Date date = null;
-            try {
-                date = format.parse(d);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            validityIdentityCard = date.getTime() / 1000;
+            validityIdentityCard = StringUtils.toLong(individualOwnersBean.getResult().getPic_time());
+            String d = DataUtil.formatData(validityIdentityCard, "yyyy-MM-dd");
+            tv_validityIdentityCard.setText(d.substring(0, 10));
+            Date date = new Date(validityIdentityCard * 1000);
             calendar.setTime(date);
-            tv_validityIdentityCard.setText(d);
             isUploadYourIdCard = false;
             uploadYourIdCardUrl = individualOwnersBean.getResult().getFront_pic();
             GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCard, R.mipmap.default_image);

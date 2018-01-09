@@ -1,6 +1,7 @@
 package com.ruitukeji.zwbh.mine.helpcenter;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -43,14 +44,17 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 总页码
      */
     private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 是否加载更多
      */
@@ -75,12 +79,11 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_helpCenter.setAdapter(mAdapter);
         lv_helpCenter.setOnItemClickListener(this);
-        ((HelpCenterContract.Presenter) mPresenter).getHelpCenter(mMorePageNumber);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mMorePageNumber = 0;
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
@@ -105,7 +108,9 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //  ViewInject.toast("1");
+        Intent intent = new Intent(aty, HelpCenterDetailsActivity.class);
+        intent.putExtra("id", 0);
+        showActivity(aty, intent);
     }
 
     /**
@@ -116,7 +121,6 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_hintText:
-                ViewInject.toast("111");
                 mRefreshLayout.beginRefreshing();
                 break;
         }

@@ -95,14 +95,14 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.phoneCompany), 0);
             return;
         }
-        if (phone.length() <= 18) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.phoneNumber1), 0);
+        if (phone.length() > 18) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.phoneNumber1), 0);
             return;
         }
-        if (StringUtils.isEmpty(buss_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadPictureBusinessLicense), 0);
-            return;
-        }
+//        if (StringUtils.isEmpty(buss_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadPictureBusinessLicense), 0);
+//            return;
+//        }
         if (StringUtils.isEmpty(law_person)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.legalPersonName), 0);
             return;
@@ -122,18 +122,18 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.legalPersonIdNumber1), 0);
             return;
         }
-        if (StringUtils.isEmpty(front_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.front_pic), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(back_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.back_pic), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(hold_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.hold_pic), 0);
-            return;
-        }
+//        if (StringUtils.isEmpty(front_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.front_pic), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(back_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.back_pic), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(hold_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.hold_pic), 0);
+//            return;
+//        }
         if (StringUtils.isEmpty(sp_identity_name)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.operationName), 0);
             return;
@@ -152,19 +152,18 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.operationIdNumber1), 0);
             return;
         }
-
-        if (StringUtils.isEmpty(sp_front_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_front_pic), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(sp_back_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_back_pic), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(sp_hold_pic)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_hold_pic), 0);
-            return;
-        }
+//        if (StringUtils.isEmpty(sp_front_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_front_pic), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(sp_back_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_back_pic), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(sp_hold_pic)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_hold_pic), 0);
+//            return;
+//        }
 //        if (pic_time <= 0) {
 //            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.validityIdentityCard), 0);
 //            return;

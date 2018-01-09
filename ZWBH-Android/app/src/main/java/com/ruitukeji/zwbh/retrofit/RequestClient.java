@@ -1360,7 +1360,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestGetHttp(URLConstants.SHOWMYRECOMMLIST, httpParams, listener);
+                HttpRequest.requestGetHttp(URLConstants.HELPCENTER, httpParams, listener);
             }
         }, listener);
     }
@@ -1379,7 +1379,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestGetHttp(URLConstants.SHOWMYRECOMMLIST, httpParams, listener);
+                HttpRequest.requestGetHttp(URLConstants.HELPCENTERDETAIL, httpParams, listener);
             }
         }, listener);
     }

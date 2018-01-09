@@ -330,7 +330,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 ViewInject.toast(getString(R.string.inAuthentication) + "," + getString(R.string.pleaseWait));
                 return;
             }
-            String type = PreferenceHelper.readString(aty, StringConstants.FILENAME, "type", "person");
+            String type = PreferenceHelper.readString(aty, StringConstants.FILENAME, "type", "all");
             Intent intent = new Intent(aty, ShipperCertificationActivity.class);
             intent.putExtra("type", type);
             showActivity(aty, intent);
@@ -427,6 +427,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         } else {
             tv_incompleteCertification.setText(getString(R.string.incompleteCertification));
             tv_incompleteCertification1.setText(getString(R.string.incompleteCertification));
+            tv_identityAuthentication.setText(getString(R.string.goCertification));
         }
     }
 

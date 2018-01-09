@@ -312,7 +312,10 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
                 toImagePreviewDelActivity(img_uploudHoldingIdPhotoOperation, images, NumericConstants.REQUEST_CODE_PREVIEW6);
                 break;
             case R.id.tv_submit:
-
+                ((CompanyOwnerContract.Presenter) mPresenter).postCompanyOwner(et_companyName.getText().toString().trim(), et_businessLicense.getText().toString().trim(),
+                        et_companyAddress.getText().toString().trim(), et_phoneCompany.getText().toString().trim(), uploadPictureBusinessLicenseUrl, et_legalPersonName.getText().toString().trim(),
+                        et_legalPersonIdNumber.getText().toString().trim(), uploadYourIdCardUrl, uploadClearYourIdCardUrl, uploudHoldingIdPhotoUrl, et_operationName.getText().toString().trim(),
+                        et_IdNumber.getText().toString().trim(), uploadYourIdCardOperationUrl, uploadClearYourIdCardOperationUrl, uploudHoldingIdPhotoOperationUrl);
                 break;
         }
     }

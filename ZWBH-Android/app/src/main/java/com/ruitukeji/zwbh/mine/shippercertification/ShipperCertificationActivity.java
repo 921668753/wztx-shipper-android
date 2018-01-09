@@ -54,6 +54,7 @@ public class ShipperCertificationActivity extends BaseActivity {
      * 用来表示移动的Fragment
      */
     private int chageIcon;
+    private String type = "all";
 
 
     @Override
@@ -66,10 +67,10 @@ public class ShipperCertificationActivity extends BaseActivity {
         super.initData();
         contentFragment = new IndividualOwnersFragment();
         contentFragment1 = new CompanyOwnerFragment();
-        String type = getIntent().getStringExtra("type");
+        type = getIntent().getStringExtra("type");
         if (type.equals("person")) {
             chageIcon = 0;
-        } else {
+        } else if (type.equals("company")) {
             chageIcon = 1;
         }
     }
@@ -106,7 +107,7 @@ public class ShipperCertificationActivity extends BaseActivity {
                 break;
             case R.id.ll_individualOwners:
                 String auth_status = PreferenceHelper.readString(this, StringConstants.FILENAME, "auth_status", "init");
-                if (auth_status != null && auth_status.equals("init")) {
+                if (auth_status != null && auth_status.equals("init") && !type.equals("company")) {
                     chageIcon = 0;
                     cleanColors(0);
                     changeFragment(contentFragment);
@@ -114,7 +115,7 @@ public class ShipperCertificationActivity extends BaseActivity {
                 break;
             case R.id.ll_companyOwner:
                 String auth_status1 = PreferenceHelper.readString(this, StringConstants.FILENAME, "auth_status", "init");
-                if (auth_status1 != null && auth_status1.equals("init")) {
+                if (auth_status1 != null && auth_status1.equals("init") && !type.equals("person")) {
                     chageIcon = 1;
                     cleanColors(1);
                     changeFragment(contentFragment1);

@@ -22,7 +22,7 @@ public class IndividualOwnersBean extends BaseResult<IndividualOwnersBean.Result
          */
 
         private String auth_status;
-        private String auth_info;
+        private String auth_info; //失败原因
         private String real_name;
         private String phone;
         private String identity;
@@ -30,6 +30,7 @@ public class IndividualOwnersBean extends BaseResult<IndividualOwnersBean.Result
         private String hold_pic;
         private String front_pic;
         private String back_pic;
+        private String pic_time;
 
         public String getAuth_status() {
             return auth_status;
@@ -101,6 +102,14 @@ public class IndividualOwnersBean extends BaseResult<IndividualOwnersBean.Result
 
         public void setBack_pic(String back_pic) {
             this.back_pic = back_pic;
+        }
+
+        public String getPic_time() {
+            return pic_time;
+        }
+
+        public void setPic_time(String pic_time) {
+            this.pic_time = pic_time;
         }
     }
 }

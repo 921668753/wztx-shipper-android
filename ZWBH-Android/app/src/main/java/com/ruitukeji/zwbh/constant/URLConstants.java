@@ -185,7 +185,6 @@ public class URLConstants {
      */
     public static String SENDORDER = APIURL + "quote/sendOrder";
 
-
     /**
      * 获取用户信息
      */
@@ -220,7 +219,6 @@ public class URLConstants {
      * 修改始发地 目的地信息
      */
     public static String UPDATEADDRESS = APIURL + "Address/UpdateAddress";
-
 
     /**
      * 获取常用司机信息
@@ -303,6 +301,16 @@ public class URLConstants {
     public static String GETCOMPANYAUTHINFO = APIURL + "user/getCompanyAuthInfo";
 
     /**
+     * 帮助中心
+     */
+    public static String HELPCENTER = APIURL + "Help/HelpMain";
+
+    /**
+     * 帮助中心详情
+     */
+    public static String HELPCENTERDETAIL = APIURL + "Help/HelpMain";
+
+    /**
      * 显示订单列表
      */
     public static String SHOWORDERLIST = APIURL + "order/showOrderList";
@@ -361,7 +369,6 @@ public class URLConstants {
      * 显示我的推荐列表
      */
     public static String SHOWMYRECOMMLIST = APIURL + "recommend/showMyRecommList";
-
 
     /**
      * 改变广告状态

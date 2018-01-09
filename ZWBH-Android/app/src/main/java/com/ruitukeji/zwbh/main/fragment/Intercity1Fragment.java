@@ -1,12 +1,8 @@
-package com.ruitukeji.zwbh.main;
+package com.ruitukeji.zwbh.main.fragment;
 
 import android.Manifest;
-import android.app.Notification;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -14,7 +10,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,7 +23,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.AMap.OnCameraChangeListener;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
 import com.amap.api.maps2d.MapView;
@@ -43,98 +40,55 @@ import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.common.BaseActivity;
+import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.dialog.LocationBouncedDialog;
 import com.ruitukeji.zwbh.entity.BaseResult;
 import com.ruitukeji.zwbh.entity.main.HomeBean;
-import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
-import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
-import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
-import com.ruitukeji.zwbh.main.announcement.AnnouncementActivity;
+import com.ruitukeji.zwbh.main.*;
+import com.ruitukeji.zwbh.main.MainContract;
 import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
-import com.ruitukeji.zwbh.main.message.SystemMessageActivity;
 import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
-import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
 import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
-import com.sunfusheng.marqueeview.MarqueeView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.jpush.android.api.BasicPushNotificationBuilder;
-import cn.jpush.android.api.JPushInterface;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static android.app.Activity.RESULT_OK;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
 
-public class Main2Activity extends BaseActivity implements EasyPermissions.PermissionCallbacks, MainContract.View, OnGeocodeSearchListener, LocationSource, AMapLocationListener, OnCameraChangeListener, CloudSearch.OnCloudSearchListener {
 
-    /**
-     * 个人中心
-     */
-    @BindView(id = R.id.img_user, click = true)
-    private ImageView img_user;
+/**
+ * 城际专车
+ * Created by Administrator on 2018/1/9.
+ */
+public class Intercity1Fragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, MainContract.View, GeocodeSearch.OnGeocodeSearchListener, LocationSource, AMapLocationListener, AMap.OnCameraChangeListener, CloudSearch.OnCloudSearchListener {
 
-    /**
-     * 消息中心
-     */
-    @BindView(id = R.id.img_message, click = true)
-    private ImageView img_message;
-    @BindView(id = R.id.tv_message)
-    public TextView tv_message;
-
-
-    /**
-     * 同城物流
-     */
-    @BindView(id = R.id.ll_cityDistribution, click = true)
-    private LinearLayout ll_cityDistribution;
-    @BindView(id = R.id.tv_cityDistribution)
-    private TextView tv_cityDistribution;
-    @BindView(id = R.id.tv_cityDistribution1)
-    private TextView tv_cityDistribution1;
-    /**
-     * 全国物流
-     */
-    @BindView(id = R.id.ll_longTrunk, click = true)
-    private LinearLayout ll_longTrunk;
-    @BindView(id = R.id.tv_longTrunk)
-    private TextView tv_longTrunk;
-    @BindView(id = R.id.tv_longTrunk1)
-    private TextView tv_longTrunk1;
-    /**
-     * 通知
-     */
-    @BindView(id = R.id.ll_ad)
-    private LinearLayout ll_ad;
-    @BindView(id = R.id.marqueeView)
-    private MarqueeView marqueeView;
 
     /**
      * 定位
@@ -258,7 +212,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private String type1 = "often";
     private int tran_type = 0;
 
-    private MessageReceiver mMessageReceiver;
+    private Main2Activity.MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
@@ -280,9 +234,9 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private String dateStr;
     private String hoursStr;
     private String minutesStr;
-    private List<DateChooseBean> date_choose;
-    private List<HoursChooseBean> hours_choose;
-    private List<MinutesChooseBean> minutes_choose;
+    private List<TimeChooseBean.ResultBean.DateChooseBean> date_choose;
+    private List<TimeChooseBean.ResultBean.HoursChooseBean> hours_choose;
+    private List<TimeChooseBean.ResultBean.MinutesChooseBean> minutes_choose;
     private int day = 0;
     private int hours = 0;
     private int minutes = 0;
@@ -290,22 +244,30 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     private int isOff = 0;
     private boolean isFirst = false;
 
+    private Main2Activity aty;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
     }
 
+    @Override
+    protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        aty = (Main2Activity) getActivity();
+        return View.inflate(aty, R.layout.fragment_intercity, null);
+    }
+
     private void init(Bundle savedInstanceState) {
-        isFirst = getIntent().getBooleanExtra("isFirst", false);
-        locationBouncedDialog = new LocationBouncedDialog(isFirst, this);
+        isFirst = aty.getIntent().getBooleanExtra("isFirst", false);
+        locationBouncedDialog = new LocationBouncedDialog(isFirst, aty);
         locationBouncedDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     dialog.dismiss();
                     dialog = null;
-                    finish();
+                    aty.finish();
                     return true;
                 } else {
                     return false;
@@ -313,7 +275,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             }
         });
         locationBouncedDialog.show();
-        mapView = (MapView) findViewById(R.id.map);
+        mapView = (MapView) aty.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         if (aMap == null) {
             aMap = mapView.getMap();
@@ -326,30 +288,24 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     }
 
     @Override
-    public void setRootView() {
-        setContentView(R.layout.activity_main1);
-    }
-
-    @Override
     public void initData() {
         super.initData();
         mPresenter = new MainPresenter(this);
-        mSensorHelper = new SensorEventHelper(this);
-        geocoderSearch = new GeocodeSearch(this);
-        mCloudSearch = new CloudSearch(this);// 初始化查询类
+        mSensorHelper = new SensorEventHelper(getActivity());
+        geocoderSearch = new GeocodeSearch(getActivity());
+        mCloudSearch = new CloudSearch(getActivity());// 初始化查询类
         ((MainContract.Presenter) mPresenter).getHome();
     }
 
     @Override
-    public void initWidget() {
-        super.initWidget();
-        registerMessageReceiver();
+    protected void initWidget(View parentView) {
+        super.initWidget(parentView);
         geocoderSearch.setOnGeocodeSearchListener(this);
         if (mSensorHelper != null) {
             mSensorHelper.registerSensorListener();
         }
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
-        ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+        ((MainContract.Presenter) mPresenter).settingType(aty, 0, tv_realTime, tv_urgent, tv_makeAppointment);
         tv_appointmentTime.setVisibility(View.GONE);
         ll_appointmentTime.setVisibility(View.GONE);
     }
@@ -358,26 +314,10 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.img_user:
-                showActivity(aty, PersonalCenterActivity.class);
-                break;
-            case R.id.img_message:
-                showActivity(aty, SystemMessageActivity.class);
-                tv_message.setVisibility(View.GONE);
-                break;
             case R.id.ll_appointmentTime:
-                SoftKeyboardUtils.packUpKeyboard(this);
+                SoftKeyboardUtils.packUpKeyboard(getActivity());
                 pvOptions.setSelectOptions(day, hours, minutes);
                 pvOptions.show(tv_appointmentTime1);
-                break;
-            case R.id.ll_cityDistribution:
-                tran_type = 0;
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
-                break;
-            case R.id.ll_longTrunk:
-                tran_type = 1;
-                cleanDestination();
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
                 break;
             case R.id.img_gps:
                 if (location == null) {
@@ -388,19 +328,19 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.tv_realTime:
                 type1 = "often";
-                ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+                ((com.ruitukeji.zwbh.main.MainContract.Presenter) mPresenter).settingType(aty, 0, tv_realTime, tv_urgent, tv_makeAppointment);
                 tv_appointmentTime.setVisibility(View.GONE);
                 ll_appointmentTime.setVisibility(View.GONE);
                 break;
             case R.id.tv_urgent:
                 type1 = "urgent";
-                ((MainContract.Presenter) mPresenter).settingType(this, 1, tv_realTime, tv_urgent, tv_makeAppointment);
+                ((com.ruitukeji.zwbh.main.MainContract.Presenter) mPresenter).settingType(aty, 1, tv_realTime, tv_urgent, tv_makeAppointment);
                 tv_appointmentTime.setVisibility(View.GONE);
                 ll_appointmentTime.setVisibility(View.GONE);
                 break;
             case R.id.tv_makeAppointment:
                 type1 = "appoint";
-                ((MainContract.Presenter) mPresenter).settingType(this, 2, tv_realTime, tv_urgent, tv_makeAppointment);
+                ((com.ruitukeji.zwbh.main.MainContract.Presenter) mPresenter).settingType(aty, 2, tv_realTime, tv_urgent, tv_makeAppointment);
                 tv_appointmentTime.setVisibility(View.VISIBLE);
                 ll_appointmentTime.setVisibility(View.VISIBLE);
                 tv_appointmentTime1.setText(getString(R.string.appointmentTime2));
@@ -411,9 +351,9 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 type = 0;
                 Intent provenanceIntent = new Intent();
                 if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
-                    provenanceIntent.setClass(this, SelectAddressActivity.class);
+                    provenanceIntent.setClass(aty, SelectAddressActivity.class);
                 } else {
-                    provenanceIntent.setClass(this, ProvenanceActivity.class);
+                    provenanceIntent.setClass(aty, ProvenanceActivity.class);
                     provenanceIntent.putExtra("isProvenance", isProvenance);
                     provenanceIntent.putExtra("isOff1", isOff);
                 }
@@ -444,9 +384,9 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 type = 1;
                 Intent destinationIntent = new Intent();
                 if (isDestination == 0 || StringUtils.isEmpty(destinationLat) || StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
-                    destinationIntent.setClass(this, SelectAddressActivity.class);
+                    destinationIntent.setClass(aty, SelectAddressActivity.class);
                 } else {
-                    destinationIntent.setClass(this, ProvenanceActivity.class);
+                    destinationIntent.setClass(aty, ProvenanceActivity.class);
                     destinationIntent.putExtra("isProvenance", isDestination);
                     destinationIntent.putExtra("isOff1", isOff1);
                 }
@@ -508,7 +448,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                     ViewInject.toast(getString(R.string.greateThanCurrentTime));
                     return;
                 }
-                Intent cargoInformationIntent = new Intent(this, AddCargoInformationActivity.class);
+                Intent cargoInformationIntent = new Intent(aty, AddCargoInformationActivity.class);
                 cargoInformationIntent.putExtra("tran_type", tran_type);
                 cargoInformationIntent.putExtra("type", type1);
                 if (type1.equals("appoint")) {
@@ -560,22 +500,22 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 .build();
 
         dateStr = DataUtil.formatData(System.currentTimeMillis() / 1000, getString(R.string.dateStr));
-        date_choose = new ArrayList<DateChooseBean>();
-        hours_choose = new ArrayList<HoursChooseBean>();
-        minutes_choose = new ArrayList<MinutesChooseBean>();
-        DateChooseBean dateChooseBean = new DateChooseBean();
+        date_choose = new ArrayList<TimeChooseBean.ResultBean.DateChooseBean>();
+        hours_choose = new ArrayList<TimeChooseBean.ResultBean.HoursChooseBean>();
+        minutes_choose = new ArrayList<TimeChooseBean.ResultBean.MinutesChooseBean>();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean.setDateStr(" " + dateStr);
-        DateChooseBean dateChooseBean1 = new DateChooseBean();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean1 = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean1.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 24 * 60 * 60, getString(R.string.dateStr)));
-        DateChooseBean dateChooseBean2 = new DateChooseBean();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean2 = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean2.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 2 * 24 * 60 * 60, getString(R.string.dateStr)));
-        DateChooseBean dateChooseBean3 = new DateChooseBean();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean3 = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean3.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 3 * 24 * 60 * 60, getString(R.string.dateStr)));
-        DateChooseBean dateChooseBean4 = new DateChooseBean();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean4 = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean4.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 4 * 24 * 60 * 60, getString(R.string.dateStr)));
-        DateChooseBean dateChooseBean5 = new DateChooseBean();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean5 = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean5.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 5 * 24 * 60 * 60, getString(R.string.dateStr)));
-        DateChooseBean dateChooseBean6 = new DateChooseBean();
+        TimeChooseBean.ResultBean.DateChooseBean dateChooseBean6 = new TimeChooseBean.ResultBean.DateChooseBean();
         dateChooseBean6.setDateStr(" " + DataUtil.formatData(System.currentTimeMillis() / 1000 + 6 * 24 * 60 * 60, getString(R.string.dateStr)));
         date_choose.add(dateChooseBean);
         date_choose.add(dateChooseBean1);
@@ -585,7 +525,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
         date_choose.add(dateChooseBean5);
         date_choose.add(dateChooseBean6);
         for (int i = 0; i < 24; i++) {
-            HoursChooseBean hoursChooseBean = new HoursChooseBean();
+            TimeChooseBean.ResultBean.HoursChooseBean hoursChooseBean = new TimeChooseBean.ResultBean.HoursChooseBean();
             if (i < 10) {
                 hoursChooseBean.setHoursStr("0" + i + getString(R.string.dian));
             } else {
@@ -594,17 +534,17 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             hours_choose.add(hoursChooseBean);
         }
 
-        MinutesChooseBean minutesChooseBean = new MinutesChooseBean();
+        TimeChooseBean.ResultBean.MinutesChooseBean minutesChooseBean = new TimeChooseBean.ResultBean.MinutesChooseBean();
         minutesChooseBean.setMinutesStr("00" + getString(R.string.minute));
-        MinutesChooseBean minutesChooseBean1 = new MinutesChooseBean();
+        TimeChooseBean.ResultBean.MinutesChooseBean minutesChooseBean1 = new TimeChooseBean.ResultBean.MinutesChooseBean();
         minutesChooseBean1.setMinutesStr("10" + getString(R.string.minute));
-        MinutesChooseBean minutesChooseBean2 = new MinutesChooseBean();
+        TimeChooseBean.ResultBean.MinutesChooseBean minutesChooseBean2 = new TimeChooseBean.ResultBean.MinutesChooseBean();
         minutesChooseBean2.setMinutesStr("20" + getString(R.string.minute));
-        MinutesChooseBean minutesChooseBean3 = new MinutesChooseBean();
+        TimeChooseBean.ResultBean.MinutesChooseBean minutesChooseBean3 = new TimeChooseBean.ResultBean.MinutesChooseBean();
         minutesChooseBean3.setMinutesStr("30" + getString(R.string.minute));
-        MinutesChooseBean minutesChooseBean4 = new MinutesChooseBean();
+        TimeChooseBean.ResultBean.MinutesChooseBean minutesChooseBean4 = new TimeChooseBean.ResultBean.MinutesChooseBean();
         minutesChooseBean4.setMinutesStr("40" + getString(R.string.minute));
-        MinutesChooseBean minutesChooseBean5 = new MinutesChooseBean();
+        TimeChooseBean.ResultBean.MinutesChooseBean minutesChooseBean5 = new TimeChooseBean.ResultBean.MinutesChooseBean();
         minutesChooseBean5.setMinutesStr("50" + getString(R.string.minute));
         minutes_choose.add(minutesChooseBean);
         minutes_choose.add(minutesChooseBean1);
@@ -641,7 +581,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
      * 方法必须重写
      */
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         mapView.onResume();
         if (mSensorHelper != null) {
@@ -654,22 +594,22 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
      * 读取默认发货地址
      */
     private void readDefaultAddress() {
-        boolean isDefaultAddress = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isDefaultAddress", false);
+        boolean isDefaultAddress = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isDefaultAddress", false);
         if (!isDefaultAddress) {
             return;
         }
-        PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", false);
-        provenanceLat = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceLat", "");
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", false);
+        provenanceLat = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLat", "");
         isOff = 1;
-        provenanceLongi = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceLongi", "");
-        provenanceDistrict = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceDistrict", "");
-        provenancePlaceName = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenancePlaceName", "");
+        provenanceLongi = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLongi", "");
+        provenanceDistrict = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDistrict", "");
+        provenancePlaceName = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenancePlaceName", "");
         tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
-        provenanceDetailedAddress = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceDetailedAddress", "");
-        provenanceDeliveryCustomer = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceDeliveryCustomer", "");
-        provenanceShipper = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceShipper", "");
-        provenancePhone = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenancePhone", "");
-        provenanceEixedTelephone = PreferenceHelper.readString(this, StringConstants.FILENAME, "provenanceEixedTelephone", "");
+        provenanceDetailedAddress = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDetailedAddress", "");
+        provenanceDeliveryCustomer = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDeliveryCustomer", "");
+        provenanceShipper = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceShipper", "");
+        provenancePhone = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenancePhone", "");
+        provenanceEixedTelephone = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceEixedTelephone", "");
         int orgprovince = provenancePlaceName.indexOf("省");
         int orgcity = provenancePlaceName.indexOf("市");
         if (orgprovince != -1 && orgcity != -1) {
@@ -695,7 +635,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
      * 方法必须重写
      */
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (mSensorHelper != null) {
             mSensorHelper.unRegisterSensorListener();
@@ -711,7 +651,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
      * 方法必须重写
      */
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
@@ -720,47 +660,16 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
      * 方法必须重写
      */
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
         if (null != mlocationClient) {
             mlocationClient.onDestroy();
         }
-        unregisterReceiver(mMessageReceiver);
-    }
-
-    /**
-     * 退出应用
-     *
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                long secondTime = System.currentTimeMillis();
-                if (secondTime - firstTime > 2000) {
-                    //如果两次按键时间间隔大于2秒，则不退出
-                    ViewInject.toast(getString(R.string.exitProcedureAgain));
-                    firstTime = secondTime;//更新firstTime
-                    return true;
-                } else {
-                    //  int i = 1 / 0;
-                    //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
-                    MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
-                    JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
-                    MobclickAgent.onKillProcess(aty);
-                    KJActivityStack.create().appExit(aty);
-                }
-                break;
-        }
-        return super.onKeyUp(keyCode, event);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             /**
@@ -859,7 +768,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
     private void choiceLocationWrapper() {
         String[] perms = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS, Manifest.permission.CHANGE_WIFI_STATE};
-        if (EasyPermissions.hasPermissions(this, perms)) {
+        if (EasyPermissions.hasPermissions(aty, perms)) {
             // 设置定位监听
             aMap.setLocationSource(this);
             aMap.getUiSettings().setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
@@ -927,7 +836,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     public void activate(OnLocationChangedListener listener) {
         mListener = listener;
         if (mlocationClient == null) {
-            mlocationClient = new AMapLocationClient(this);
+            mlocationClient = new AMapLocationClient(aty);
             mLocationOption = new AMapLocationClientOption();
             //设置定位监听
             mlocationClient.setLocationListener(this);
@@ -1022,7 +931,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
     }
 
     @Override
-    public void setPresenter(MainContract.Presenter presenter) {
+    public void setPresenter(com.ruitukeji.zwbh.main.MainContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -1032,7 +941,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             if (!(success.equals("true"))) {
                 return;
             }
-            String updateAppUrl = PreferenceHelper.readString(this, StringConstants.FILENAME, "updateAppUrl", null);
+            String updateAppUrl = PreferenceHelper.readString(aty, StringConstants.FILENAME, "updateAppUrl", null);
             if (StringUtils.isEmpty(updateAppUrl)) {
                 return;
             }
@@ -1045,7 +954,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            ((MainContract.Presenter) mPresenter).downloadApp(updateAppUrl);
+                            ((com.ruitukeji.zwbh.main.MainContract.Presenter) mPresenter).downloadApp(updateAppUrl);
                         }
                     }).show();
             dismissLoadingDialog();
@@ -1055,79 +964,51 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 return;
             }
             File path = new File((String) baseResult.getResult());
-            FileNewUtil.installApkFile(this, path.getAbsolutePath());
+            FileNewUtil.installApkFile(getActivity(), path.getAbsolutePath());
             dismissLoadingDialog();
         } else if (flag == 3) {
             HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(success, HomeBean.class);
             if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
-                tv_message.setVisibility(View.GONE);
+                aty.tv_message.setVisibility(View.GONE);
             } else {
-                tv_message.setVisibility(View.VISIBLE);
-                String accessToken = PreferenceHelper.readString(this, StringConstants.FILENAME, "accessToken");
+                aty.tv_message.setVisibility(View.VISIBLE);
+                String accessToken = PreferenceHelper.readString(aty, StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    tv_message.setVisibility(View.GONE);
+                    aty.tv_message.setVisibility(View.GONE);
                 }
-                tv_message.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
+                aty.tv_message.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
             }
             HomeBean.ResultBean.StartAddressBean start_address = homeBean.getResult().getStart_address();
             if (start_address != null && start_address.getCity() != null) {
-                PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", true);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLat", start_address.getAddress_maps().split(",")[1]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLongi", start_address.getAddress_maps().split(",")[0]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDistrict", start_address.getCity());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePlaceName", start_address.getAddress_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDetailedAddress", start_address.getAddress_detail());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDeliveryCustomer", start_address.getClient());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceShipper", start_address.getClient_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePhone", start_address.getPhone());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceEixedTelephone", start_address.getTelphone());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", true);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceLat", start_address.getAddress_maps().split(",")[1]);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceLongi", start_address.getAddress_maps().split(",")[0]);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDistrict", start_address.getCity());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenancePlaceName", start_address.getAddress_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDetailedAddress", start_address.getAddress_detail());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDeliveryCustomer", start_address.getClient());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceShipper", start_address.getClient_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenancePhone", start_address.getPhone());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceEixedTelephone", start_address.getTelphone());
             }
             HomeBean.ResultBean.EndAddressBean end_address = homeBean.getResult().getEnd_address();
             if (end_address != null && end_address.getCity() != null) {
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLat", end_address.getAddress_maps().split(",")[1]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLongi", end_address.getAddress_maps().split(",")[0]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDistrict", end_address.getCity());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPlaceName", end_address.getAddress_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDetailedAddress", end_address.getAddress_detail());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDeliveryCustomer", end_address.getClient());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationShipper", end_address.getClient_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPhone", end_address.getPhone());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationEixedTelephone", end_address.getTelphone());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationLat", end_address.getAddress_maps().split(",")[1]);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationLongi", end_address.getAddress_maps().split(",")[0]);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationDistrict", end_address.getCity());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationPlaceName", end_address.getAddress_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationDetailedAddress", end_address.getAddress_detail());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationDeliveryCustomer", end_address.getClient());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationShipper", end_address.getClient_name());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationPhone", end_address.getPhone());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationEixedTelephone", end_address.getTelphone());
             }
-            processLogic(homeBean.getResult().getList());
             readDefaultAddress();
             dismissLoadingDialog();
         }
     }
 
-    /**
-     * 广告轮播图
-     */
-    List<String> tips = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
-    private void processLogic(List<HomeBean.ResultBean.ListBean> list) {
-        if (list == null || list.size() == 0) {
-            ll_ad.setVisibility(View.GONE);
-            return;
-        }
-        tips.clear();
-        for (int i = 0; i < list.size(); i++) {
-            tips.add(list.get(i).getAd_content());
-        }
-        marqueeView.startWithList(tips);
-// 在代码里设置自己的动画
-        //   marqueeView.startWithList(tips, R.anim.anim_bottom_in, R.anim.anim_top_out);
-        ll_ad.setVisibility(View.VISIBLE);
-        marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, TextView textView) {
-                Intent intent = new Intent(aty, AnnouncementActivity.class);
-                intent.putExtra("id", list.get(position).getId());
-                showActivity(aty, intent);
-            }
-        });
-    }
 
     @Override
     public void errorMsg(String msg, int flag) {
@@ -1139,29 +1020,12 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             ((MainContract.Presenter) mPresenter).getHome();
         } else if (flag == 5 || flag == 6 || flag == 7 || flag == 8 || flag == 9 || flag == 10 || flag == 11 || flag == 12) {
             if (msg.equals("" + NumericConstants.TOLINGIN)) {
-                showActivity(aty, LoginActivity.class);
+                aty.showActivity(aty, LoginActivity.class);
             }
         }
         dismissLoadingDialog();
     }
 
-
-    public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        filter.addAction(MESSAGE_RECEIVED_ACTION);
-        Intent intent = registerReceiver(mMessageReceiver, filter);
-        //极光推送 定制声音、震动、闪灯等 Notification 样式。
-        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(this);
-//        builder.statusBarDrawable = R.mipmap.ic_launcher;
-        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL
-                | Notification.FLAG_SHOW_LIGHTS;  //设置为自动消失和呼吸灯闪烁
-        builder.notificationDefaults = Notification.DEFAULT_SOUND
-                | Notification.DEFAULT_VIBRATE
-                | Notification.DEFAULT_LIGHTS;  // 设置为铃声、震动、呼吸灯闪烁都要
-        JPushInterface.setPushNotificationBuilder(1, builder);
-    }
 
     @Override
     public void onCloudSearched(CloudResult cloudResult, int rCode) {
@@ -1192,22 +1056,5 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
 
     }
 
-
-    public class MessageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
-                String messge = intent.getStringExtra(KEY_MESSAGE);
-                String extras = intent.getStringExtra(KEY_EXTRAS);
-                StringBuilder showMsg = new StringBuilder();
-                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
-                if (!StringUtils.isEmpty(extras)) {
-                    showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
-                }
-                //  setCostomMsg(showMsg.toString());
-            }
-        }
-    }
 
 }

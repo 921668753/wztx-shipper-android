@@ -59,7 +59,7 @@
             android:layout_marginLeft="@dimen/dimen34"
             android:layout_marginRight="@dimen/dimen15"
             android:background="@android:color/transparent"
-            android:digits="012345678-"
+            android:digits="0123456789-"
             android:hint="@string/pleaseFillOut"
             android:inputType="phone"
             android:maxLength="18"
