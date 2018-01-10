@@ -791,7 +791,8 @@
 
     <!--用户反馈-->
     <string name="ridiculeGiveSomeAdvice">我要吐槽或给点建议</string>
-
+    <string name="yourFeedback">请输入您要反馈的内容</string>
+    <string name="thankFeedback">感谢您的反馈，我们将更加努力去做！</string>
 
     <!--修改密码-->
     <string name="originalPassword">原密码</string>

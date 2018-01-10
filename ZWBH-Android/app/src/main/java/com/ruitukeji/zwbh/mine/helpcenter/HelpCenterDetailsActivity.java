@@ -6,6 +6,7 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.entity.mine.helpcenter.HelpCenterDetailsBean;
 import com.ruitukeji.zwbh.entity.mine.setting.AboutUsBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -53,8 +54,8 @@ public class HelpCenterDetailsActivity extends BaseActivity implements HelpCente
 
     @Override
     public void getSuccess(String s) {
-        AboutUsBean aboutUsBean = (AboutUsBean) JsonUtil.json2Obj(s, AboutUsBean.class);
-        initView(aboutUsBean.getResult().getTitle(), aboutUsBean.getResult().getContent());
+        HelpCenterDetailsBean helpCenterDetailsBean = (HelpCenterDetailsBean) JsonUtil.json2Obj(s, HelpCenterDetailsBean.class);
+        initView(helpCenterDetailsBean.getResult().getTitle(), helpCenterDetailsBean.getResult().getContent());
         dismissLoadingDialog();
     }
 
@@ -67,9 +68,9 @@ public class HelpCenterDetailsActivity extends BaseActivity implements HelpCente
     public void initView(String title, String content) {
         webViewLayout.setTitleVisibility(false);
         if (StringUtils.isEmpty(title)) {
-            ActivityTitleUtils.initToolbar(aty, getString(R.string.app_name), true, R.id.titlebar);
+            tv_title.setText(getString(R.string.app_name));
         } else {
-            ActivityTitleUtils.initToolbar(aty, title, true, R.id.titlebar);
+            tv_title.setText(title);
         }
         if (!StringUtils.isEmpty(content)) {
             String code = "<!DOCTYPE html><html lang=\"zh\"><head>\t<meta charset=\"UTF-8\"><title>" + title + "</title></head><body>" + content

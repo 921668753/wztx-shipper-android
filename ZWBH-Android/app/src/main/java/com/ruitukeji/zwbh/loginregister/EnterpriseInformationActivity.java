@@ -164,9 +164,9 @@ public class EnterpriseInformationActivity extends BaseActivity implements EasyP
             et_legalPersonIdNumber.setText(companyOwnerBean.getResult().getLaw_identity());
             et_phoneNumber.setText(companyOwnerBean.getResult().getCom_phone());
             et_address.setText(companyOwnerBean.getResult().getAddress());
-            et_accountName.setText(companyOwnerBean.getResult().getDeposit_name());
-            et_openingBank.setText(companyOwnerBean.getResult().getBank());
-            et_settlementAccount.setText(companyOwnerBean.getResult().getAccount());
+//            et_accountName.setText(companyOwnerBean.getResult().getDeposit_name());
+//            et_openingBank.setText(companyOwnerBean.getResult().getBank());
+//            et_settlementAccount.setText(companyOwnerBean.getResult().getAccount());
 
             hold_pic = companyOwnerBean.getResult().getLaw_hold_pic();
             front_pic = companyOwnerBean.getResult().getLaw_front_pic();

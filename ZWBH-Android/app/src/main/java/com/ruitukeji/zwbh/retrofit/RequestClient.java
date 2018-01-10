@@ -1351,18 +1351,7 @@ public class RequestClient {
      * 帮助中心
      */
     public static void getHelpCenter(HttpParams httpParams, final ResponseListener<String> listener) {
-        doServer(new TokenCallback() {
-            @Override
-            public void execute() {
-                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    listener.onFailure(NumericConstants.TOLINGIN + "");
-                    return;
-                }
-                httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestGetHttp(URLConstants.HELPCENTER, httpParams, listener);
-            }
-        }, listener);
+        HttpRequest.requestGetHttp(URLConstants.HELPCENTER, httpParams, listener);
     }
 
 
@@ -1370,18 +1359,19 @@ public class RequestClient {
      * 帮助中心详情
      */
     public static void getHelpCenterDetails(HttpParams httpParams, final ResponseListener<String> listener) {
-        doServer(new TokenCallback() {
-            @Override
-            public void execute() {
-                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    listener.onFailure(NumericConstants.TOLINGIN + "");
-                    return;
-                }
-                httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestGetHttp(URLConstants.HELPCENTERDETAIL, httpParams, listener);
-            }
-        }, listener);
+        HttpRequest.requestGetHttp(URLConstants.HELPCENTERDETAIL, httpParams, listener);
+    }
+
+
+    /**
+     * 用户反馈
+     */
+    public static void postUserFeedback(HttpParams httpParams, ResponseListener<String> listener) {
+        String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+        if (!StringUtils.isEmpty(accessToken)) {
+            httpParams.putHeaders("authorization-token", accessToken);
+        }
+        HttpRequest.requestPostHttp(URLConstants.USERFEEDBACK, httpParams, listener);
     }
 
 

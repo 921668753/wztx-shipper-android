@@ -3,7 +3,7 @@ package com.ruitukeji.zwbh.adapter.mine.helpcenter;
 import android.content.Context;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.entity.mine.invitefriends.RecommendedRecordBean.ResultBean.ListBean;
+import com.ruitukeji.zwbh.entity.mine.helpcenter.HelpCenterBean.ResultBean.ListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
@@ -24,7 +24,7 @@ public class HelpCenterViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          * 标题
          */
-        viewHolderHelper.setText(R.id.tv_title,  listBean.getBonus() + "");
+        viewHolderHelper.setText(R.id.tv_title, listBean.getTitle());
 
     }
 

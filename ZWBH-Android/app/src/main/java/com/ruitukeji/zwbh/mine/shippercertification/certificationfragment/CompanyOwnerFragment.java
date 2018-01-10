@@ -340,31 +340,49 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
             return;
         } else if (flag == 1) {
             CompanyOwnerBean companyOwnerBean = (CompanyOwnerBean) JsonUtil.getInstance().json2Obj(success, CompanyOwnerBean.class);
-//            tv_companyName.setText(companyOwnerBean.getResult().getCom_name());
-//            tv_registrationNumber.setText(companyOwnerBean.getResult().getCom_buss_num());
-//            tv_legalPersonName.setText(companyOwnerBean.getResult().getLaw_person());
-//            tv_legalPersonIdNumber.setText(companyOwnerBean.getResult().getLaw_identity());
-//            tv_phoneNumber.setText(companyOwnerBean.getResult().getCom_phone());
-//            tv_address.setText(companyOwnerBean.getResult().getAddress());
-//            tv_operationIdNumber.setText(companyOwnerBean.getResult().getIdentity());
-            images.clear();
-            //  imageViewAdapter.clear();
-            ImageItem imageItem = new ImageItem();
-            imageItem.path = companyOwnerBean.getResult().getLaw_front_pic();
-            images.add(imageItem);
-            ImageItem imageItem1 = new ImageItem();
-            imageItem1.path = companyOwnerBean.getResult().getLaw_back_pic();
-            images.add(imageItem1);
-            ImageItem imageItem2 = new ImageItem();
-            imageItem2.path = companyOwnerBean.getResult().getBuss_pic();
-            images.add(imageItem2);
-            ImageItem imageItem3 = new ImageItem();
-            imageItem3.path = companyOwnerBean.getResult().getFront_pic();
-            images.add(imageItem3);
-            ImageItem imageItem4 = new ImageItem();
-            imageItem4.path = companyOwnerBean.getResult().getBack_pic();
-            images.add(imageItem4);
-            //  imageViewAdapter.addMoreData(images);
+            String auth_status = companyOwnerBean.getResult().getAuth_status();
+            if (auth_status != null && auth_status.equals("pass")) {
+                tv_unauthorized.setText(getString(R.string.authorized));
+            } else if (auth_status != null && auth_status.equals("check")) {
+                tv_unauthorized.setText(getString(R.string.inAuthentication));
+            } else if (auth_status != null && auth_status.equals("refuse")) {
+                tv_unauthorized.setText(getString(R.string.refuse));
+            } else {
+                tv_unauthorized.setText(getString(R.string.unauthorized));
+            }
+            et_companyName.setText(companyOwnerBean.getResult().getCom_name());
+            et_businessLicense.setText(companyOwnerBean.getResult().getCom_buss_num());
+            et_companyAddress.setText(companyOwnerBean.getResult().getAddress());
+            et_phoneCompany.setText(companyOwnerBean.getResult().getCom_phone());
+            uploadPictureBusinessLicenseUrl = companyOwnerBean.getResult().getBuss_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadPictureBusinessLicenseUrl + "?imageView2/1/w/161/h/103", 3, img_uploadPictureBusinessLicense, R.mipmap.default_image);
+            isUploadPictureBusinessLicense = false;
+
+            et_legalPersonName.setText(companyOwnerBean.getResult().getLaw_person());
+            et_legalPersonIdNumber.setText(companyOwnerBean.getResult().getLaw_identity());
+            uploadYourIdCardUrl = companyOwnerBean.getResult().getLaw_front_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCard, R.mipmap.default_image);
+            isUploadYourIdCard = false;
+            uploadClearYourIdCardUrl = companyOwnerBean.getResult().getLaw_back_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadClearYourIdCardUrl + "?imageView2/1/w/161/h/103", 3, img_uploadClearYourIdCard, R.mipmap.default_image);
+            isUploadClearYourIdCard = false;
+            uploudHoldingIdPhotoUrl = companyOwnerBean.getResult().getLaw_hold_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploudHoldingIdPhotoUrl + "?imageView2/1/w/161/h/103", 3, img_uploudHoldingIdPhoto, R.mipmap.default_image);
+            isUploudHoldingIdPhoto = false;
+            et_operationName.setText(companyOwnerBean.getResult().getSp_identity_name());
+            et_IdNumber.setText(companyOwnerBean.getResult().getIdentity());
+
+            uploadYourIdCardOperationUrl = companyOwnerBean.getResult().getFront_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadYourIdCardOperationUrl + "?imageView2/1/w/161/h/103", 3, img_uploadYourIdCardOperation, R.mipmap.default_image);
+            isUploadYourIdCardOperation = false;
+
+            uploadClearYourIdCardOperationUrl = companyOwnerBean.getResult().getBack_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadClearYourIdCardOperationUrl + "?imageView2/1/w/161/h/103", 3, img_uploadClearYourIdCardOperation, R.mipmap.default_image);
+            isUploadClearYourIdCardOperation = false;
+
+            uploudHoldingIdPhotoOperationUrl = companyOwnerBean.getResult().getHold_pic();
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploudHoldingIdPhotoOperationUrl + "?imageView2/1/w/161/h/103", 3, img_uploudHoldingIdPhotoOperation, R.mipmap.default_image);
+            isUploudHoldingIdPhotoOperation = false;
         } else if (flag == REQUEST_CODE_CHOOSE_PHOTO) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
             if (!(StringUtils.isEmpty(uploadImageBean.getResult().getFile().getUrl()))) {

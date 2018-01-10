@@ -308,7 +308,12 @@ public class URLConstants {
     /**
      * 帮助中心详情
      */
-    public static String HELPCENTERDETAIL = APIURL + "Help/HelpMain";
+    public static String HELPCENTERDETAIL = APIURL + "Help/getOneHelp";
+
+    /**
+     * 用户反馈
+     */
+    public static String USERFEEDBACK = APIURL + "Help/UserFadeBack";
 
     /**
      * 显示订单列表

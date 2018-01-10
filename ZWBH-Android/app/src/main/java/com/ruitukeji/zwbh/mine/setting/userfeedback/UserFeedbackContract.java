@@ -14,7 +14,7 @@ public interface UserFeedbackContract {
         /**
          * 发送用户反馈
          */
-        void postUserFeedback();
+        void postUserFeedback(String content, String tel);
     }
 
     interface View extends BaseNewView<Presenter, String> {

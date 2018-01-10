@@ -63,8 +63,7 @@ public class UserFeedbackActivity extends BaseActivity implements UserFeedbackCo
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_determine:
-                showLoadingDialog(getString(R.string.submissionLoad));
-                ((UserFeedbackContract.Presenter) mPresenter).postUserFeedback();
+                ((UserFeedbackContract.Presenter) mPresenter).postUserFeedback(et_ridiculeGiveSomeAdvice.getText().toString().trim(), et_phone.getText().toString().trim());
                 break;
         }
     }
@@ -77,17 +76,12 @@ public class UserFeedbackActivity extends BaseActivity implements UserFeedbackCo
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        ViewInject.toast(getString(R.string.submittedSuccessfully));
+        ViewInject.toast(getString(R.string.thankFeedback));
         finish();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            showActivity(aty, LoginActivity.class);
-            return;
-        }
         dismissLoadingDialog();
         ViewInject.toast(msg);
     }

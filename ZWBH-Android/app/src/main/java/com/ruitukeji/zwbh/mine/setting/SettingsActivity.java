@@ -202,6 +202,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
                 // PreferenceHelper.clean(this, StringConstants.FILENAME);
                 //   PreferenceHelper.write(aty, StringConstants.FILENAME, "isGoneBanner", false);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", "");
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
@@ -311,6 +312,7 @@ public class SettingsActivity extends BaseActivity implements SettingsContract.V
             ViewInject.toast(getString(R.string.sdPermission));
         }
     }
+
     /**
      * 在接收消息的时候，选择性接收消息：
      */

@@ -14,7 +14,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.mine.invitefriends.RecommendedRecordBean;
+import com.ruitukeji.zwbh.entity.mine.helpcenter.HelpCenterBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -109,7 +109,7 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(aty, HelpCenterDetailsActivity.class);
-        intent.putExtra("id", 0);
+        intent.putExtra("id", mAdapter.getItem(i).getId());
         showActivity(aty, intent);
     }
 
@@ -131,20 +131,20 @@ public class HelpCenterActivity extends BaseActivity implements HelpCenterContra
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
+        HelpCenterBean helpCenterBean = (HelpCenterBean) JsonUtil.getInstance().json2Obj(s, HelpCenterBean.class);
+        mMorePageNumber = helpCenterBean.getResult().getPage();
+        totalPageNumber = helpCenterBean.getResult().getPageTotal();
+        if (helpCenterBean.getResult().getList() == null || helpCenterBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
-            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
+            mAdapter.addNewData(helpCenterBean.getResult().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
+            mAdapter.addMoreData(helpCenterBean.getResult().getList());
         }
         dismissLoadingDialog();
     }

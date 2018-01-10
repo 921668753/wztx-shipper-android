@@ -125,6 +125,7 @@ public class HttpRequest {
                 return false;
             } else if (baseResult.getCode() == 4011 || baseResult.getCode() == 4012 || baseResult.getCode() == 4013 || baseResult.getCode() == 4015) {
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "userId", 0);
+                PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "phone", "");
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken", "");
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "refreshToken", "");
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "expireTime", "0");

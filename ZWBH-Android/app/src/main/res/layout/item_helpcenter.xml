@@ -12,7 +12,7 @@
         android:paddingBottom="@dimen/dimen15"
         android:paddingRight="@dimen/dimen15"
         android:paddingTop="@dimen/dimen15"
-        android:text="为什么要实名认证？"
+        android:text="--"
         android:textColor="@color/titletextcolors"
         android:textSize="@dimen/textsize16" />
 
