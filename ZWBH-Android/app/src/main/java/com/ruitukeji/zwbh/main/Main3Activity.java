@@ -149,10 +149,10 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_user:
-                showActivity(this, PersonalCenterActivity.class);
+                showActivity(aty, PersonalCenterActivity.class);
                 break;
             case R.id.img_message:
-                showActivity(this, SystemMessageActivity.class);
+                showActivity(aty, SystemMessageActivity.class);
                 tv_message.setVisibility(View.GONE);
                 break;
             case R.id.ll_cityDistribution:
