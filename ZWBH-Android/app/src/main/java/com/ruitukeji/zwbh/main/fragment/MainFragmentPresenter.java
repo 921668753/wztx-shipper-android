@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.main.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,23 +14,27 @@ import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.KJActivityStack;
-import com.ruitukeji.zwbh.entity.main.TimeChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
 import com.ruitukeji.zwbh.main.Main3Activity;
+import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
+import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
+import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
 
 /**
  * Created by Administrator on 2017/2/20.
@@ -153,6 +158,113 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
             tv_realTime.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
             tv_realTime.setBackgroundResource(R.drawable.shape_main_type1);
         }
+    }
+
+    @Override
+    public void startActivityForResult(BaseFragment baseFragment, int isProvenance, int isOff, int type, int tran_type, String provenanceLat, String provenanceLongi,
+                                       String city, String provenanceDistrict, String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer,
+                                       String provenanceShipper, String provenancePhone, String provenanceEixedTelephone, int resultCode) {
+        Intent provenanceIntent = new Intent();
+        if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
+            provenanceIntent.setClass(KJActivityStack.create().topActivity(), SelectAddressActivity.class);
+        } else {
+            provenanceIntent.setClass(KJActivityStack.create().topActivity(), ProvenanceActivity.class);
+            provenanceIntent.putExtra("isProvenance", isProvenance);
+            provenanceIntent.putExtra("isOff1", isOff);
+        }
+        provenanceIntent.putExtra("type", type);
+        if (type == 0) {
+            provenanceIntent.putExtra("title", KJActivityStack.create().topActivity().getString(R.string.provenance));
+        } else {
+            provenanceIntent.putExtra("title", KJActivityStack.create().topActivity().getString(R.string.destination));
+        }
+        provenanceIntent.putExtra("tran_type", tran_type);
+        provenanceIntent.putExtra("lat", provenanceLat);
+        provenanceIntent.putExtra("longi", provenanceLongi);
+        provenanceIntent.putExtra("cityName", city);
+        provenanceIntent.putExtra("district", provenanceDistrict);
+        provenanceIntent.putExtra("placeName", provenancePlaceName);
+        provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
+        provenanceIntent.putExtra("deliveryCustomer", provenanceDeliveryCustomer);
+        provenanceIntent.putExtra("shipper", provenanceShipper);
+        provenanceIntent.putExtra("phone", provenancePhone);
+        provenanceIntent.putExtra("eixedTelephone", provenanceEixedTelephone);
+        baseFragment.startActivityForResult(provenanceIntent, resultCode);
+    }
+
+    @Override
+    public void startAddCargoInformationActivityForResult(BaseFragment baseFragment, int tran_type, String type1, String appointmentTime, String provenanceLat, String provenanceLongi,
+                                                          String provenanceDistrict, String provenancePlaceName, String provenanceDetailedAddress,
+                                                          String provenanceDeliveryCustomer, String provenanceShipper, String provenancePhone,
+                                                          String provenanceEixedTelephone, String destinationLat, String destinationLongi, String destinationDistrict,
+                                                          String destinationPlaceName, String destinationDetailedAddress, String destinationDeliveryCustomer,
+                                                          String destinationShipper, String destinationPhone, String destinationEixedTelephone) {
+
+        if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnterDeparturePoint), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnterInformationShipper), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterDestination), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnterConsigneeInformation), 0);
+            return;
+        }
+        int orgprovince = provenancePlaceName.indexOf("省");
+        int orgcity = provenancePlaceName.indexOf("市");
+        String provenanceCity = null;
+        if (orgprovince != -1 && orgcity != -1) {
+            provenanceCity = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
+        }
+        int orgprovince1 = destinationPlaceName.indexOf("省");
+        int orgcity1 = destinationPlaceName.indexOf("市");
+        String destinationCity = null;
+        if (orgprovince != -1 && orgcity != -1) {
+            destinationCity = destinationPlaceName.substring(orgprovince1 + 1, orgcity1 + 1);
+        }
+        if (!provenanceCity.equals(destinationCity) && tran_type == 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.enterAddressSameCity1), 0);
+            return;
+        }
+        if (type1.equals("appoint") && appointmentTime.equals(KJActivityStack.create().topActivity().getString(R.string.appointmentTime2))) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.appointmentTime2), 0);
+            return;
+        }
+        if (type1.equals("appoint") && DataUtil.getStringToDate(appointmentTime, KJActivityStack.create().topActivity().getString(R.string.timeStr)) < System.currentTimeMillis()) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.greateThanCurrentTime), 0);
+            return;
+        }
+        Intent cargoInformationIntent = new Intent(KJActivityStack.create().topActivity(), AddCargoInformationActivity.class);
+        cargoInformationIntent.putExtra("tran_type", tran_type);
+        cargoInformationIntent.putExtra("type", type1);
+        if (type1.equals("appoint")) {
+            cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(appointmentTime, KJActivityStack.create().topActivity().getString(R.string.timeStr)) / 1000 + "");
+        }
+        cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
+        cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
+        cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
+        cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
+        cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
+        cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
+        cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
+        cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
+        cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
+        cargoInformationIntent.putExtra("destinationLat", destinationLat);
+        cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
+        cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
+        cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
+        cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
+        cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
+        cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
+        cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
+        cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
+        baseFragment.startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
     }
 
 

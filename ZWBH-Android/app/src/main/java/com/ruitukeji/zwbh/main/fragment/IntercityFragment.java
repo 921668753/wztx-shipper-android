@@ -297,28 +297,31 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 break;
             case R.id.tv_pleaseEnterDeparturePoint:
                 type = 0;
-                Intent provenanceIntent = new Intent();
-                if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
-                    provenanceIntent.setClass(aty, SelectAddressActivity.class);
-                } else {
-                    provenanceIntent.setClass(aty, ProvenanceActivity.class);
-                    provenanceIntent.putExtra("isProvenance", isProvenance);
-                    provenanceIntent.putExtra("isOff1", isOff);
-                }
-                provenanceIntent.putExtra("type", type);
-                provenanceIntent.putExtra("title", getString(R.string.provenance));
-                provenanceIntent.putExtra("tran_type", tran_type);
-                provenanceIntent.putExtra("lat", provenanceLat);
-                provenanceIntent.putExtra("longi", provenanceLongi);
-                provenanceIntent.putExtra("cityName", city);
-                provenanceIntent.putExtra("district", provenanceDistrict);
-                provenanceIntent.putExtra("placeName", provenancePlaceName);
-                provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
-                provenanceIntent.putExtra("deliveryCustomer", provenanceDeliveryCustomer);
-                provenanceIntent.putExtra("shipper", provenanceShipper);
-                provenanceIntent.putExtra("phone", provenancePhone);
-                provenanceIntent.putExtra("eixedTelephone", provenanceEixedTelephone);
-                startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
+                ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isProvenance, isOff, type, tran_type, provenanceLat,
+                        provenanceLongi, city, provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer,
+                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO);
+//                Intent provenanceIntent = new Intent();
+//                if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
+//                    provenanceIntent.setClass(aty, SelectAddressActivity.class);
+//                } else {
+//                    provenanceIntent.setClass(aty, ProvenanceActivity.class);
+//                    provenanceIntent.putExtra("isProvenance", isProvenance);
+//                    provenanceIntent.putExtra("isOff1", isOff);
+//                }
+//                provenanceIntent.putExtra("type", type);
+//                provenanceIntent.putExtra("title", getString(R.string.provenance));
+//                provenanceIntent.putExtra("tran_type", tran_type);
+//                provenanceIntent.putExtra("lat", provenanceLat);
+//                provenanceIntent.putExtra("longi", provenanceLongi);
+//                provenanceIntent.putExtra("cityName", city);
+//                provenanceIntent.putExtra("district", provenanceDistrict);
+//                provenanceIntent.putExtra("placeName", provenancePlaceName);
+//                provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
+//                provenanceIntent.putExtra("deliveryCustomer", provenanceDeliveryCustomer);
+//                provenanceIntent.putExtra("shipper", provenanceShipper);
+//                provenanceIntent.putExtra("phone", provenancePhone);
+//                provenanceIntent.putExtra("eixedTelephone", provenanceEixedTelephone);
+//                startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.tv_enterDestination:
                 if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
@@ -330,79 +333,87 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                     break;
                 }
                 type = 1;
-                Intent destinationIntent = new Intent();
-                if (isDestination == 0 || StringUtils.isEmpty(destinationLat) || StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
-                    destinationIntent.setClass(aty, SelectAddressActivity.class);
-                } else {
-                    destinationIntent.setClass(aty, ProvenanceActivity.class);
-                    destinationIntent.putExtra("isProvenance", isDestination);
-                    destinationIntent.putExtra("isOff1", isOff1);
-                }
-                destinationIntent.putExtra("lat", destinationLat);
-                destinationIntent.putExtra("longi", destinationLongi);
-                destinationIntent.putExtra("district", destinationDistrict);
-                destinationIntent.putExtra("placeName", destinationPlaceName);
-                destinationIntent.putExtra("tran_type", tran_type);
-                destinationIntent.putExtra("cityName", city);
-                destinationIntent.putExtra("type", type);
-                destinationIntent.putExtra("title", getString(R.string.destination));
-                destinationIntent.putExtra("detailedAddress", destinationDetailedAddress);
-                destinationIntent.putExtra("deliveryCustomer", destinationDeliveryCustomer);
-                destinationIntent.putExtra("shipper", destinationShipper);
-                destinationIntent.putExtra("phone", destinationPhone);
-                destinationIntent.putExtra("eixedTelephone", destinationEixedTelephone);
-                startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
+                ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isDestination, isOff1, type, tran_type, destinationLat,
+                        destinationLongi, city, destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer,
+                        destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PHOTO_PREVIEW);
+//                Intent destinationIntent = new Intent();
+//                if (isDestination == 0 || StringUtils.isEmpty(destinationLat) || StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
+//                    destinationIntent.setClass(aty, SelectAddressActivity.class);
+//                } else {
+//                    destinationIntent.setClass(aty, ProvenanceActivity.class);
+//                    destinationIntent.putExtra("isProvenance", isDestination);
+//                    destinationIntent.putExtra("isOff1", isOff1);
+//                }
+//                destinationIntent.putExtra("lat", destinationLat);
+//                destinationIntent.putExtra("longi", destinationLongi);
+//                destinationIntent.putExtra("district", destinationDistrict);
+//                destinationIntent.putExtra("placeName", destinationPlaceName);
+//                destinationIntent.putExtra("tran_type", tran_type);
+//                destinationIntent.putExtra("cityName", city);
+//                destinationIntent.putExtra("type", type);
+//                destinationIntent.putExtra("title", getString(R.string.destination));
+//                destinationIntent.putExtra("detailedAddress", destinationDetailedAddress);
+//                destinationIntent.putExtra("deliveryCustomer", destinationDeliveryCustomer);
+//                destinationIntent.putExtra("shipper", destinationShipper);
+//                destinationIntent.putExtra("phone", destinationPhone);
+//                destinationIntent.putExtra("eixedTelephone", destinationEixedTelephone);
+//                startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
-                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
-                    break;
-                }
-                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
-                    break;
-                }
-                if (StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
-                    ViewInject.toast(getString(R.string.enterDestination));
-                    break;
-                }
-                if (StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
-                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
-                    break;
-                }
-                if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
-                    ViewInject.toast(getString(R.string.appointmentTime2));
-                    return;
-                }
-                if (type1.equals("appoint") && DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) < System.currentTimeMillis()) {
-                    ViewInject.toast(getString(R.string.greateThanCurrentTime));
-                    return;
-                }
-                Intent cargoInformationIntent = new Intent(aty, AddCargoInformationActivity.class);
-                cargoInformationIntent.putExtra("tran_type", tran_type);
-                cargoInformationIntent.putExtra("type", type1);
-                if (type1.equals("appoint")) {
-                    cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) / 1000 + "");
-                }
-                cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
-                cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
-                cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
-                cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
-                cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
-                cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
-                cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
-                cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
-                cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
-                cargoInformationIntent.putExtra("destinationLat", destinationLat);
-                cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
-                cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
-                cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
-                cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
-                cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
-                cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
-                cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
-                cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
-                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
+                ((MainFragmentContract.Presenter) mPresenter).startAddCargoInformationActivityForResult(this, tran_type, type1,
+                        tv_appointmentTime1.getText().toString(), provenanceLat, provenanceLongi, provenanceDistrict, provenancePlaceName,
+                        provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
+                        destinationLat, destinationLongi, destinationDistrict, destinationPlaceName, destinationDetailedAddress,
+                        destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone);
+//                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
+//                    break;
+//                }
+//                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
+//                    break;
+//                }
+//                if (StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
+//                    ViewInject.toast(getString(R.string.enterDestination));
+//                    break;
+//                }
+//                if (StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
+//                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
+//                    break;
+//                }
+//                if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
+//                    ViewInject.toast(getString(R.string.appointmentTime2));
+//                    return;
+//                }
+//                if (type1.equals("appoint") && DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) < System.currentTimeMillis()) {
+//                    ViewInject.toast(getString(R.string.greateThanCurrentTime));
+//                    return;
+//                }
+//                Intent cargoInformationIntent = new Intent(aty, AddCargoInformationActivity.class);
+//                cargoInformationIntent.putExtra("tran_type", tran_type);
+//                cargoInformationIntent.putExtra("type", type1);
+//                if (type1.equals("appoint")) {
+//                    cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) / 1000 + "");
+//                }
+//                cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
+//                cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
+//                cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
+//                cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
+//                cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
+//                cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
+//                cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
+//                cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
+//                cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
+//                cargoInformationIntent.putExtra("destinationLat", destinationLat);
+//                cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
+//                cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
+//                cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
+//                cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
+//                cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
+//                cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
+//                cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
+//                cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
+//                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
                 break;
         }
     }

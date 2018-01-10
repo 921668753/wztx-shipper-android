@@ -267,9 +267,8 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(aty, SystemMessageDetailsActivity.class);
         intent.putExtra("messageId", mAdapter.getItem(position).getId());
-        intent.setClass(getApplicationContext(), SystemMessageDetailsActivity.class);
         showActivity(aty, intent);
     }
 

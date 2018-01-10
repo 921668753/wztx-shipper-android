@@ -7,6 +7,7 @@ import com.amap.api.maps2d.model.Circle;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
@@ -47,6 +48,24 @@ public interface MainFragmentContract {
          * 设置状态：实时，加急，预约
          */
         void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
+
+
+        /**
+         * 始發地/目的地
+         */
+        void startActivityForResult(BaseFragment baseFragment, int isProvenance, int isOff, int type, int tran_type, String provenanceLat, String provenanceLongi,
+                                    String city, String provenanceDistrict, String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer,
+                                    String provenanceShipper, String provenancePhone, String provenanceEixedTelephone, int resultCode);
+
+        /**
+         * 跳傳貨物詳情
+         */
+        void startAddCargoInformationActivityForResult(BaseFragment baseFragment, int tran_type, String type, String appointmentTime,String provenanceLat, String provenanceLongi, String provenanceDistrict,
+                                                       String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer, String provenanceShipper,
+                                                       String provenancePhone, String provenanceEixedTelephone, String destinationLat, String destinationLongi,
+                                                       String destinationDistrict, String destinationPlaceName, String destinationDetailedAddress,
+                                                       String destinationDeliveryCustomer, String destinationShipper, String destinationPhone, String destinationEixedTelephone);
+
     }
 
     interface View extends BaseNewView<Presenter, String> {

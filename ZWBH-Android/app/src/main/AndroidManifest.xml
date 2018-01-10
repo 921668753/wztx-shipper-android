@@ -183,7 +183,6 @@
         <!--个人中心-->
         <activity
             android:name=".mine.PersonalCenterActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <!--个人中心 个人资料-->

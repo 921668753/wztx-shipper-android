@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amap.api.services.geocoder.GeocodeSearch;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -35,7 +34,6 @@ import com.ruitukeji.zwbh.main.message.SystemMessageActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
-import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 import com.sunfusheng.marqueeview.MarqueeView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -151,10 +149,10 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.img_user:
-                showActivity(aty, PersonalCenterActivity.class);
+                showActivity(this, PersonalCenterActivity.class);
                 break;
             case R.id.img_message:
-                showActivity(aty, SystemMessageActivity.class);
+                showActivity(this, SystemMessageActivity.class);
                 tv_message.setVisibility(View.GONE);
                 break;
             case R.id.ll_cityDistribution:
