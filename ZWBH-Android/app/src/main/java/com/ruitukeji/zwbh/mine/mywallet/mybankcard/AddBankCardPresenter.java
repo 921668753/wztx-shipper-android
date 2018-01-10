@@ -6,6 +6,7 @@ import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.AccountValidatorUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
@@ -55,13 +56,31 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg,0);
+                mView.errorMsg(msg, 0);
             }
         });
     }
 
+
     @Override
-    public void postAddBankCard(String cardholder, String bankCardNumber, String withdrawalsBank, String openingBank, String phone, String verificationCode) {
+    public void getBank() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getBank(httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+
+    @Override
+    public void postAddBankCard(String cardholder, String bankCardNumber, int bank_id, String openingBank, String phone, String verificationCode) {
         if (StringUtils.isEmpty(cardholder)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.accountHolderName1), 0);
             return;
@@ -70,7 +89,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.bankCardNumber1), 0);
             return;
         }
-        if (StringUtils.isEmpty(withdrawalsBank)) {
+        if (bank_id < 1) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.withdrawalsBank1), 0);
             return;
         }
@@ -82,7 +101,7 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.accountText), 0);
             return;
         }
-        if (phone.length() != 11) {
+        if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.inputPhone), 0);
             return;
         }
@@ -92,15 +111,17 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("withdrawal_amount", phone);
-        map.put("bank_name", phone);
-        map.put("payment_account", phone);
-        map.put("account_name", phone);
+        map.put("card_holder_man", cardholder);
+        map.put("bank_card", bankCardNumber);
+        map.put("with_drawal_bank_id", bank_id);
+        map.put("bank", openingBank);
+        map.put("tel", phone);
+        map.put("captcha", verificationCode);
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postWithdrawal(httpParams, new ResponseListener<String>() {
+        RequestClient.postAddBankCard(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
+                mView.getSuccess(response, 2);
             }
 
             @Override

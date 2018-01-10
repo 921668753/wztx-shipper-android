@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.complaintcenter.ComplaintCenterViewAdapter;
+import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
@@ -81,6 +82,7 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
         ((ComplaintCenterContract.Presenter) mPresenter).getComplaintCenter(mMorePageNumber);
     }
 
@@ -95,6 +97,7 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
             ViewInject.toast(getString(R.string.noMoreData));
             return false;
         }
+        showLoadingDialog(getString(R.string.dataLoad));
         ((ComplaintCenterContract.Presenter) mPresenter).getComplaintCenter(mMorePageNumber);
         return true;
     }

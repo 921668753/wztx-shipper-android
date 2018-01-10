@@ -35,6 +35,7 @@ import com.ruitukeji.zwbh.main.message.SystemMessageActivity;
 import com.ruitukeji.zwbh.mine.PersonalCenterActivity;
 import com.ruitukeji.zwbh.utils.FileNewUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 import com.sunfusheng.marqueeview.MarqueeView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -96,8 +97,8 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
-    private BaseFragment contentFragment;
-    private BaseFragment contentFragment1;
+    public BaseFragment contentFragment;
+    public BaseFragment contentFragment1;
     private Handler handler = null;
 
     @Override
@@ -139,16 +140,6 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     public void initWidget() {
         super.initWidget();
         ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (null != handler) {
-                    handler.removeCallbacksAndMessages(null);
-                    handler = null;
-                }
-                changeFragment(contentFragment);
-            }
-        }, 3000);
     }
 
     public void changeFragment(BaseFragment targetFragment) {

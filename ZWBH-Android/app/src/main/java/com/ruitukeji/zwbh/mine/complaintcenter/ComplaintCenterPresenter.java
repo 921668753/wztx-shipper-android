@@ -22,7 +22,6 @@ public class ComplaintCenterPresenter implements ComplaintCenterContract.Present
 
     @Override
     public void getComplaintCenter(int page) {
-        mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);

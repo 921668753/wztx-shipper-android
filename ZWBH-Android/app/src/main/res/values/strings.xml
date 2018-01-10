@@ -608,7 +608,7 @@
     <string name="bankCardNumber">银行卡号</string>
     <string name="bankCardNumber1">请输入银行卡号</string>
     <string name="withdrawalsBank">提现银行</string>
-    <string name="withdrawalsBank1">请输入提现银行</string>
+    <string name="withdrawalsBank1">请选择提现银行</string>
     <string name="openingBank1">请输入开户行</string>
     <string name="accountText">请输入手机号</string>
     <string name="confirmAdd">确认添加</string>

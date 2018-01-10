@@ -3,6 +3,7 @@ package com.ruitukeji.zwbh.mine.addressmanagement.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,7 +153,7 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
                 mRefreshLayout.beginRefreshing();
                 break;
             case R.id.tv_newAddress:
-                String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "locationCity","苏州市");
+                String city = PreferenceHelper.readString(aty, StringConstants.FILENAME, "locationCity", "苏州市");
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);
                 intent.putExtra("city", city);
                 intent.putExtra("type", 0);
@@ -255,7 +256,12 @@ public class DeliveryAddressFragment extends BaseFragment implements AddressCont
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
-            mRefreshLayout.beginRefreshing();
+            aty.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshLayout.beginRefreshing();
+                }
+            }, 500);
         }
     }
 }

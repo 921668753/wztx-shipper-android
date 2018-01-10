@@ -111,6 +111,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Have permissions, do the thing!
             RxVolley.setRequestQueue(RequestQueue.newRequestQueue(FileUtils.getSaveFolder(StringConstants.CACHEPATH), new OkHttpStack(new OkHttpClient())));
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityNum", 0);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", 0);
             ((StartPageContract.Presenter) mPresenter).getAppConfig();
         } else {

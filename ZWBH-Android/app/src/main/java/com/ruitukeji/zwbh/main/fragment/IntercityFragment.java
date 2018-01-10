@@ -831,7 +831,11 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         } else {
             //       ViewInject.toast(getString(R.string.no_result));
         }
-        //  aty.dismissDialog();
+        int intercityNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "intercityNum", 0);
+        if (intercityNum == 0) {
+            aty.changeFragment(aty.contentFragment);
+        }
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityNum", intercityNum + 1);
     }
 
     @Override

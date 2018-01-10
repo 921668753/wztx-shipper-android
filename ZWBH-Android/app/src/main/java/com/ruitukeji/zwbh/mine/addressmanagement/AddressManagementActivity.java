@@ -1,6 +1,7 @@
 package com.ruitukeji.zwbh.mine.addressmanagement;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class AddressManagementActivity extends BaseActivity {
     private BaseFragment contentFragment;
     private BaseFragment contentFragment1;
     private int chageIcon = 0;
+    public Handler handler = null;
 
     @Override
     public void setRootView() {
@@ -54,6 +56,7 @@ public class AddressManagementActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+        handler = new Handler();
         contentFragment = new DeliveryAddressFragment();
         contentFragment1 = new ShippingAddressFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
@@ -122,4 +125,12 @@ public class AddressManagementActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+    }
 }

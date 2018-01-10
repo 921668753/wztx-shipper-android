@@ -12,8 +12,15 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.mywallet.mybankcard.BankBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
+
+import java.util.List;
 
 /**
  * 添加银行卡
@@ -77,8 +84,11 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
      */
     @BindView(id = R.id.tv_prepaidImmediately, click = true)
     private TextView tv_prepaidImmediately;
-    private OptionsPickerView pvOptions;
 
+    private OptionsPickerView pvOptions;
+    private List<BankBean.ResultBean> bankList;
+
+    private int bank_id = 0;
 
     @Override
     public void setRootView() {
@@ -91,6 +101,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         mPresenter = new AddBankCardPresenter(this);
         time = new TimeCount(60000, 1000);// 构造CountDownTimer对象
         selectBankName();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((AddBankCardContract.Presenter) mPresenter).getBank();
     }
 
     @Override
@@ -104,15 +116,17 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_withdrawalsBank:
-
+                SoftKeyboardUtils.packUpKeyboard(this);
+                pvOptions.show(tv_withdrawalsBank);
                 break;
             case R.id.tv_verificationCode:
                 showLoadingDialog(getString(R.string.sendingLoad));
                 ((AddBankCardContract.Presenter) mPresenter).postCode(et_phone.getText().toString(), type);
                 break;
             case R.id.tv_prepaidImmediately:
+                showLoadingDialog(getString(R.string.submissionLoad));
                 ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_bankCardNumber.getText().toString().trim(),
-                        tv_withdrawalsBank.getText().toString().trim(), et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
+                        bank_id , et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
                         et_verificationCode.getText().toString().trim());
                 break;
         }
@@ -128,8 +142,8 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                //  car_type_id = carInfoBean.getResult().get(options1).getId();
-                //  ((TextView) v).setText(restaurant_chooseList.get(options1).getDescription());
+                bank_id = bankList.get(options1).getId();
+                ((TextView) v).setText(bankList.get(options1).getBank());
             }
         }).build();
     }
@@ -163,25 +177,30 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
 
     @Override
     public void getSuccess(String success, int flag) {
+        dismissLoadingDialog();
         if (flag == 0) {
-            //    tv_registe.setEnabled(true);
-            //    CodeBean bean = (CodeBean) JsonUtil.getInstance().json2Obj(s, CodeBean.class);
             ViewInject.toast(getString(R.string.testget));
             time.start();
         } else if (flag == 1) {
-
+            BankBean bankBean = (BankBean) JsonUtil.json2Obj(success, BankBean.class);
+            bankList = bankBean.getResult();
+            if (bankList != null && bankList.size() > 0) {
+                pvOptions.setPicker(bankList);
+            }
+        } else if (flag == 2) {
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
+            finish();
+            return;
         }
-        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
             showActivity(aty, LoginActivity.class);
             return;
         }
-        dismissLoadingDialog();
         ViewInject.toast(msg);
     }
 }

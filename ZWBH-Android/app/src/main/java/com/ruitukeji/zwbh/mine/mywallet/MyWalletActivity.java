@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.constant.NumericConstants;
@@ -96,7 +97,6 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     public void initData() {
         super.initData();
         mPresenter = new MyWalletPresenter(this);
-        ((MyWalletContract.Presenter) mPresenter).getMyWallet();
     }
 
     @Override
@@ -104,6 +104,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         super.initWidget();
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
         ActivityTitleUtils.initToolbar(aty, getString(R.string.myWallet), true, R.id.titlebar);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -113,7 +114,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
             case R.id.ll_accountDetails:
                 ((MyWalletContract.Presenter) mPresenter).isLogin(1);
                 break;
-            case R.id.tv_recharge:
+            case R.id.ll_recharge:
                 showActivity(aty, RechargeActivity.class);
                 break;
             case R.id.ll_cashWithdrawal:
@@ -162,7 +163,6 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         dismissLoadingDialog();
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             Intent intent = new Intent(aty, LoginActivity.class);
-            intent.putExtra("type", "personalCenter");
             showActivity(aty, intent);
             return;
         }
@@ -173,6 +173,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout bgaRefreshLayout) {
         mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
         ((MyWalletContract.Presenter) mPresenter).getMyWallet();
     }
 

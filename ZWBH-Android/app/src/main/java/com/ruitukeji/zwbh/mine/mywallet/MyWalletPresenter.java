@@ -23,7 +23,6 @@ public class MyWalletPresenter implements MyWalletContract.Presenter {
 
     @Override
     public void getMyWallet() {
-        mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         RequestClient.getPay(httpParams, new ResponseListener<String>() {
             @Override

@@ -266,7 +266,7 @@ public class URLConstants {
     public static String GETABNORMAL = APIURL + "Abnormal/GetAbnormal";
 
     /**
-     *  获取单条异常信息
+     * 获取单条异常信息
      */
     public static String GETONEABNORMAL = APIURL + "Abnormal/GetOneAbnormal";
 
@@ -401,6 +401,22 @@ public class URLConstants {
      * 提现记录
      */
     public static String SHOWCASHRECORD = APIURL + "pay/showCashRecord";
+
+    /**
+     * 获取个人银行卡信息
+     */
+    public static String MYBANKCARD = APIURL + "Pay/MyBankCard";
+
+    /**
+     * 添加银行卡
+     */
+    public static String ADDBANKCARD = APIURL + "Pay/AddBankCard";
+
+    /**
+     * 获得银行
+     */
+    public static String GETBANK = APIURL + "Pay/GetBank";
+
 
     /**
      * 充值 支付宝支付

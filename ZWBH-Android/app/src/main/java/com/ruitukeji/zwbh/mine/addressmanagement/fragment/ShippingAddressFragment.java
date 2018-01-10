@@ -255,7 +255,12 @@ public class ShippingAddressFragment extends BaseFragment implements AddressCont
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
-            mRefreshLayout.beginRefreshing();
+            aty.handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshLayout.beginRefreshing();
+                }
+            }, 500);
         }
     }
 }
