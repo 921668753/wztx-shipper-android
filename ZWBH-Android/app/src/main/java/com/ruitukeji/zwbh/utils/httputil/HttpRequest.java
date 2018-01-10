@@ -131,6 +131,7 @@ public class HttpRequest {
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "expireTime", "0");
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "timeBefore", "0");
                 PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isDefaultAddress", false);
+                PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isDefaultAddress1", false);
                 listener.onFailure(NumericConstants.TOLINGIN + "");
                 return false;
             }
@@ -165,7 +166,6 @@ public class HttpRequest {
                 listener.onFailure(KJActivityStack.create().topActivity().getString(R.string.clientError));
             }
         } else if (errCode == NumericConstants.TOLINGIN) {
-            PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
             listener.onFailure(NumericConstants.TOLINGIN + "");
         } else if (errCode == 400) {
             listener.onFailure(KJActivityStack.create().topActivity().getString(R.string.grammarError));

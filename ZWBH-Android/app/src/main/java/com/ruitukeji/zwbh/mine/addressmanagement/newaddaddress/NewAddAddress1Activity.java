@@ -262,6 +262,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         } else if (flag == 1) {
             if (type == 0 && is_default == 1 || type == 1 && is_default == 1) {
                 PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", true);
+                PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress1", true);
                 PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLat", lat);
                 PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLongi", longi);
                 PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDistrict", district);

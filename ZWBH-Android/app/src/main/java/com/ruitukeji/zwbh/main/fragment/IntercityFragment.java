@@ -196,7 +196,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     private Marker mLocMarker;
     private SensorEventHelper mSensorHelper;
     private Circle mCircle;
-    private GeocodeSearch geocoderSearch;
+
     private LatLng location;
     private List<TimeChooseBean.ResultBean.DateChooseBean> date_choose;
     private List<TimeChooseBean.ResultBean.HoursChooseBean> hours_choose;
@@ -208,6 +208,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     private int isOff = 0;
 
     private Main3Activity aty;
+    private GeocodeSearch geocoderSearch = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -235,12 +236,12 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         super.initData();
         mPresenter = new MainFragmentPresenter(this);
         mSensorHelper = new SensorEventHelper(getActivity());
-        geocoderSearch = new GeocodeSearch(getActivity());
         mCloudSearch = new CloudSearch(getActivity());// 初始化查询类
+        geocoderSearch = new GeocodeSearch(getActivity());
         date_choose = ((MainFragmentContract.Presenter) mPresenter).addDateChooseBean(date_choose);
         hours_choose = ((MainFragmentContract.Presenter) mPresenter).addHoursChooseBean(hours_choose);
         minutes_choose = ((MainFragmentContract.Presenter) mPresenter).addMinutesChooseBean(minutes_choose);
-        ((MainFragmentContract.Presenter) mPresenter).getHome();
+        //((MainFragmentContract.Presenter) mPresenter).getHome();
     }
 
     @Override
@@ -255,6 +256,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         tv_appointmentTime.setVisibility(View.GONE);
         ll_appointmentTime.setVisibility(View.GONE);
     }
+
 
     @Override
     public void widgetClick(View v) {
@@ -464,15 +466,25 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         readDefaultAddress();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            aMap.setOnCameraChangeListener(null);
+        } else {
+            aMap.setOnCameraChangeListener(this);
+        }
+    }
+
     /**
      * 读取默认发货地址
      */
     private void readDefaultAddress() {
-        boolean isDefaultAddress = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isDefaultAddress", false);
-        if (!isDefaultAddress) {
+        boolean isDefaultAddress1 = PreferenceHelper.readBoolean(getActivity(), StringConstants.FILENAME, "isDefaultAddress1", false);
+        if (!isDefaultAddress1) {
             return;
         }
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", false);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress1", false);
         provenanceLat = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLat", "");
         isOff = 1;
         provenanceLongi = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLongi", "");
@@ -630,7 +642,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
      */
     @Override
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
-        android.util.Log.d("tag", "1");
+        android.util.Log.d("tag", "2");
 //// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
         RegeocodeQuery query = new RegeocodeQuery(AMapUtil.convertToLatLonPoint(cameraPosition.target), 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
@@ -774,10 +786,16 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             city = "";
             provenanceDistrict = "";
             provenancePlaceName = "";
-            aty.dismissDialog();
-            ViewInject.toast(getString(R.string.no_result));
+            //     aty.dismissDialog();
+            //      ViewInject.toast(getString(R.string.no_result));
         }
 
+    }
+
+    @Override
+    public void onChange() {
+        super.onChange();
+        readDefaultAddress();
     }
 
     @Override
@@ -792,45 +810,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
 
     @Override
     public void getSuccess(String success, int flag) {
-        if (flag == 0) {
-            HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(success, HomeBean.class);
-            if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
-                aty.tv_message.setVisibility(View.GONE);
-            } else {
-                aty.tv_message.setVisibility(View.VISIBLE);
-                String accessToken = PreferenceHelper.readString(aty, StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    aty.tv_message.setVisibility(View.GONE);
-                }
-                aty.tv_message.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
-            }
-            HomeBean.ResultBean.StartAddressBean start_address = homeBean.getResult().getStart_address();
-            if (start_address != null && start_address.getCity() != null) {
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", true);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceLat", start_address.getAddress_maps().split(",")[1]);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceLongi", start_address.getAddress_maps().split(",")[0]);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDistrict", start_address.getCity());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenancePlaceName", start_address.getAddress_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDetailedAddress", start_address.getAddress_detail());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDeliveryCustomer", start_address.getClient());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceShipper", start_address.getClient_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenancePhone", start_address.getPhone());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceEixedTelephone", start_address.getTelphone());
-            }
-            HomeBean.ResultBean.EndAddressBean end_address = homeBean.getResult().getEnd_address();
-            if (end_address != null && end_address.getCity() != null) {
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationLat", end_address.getAddress_maps().split(",")[1]);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationLongi", end_address.getAddress_maps().split(",")[0]);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationDistrict", end_address.getCity());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationPlaceName", end_address.getAddress_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationDetailedAddress", end_address.getAddress_detail());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationDeliveryCustomer", end_address.getClient());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationShipper", end_address.getClient_name());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationPhone", end_address.getPhone());
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationEixedTelephone", end_address.getTelphone());
-            }
-            readDefaultAddress();
-        }
         dismissLoadingDialog();
     }
 
@@ -850,9 +829,9 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         if (rCode == AMapException.CODE_AMAP_SUCCESS && cloudResult != null && cloudResult.getClouds() != null && !cloudResult.getClouds().isEmpty()) {
             AMapUtil.addEmulateData1(aMap, cloudResult.getClouds());
         } else {
-            ViewInject.toast(getString(R.string.no_result));
+            //       ViewInject.toast(getString(R.string.no_result));
         }
-        aty.dismissDialog();
+        //  aty.dismissDialog();
     }
 
     @Override

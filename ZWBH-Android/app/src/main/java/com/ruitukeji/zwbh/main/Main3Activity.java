@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amap.api.services.geocoder.GeocodeSearch;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -86,7 +88,6 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     @BindView(id = R.id.marqueeView)
     private MarqueeView marqueeView;
 
-
     private boolean isFirst = false;
     private LocationBouncedDialog locationBouncedDialog;
     private long firstTime = 0;
@@ -97,6 +98,7 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     public static final String KEY_EXTRAS = "extras";
     private BaseFragment contentFragment;
     private BaseFragment contentFragment1;
+    private Handler handler = null;
 
     @Override
     public void setRootView() {
@@ -109,8 +111,9 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
         initDialog();
         contentFragment = new SameCityFragment();
         contentFragment1 = new IntercityFragment();
+        handler = new Handler();
+        changeFragment(contentFragment1);
         mPresenter = new MainPresenter(this);
-        ((MainContract.Presenter) mPresenter).getHome();
         registerMessageReceiver();
     }
 
@@ -136,7 +139,16 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     public void initWidget() {
         super.initWidget();
         ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
-        changeFragment(contentFragment);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (null != handler) {
+                    handler.removeCallbacksAndMessages(null);
+                    handler = null;
+                }
+                changeFragment(contentFragment);
+            }
+        }, 3000);
     }
 
     public void changeFragment(BaseFragment targetFragment) {
@@ -192,8 +204,6 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
                     firstTime = secondTime;//更新firstTime
                     return true;
                 } else {
-                    //  int i = 1 / 0;
-                    //   KjBitmapUtil.getInstance().getKjBitmap().cleanCache();
                     MobclickAgent.onProfileSignOff();//关闭账号统计     退出登录也加
                     JPushInterface.stopCrashHandler(getApplication());//JPush关闭CrashLog上报
                     MobclickAgent.onKillProcess(aty);
@@ -228,46 +238,8 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
             File path = new File((String) baseResult.getResult());
             FileNewUtil.installApkFile(this, path.getAbsolutePath());
             dismissLoadingDialog();
-        } else if (flag == 3) {
-            HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(success, HomeBean.class);
-            if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
-                tv_message.setVisibility(View.GONE);
-            } else {
-                tv_message.setVisibility(View.VISIBLE);
-                String accessToken = PreferenceHelper.readString(this, StringConstants.FILENAME, "accessToken");
-                if (StringUtils.isEmpty(accessToken)) {
-                    tv_message.setVisibility(View.GONE);
-                }
-                tv_message.setText(String.valueOf(homeBean.getResult().getUnreadMsg().getMsgX()));
-            }
-            HomeBean.ResultBean.StartAddressBean start_address = homeBean.getResult().getStart_address();
-            if (start_address != null && start_address.getCity() != null) {
-                PreferenceHelper.write(this, StringConstants.FILENAME, "isDefaultAddress", true);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLat", start_address.getAddress_maps().split(",")[1]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceLongi", start_address.getAddress_maps().split(",")[0]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDistrict", start_address.getCity());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePlaceName", start_address.getAddress_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDetailedAddress", start_address.getAddress_detail());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceDeliveryCustomer", start_address.getClient());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceShipper", start_address.getClient_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenancePhone", start_address.getPhone());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "provenanceEixedTelephone", start_address.getTelphone());
-            }
-            HomeBean.ResultBean.EndAddressBean end_address = homeBean.getResult().getEnd_address();
-            if (end_address != null && end_address.getCity() != null) {
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLat", end_address.getAddress_maps().split(",")[1]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationLongi", end_address.getAddress_maps().split(",")[0]);
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDistrict", end_address.getCity());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPlaceName", end_address.getAddress_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDetailedAddress", end_address.getAddress_detail());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationDeliveryCustomer", end_address.getClient());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationShipper", end_address.getClient_name());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationPhone", end_address.getPhone());
-                PreferenceHelper.write(this, StringConstants.FILENAME, "destinationEixedTelephone", end_address.getTelphone());
-            }
-            processLogic(homeBean.getResult().getList());
-            dismissLoadingDialog();
         }
+        dismissDialog();
     }
 
     /**
@@ -276,7 +248,7 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     List<String> tips = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
-    private void processLogic(List<HomeBean.ResultBean.ListBean> list) {
+    public void processLogic(List<HomeBean.ResultBean.ListBean> list) {
         if (list == null || list.size() == 0) {
             ll_ad.setVisibility(View.GONE);
             return;
@@ -287,7 +259,6 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
         }
         marqueeView.startWithList(tips);
 // 在代码里设置自己的动画
-        //   marqueeView.startWithList(tips, R.anim.anim_bottom_in, R.anim.anim_top_out);
         ll_ad.setVisibility(View.VISIBLE);
         marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
             @Override
@@ -363,57 +334,6 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
                 //  setCostomMsg(showMsg.toString());
             }
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
-//            /**
-//             * 选择始发地页面返回
-//             */
-//            isProvenance = 1;
-//            provenanceLat = data.getStringExtra("lat");
-//            provenanceLongi = data.getStringExtra("longi");
-//            provenanceDistrict = data.getStringExtra("district");
-//            provenancePlaceName = data.getStringExtra("placeName");
-//            provenanceDetailedAddress = data.getStringExtra("detailedAddress");
-//            provenanceDeliveryCustomer = data.getStringExtra("deliveryCustomer");
-//            provenanceShipper = data.getStringExtra("shipper");
-//            provenancePhone = data.getStringExtra("phone");
-//            isOff = data.getIntExtra("isOff1", 0);
-//            provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
-//            tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
-//            if (tran_type == 0) {
-//                int orgprovince = provenancePlaceName.indexOf("省");
-//                int orgcity = provenancePlaceName.indexOf("市");
-//                if (orgprovince != -1 && orgcity != -1) {
-//                    province = provenancePlaceName.substring(0, orgprovince + 1);
-//                    city = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
-//                }
-//            }
-//        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
-//            /**
-//             * 选择目的地页面返回
-//             */
-//            isDestination = 1;
-//            destinationLat = data.getStringExtra("lat");
-//            destinationLongi = data.getStringExtra("longi");
-//            destinationDistrict = data.getStringExtra("district");
-//            destinationPlaceName = data.getStringExtra("placeName");
-//            destinationDetailedAddress = data.getStringExtra("detailedAddress");
-//            destinationDeliveryCustomer = data.getStringExtra("deliveryCustomer");
-//            destinationShipper = data.getStringExtra("shipper");
-//            destinationPhone = data.getStringExtra("phone");
-//            isOff1 = data.getIntExtra("isOff1", 0);
-//            destinationEixedTelephone = data.getStringExtra("eixedTelephone");
-//            tv_enterDestination.setText(destinationPlaceName);
-//        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
-//            /**
-//             * 目的地信息
-//             */
-//            cleanDestination();
-//        }
     }
 
 }

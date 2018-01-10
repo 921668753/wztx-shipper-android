@@ -511,6 +511,9 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler = null;
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
     }
 }

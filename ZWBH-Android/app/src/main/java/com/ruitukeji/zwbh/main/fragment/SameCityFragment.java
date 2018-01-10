@@ -201,7 +201,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     private Marker mLocMarker;
     private SensorEventHelper mSensorHelper;
     private Circle mCircle;
-    private GeocodeSearch geocoderSearch;
+
     private LatLng location;
     private List<DateChooseBean> date_choose;
     private List<HoursChooseBean> hours_choose;
@@ -213,6 +213,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     private int isOff = 0;
 
     private Main3Activity aty;
+    private GeocodeSearch geocoderSearch = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -526,6 +527,15 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
 //        }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            aMap.setOnCameraChangeListener(null);
+        } else {
+            aMap.setOnCameraChangeListener(this);
+        }
+    }
 
     /**
      * 方法必须重写
@@ -799,7 +809,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             provenanceDistrict = "";
             provenancePlaceName = "";
             aty.dismissDialog();
-            ViewInject.toast(getString(R.string.no_result));
+            // ViewInject.toast(getString(R.string.no_result));
         }
 
     }
@@ -818,6 +828,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
             HomeBean homeBean = (HomeBean) JsonUtil.getInstance().json2Obj(success, HomeBean.class);
+            aty.processLogic(homeBean.getResult().getList());
             if (homeBean.getResult().getUnreadMsg() == null || homeBean.getResult().getUnreadMsg().getMsgX() == 0) {
                 aty.tv_message.setVisibility(View.GONE);
             } else {
@@ -831,6 +842,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             HomeBean.ResultBean.StartAddressBean start_address = homeBean.getResult().getStart_address();
             if (start_address != null && start_address.getCity() != null) {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", true);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress1", true);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceLat", start_address.getAddress_maps().split(",")[1]);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceLongi", start_address.getAddress_maps().split(",")[0]);
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "provenanceDistrict", start_address.getCity());
@@ -865,6 +877,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             ViewInject.toast(msg);
         }
         dismissLoadingDialog();
+
     }
 
 
@@ -874,7 +887,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
         if (rCode == AMapException.CODE_AMAP_SUCCESS && cloudResult != null && cloudResult.getClouds() != null && !cloudResult.getClouds().isEmpty()) {
             AMapUtil.addEmulateData1(aMap, cloudResult.getClouds());
         } else {
-            ViewInject.toast(getString(R.string.no_result));
+            //     ViewInject.toast(getString(R.string.no_result));
         }
         aty.dismissDialog();
     }
