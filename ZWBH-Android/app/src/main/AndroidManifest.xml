@@ -92,12 +92,15 @@
             android:name=".main.Main2Activity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".main.Main3Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <!--主界面  公告通知-->
         <activity
             android:name=".main.announcement.AnnouncementActivity"
             android:screenOrientation="portrait" />
-
 
         <!--主界面  地址选择-->
         <activity

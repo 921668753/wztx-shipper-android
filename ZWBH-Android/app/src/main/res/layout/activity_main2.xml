@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:fitsSystemWindows="true"
+    tools:context=".main.Main1Activity">
+
+    <!--<com.amap.api.maps2d.MapView-->
+    <!--android:id="@+id/map"-->
+    <!--style="@style/MatchMatch" />-->
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        style="@style/MatchMatch" />
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        style="@style/MatchWrap"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen48"
+            android:paddingBottom="@dimen/dimen8"
+            android:paddingLeft="@dimen/dimen15"
+            android:paddingRight="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen12"
+            android:src="@mipmap/ic_nav_user" />
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:paddingBottom="@dimen/dimen3"
+            android:text="@string/app_name"
+            android:textColor="@color/a4A4AColor"
+            android:textSize="@dimen/textsize18" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen48"
+            android:layout_alignParentRight="true">
+
+
+            <ImageView
+                android:id="@+id/img_message"
+                android:layout_width="@dimen/dimen28"
+                android:layout_height="@dimen/dimen28"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen15"
+                android:layout_marginTop="@dimen/dimen12"
+                android:src="@mipmap/icon_message" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="@dimen/dimen15"
+                android:layout_height="@dimen/dimen15"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen10"
+                android:layout_marginTop="@dimen/dimen10"
+                android:background="@drawable/shape_dot"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_10"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_logisticsType"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen40"
+        android:layout_below="@id/rl_title"
+        android:background="@color/mainColor"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_cityDistribution"
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_cityDistribution"
+                style="@style/MatchAuto"
+                android:gravity="center"
+                android:text="@string/cityDistribution"
+                android:textColor="@color/announcementCloseColors"
+                android:textSize="@dimen/textsize15" />
+
+            <TextView
+                android:id="@+id/tv_cityDistribution1"
+                android:layout_width="@dimen/dimen79"
+                android:layout_height="@dimen/dimen2"
+                android:background="@color/announcementCloseColors" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_longTrunk"
+            style="@style/AutoMatch"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_longTrunk"
+                style="@style/MatchAuto"
+                android:gravity="center"
+                android:text="@string/longTrunk"
+                android:textColor="@color/typecolors"
+                android:textSize="@dimen/textsize15" />
+
+            <TextView
+                android:id="@+id/tv_longTrunk1"
+                android:layout_width="@dimen/dimen79"
+                android:layout_height="@dimen/dimen2"
+                android:background="@color/mainColor" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_divider"
+        style="@style/DividerWidth"
+        android:layout_below="@id/ll_logisticsType" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_ad"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen43"
+        android:layout_below="@id/tv_divider"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
+        android:layout_marginTop="@dimen/dimen8"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/dimen12"
+            android:src="@mipmap/ic_notice" />
+
+        <!--<TextView-->
+        <!--style="@style/AutoWrap"-->
+        <!--android:layout_marginLeft="@dimen/dimen16"-->
+        <!--android:singleLine="true"-->
+        <!--android:text="双十一司机优惠，每单补贴20%"-->
+        <!--android:textColor="@color/announceColors"-->
+        <!--android:textSize="@dimen/dimen14" />-->
+
+        <com.sunfusheng.marqueeview.MarqueeView
+            android:id="@+id/marqueeView"
+            style="@style/AutoMatch"
+            android:layout_marginLeft="@dimen/dimen16"
+            android:layout_marginRight="@dimen/dimen15"
+            app:mvAnimDuration="1000"
+            app:mvDirection="bottom_to_top"
+            app:mvInterval="2000"
+            app:mvSingleLine="true"
+            app:mvTextColor="@color/announcementColors"
+            app:mvTextSize="@dimen/textsize14" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen6"
+            android:layout_height="@dimen/dimen11"
+            android:layout_marginRight="@dimen/dimen12"
+            android:src="@mipmap/ic_arrow" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        style="@style/WrapWrap"
+        android:layout_below="@id/ll_ad"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen75"
+        android:src="@mipmap/icon_pin" />
+
+
+</RelativeLayout>

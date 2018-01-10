@@ -349,7 +349,7 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
             mSensorHelper.registerSensorListener();
         }
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
-        ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+       // ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
         tv_appointmentTime.setVisibility(View.GONE);
         ll_appointmentTime.setVisibility(View.GONE);
     }
@@ -372,12 +372,12 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.ll_cityDistribution:
                 tran_type = 0;
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+           //     ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 0, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
                 break;
             case R.id.ll_longTrunk:
                 tran_type = 1;
                 cleanDestination();
-                ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
+           //     ((MainContract.Presenter) mPresenter).chooseLogisticsType(this, 1, tv_cityDistribution, tv_cityDistribution1, tv_longTrunk, tv_longTrunk1);
                 break;
             case R.id.img_gps:
                 if (location == null) {
@@ -388,19 +388,19 @@ public class Main2Activity extends BaseActivity implements EasyPermissions.Permi
                 break;
             case R.id.tv_realTime:
                 type1 = "often";
-                ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
+             //   ((MainContract.Presenter) mPresenter).settingType(this, 0, tv_realTime, tv_urgent, tv_makeAppointment);
                 tv_appointmentTime.setVisibility(View.GONE);
                 ll_appointmentTime.setVisibility(View.GONE);
                 break;
             case R.id.tv_urgent:
                 type1 = "urgent";
-                ((MainContract.Presenter) mPresenter).settingType(this, 1, tv_realTime, tv_urgent, tv_makeAppointment);
+             //   ((MainContract.Presenter) mPresenter).settingType(this, 1, tv_realTime, tv_urgent, tv_makeAppointment);
                 tv_appointmentTime.setVisibility(View.GONE);
                 ll_appointmentTime.setVisibility(View.GONE);
                 break;
             case R.id.tv_makeAppointment:
                 type1 = "appoint";
-                ((MainContract.Presenter) mPresenter).settingType(this, 2, tv_realTime, tv_urgent, tv_makeAppointment);
+             //   ((MainContract.Presenter) mPresenter).settingType(this, 2, tv_realTime, tv_urgent, tv_makeAppointment);
                 tv_appointmentTime.setVisibility(View.VISIBLE);
                 ll_appointmentTime.setVisibility(View.VISIBLE);
                 tv_appointmentTime1.setText(getString(R.string.appointmentTime2));

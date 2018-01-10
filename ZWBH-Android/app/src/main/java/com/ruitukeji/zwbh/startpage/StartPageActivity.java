@@ -19,7 +19,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.startpage.AppConfigBean;
-import com.ruitukeji.zwbh.main.Main2Activity;
+import com.ruitukeji.zwbh.main.Main3Activity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
 import java.util.List;
@@ -100,7 +100,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         jumpIntent.setAction("android.intent.action.MAIN");
         jumpIntent.addCategory("android.intent.category.LAUNCHER");
         jumpIntent.putExtra("img", R.mipmap.startpage);
-        jumpIntent.setClass(this, Main2Activity.class);
+        jumpIntent.setClass(this, Main3Activity.class);
         skipActivity(aty, jumpIntent);
         overridePendingTransition(0, 0);
     }

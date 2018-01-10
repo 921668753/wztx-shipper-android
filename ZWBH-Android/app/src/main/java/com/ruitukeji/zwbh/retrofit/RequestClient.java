@@ -1348,6 +1348,26 @@ public class RequestClient {
 
 
     /**
+     * 投诉中心
+     */
+    public static void getComplaintCenter(HttpParams httpParams, final ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //        PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.COMPLAINTCENTER, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
      * 帮助中心
      */
     public static void getHelpCenter(HttpParams httpParams, final ResponseListener<String> listener) {

@@ -54,13 +54,14 @@ public interface MainContract {
 
         /**
          * 选择物流类型
+         * 清除颜色，并添加颜色
          */
-        void chooseLogisticsType(Main2Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
+        void chooseLogisticsType(Main3Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
 
         /**
          * 设置状态：实时，加急，预约
          */
-        void settingType(Main2Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
+        void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
     }
 
     interface View extends BaseNewView<Presenter, String> {

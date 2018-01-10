@@ -117,7 +117,7 @@ public class MainPresenter implements MainContract.Presenter {
      * 清除颜色，并添加颜色
      */
     @Override
-    public void chooseLogisticsType(Main2Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
+    public void chooseLogisticsType(Main3Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
         tv_cityDistribution.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_cityDistribution1.setBackgroundResource(R.color.mainColor);
         tv_longTrunk.setTextColor(activity.getResources().getColor(R.color.typecolors));
@@ -135,7 +135,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void settingType(Main2Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
+    public void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
         tv_realTime.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_realTime.setBackgroundResource(R.color.mainColor);
         tv_realTime.setBackgroundResource(R.drawable.shape_main_type2);

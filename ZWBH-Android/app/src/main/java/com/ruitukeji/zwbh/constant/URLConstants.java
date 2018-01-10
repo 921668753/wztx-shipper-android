@@ -300,6 +300,13 @@ public class URLConstants {
      */
     public static String GETCOMPANYAUTHINFO = APIURL + "user/getCompanyAuthInfo";
 
+
+    /**
+     * 投诉中心
+     */
+    public static String COMPLAINTCENTER = APIURL + "Help/ComplaintInfo";
+
+
     /**
      * 帮助中心
      */

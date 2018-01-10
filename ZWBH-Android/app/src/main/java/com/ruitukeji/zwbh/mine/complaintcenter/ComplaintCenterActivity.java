@@ -9,12 +9,13 @@ import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.complaintcenter.ComplaintCenterViewAdapter;
-import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.complaintcenter.ComplaintCenterBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -80,7 +81,6 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
-        showLoadingDialog(getString(R.string.dataLoad));
         ((ComplaintCenterContract.Presenter) mPresenter).getComplaintCenter(mMorePageNumber);
     }
 
@@ -95,7 +95,6 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
             ViewInject.toast(getString(R.string.noMoreData));
             return false;
         }
-        showLoadingDialog(getString(R.string.dataLoad));
         ((ComplaintCenterContract.Presenter) mPresenter).getComplaintCenter(mMorePageNumber);
         return true;
     }
@@ -124,21 +123,21 @@ public class ComplaintCenterActivity extends BaseActivity implements ComplaintCe
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-//        RecommendedRecordBean recommendedRecordBean = (RecommendedRecordBean) JsonUtil.getInstance().json2Obj(s, RecommendedRecordBean.class);
-//        mMorePageNumber = recommendedRecordBean.getResult().getPage();
-//        totalPageNumber = recommendedRecordBean.getResult().getPageTotal();
-//        if (recommendedRecordBean.getResult().getList() == null || recommendedRecordBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(recommendedRecordBean.getResult().getList());
-//        } else {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(recommendedRecordBean.getResult().getList());
-//        }
+        ComplaintCenterBean complaintCenterBean = (ComplaintCenterBean) JsonUtil.getInstance().json2Obj(success, ComplaintCenterBean.class);
+        mMorePageNumber = complaintCenterBean.getResult().getPage();
+        totalPageNumber = complaintCenterBean.getResult().getPageTotal();
+        if (complaintCenterBean.getResult().getList() == null || complaintCenterBean.getResult().getList().size() == 0) {
+            errorMsg(getString(R.string.serverReturnsDataNull), 0);
+            return;
+        }
+        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+            mRefreshLayout.endRefreshing();
+            mAdapter.clear();
+            mAdapter.addNewData(complaintCenterBean.getResult().getList());
+        } else {
+            mRefreshLayout.endLoadingMore();
+            mAdapter.addMoreData(complaintCenterBean.getResult().getList());
+        }
         dismissLoadingDialog();
     }
 

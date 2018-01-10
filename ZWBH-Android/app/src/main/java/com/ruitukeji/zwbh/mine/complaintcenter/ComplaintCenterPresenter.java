@@ -26,7 +26,7 @@ public class ComplaintCenterPresenter implements ComplaintCenterContract.Present
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);
-        RequestClient.getOrderList(httpParams, new ResponseListener<String>() {
+        RequestClient.getComplaintCenter(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);
