@@ -114,6 +114,9 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
             finish();
             return;
         }
+        if (msg.equals("暂无信息")) {
+            return;
+        }
         ViewInject.toast(msg);
     }
 

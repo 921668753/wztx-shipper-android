@@ -32,6 +32,7 @@
             android:paddingRight="@dimen/dimen15"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize15" />
 
     </LinearLayout>
@@ -65,6 +66,7 @@
             android:paddingRight="@dimen/dimen15"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize15" />
 
     </LinearLayout>
@@ -134,6 +136,7 @@
             android:paddingRight="@dimen/dimen15"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize15" />
 
     </LinearLayout>
@@ -166,6 +169,7 @@
             android:paddingRight="@dimen/dimen15"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize15" />
 
     </LinearLayout>
@@ -199,6 +203,7 @@
             android:paddingRight="@dimen/dimen15"
             android:textColor="@color/titletextcolors"
             android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
             android:textSize="@dimen/textsize15" />
 
 

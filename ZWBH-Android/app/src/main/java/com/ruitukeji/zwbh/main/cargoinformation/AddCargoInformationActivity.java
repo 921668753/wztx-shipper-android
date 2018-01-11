@@ -353,7 +353,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        if(!toLigon1(msg)){
+        if (!toLigon1(msg)) {
             return;
         }
         ViewInject.toast(msg);
