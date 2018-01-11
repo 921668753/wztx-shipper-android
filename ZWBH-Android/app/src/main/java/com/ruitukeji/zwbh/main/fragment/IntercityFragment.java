@@ -42,14 +42,8 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.main.HomeBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean;
 import com.ruitukeji.zwbh.main.Main3Activity;
-import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
-import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
-import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
-import com.ruitukeji.zwbh.utils.DataUtil;
-import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
 import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
@@ -300,28 +294,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isProvenance, isOff, type, tran_type, provenanceLat,
                         provenanceLongi, city, provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer,
                         provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO);
-//                Intent provenanceIntent = new Intent();
-//                if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
-//                    provenanceIntent.setClass(aty, SelectAddressActivity.class);
-//                } else {
-//                    provenanceIntent.setClass(aty, ProvenanceActivity.class);
-//                    provenanceIntent.putExtra("isProvenance", isProvenance);
-//                    provenanceIntent.putExtra("isOff1", isOff);
-//                }
-//                provenanceIntent.putExtra("type", type);
-//                provenanceIntent.putExtra("title", getString(R.string.provenance));
-//                provenanceIntent.putExtra("tran_type", tran_type);
-//                provenanceIntent.putExtra("lat", provenanceLat);
-//                provenanceIntent.putExtra("longi", provenanceLongi);
-//                provenanceIntent.putExtra("cityName", city);
-//                provenanceIntent.putExtra("district", provenanceDistrict);
-//                provenanceIntent.putExtra("placeName", provenancePlaceName);
-//                provenanceIntent.putExtra("detailedAddress", provenanceDetailedAddress);
-//                provenanceIntent.putExtra("deliveryCustomer", provenanceDeliveryCustomer);
-//                provenanceIntent.putExtra("shipper", provenanceShipper);
-//                provenanceIntent.putExtra("phone", provenancePhone);
-//                provenanceIntent.putExtra("eixedTelephone", provenanceEixedTelephone);
-//                startActivityForResult(provenanceIntent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.tv_enterDestination:
                 if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
@@ -336,28 +308,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isDestination, isOff1, type, tran_type, destinationLat,
                         destinationLongi, city, destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer,
                         destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PHOTO_PREVIEW);
-//                Intent destinationIntent = new Intent();
-//                if (isDestination == 0 || StringUtils.isEmpty(destinationLat) || StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
-//                    destinationIntent.setClass(aty, SelectAddressActivity.class);
-//                } else {
-//                    destinationIntent.setClass(aty, ProvenanceActivity.class);
-//                    destinationIntent.putExtra("isProvenance", isDestination);
-//                    destinationIntent.putExtra("isOff1", isOff1);
-//                }
-//                destinationIntent.putExtra("lat", destinationLat);
-//                destinationIntent.putExtra("longi", destinationLongi);
-//                destinationIntent.putExtra("district", destinationDistrict);
-//                destinationIntent.putExtra("placeName", destinationPlaceName);
-//                destinationIntent.putExtra("tran_type", tran_type);
-//                destinationIntent.putExtra("cityName", city);
-//                destinationIntent.putExtra("type", type);
-//                destinationIntent.putExtra("title", getString(R.string.destination));
-//                destinationIntent.putExtra("detailedAddress", destinationDetailedAddress);
-//                destinationIntent.putExtra("deliveryCustomer", destinationDeliveryCustomer);
-//                destinationIntent.putExtra("shipper", destinationShipper);
-//                destinationIntent.putExtra("phone", destinationPhone);
-//                destinationIntent.putExtra("eixedTelephone", destinationEixedTelephone);
-//                startActivityForResult(destinationIntent, REQUEST_CODE_PHOTO_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
                 ((MainFragmentContract.Presenter) mPresenter).startAddCargoInformationActivityForResult(this, tran_type, type1,
@@ -365,55 +315,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                         provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
                         destinationLat, destinationLongi, destinationDistrict, destinationPlaceName, destinationDetailedAddress,
                         destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone);
-//                if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
-//                    ViewInject.toast(getString(R.string.pleaseEnterDeparturePoint));
-//                    break;
-//                }
-//                if (StringUtils.isEmpty(provenanceDeliveryCustomer) || StringUtils.isEmpty(provenanceShipper) || StringUtils.isEmpty(provenancePhone)) {
-//                    ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
-//                    break;
-//                }
-//                if (StringUtils.isEmpty(destinationDistrict) || StringUtils.isEmpty(destinationPlaceName)) {
-//                    ViewInject.toast(getString(R.string.enterDestination));
-//                    break;
-//                }
-//                if (StringUtils.isEmpty(destinationDeliveryCustomer) || StringUtils.isEmpty(destinationShipper) || StringUtils.isEmpty(destinationPhone)) {
-//                    ViewInject.toast(getString(R.string.pleaseEnterConsigneeInformation));
-//                    break;
-//                }
-//                if (type1.equals("appoint") && tv_appointmentTime1.getText().toString().equals(getString(R.string.appointmentTime2))) {
-//                    ViewInject.toast(getString(R.string.appointmentTime2));
-//                    return;
-//                }
-//                if (type1.equals("appoint") && DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) < System.currentTimeMillis()) {
-//                    ViewInject.toast(getString(R.string.greateThanCurrentTime));
-//                    return;
-//                }
-//                Intent cargoInformationIntent = new Intent(aty, AddCargoInformationActivity.class);
-//                cargoInformationIntent.putExtra("tran_type", tran_type);
-//                cargoInformationIntent.putExtra("type", type1);
-//                if (type1.equals("appoint")) {
-//                    cargoInformationIntent.putExtra("appoint_at", DataUtil.getStringToDate(tv_appointmentTime1.getText().toString(), getString(R.string.timeStr)) / 1000 + "");
-//                }
-//                cargoInformationIntent.putExtra("provenanceLat", provenanceLat);
-//                cargoInformationIntent.putExtra("provenanceLongi", provenanceLongi);
-//                cargoInformationIntent.putExtra("provenanceDistrict", provenanceDistrict);
-//                cargoInformationIntent.putExtra("provenancePlaceName", provenancePlaceName);
-//                cargoInformationIntent.putExtra("provenanceDetailedAddress", provenanceDetailedAddress);
-//                cargoInformationIntent.putExtra("provenanceDeliveryCustomer", provenanceDeliveryCustomer);
-//                cargoInformationIntent.putExtra("provenanceShipper", provenanceShipper);
-//                cargoInformationIntent.putExtra("provenancePhone", provenancePhone);
-//                cargoInformationIntent.putExtra("provenanceEixedTelephone", provenanceEixedTelephone);
-//                cargoInformationIntent.putExtra("destinationLat", destinationLat);
-//                cargoInformationIntent.putExtra("destinationLongi", destinationLongi);
-//                cargoInformationIntent.putExtra("destinationDistrict", destinationDistrict);
-//                cargoInformationIntent.putExtra("destinationPlaceName", destinationPlaceName);
-//                cargoInformationIntent.putExtra("destinationDetailedAddress", destinationDetailedAddress);
-//                cargoInformationIntent.putExtra("destinationDeliveryCustomer", destinationDeliveryCustomer);
-//                cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
-//                cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
-//                cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
-//                startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
                 break;
         }
     }
@@ -501,6 +402,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         provenanceLongi = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLongi", "");
         provenanceDistrict = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDistrict", "");
         provenancePlaceName = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenancePlaceName", "");
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 18));
         tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         provenanceDetailedAddress = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDetailedAddress", "");
         provenanceDeliveryCustomer = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDeliveryCustomer", "");
@@ -589,15 +491,8 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             provenancePhone = data.getStringExtra("phone");
             isOff = data.getIntExtra("isOff1", 0);
             provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 18));
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
-            if (tran_type == 0) {
-                int orgprovince = provenancePlaceName.indexOf("省");
-                int orgcity = provenancePlaceName.indexOf("市");
-                if (orgprovince != -1 && orgcity != -1) {
-                    province = provenancePlaceName.substring(0, orgprovince + 1);
-                    city = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
-                }
-            }
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
             /**
              * 选择目的地页面返回
@@ -613,6 +508,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             destinationPhone = data.getStringExtra("phone");
             isOff1 = data.getIntExtra("isOff1", 0);
             destinationEixedTelephone = data.getStringExtra("eixedTelephone");
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(destinationLat) - 0.0004, StringUtils.toDouble(destinationLongi)), 18));
             tv_enterDestination.setText(destinationPlaceName);
         } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
             /**

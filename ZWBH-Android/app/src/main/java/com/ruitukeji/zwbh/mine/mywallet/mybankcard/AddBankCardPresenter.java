@@ -13,6 +13,7 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/2/17.
@@ -83,6 +84,13 @@ public class AddBankCardPresenter implements AddBankCardContract.Presenter {
     public void postAddBankCard(String cardholder, String bankCardNumber, int bank_id, String openingBank, String phone, String verificationCode) {
         if (StringUtils.isEmpty(cardholder)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.accountHolderName1), 0);
+            return;
+        }
+        String all = "^[A-Za-z\\u4e00-\\u9fa5]{2,10}";//{2,10}表示字符的长度是2-10
+        Pattern pattern = Pattern.compile(all);
+        boolean tf = Pattern.matches(all, cardholder);
+        if (!tf) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.hintName1), 0);
             return;
         }
         if (StringUtils.isEmpty(bankCardNumber)) {

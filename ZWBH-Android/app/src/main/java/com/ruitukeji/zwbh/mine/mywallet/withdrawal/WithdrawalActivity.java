@@ -19,6 +19,8 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+
 
 /**
  * 提现
@@ -57,7 +59,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     /**
      * 协议
      */
-    @BindView(id = R.id.tv_driverWithdrawAgreement)
+    @BindView(id = R.id.tv_driverWithdrawAgreement, click = true)
     private TextView tv_driverWithdrawAgreement;
 
 
@@ -68,7 +70,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     private TextView tv_confirmSubmit;
     private String bankCardName = "";
     private String bankCardNun = "";
-    private String bankCardId = "";
+    private int bankCardId = 0;
 
 
     @Override
@@ -80,13 +82,11 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void initData() {
         super.initData();
         mPresenter = new WithdrawalPresenter(this);
-        // initDialog();
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-
         BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
             @Override
             public void onClickLeftCtv() {
@@ -103,7 +103,6 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), getString(R.string.withdrawalRecord), R.id.titlebar, simpleDelegate);
         String withdraw_begintime = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdraw_begintime");
         String withdraw_endtime = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdraw_endtime");
-        //  tv_hintWithdrawal1.setText("提现日期每月" + withdraw_begintime + "号—" + withdraw_endtime + "号");
     }
 
 
@@ -125,7 +124,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
                 showActivity(aty, intentDriver);
                 break;
             case R.id.tv_confirmSubmit:
-                //    ((WithdrawalContract.Presenter) mPresenter).postWithdrawal(sweetAlertDialog, et_withdrawalAmount1.getText().toString(), et_bankName.getText().toString(), et_paymentAccount.getText().toString(), et_openAccountName.getText().toString());
+                ((WithdrawalContract.Presenter) mPresenter).postWithdrawal(et_withdrawalAmount1.getText().toString(), bankCardId);
                 break;
         }
     }
@@ -138,80 +137,37 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
 
     @Override
     public void getSuccess(String success, int flag) {
-        if (flag == 1) {
-            Intent intent = new Intent(aty, MyBankCardActivity.class);
-            intent.putExtra("bankCardName", bankCardName);
-            intent.putExtra("bankCardNun", bankCardNun);
-            intent.putExtra("bankCardId", bankCardId);
-            intent.putExtra("type", 1);
-            startActivityForResult(intent, 1);
-        }
         dismissLoadingDialog();
-//        if (sweetAlertDialog == null) {
-//            initDialog();
-//        }
-//        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshMyWalletActivity", true);
-//        sweetAlertDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-//        sweetAlertDialog.setTitleText(getString(R.string.confirmSubmit2))
-//                .setConfirmText(getString(R.string.confirm))
-//                .showCancelButton(false)
-//                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                    @Override
-//                    public void onClick(SweetAlertDialog sDialog) {
-//                        sDialog.dismiss();
-//                        sDialog = null;
-//                        aty.finish();
-//                    }
-//                }).show();
+        if (flag == 0) {
+            ViewInject.toast(getString(R.string.confirmSubmit2));
+            finish();
+        } else if (flag == 1) {
+            Intent intent = new Intent(aty, MyBankCardActivity.class);
+            intent.putExtra("type", 1);
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+        }
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
             showActivity(aty, LoginActivity.class);
             return;
         }
-        dismissLoadingDialog();
         ViewInject.toast(msg);
     }
-
-    //    /**
-//     * 弹框设置
-//     */
-//    private void initDialog() {
-//        sweetAlertDialog = null;
-//        sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-//        sweetAlertDialog.setCancelable(false);
-//        sweetAlertDialog.setTitleText(getString(R.string.confirmSubmit1))
-//                .setCancelText(getString(R.string.cancel))
-//                .setConfirmText(getString(R.string.confirm))
-//                .showCancelButton(true)
-//                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                    @Override
-//                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                        sweetAlertDialog.dismiss();
-//                    }
-//                });
-//    }
-//
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             bankCardName = data.getStringExtra("bankCardName");
             bankCardNun = data.getStringExtra("bankCardNun");
-            bankCardId = data.getStringExtra("bankCardId");
-            tv_withdrawalBank.setText(bankCardName + "(" + getString(R.string.tail) + bankCardNun + ")");
+            bankCardId = data.getIntExtra("bankCardId", 0);
+            tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // sweetAlertDialog = null;
-    }
 }

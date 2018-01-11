@@ -4,6 +4,8 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
+import com.ruitukeji.zwbh.common.KJActivityStack;
+import com.ruitukeji.zwbh.mine.mywallet.withdrawal.dialog.SubmitBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.MathUtil;
@@ -31,7 +33,7 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
     }
 
     @Override
-    public void postWithdrawal(SweetAlertDialog sweetAlertDialog, String withdrawalAmount, String bankName, String paymentAccount, String accountName) {
+    public void postWithdrawal(String withdrawalAmount, int bankId) {
         if (StringUtils.isEmpty(withdrawalAmount)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.notHigherWithdrawalLimit1), 0);
             return;
@@ -44,36 +46,19 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.notHigherWithdrawalLimit1), 0);
             return;
         }
-        if (StringUtils.isEmpty(bankName)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.presentingBank1), 0);
+        if (bankId < 0) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.withdrawalsBank1), 0);
             return;
         }
-        if (StringUtils.isEmpty(paymentAccount)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.promptAccount1), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(accountName)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.accountHolderName1), 0);
-            return;
-        }
-        String all = "^[A-Za-z\\u4e00-\\u9fa5]{2,10}";//{2,10}表示字符的长度是2-10
-        Pattern pattern = Pattern.compile(all);
-        boolean tf = Pattern.matches(all, accountName);
-        if (!tf) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.hintName1), 0);
-            return;
-        }
-        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+        SubmitBouncedDialog submitBouncedDialog = new SubmitBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                sweetAlertDialog.dismiss();
+            public void confirm() {
+                this.cancel();
                 mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
                 HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("withdrawal_amount", withdrawalAmount);
-                map.put("bank_name", bankName);
-                map.put("payment_account", paymentAccount);
-                map.put("account_name", accountName);
+                map.put("bank_id", bankId);
                 httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
                 RequestClient.postWithdrawal(httpParams, new ResponseListener<String>() {
                     @Override
@@ -87,7 +72,8 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
                     }
                 });
             }
-        }).show();
+        };
+        submitBouncedDialog.show();
     }
 
     @Override

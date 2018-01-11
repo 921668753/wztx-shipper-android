@@ -38,9 +38,6 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @BindView(id = R.id.ll_addBankCard, click = true)
     private LinearLayout ll_addBankCard;
 
-    private String bankCardName = "";
-    private String bankCardNun = "";
-    private String bankCardId = "";
     private int type = 0;
     private Handler handler = null;
 
@@ -56,9 +53,6 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
         handler = new Handler();
         mPresenter = new MyBankCardPresenter(this);
         type = getIntent().getIntExtra("type", 0);
-        bankCardName = getIntent().getStringExtra("bankCardName");
-        bankCardNun = getIntent().getStringExtra("bankCardNun");
-        bankCardId = getIntent().getStringExtra("bankCardId");
         showLoadingDialog(getString(R.string.dataLoad));
         ((MyBankCardContract.Presenter) mPresenter).getMyBankCard();
     }
@@ -83,16 +77,13 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (type < 1) {
-            return;
-        }
         if (type == 1) {
-            myBankCardViewAdapter.getItem(position);
+            MyBankCardBean.ResultBean resultBean = myBankCardViewAdapter.getItem(position);
             Intent intent = new Intent();
             // 获取内容
-            intent.putExtra("bankCardName", bankCardName);
-            intent.putExtra("bankCardNun", bankCardNun);
-            intent.putExtra("bankCardId", bankCardId);
+            intent.putExtra("bankCardName", resultBean.getBank());
+            intent.putExtra("bankCardNun", resultBean.getBank_card());
+            intent.putExtra("bankCardId", resultBean.getId());
             // 设置结果 结果码，一个数据
             setResult(RESULT_OK, intent);
             // 结束该activity 结束之后，前面的activity才可以处理结果
