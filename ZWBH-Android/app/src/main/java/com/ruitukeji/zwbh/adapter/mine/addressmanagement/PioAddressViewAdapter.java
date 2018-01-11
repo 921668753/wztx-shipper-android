@@ -18,11 +18,9 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
 
 public class PioAddressViewAdapter extends BGAAdapterViewAdapter<PoiItem> {
 
-
     public PioAddressViewAdapter(Context context) {
         super(context, R.layout.item_selectaddress);
     }
-
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, PoiItem model) {
@@ -33,7 +31,12 @@ public class PioAddressViewAdapter extends BGAAdapterViewAdapter<PoiItem> {
             Log.d("tag", model.getAdName());
             Log.d("tag", model.getSnippet());
             Log.d("tag", model.getTitle());
-            viewHolderHelper.setText(R.id.tv_district, model.getProvinceName() + model.getCityName() + model.getAdName() + model.getSnippet());
+            int orgprovince = model.getProvinceName().indexOf("省");
+            if (orgprovince == -1) {
+                viewHolderHelper.setText(R.id.tv_district, model.getCityName() + model.getAdName() + model.getSnippet());
+            } else {
+                viewHolderHelper.setText(R.id.tv_district, model.getProvinceName() + model.getCityName() + model.getAdName() + model.getSnippet());
+            }
         } else {
             removeItem(position);
         }

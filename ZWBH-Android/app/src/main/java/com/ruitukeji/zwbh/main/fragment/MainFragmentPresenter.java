@@ -219,13 +219,17 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         int orgprovince = provenancePlaceName.indexOf("省");
         int orgcity = provenancePlaceName.indexOf("市");
         String provenanceCity = null;
-        if (orgprovince != -1 && orgcity != -1) {
+        if (orgprovince == -1 && orgcity != -1) {
+            provenanceCity = provenancePlaceName.substring(0, orgcity + 1);
+        } else if (orgprovince != -1 && orgcity != -1) {
             provenanceCity = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
         }
         int orgprovince1 = destinationPlaceName.indexOf("省");
         int orgcity1 = destinationPlaceName.indexOf("市");
         String destinationCity = null;
-        if (orgprovince != -1 && orgcity != -1) {
+        if (orgprovince1 == -1 && orgcity1 != -1) {
+            destinationCity = provenancePlaceName.substring(0, orgcity1 + 1);
+        } else if (orgprovince1 != -1 && orgcity != -1) {
             destinationCity = destinationPlaceName.substring(orgprovince1 + 1, orgcity1 + 1);
         }
         if (!provenanceCity.equals(destinationCity) && tran_type == 0) {

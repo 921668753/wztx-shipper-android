@@ -189,7 +189,9 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
                 }
                 int orgprovince = placeName.indexOf("省");
                 int orgcity = placeName.indexOf("市");
-                if (orgprovince != -1 && orgcity != -1) {
+                if (orgprovince == -1 && orgcity != -1) {
+                    city = placeName.substring(0, orgcity + 1);
+                } else if (orgprovince != -1 && orgcity != -1) {
                     city = placeName.substring(orgprovince + 1, orgcity + 1);
                 }
                 Intent intent = new Intent(aty, NewAddAddressActivity.class);

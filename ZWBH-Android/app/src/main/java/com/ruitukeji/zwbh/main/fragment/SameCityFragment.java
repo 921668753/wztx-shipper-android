@@ -408,7 +408,9 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
         provenanceEixedTelephone = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceEixedTelephone", "");
         int orgprovince = provenancePlaceName.indexOf("省");
         int orgcity = provenancePlaceName.indexOf("市");
-        if (orgprovince != -1 && orgcity != -1) {
+        if (orgprovince == -1 && orgcity != -1) {
+            city = provenancePlaceName.substring(0, orgcity + 1);
+        } else if (orgprovince != -1 && orgcity != -1) {
             province = provenancePlaceName.substring(0, orgprovince + 1);
             city = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
         }
@@ -502,7 +504,9 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             if (tran_type == 0) {
                 int orgprovince = provenancePlaceName.indexOf("省");
                 int orgcity = provenancePlaceName.indexOf("市");
-                if (orgprovince != -1 && orgcity != -1) {
+                if (orgprovince == -1 && orgcity != -1) {
+                    city = provenancePlaceName.substring(0, orgcity + 1);
+                } else if (orgprovince != -1 && orgcity != -1) {
                     province = provenancePlaceName.substring(0, orgprovince + 1);
                     city = provenancePlaceName.substring(orgprovince + 1, orgcity + 1);
                 }

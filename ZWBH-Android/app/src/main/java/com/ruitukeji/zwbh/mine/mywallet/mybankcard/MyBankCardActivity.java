@@ -130,7 +130,7 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
                     showLoadingDialog(getString(R.string.dataLoad));
                     ((MyBankCardContract.Presenter) mPresenter).getMyBankCard();
                 }
-            }, 500);
+            }, 800);
         }
     }
 

@@ -176,8 +176,14 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         PoiItem poiItem = pioAddressViewAdapter.getItem(position);
         lat = String.valueOf(poiItem.getLatLonPoint().getLatitude());
         longi = String.valueOf(poiItem.getLatLonPoint().getLongitude());
-        district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
-        placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        int orgprovince = poiItem.getProvinceName().indexOf("省");
+        if (orgprovince == -1) {
+            district = poiItem.getCityName() + poiItem.getAdName();
+            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        } else {
+            district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
+            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        }
         if (type == 1 || type == 3) {
             Intent intent = new Intent();
             intent.putExtra("lat", String.valueOf(lat));

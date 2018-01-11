@@ -130,7 +130,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_city:
-                if (tran_type == 0) {
+                if (tran_type == 0 && type != 0) {
                     return;
                 }
                 Intent intent = new Intent(aty, SelectionCityActivity.class);
@@ -181,9 +181,14 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         PoiItem poiItem = pioAddressViewAdapter.getItem(position);
         lat = String.valueOf(poiItem.getLatLonPoint().getLatitude());
         longi = String.valueOf(poiItem.getLatLonPoint().getLongitude());
-        district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
-        placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
-
+        int orgprovince = poiItem.getProvinceName().indexOf("省");
+        if (orgprovince == -1) {
+            district = poiItem.getCityName() + poiItem.getAdName();
+            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        } else {
+            district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
+            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        }
         if (getIntent().getIntExtra("isProvenance", 0) == 1) {
             Intent intent = new Intent();
             intent.putExtra("lat", lat);
