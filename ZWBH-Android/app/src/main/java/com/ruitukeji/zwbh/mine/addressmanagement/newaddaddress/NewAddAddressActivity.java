@@ -163,8 +163,6 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
-
-
     }
 
     @Override
