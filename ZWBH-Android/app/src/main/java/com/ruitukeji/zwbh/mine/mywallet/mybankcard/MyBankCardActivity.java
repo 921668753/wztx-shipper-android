@@ -110,14 +110,13 @@ public class MyBankCardActivity extends BaseActivity implements MyBankCardContra
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
+        if (msg.trim().equals("暂无信息")) {
+            return;
+        }
         if (!toLigon1(msg)) {
             finish();
             return;
         }
-        if (msg.equals("暂无信息")) {
-            return;
-        }
-        ViewInject.toast(msg);
     }
 
     /**

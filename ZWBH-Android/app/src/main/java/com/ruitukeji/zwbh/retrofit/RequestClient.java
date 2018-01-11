@@ -1199,6 +1199,26 @@ public class RequestClient {
         }, listener);
     }
 
+
+    /**
+     * 设置支付密码
+     */
+    public static void postSetPayPassword(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.SETPAYPASSEORD, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
     /**
      * 获得银行
      */

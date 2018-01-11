@@ -321,6 +321,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             PreferenceHelper.write(aty, StringConstants.FILENAME, "recomm_code", userInfoBean.getResult().getRecomm_code());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "bond_status", userInfoBean.getResult().getBond_status());
             PreferenceHelper.write(aty, StringConstants.FILENAME, "bond", userInfoBean.getResult().getBond());
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "is_pay_password", userInfoBean.getResult().getIs_pay_password());
             readLocal();
         } else if (flag == 1) {
             showActivity(aty, PersonalDataActivity.class);

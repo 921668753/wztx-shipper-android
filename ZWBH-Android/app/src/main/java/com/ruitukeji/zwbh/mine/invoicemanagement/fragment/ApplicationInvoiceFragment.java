@@ -322,6 +322,11 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
             aty.showActivity(aty, LoginActivity.class);
             return;
         }
+        if (msg.trim().equals("暂无信息")) {
+            ll_generalElection.setVisibility(View.GONE);
+            mAdapter.clear();
+            return;
+        }
         if (msg.equals(getString(R.string.requestedDataEmpty))) {
             ll_generalElection.setVisibility(View.GONE);
             mAdapter.clear();

@@ -413,6 +413,11 @@ public class URLConstants {
     public static String ADDBANKCARD = APIURL + "Pay/AddBankCard";
 
     /**
+     * 设置支付密码
+     */
+    public static String SETPAYPASSEORD = APIURL + "user/PayPassword";
+
+    /**
      * 获得银行
      */
     public static String GETBANK = APIURL + "Pay/GetBank";

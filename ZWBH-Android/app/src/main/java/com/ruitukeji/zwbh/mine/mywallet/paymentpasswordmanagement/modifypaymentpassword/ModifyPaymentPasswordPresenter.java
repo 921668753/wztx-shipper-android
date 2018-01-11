@@ -62,64 +62,69 @@ public class ModifyPaymentPasswordPresenter implements ModifyPaymentPasswordCont
         });
     }
 
-    @Override
-    public void postVerificationCode(String phone, String code) {
-        if (StringUtils.isEmpty(phone)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.hintAccountText), 0);
-            return;
-        }
-        if (phone.length() != 11) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.inputPhone), 0);
-            return;
-        }
-        if (StringUtils.isEmpty(code)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.errorCode), 0);
-            return;
-        }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("account", phone);
-        map.put("captcha", code);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
-            }
+//    @Override
+//    public void postModifyPaymentPassword(String is_remember, String captcha, String identity, String old_password, String pay_password) {
+//
+//    }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
-    }
+//    @Override
+//    public void postVerificationCode(String phone, String code) {
+//        if (StringUtils.isEmpty(phone)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.hintAccountText), 0);
+//            return;
+//        }
+//        if (phone.length() != 11) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.inputPhone), 0);
+//            return;
+//        }
+//        if (StringUtils.isEmpty(code)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.errorCode), 0);
+//            return;
+//        }
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("account", phone);
+//        map.put("captcha", code);
+//        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+//        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 1);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 0);
+//            }
+//        });
+//    }
 
-    @Override
-    public void postVerifyIdNumber(String idNumber) {
-        if (StringUtils.isEmpty(idNumber)) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.IdNumber), 2);
-            return;
-        }
-        if (idNumber.length() != 15 && idNumber.length() != 18) {
-            mView.errorMsg(MyApplication.getContext().getString(R.string.hintIDerrorText), 2);
-            return;
-        }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("idNumber", idNumber);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 2);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 2);
-            }
-        });
-    }
+//    @Override
+//    public void postVerifyIdNumber(String idNumber) {
+//        if (StringUtils.isEmpty(idNumber)) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.IdNumber), 2);
+//            return;
+//        }
+//        if (idNumber.length() != 15 && idNumber.length() != 18) {
+//            mView.errorMsg(MyApplication.getContext().getString(R.string.hintIDerrorText), 2);
+//            return;
+//        }
+//        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+//        Map<String, Object> map = new HashMap<String, Object>();
+//        map.put("idNumber", idNumber);
+//        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
+//        RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
+//            @Override
+//            public void onSuccess(String response) {
+//                mView.getSuccess(response, 2);
+//            }
+//
+//            @Override
+//            public void onFailure(String msg) {
+//                mView.errorMsg(msg, 2);
+//            }
+//        });
+//    }
 
 
     @Override

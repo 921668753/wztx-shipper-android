@@ -3,14 +3,19 @@ package com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.setpaymentpas
 import android.view.View;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.myview.PayPwdEditText;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 /**
  * 设置支付密码
@@ -79,6 +84,7 @@ public class SetPaymentPassword1Activity extends BaseActivity implements SetPaym
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_nextStep:
+                showLoadingDialog(getString(R.string.submissionLoad));
                 ((SetPaymentPasswordContract.Presenter) mPresenter).postSetPaymentPassword(oldPaymentPassword, paymentPassword);
                 break;
         }
@@ -92,18 +98,19 @@ public class SetPaymentPassword1Activity extends BaseActivity implements SetPaym
 
     @Override
     public void getSuccess(String success, int flag) {
-
-
+        KJActivityStack.create().finishActivity(SetPaymentPasswordActivity.class);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "is_pay_password", 1);
+        finish();
+        dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
+        dismissLoadingDialog();
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
             showActivity(aty, LoginActivity.class);
             return;
         }
-        dismissLoadingDialog();
         ViewInject.toast(msg);
     }
 }

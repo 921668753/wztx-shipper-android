@@ -1,15 +1,18 @@
 package com.ruitukeji.zwbh.mine.mywallet;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.mywallet.MyWalletBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
@@ -21,8 +24,11 @@ import com.ruitukeji.zwbh.mine.mywallet.withdrawal.WithdrawalActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
 /**
  * 我的钱包
@@ -88,6 +94,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @BindView(id = R.id.ll_paymentPassword, click = true)
     private LinearLayout ll_paymentPassword;
 
+    private Handler handler = null;
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_mywallet1);
@@ -97,6 +105,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     public void initData() {
         super.initData();
         mPresenter = new MyWalletPresenter(this);
+        handler = new Handler();
     }
 
     @Override
@@ -144,7 +153,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         } else if (flag == 1) {
             showActivity(aty, AccountDetailsActivity.class);
         } else if (flag == 2) {
-            if (true) {
+            int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
+            if (is_pay_password == 1) {
                 showActivity(aty, ModifyPaymentPasswordActivity.class);
             } else {
                 showActivity(aty, SetPaymentPasswordActivity.class);
@@ -182,4 +192,29 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         mRefreshLayout.endLoadingMore();
         return false;
     }
+
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusSetPaymentPasswordEvent")) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshLayout.beginRefreshing();
+                }
+            }, 600);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+    }
+
+
 }

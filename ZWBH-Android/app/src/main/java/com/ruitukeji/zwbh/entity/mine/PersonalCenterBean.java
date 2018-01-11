@@ -30,6 +30,7 @@ public class PersonalCenterBean extends BaseResult<PersonalCenterBean.ResultBean
         private String bond;
         private String type;
         private String recomm_code;
+        private int is_pay_password;
 
         public String getType() {
             return type;
@@ -109,6 +110,14 @@ public class PersonalCenterBean extends BaseResult<PersonalCenterBean.ResultBean
 
         public void setBond(String bond) {
             this.bond = bond;
+        }
+
+        public int getIs_pay_password() {
+            return is_pay_password;
+        }
+
+        public void setIs_pay_password(int is_pay_password) {
+            this.is_pay_password = is_pay_password;
         }
     }
 }
