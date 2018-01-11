@@ -14,9 +14,6 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * Created by Administrator on 2017/2/17.

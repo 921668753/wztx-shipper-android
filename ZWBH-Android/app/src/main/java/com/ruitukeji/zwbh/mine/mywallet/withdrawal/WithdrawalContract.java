@@ -3,8 +3,6 @@ package com.ruitukeji.zwbh.mine.mywallet.withdrawal;
 import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 /**
  * Created by Administrator on 2017/2/17.
  */
