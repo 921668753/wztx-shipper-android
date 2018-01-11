@@ -24,11 +24,11 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/2/15.
  */
 
-public class RechargeRecordActivity extends BaseActivity implements PrepaidPhoneRecordsContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class RechargeRecordActivity extends BaseActivity implements RechargeRecordContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
 
-    @BindView(id = R.id.lv_rechargeRecord)
-    private ListView lv_rechargeRecord;
+    @BindView(id = R.id.lv_withdrawalrecord)
+    private ListView lv_withdrawalrecord;
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -62,13 +62,13 @@ public class RechargeRecordActivity extends BaseActivity implements PrepaidPhone
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_rechargerecord);
+        setContentView(R.layout.activity_withdrawalrecord);
     }
 
     @Override
     public void initData() {
         super.initData();
-        mPresenter = new PrepaidPhoneRecordsPresenter(this);
+        mPresenter = new RechargeRecordPresenter(this);
         rechargeRecordViewAdapter = new RechargeRecordViewAdapter(this);
     }
 
@@ -77,9 +77,9 @@ public class RechargeRecordActivity extends BaseActivity implements PrepaidPhone
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.prepaidPhoneRecords), true, R.id.titlebar);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
-        lv_rechargeRecord.setAdapter(rechargeRecordViewAdapter);
-//        lv_rechargeRecord.setOnItemClickListener(this);
-        ((PrepaidPhoneRecordsContract.Presenter) mPresenter).getPrepaidPhoneRecords(mMorePageNumber);
+        lv_withdrawalrecord.setAdapter(rechargeRecordViewAdapter);
+//        lv_withdrawalrecord.setOnItemClickListener(this);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -91,8 +91,8 @@ public class RechargeRecordActivity extends BaseActivity implements PrepaidPhone
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
-//        showLoadingDialog(getString(R.string.dataLoad));
-        ((PrepaidPhoneRecordsContract.Presenter) mPresenter).getPrepaidPhoneRecords(mMorePageNumber);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((RechargeRecordContract.Presenter) mPresenter).getRechargeRecord(mMorePageNumber);
     }
 
     @Override
@@ -106,8 +106,8 @@ public class RechargeRecordActivity extends BaseActivity implements PrepaidPhone
             ViewInject.toast(getString(R.string.noMoreData));
             return false;
         }
-//        showLoadingDialog(getString(R.string.dataLoad));
-        ((PrepaidPhoneRecordsContract.Presenter) mPresenter).getPrepaidPhoneRecords(mMorePageNumber);
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((RechargeRecordContract.Presenter) mPresenter).getRechargeRecord(mMorePageNumber);
         return true;
     }
 
@@ -162,7 +162,7 @@ public class RechargeRecordActivity extends BaseActivity implements PrepaidPhone
     }
 
     @Override
-    public void setPresenter(PrepaidPhoneRecordsContract.Presenter presenter) {
+    public void setPresenter(RechargeRecordContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

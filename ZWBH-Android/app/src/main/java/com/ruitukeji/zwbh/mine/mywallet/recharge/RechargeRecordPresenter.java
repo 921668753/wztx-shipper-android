@@ -22,10 +22,10 @@ public class RechargeRecordPresenter implements RechargeRecordContract.Presenter
 
     @Override
     public void getRechargeRecord(int page) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
-        RequestClient.getPrepaidPhoneRecords(httpParams, new ResponseListener<String>() {
+        httpParams.put("pageSize", 10);
+        RequestClient.getRechargeRecord(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response);

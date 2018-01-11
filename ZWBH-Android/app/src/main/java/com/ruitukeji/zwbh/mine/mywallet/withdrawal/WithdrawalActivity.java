@@ -68,6 +68,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
      */
     @BindView(id = R.id.tv_confirmSubmit, click = true)
     private TextView tv_confirmSubmit;
+
     private String bankCardName = "";
     private String bankCardNun = "";
     private int bankCardId = 0;
@@ -103,6 +104,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), getString(R.string.withdrawalRecord), R.id.titlebar, simpleDelegate);
         String withdraw_begintime = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdraw_begintime");
         String withdraw_endtime = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdraw_endtime");
+
     }
 
 

@@ -2,7 +2,6 @@ package com.ruitukeji.zwbh.adapter.mine.mywallet;
 
 import android.content.Context;
 
-import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.entity.WithdrawalRecordBean.ResultBean.ListBean;
 
@@ -22,46 +21,35 @@ public class WithdrawalRecordViewAdapter extends BGAAdapterViewAdapter<ListBean>
 
     @Override
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, ListBean listBean) {
+
         /**
          * 名称
          */
-        viewHolderHelper.setText(R.id.tv_name, listBean.getBank_name());
+        if (listBean.getStatus() == "") {
+            viewHolderHelper.setText(R.id.tv_name, mContext.getString(R.string.alipayPay));
+            viewHolderHelper.setTextColorRes(R.id.tv_name, R.color.titletextcolors);
+        } else if (listBean.getStatus() == "2") {
+            viewHolderHelper.setText(R.id.tv_name, mContext.getString(R.string.weChatPay));
+            viewHolderHelper.setTextColorRes(R.id.tv_name, R.color.announcementCloseColors);
+        } else {
+            viewHolderHelper.setText(R.id.tv_name, "其他");
+        }
 
         /**
-         * 金额
+         * 提现金额
          */
         viewHolderHelper.setText(R.id.tv_money, listBean.getWithdrawal_amount());
 
         /**
-         * 成功 失败
-         */
-        if (listBean.getStatus().equals("init")) {
-            viewHolderHelper.setTextColorRes(R.id.tv_balance, R.color.hintcolors);
-            viewHolderHelper.setText(R.id.tv_balance, "未处理");
-        } else if (listBean.getStatus().equals("agree")) {
-            viewHolderHelper.setTextColorRes(R.id.tv_balance, R.color.hintcolors);
-            // viewHolderHelper.setText(R.id.tv_money, "+" + listBean.getReal_amount());
-            viewHolderHelper.setText(R.id.tv_balance, "后台同意");
-        } else if (listBean.getStatus().equals("refuse")) {
-             viewHolderHelper.setTextColorRes(R.id.tv_balance, R.color.lonincolors);
-            viewHolderHelper.setText(R.id.tv_balance, "已拒绝");
-        } else if (listBean.getStatus().equals("pay_success")) {
-            viewHolderHelper.setTextColorRes(R.id.tv_balance, R.color.certificationcolors1);
-         //   viewHolderHelper.setText(R.id.tv_money, "-" + listBean.getWithdrawal_amount());
-            viewHolderHelper.setText(R.id.tv_balance, "提现成功");
-        } else if (listBean.getStatus().equals("pay_fail")) {
-            viewHolderHelper.setTextColorRes(R.id.tv_balance, R.color.lonincolors);
-            viewHolderHelper.setText(R.id.tv_balance, "提现失败");
-        }
-
-        /**
          *时间
          */
-        if (StringUtils.isEmpty(listBean.getCreate_at())) {
-            viewHolderHelper.setText(R.id.tv_time, "");
-        } else {
-            viewHolderHelper.setText(R.id.tv_time, listBean.getCreate_at().substring(0, 16));
-        }
+        viewHolderHelper.setText(R.id.tv_time, listBean.getCreate_at().substring(0, 16));
+
+        /**
+         * 余额
+         */
+        viewHolderHelper.setText(R.id.tv_balance, "支付失败");
+
     }
 
 }

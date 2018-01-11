@@ -1147,7 +1147,7 @@ public class RequestClient {
     /**
      * 提现记录
      */
-    public static void showCashRecord(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void showCashRecord(HttpParams httpParams, ResponseListener<String> listener) {
         doServer(new TokenCallback() {
             @Override
             public void execute() {
@@ -1313,7 +1313,7 @@ public class RequestClient {
     /**
      * 充值记录
      */
-    public static void getPrepaidPhoneRecords(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getRechargeRecord(HttpParams httpParams, final ResponseListener<String> listener) {
         doServer(new TokenCallback() {
             @Override
             public void execute() {
