@@ -89,7 +89,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("account", phone);
         map.put("captcha", code);
-        map.put("new_password", CipherUtils.md5("RUITU" + pwd + "KEJI"));
+        map.put("new_password", CipherUtils.md5("WUZAI" + pwd + "TIANXIA"));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postResetpwd(httpParams, new ResponseListener<String>() {
             @Override
@@ -130,7 +130,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("user_name", phone);
         map.put("captcha", code);
-        map.put("password", CipherUtils.md5("RUITU" + pwd + "KEJI"));
+        map.put("password", CipherUtils.md5("WUZAI" + pwd + "TIANXIA"));
         map.put("recomm_code", recommendcode);
         map.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());

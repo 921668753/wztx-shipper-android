@@ -50,7 +50,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("account", phone);
-        map.put("password", CipherUtils.md5("RUITU" + pwd + "KEJI"));
+        map.put("password", CipherUtils.md5("WUZAI" + pwd + "TIANXIA"));
         map.put("wxOpenid", "");
         map.put("pushToken", JPushInterface.getRegistrationID(KJActivityStack.create().topActivity()));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());

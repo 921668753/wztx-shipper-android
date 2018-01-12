@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.setpaymentpassword;
+package com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.modifypaymentpassword;
 
 import android.content.Intent;
 import android.view.View;
@@ -12,11 +12,12 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.myview.PayPwdEditText;
 
 /**
- * 设置支付密码
- * Created by Administrator on 2017/12/12.
+ * 修改支付密码---输入新密码
+ * Created by Administrator on 2017/12/13.
  */
 
-public class SetPaymentPasswordActivity extends BaseActivity {
+public class ModifyPaymentPassword4Activity extends BaseActivity {
+
 
     /**
      * 设置支付密码
@@ -47,7 +48,7 @@ public class SetPaymentPasswordActivity extends BaseActivity {
     public void initWidget() {
         super.initWidget();
         tv_nextStep.setClickable(false);
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.setPaymentPassword), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.modifyPaymentPassword), true, R.id.titlebar);
         et_paymentPassword.initStyle(R.drawable.edit_num_bg, 6, 0.33f, R.color.bEBEC0Colors, R.color.f2222Colors, 20);
         et_paymentPassword.setOnTextFinishListener(new PayPwdEditText.OnTextFinishListener() {
             @Override
@@ -62,7 +63,7 @@ public class SetPaymentPasswordActivity extends BaseActivity {
                 }
             }
         });
-        tv_setPaymentPassword.setText(getString(R.string.pleaseEnterPaymentPassword));
+        tv_setPaymentPassword.setText(getString(R.string.pleaseEnterNewPaymentPassword));
         tv_nextStep.setText(getString(R.string.nextStep));
     }
 
@@ -71,15 +72,14 @@ public class SetPaymentPasswordActivity extends BaseActivity {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_nextStep:
-                if (paymentPassword.length() < 6) {
+                if (paymentPassword.length() != 6) {
                     ViewInject.toast(getString(R.string.pleaseEnterPaymentPassword1));
                     break;
                 }
-                Intent intent = new Intent(aty, SetPaymentPassword1Activity.class);
+                Intent intent = new Intent(aty, ConfirmPaymentPasswordActivity.class);
                 intent.putExtra("paymentPassword", paymentPassword);
                 showActivity(aty, intent);
                 break;
         }
-
     }
 }

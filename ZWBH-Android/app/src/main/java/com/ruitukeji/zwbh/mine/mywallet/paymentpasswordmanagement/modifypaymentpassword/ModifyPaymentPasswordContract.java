@@ -19,25 +19,25 @@ public interface ModifyPaymentPasswordContract {
          */
         void postCode(String phone, String type);
 
-//        /**
-//         * 验证验证码
-//         */
-//        void postVerificationCode(String code);
+        /**
+         * 验证验证码
+         */
+        void postVerificationCode(String phone,String code);
 
-//        /**
-//         * 验证身份证号
-//         */
-//        void postVerifyIdNumber(String idNumber);
+        /**
+         * 验证身份证号
+         */
+        void postVerifyIdNumber(String idNumber);
 
-//        /**
-//         * 验证旧支付密码
-//         */
-//        void postVerifyIdNumber(String oldPaymentPassword);
+        /**
+         * 验证旧支付密码
+         */
+        void postOldPayPassword(String oldPaymentPassword);
 
         /**
          * 设置支付密码
          */
-        void postModifyPaymentPassword(String oldPaymentPassword, String paymentPassword);
+        void postModifyPaymentPassword(String newPaymentPassword, String paymentPassword);
     }
 
     interface View extends BaseNewView<Presenter, String> {

@@ -6,18 +6,18 @@ import android.widget.TextView;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.myview.PayPwdEditText;
 
 /**
- *确认支付密码
+ * 确认支付密码
  * Created by Administrator on 2017/12/13.
  */
 
-public class ConfirmPaymentPasswordActivity extends BaseActivity implements ModifyPaymentPasswordContract.View{
+public class ConfirmPaymentPasswordActivity extends BaseActivity implements ModifyPaymentPasswordContract.View {
+
     /**
      * 设置支付密码
      */
@@ -54,6 +54,7 @@ public class ConfirmPaymentPasswordActivity extends BaseActivity implements Modi
     @Override
     public void initWidget() {
         super.initWidget();
+        tv_nextStep.setClickable(false);
         ActivityTitleUtils.initToolbar(aty, getString(R.string.confirmPaymentPassword), true, R.id.titlebar);
         et_paymentPassword.initStyle(R.drawable.edit_num_bg, 6, 0.33f, R.color.bEBEC0Colors, R.color.f2222Colors, 20);
         et_paymentPassword.setOnTextFinishListener(new PayPwdEditText.OnTextFinishListener() {
@@ -91,18 +92,19 @@ public class ConfirmPaymentPasswordActivity extends BaseActivity implements Modi
 
     @Override
     public void getSuccess(String success, int flag) {
-
-
+        KJActivityStack.create().finishActivity(ModifyPaymentPasswordActivity.class);
+        KJActivityStack.create().finishActivity(ModifyPaymentPassword1Activity.class);
+        KJActivityStack.create().finishActivity(ModifyPaymentPassword2Activity.class);
+        KJActivityStack.create().finishActivity(ModifyPaymentPassword3Activity.class);
+        KJActivityStack.create().finishActivity(ModifyPaymentPassword4Activity.class);
+        dismissLoadingDialog();
+        ViewInject.toast(getString(R.string.modifyPaymentPasswordSucceed));
+        finish();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            showActivity(aty, LoginActivity.class);
-            return;
-        }
         dismissLoadingDialog();
-        ViewInject.toast(msg);
+        toLigon1(msg);
     }
 }

@@ -28,7 +28,7 @@ public class SetPaymentPasswordPresenter implements SetPaymentPasswordContract.P
 
     @Override
     public void postSetPaymentPassword(String oldPaymentPassword, String paymentPassword) {
-        if (paymentPassword.length() < 6) {
+        if (paymentPassword.length() != 6) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnterPaymentPassword1), 0);
             return;
         }
@@ -38,6 +38,7 @@ public class SetPaymentPasswordPresenter implements SetPaymentPasswordContract.P
         }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("type", 0);
         map.put("pay_password", CipherUtils.md5("WUZAI" + paymentPassword + "TIANXIA"));
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postSetPayPassword(httpParams, new ResponseListener<String>() {

@@ -1218,6 +1218,24 @@ public class RequestClient {
         }, listener);
     }
 
+    /**
+     *修改密码校验
+     */
+    public static void getCheckPayPassword(HttpParams httpParams, ResponseListener<String> listener) {
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.CHECKPAYPASSEORD, httpParams, listener);
+            }
+        }, listener);
+    }
+
 
     /**
      * 获得银行
