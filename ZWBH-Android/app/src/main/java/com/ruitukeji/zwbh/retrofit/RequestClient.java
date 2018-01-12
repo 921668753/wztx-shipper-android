@@ -1273,12 +1273,11 @@ public class RequestClient {
             public void execute() {
                 String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
                 if (StringUtils.isEmpty(accessToken)) {
-                    //     PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
                     listener.onFailure(NumericConstants.TOLINGIN + "");
                     return;
                 }
                 httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestPostHttp(URLConstants.APIURL, httpParams, listener);
+                HttpRequest.requestPostHttp(URLConstants.WITHDRAWAL, httpParams, listener);
             }
         }, listener);
     }

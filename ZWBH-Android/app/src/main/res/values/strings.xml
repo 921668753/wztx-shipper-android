@@ -643,6 +643,13 @@
     <string name="consent">同意</string>
     <string name="withdrawAgreement">《提现协议》</string>
 
+    <!--提现记录-->
+    <string name="withdrawalSuccess">提现成功</string>
+    <string name="withdrawalFailure">提现失败</string>
+    <!--<string name="withdrawalFailure">提现未处理</string>-->
+    <string name="withdrawalProcessing">提现申请处理中</string>
+    <string name="withdrawalRejected">提现申请被拒绝</string>
+
 
     <!--充值-->
     <string name="topUpAmount">充值金额</string>
@@ -651,6 +658,10 @@
     <string name="alipayPay">支付宝支付</string>
     <string name="prepaidImmediately">立即充值</string>
     <string name="rechargeRecord">充值记录</string>
+
+    <!--充值记录-->
+    <string name="rechargeSuccess">充值成功</string>
+    <string name="rechargeFailure">充值失败</string>
 
 
     <!--设置支付密码-->

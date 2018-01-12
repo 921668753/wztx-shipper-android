@@ -92,7 +92,7 @@ public class ModifyPaymentPassword2Activity extends BaseActivity implements Modi
     @Override
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
-        showActivity(aty, SetPaymentPasswordActivity.class);
+        showActivity(aty, ModifyPaymentPassword4Activity.class);
     }
 
     @Override

@@ -1,6 +1,7 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.mine.mywallet.recharge;
 
 import com.google.gson.annotations.SerializedName;
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 /**
  * Created by Admin on 2017/7/27.

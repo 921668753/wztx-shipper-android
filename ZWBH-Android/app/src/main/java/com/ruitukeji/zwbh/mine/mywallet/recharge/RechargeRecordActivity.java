@@ -12,7 +12,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.PrepaidPhoneRecordsBean;
+import com.ruitukeji.zwbh.entity.mine.mywallet.recharge.RechargeRecordBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -130,7 +130,7 @@ public class RechargeRecordActivity extends BaseActivity implements RechargeReco
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        PrepaidPhoneRecordsBean prepaidPhoneRecordsBean = (PrepaidPhoneRecordsBean) JsonUtil.getInstance().json2Obj(s, PrepaidPhoneRecordsBean.class);
+        RechargeRecordBean prepaidPhoneRecordsBean = (RechargeRecordBean) JsonUtil.getInstance().json2Obj(s, RechargeRecordBean.class);
         if (prepaidPhoneRecordsBean.getResult().getList() == null || prepaidPhoneRecordsBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;

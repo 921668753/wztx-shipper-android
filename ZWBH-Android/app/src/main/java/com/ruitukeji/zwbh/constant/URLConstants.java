@@ -398,6 +398,11 @@ public class URLConstants {
     public static String PAY = APIURL + "pay";
 
     /**
+     * 提现
+     */
+    public static String WITHDRAWAL = APIURL + "pay/withDraw";
+
+    /**
      * 提现记录
      */
     public static String SHOWCASHRECORD = APIURL + "pay/showCashRecord";
@@ -418,7 +423,7 @@ public class URLConstants {
     public static String SETPAYPASSEORD = APIURL + "user/PayPassword";
 
     /**
-     *修改密码校验
+     * 修改密码校验
      */
     public static String CHECKPAYPASSEORD = APIURL + "user/CheckUpPayPassword";
 

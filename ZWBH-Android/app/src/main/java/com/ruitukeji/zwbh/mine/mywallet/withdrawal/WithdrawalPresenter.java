@@ -43,7 +43,7 @@ public class WithdrawalPresenter implements WithdrawalContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.notHigherWithdrawalLimit1), 0);
             return;
         }
-        if (bankId < 0) {
+        if (bankId < 1) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.withdrawalsBank1), 0);
             return;
         }

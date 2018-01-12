@@ -5,7 +5,6 @@ import android.content.Context;
 import com.amap.api.services.help.Tip;
 
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.entity.RefreshModel;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;

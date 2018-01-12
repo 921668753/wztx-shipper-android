@@ -79,6 +79,7 @@ public class ConfirmPaymentPasswordActivity extends BaseActivity implements Modi
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_nextStep:
+                showLoadingDialog(getString(R.string.submissionLoad));
                 ((ModifyPaymentPasswordContract.Presenter) mPresenter).postModifyPaymentPassword(oldPaymentPassword, paymentPassword);
                 break;
         }
