@@ -95,6 +95,9 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     private LinearLayout ll_paymentPassword;
 
     private Handler handler = null;
+    private String bankName = "";
+    private String bankCard = "";
+    private int id = 0;
 
     @Override
     public void setRootView() {
@@ -127,7 +130,12 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
                 showActivity(aty, RechargeActivity.class);
                 break;
             case R.id.ll_cashWithdrawal:
-                showActivity(aty, WithdrawalActivity.class);
+                Intent intent = new Intent(aty, WithdrawalActivity.class);
+                intent.putExtra("bankCardName", bankName);
+                intent.putExtra("bankCardName", bankName);
+                intent.putExtra("bankCardNun", bankCard);
+                intent.putExtra("bankCardId", id);
+                showActivity(aty, intent);
                 break;
             case R.id.ll_myBankCard:
                 showActivity(aty, MyBankCardActivity.class);
@@ -149,7 +157,13 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         if (flag == 0) {
             MyWalletBean myWalletBean = (MyWalletBean) JsonUtil.getInstance().json2Obj(success, MyWalletBean.class);
             tv_accountBalance.setText(myWalletBean.getResult().getBalance());
-//        tv_myReferralBonuses.setText("+" + myWalletBean.getResult().getBonus());
+            tv_withdrawalAmount.setText(myWalletBean.getResult().getWithdrawalAmount());
+            PreferenceHelper.write(this, StringConstants.FILENAME, "withdrawalAmount", myWalletBean.getResult().getWithdrawalAmount());
+            tv_totalConsumption.setText(myWalletBean.getResult().getPayAccount());
+            tv_outstandingAmount.setText(myWalletBean.getResult().getNotPayAccount());
+            bankName = myWalletBean.getResult().getBankName();
+            bankCard = myWalletBean.getResult().getBankCard();
+            id = myWalletBean.getResult().getId();
         } else if (flag == 1) {
             showActivity(aty, AccountDetailsActivity.class);
         } else if (flag == 2) {
@@ -197,7 +211,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusSetPaymentPasswordEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusWithdrawalEvent")) {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {

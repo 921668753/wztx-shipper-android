@@ -16,6 +16,8 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
@@ -83,6 +85,9 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void initData() {
         super.initData();
         mPresenter = new WithdrawalPresenter(this);
+        bankCardName = getIntent().getStringExtra("bankCardName");
+        bankCardNun = getIntent().getStringExtra("bankCardName");
+        bankCardId = getIntent().getIntExtra("bankCardId", 0);
     }
 
     @Override
@@ -102,9 +107,9 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
             }
         };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), getString(R.string.withdrawalRecord), R.id.titlebar, simpleDelegate);
-        String withdraw_begintime = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdraw_begintime");
-        String withdraw_endtime = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdraw_endtime");
-
+        String withdrawalAmount = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdrawalAmount");
+        tv_money.setText(withdrawalAmount);
+        tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
     }
 
 
@@ -142,6 +147,7 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         dismissLoadingDialog();
         if (flag == 0) {
             ViewInject.toast(getString(R.string.confirmSubmit2));
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
             finish();
         } else if (flag == 1) {
             Intent intent = new Intent(aty, MyBankCardActivity.class);

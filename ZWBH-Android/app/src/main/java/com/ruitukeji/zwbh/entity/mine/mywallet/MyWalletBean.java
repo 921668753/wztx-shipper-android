@@ -12,15 +12,21 @@ public class MyWalletBean extends BaseResult<MyWalletBean.ResultBean> {
     public class ResultBean {
         /**
          * balance : 0.00
-         * NotPayAccount : 0.00
-         * PayAccount : 0.00
-         * WithdrawalAmount : 0.00
+         * notPayAccount : 0.00
+         * payAccount : 0.00
+         * withdrawalAmount : 0.00
+         * bankCard : 8558
+         * id : 28
+         * bankName : 中国工商银行
          */
 
         private String balance;
-        private String NotPayAccount;
-        private String PayAccount;
-        private String WithdrawalAmount;
+        private String notPayAccount;
+        private String payAccount;
+        private String withdrawalAmount;
+        private String bankCard;
+        private int id;
+        private String bankName;
 
         public String getBalance() {
             return balance;
@@ -31,27 +37,51 @@ public class MyWalletBean extends BaseResult<MyWalletBean.ResultBean> {
         }
 
         public String getNotPayAccount() {
-            return NotPayAccount;
+            return notPayAccount;
         }
 
-        public void setNotPayAccount(String NotPayAccount) {
-            this.NotPayAccount = NotPayAccount;
+        public void setNotPayAccount(String notPayAccount) {
+            this.notPayAccount = notPayAccount;
         }
 
         public String getPayAccount() {
-            return PayAccount;
+            return payAccount;
         }
 
-        public void setPayAccount(String PayAccount) {
-            this.PayAccount = PayAccount;
+        public void setPayAccount(String payAccount) {
+            this.payAccount = payAccount;
         }
 
         public String getWithdrawalAmount() {
-            return WithdrawalAmount;
+            return withdrawalAmount;
         }
 
-        public void setWithdrawalAmount(String WithdrawalAmount) {
-            this.WithdrawalAmount = WithdrawalAmount;
+        public void setWithdrawalAmount(String withdrawalAmount) {
+            this.withdrawalAmount = withdrawalAmount;
+        }
+
+        public String getBankCard() {
+            return bankCard;
+        }
+
+        public void setBankCard(String bankCard) {
+            this.bankCard = bankCard;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getBankName() {
+            return bankName;
+        }
+
+        public void setBankName(String bankName) {
+            this.bankName = bankName;
         }
     }
 }
