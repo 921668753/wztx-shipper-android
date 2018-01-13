@@ -12,11 +12,15 @@ public class MyWalletBean extends BaseResult<MyWalletBean.ResultBean> {
     public class ResultBean {
         /**
          * balance : 0.00
-         * bonus : 1000.00
+         * NotPayAccount : 0.00
+         * PayAccount : 0.00
+         * WithdrawalAmount : 0.00
          */
 
         private String balance;
-        private String bonus;
+        private String NotPayAccount;
+        private String PayAccount;
+        private String WithdrawalAmount;
 
         public String getBalance() {
             return balance;
@@ -26,12 +30,28 @@ public class MyWalletBean extends BaseResult<MyWalletBean.ResultBean> {
             this.balance = balance;
         }
 
-        public String getBonus() {
-            return bonus;
+        public String getNotPayAccount() {
+            return NotPayAccount;
         }
 
-        public void setBonus(String bonus) {
-            this.bonus = bonus;
+        public void setNotPayAccount(String NotPayAccount) {
+            this.NotPayAccount = NotPayAccount;
+        }
+
+        public String getPayAccount() {
+            return PayAccount;
+        }
+
+        public void setPayAccount(String PayAccount) {
+            this.PayAccount = PayAccount;
+        }
+
+        public String getWithdrawalAmount() {
+            return WithdrawalAmount;
+        }
+
+        public void setWithdrawalAmount(String WithdrawalAmount) {
+            this.WithdrawalAmount = WithdrawalAmount;
         }
     }
 }
