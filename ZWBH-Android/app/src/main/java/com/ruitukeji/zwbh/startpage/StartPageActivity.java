@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.kymjs.common.FileUtils;
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
+import com.kymjs.common.SystemTool;
 import com.kymjs.okhttp3.OkHttpStack;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.http.RequestQueue;
@@ -83,12 +85,9 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         });
         image.setAnimation(anim);
         setContentView(image);
-//        MyApplication.screenH = DensityUtils.getScreenH();
-//        MyApplication.screenW = DensityUtils.getScreenW();
     }
 
     private void jumpTo() {
-//        startService(new Intent(aty, CommonService.class));
         boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isFirst", true);
         Intent jumpIntent = new Intent();
         jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -165,6 +164,20 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         PreferenceHelper.write(this, StringConstants.FILENAME, "share_shipper", appConfigBean.getResult().getShare_shipper());
         PreferenceHelper.write(this, StringConstants.FILENAME, "share_shipper_description", appConfigBean.getResult().getShare_shipper_description());
         PreferenceHelper.write(this, StringConstants.FILENAME, "share_shipper_title", appConfigBean.getResult().getShare_shipper_title());
+        int lastApkVersionNum = 0;
+        if (StringUtils.isEmpty(appConfigBean.getResult().getLastApkVersionNum() + "")) {
+            lastApkVersionNum = 0;
+        } else {
+            lastApkVersionNum = appConfigBean.getResult().getLastApkVersionNum();
+        }
+        Log.d("tag", "lastApkVersionNum" + "===" + lastApkVersionNum);
+        if (lastApkVersionNum > SystemTool.getAppVersionCode(this)) {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "isUpdate", true);
+            Log.d("tag", "isUpdate" + "===" + true);
+        } else {
+            PreferenceHelper.write(this, StringConstants.FILENAME, "isUpdate", false);
+            Log.d("tag", "isUpdate" + "===" + false);
+        }
         jumpTo();
         dismissLoadingDialog();
     }
@@ -172,8 +185,6 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
     @Override
     public void error(String msg) {
         ((StartPageContract.Presenter) mPresenter).getAppConfig();
-        //    dismissLoadingDialog();
-        //  ViewInject.toast(msg);
     }
 
     @Override

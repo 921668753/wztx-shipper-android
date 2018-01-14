@@ -11,6 +11,7 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
  */
 
 public class StartPagePresenter implements StartPageContract.Presenter {
+
     private StartPageContract.View mView;
 
     public StartPagePresenter(StartPageContract.View view) {

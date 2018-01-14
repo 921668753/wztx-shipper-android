@@ -17,6 +17,7 @@ public interface StartPageContract {
     }
 
     interface View extends BaseView<Presenter> {
+
         /**
          * http请求正确
          *
