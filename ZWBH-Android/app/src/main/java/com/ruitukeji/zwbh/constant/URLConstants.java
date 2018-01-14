@@ -10,31 +10,17 @@ public class URLConstants {
     /**
      * 服务器地址URL
      */
-    public static String SERVERURL = "http://atwwg.api.antiwearvalve.com/";
+    // public static String APIURL = "http://atwwg.api.antiwearvalve.com/";
 
     /**
      * 测试服务器地址URL
      */
-    public static String SERVERURL1 = "http://wuzaishipper.wuzaitianxia56.com/";
+    public static String APIURL = "http://wuzaishipper.wuzaitianxia56.com/";
 //    public static String SERVERURL1 = "http://wztx.drv.api.zenmechi.cc/";
-
-
-    /**
-     * 得到国内全部城市
-     */
-    public static String SERVERURL2 = "http://user.api.shahaizi.shop/";
-    public static String APIURL1 = SERVERURL2 + "index.php?";
-
-
-    /**
-     * 请求地址URL
-     */
-    public static String APIURL = SERVERURL1;
 
     /**
      * 得到全部城市
      */
-    //  public static String GETALLCITYBYCOUNTRY = APIURL1 + "m=Api&c=Region&a=getAllCityByCountryId";
     public static String ALLCITY = APIURL + "Address/getAllCity";
 
     /**
