@@ -112,6 +112,7 @@ public abstract class BaseActivity extends KJActivity implements LoadingDialogVi
 
     public boolean toLigon1(String msg) {
         if (StringUtils.isEmpty(msg)) {
+            ViewInject.toast(getString(R.string.otherError));
             return true;
         }
         if (msg.equals("" + NumericConstants.TOLINGIN)) {
