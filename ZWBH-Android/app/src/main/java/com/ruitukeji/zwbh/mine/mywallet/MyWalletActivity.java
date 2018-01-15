@@ -8,13 +8,10 @@ import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.mywallet.MyWalletBean;
-import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.modifypaymentpassword.ModifyPaymentPasswordActivity;
@@ -27,8 +24,6 @@ import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
-
-import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
 /**
  * 我的钱包
@@ -138,10 +133,10 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
                 showActivity(aty, intent);
                 break;
             case R.id.ll_myBankCard:
-                showActivity(aty, MyBankCardActivity.class);
+                ((MyWalletContract.Presenter) mPresenter).isLogin(2);
                 break;
             case R.id.ll_paymentPassword:
-                ((MyWalletContract.Presenter) mPresenter).isLogin(2);
+                ((MyWalletContract.Presenter) mPresenter).isLogin(3);
                 break;
         }
     }
@@ -167,6 +162,8 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
         } else if (flag == 1) {
             showActivity(aty, AccountDetailsActivity.class);
         } else if (flag == 2) {
+            showActivity(aty, MyBankCardActivity.class);
+        } else if (flag == 3) {
             int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
             if (is_pay_password == 1) {
                 showActivity(aty, ModifyPaymentPasswordActivity.class);
@@ -181,16 +178,14 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
 
     @Override
     public void errorMsg(String msg, int flag) {
-        if (flag == 0) {
-            toLigon(msg);
-        }
         dismissLoadingDialog();
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            Intent intent = new Intent(aty, LoginActivity.class);
-            showActivity(aty, intent);
+        if (toLigon1(msg)) {
             return;
         }
-
+        if (flag == 0) {
+            finish();
+            return;
+        }
     }
 
 
