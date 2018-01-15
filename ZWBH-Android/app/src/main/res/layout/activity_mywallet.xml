@@ -116,7 +116,7 @@
                 <TextView
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen15"
-                    android:text="@string/prepaidPhoneRecords"
+                    android:text="@string/rechargeRecord"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/textsize15" />
 

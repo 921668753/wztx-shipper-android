@@ -75,7 +75,7 @@ public class RechargeRecordActivity extends BaseActivity implements RechargeReco
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.prepaidPhoneRecords), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.rechargeRecord), true, R.id.titlebar);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, true);
         lv_withdrawalrecord.setAdapter(rechargeRecordViewAdapter);
 //        lv_withdrawalrecord.setOnItemClickListener(this);
