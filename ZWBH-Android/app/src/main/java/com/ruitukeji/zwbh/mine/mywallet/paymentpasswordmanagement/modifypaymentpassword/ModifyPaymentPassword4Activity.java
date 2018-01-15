@@ -83,7 +83,7 @@ public class ModifyPaymentPassword4Activity extends BaseActivity {
                     ViewInject.toast(getString(R.string.pleaseEnterPaymentPassword1));
                     break;
                 }
-                if (oldPaymentPassword.equals(paymentPassword)) {
+                if (oldPaymentPassword != null && oldPaymentPassword.equals(paymentPassword)) {
                     ViewInject.toast(getString(R.string.oldPpaymentPasswordsNotMatch));
                     break;
                 }

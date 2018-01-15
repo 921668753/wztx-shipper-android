@@ -10,7 +10,6 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.mywallet.MyBankCardViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.entity.mine.mywallet.mybankcard.MyBankCardBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;

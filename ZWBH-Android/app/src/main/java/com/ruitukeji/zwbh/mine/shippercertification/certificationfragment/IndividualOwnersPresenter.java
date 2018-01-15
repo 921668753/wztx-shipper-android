@@ -9,6 +9,7 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.mine.shippercertification.dialog.SubmitBouncedDialog;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
+import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.picturerelated.BitmapCoreUtil;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -48,6 +49,12 @@ public class IndividualOwnersPresenter implements IndividualOwnersContract.Prese
         }
         if (pic_time <= 0) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.validityIdentityCard), 0);
+            return;
+        }
+        String dateStr = DataUtil.formatData(System.currentTimeMillis() / 1000, "yyyy-MM-dd");
+        long dateLong = DataUtil.getStringToDate(dateStr + " 00:00:00", "yyyy-MM-dd HH:mm:ss");
+        if (pic_time > dateLong) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.aboveCurrentTime), 0);
             return;
         }
 //        if (StringUtils.isEmpty(front_pic)) {

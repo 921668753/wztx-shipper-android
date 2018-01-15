@@ -390,8 +390,6 @@
     <string name="companyOwner">公司货主</string>
     <string name="unauthorized">未认证</string>
     <string name="authorized">已认证</string>
-
-
     <string name="confirmationInformation">确定提交认证信息？</string>
 
     <!--个人中心   个人货主-->
@@ -677,6 +675,7 @@
     <string name="toResend1">秒后重发</string>
     <string name="doRememberAccountNumber">您是否记得账号</string>
     <string name="currentPaymentPassword">当前使用的支付密码</string>
+    <string name="doNotRemember1">认证通过后，才能修改密码</string>
     <string name="doNotRemember">不记得</string>
     <string name="remember">记得</string>
     <string name="enterCorrectVerificationCode">请输入正确的验证码</string>

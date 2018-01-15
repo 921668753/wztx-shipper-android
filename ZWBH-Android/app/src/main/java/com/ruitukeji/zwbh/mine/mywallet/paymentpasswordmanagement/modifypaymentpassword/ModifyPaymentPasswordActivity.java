@@ -4,10 +4,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
+import com.nanchen.compresshelper.StringUtil;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
 /**
@@ -46,6 +50,10 @@ public class ModifyPaymentPasswordActivity extends BaseActivity {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.modifyPaymentPassword), true, R.id.titlebar);
         String phone = PreferenceHelper.readString(aty, StringConstants.FILENAME, "phone", "");
+        if (StringUtils.isEmpty(phone)) {
+            finish();
+            return;
+        }
         tv_accountNumber.setText(phone);
     }
 
@@ -54,7 +62,15 @@ public class ModifyPaymentPasswordActivity extends BaseActivity {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_doNotRemember:
-                showActivity(aty, ModifyPaymentPassword1Activity.class);
+                String auth_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "auth_status", "init");
+                if (auth_status != null && auth_status.equals("pass")) {
+                    showActivity(aty, ModifyPaymentPassword1Activity.class);
+                    break;
+                } else if (auth_status != null && auth_status.equals("init") || auth_status != null && auth_status.equals("refuse")) {
+                    showActivity(aty, ShipperCertificationActivity.class);
+                    break;
+                }
+                ViewInject.toast(getString(R.string.doNotRemember1));
                 break;
             case R.id.tv_remember:
                 showActivity(aty, ModifyPaymentPassword3Activity.class);
