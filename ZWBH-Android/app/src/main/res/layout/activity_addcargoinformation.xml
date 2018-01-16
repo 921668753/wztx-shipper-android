@@ -408,12 +408,25 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <LinearLayout
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen15"
-                    android:text="@string/transportationEstimated"
-                    android:textColor="@color/titletextcolors"
-                    android:textSize="@dimen/textsize15" />
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/transportationEstimated"
+                        android:textColor="@color/titletextcolors"
+                        android:textSize="@dimen/textsize15" />
+
+                    <TextView
+                        style="@style/WrapWrap"
+                        android:text="@string/containsDistribution"
+                        android:textColor="@color/announcementCloseColors"
+                        android:textSize="@dimen/textsize14" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/tv_transportationEstimated"
@@ -426,17 +439,11 @@
 
                 <TextView
                     style="@style/WrapWrap"
-                    android:layout_marginRight="@dimen/dimen10"
+                    android:layout_marginRight="@dimen/dimen15"
                     android:text="元"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />
 
-                <TextView
-                    style="@style/WrapWrap"
-                    android:layout_marginRight="@dimen/dimen15"
-                    android:text="@string/containsDistribution"
-                    android:textColor="@color/announcementCloseColors"
-                    android:textSize="@dimen/textsize14" />
 
             </LinearLayout>
 

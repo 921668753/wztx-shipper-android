@@ -197,7 +197,6 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         provenanceShipper = getIntent().getStringExtra("provenanceShipper");
         provenancePhone = getIntent().getStringExtra("provenancePhone");
         provenanceEixedTelephone = getIntent().getStringExtra("provenanceEixedTelephone");
-
         destinationLat = getIntent().getStringExtra("destinationLat");
         destinationLongi = getIntent().getStringExtra("destinationLongi");
         destinationDistrict = getIntent().getStringExtra("destinationDistrict");
