@@ -287,30 +287,4 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
             return;
         }
     }
-
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        boolean isRefreshPersonalDataActivity = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity", false);
-//        if (isRefreshPersonalDataActivity) {
-//            showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
-//            ((PersonalDataContract.Presenter) mPresenter).getInfo();
-//        }
-//        boolean isRefreshPersonalDataActivity1 = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity1", false);
-//        if (isRefreshPersonalDataActivity1) {
-//            String bond_status = PreferenceHelper.readString(aty, StringConstants.FILENAME, "bond_status");
-//            if (bond_status == null || bond_status.equals("init")) {
-//                img_arrow.setVisibility(View.VISIBLE);
-//                tv_accountDeposit.setText(getString(R.string.failurePay));
-//            } else if (bond_status.equals("checked")) {
-//                img_arrow.setVisibility(View.GONE);
-//                tv_accountDeposit.setText(getString(R.string.checked));
-//            } else if (bond_status.equals("frozen")) {
-//                img_arrow.setVisibility(View.VISIBLE);
-//                tv_accountDeposit.setText(getString(R.string.frozen));
-//            }
-//           // PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity1", false);
-//        }
-//    }
 }
