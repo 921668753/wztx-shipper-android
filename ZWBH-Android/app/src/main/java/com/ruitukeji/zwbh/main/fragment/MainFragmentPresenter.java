@@ -34,8 +34,6 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
-
 /**
  * Created by Administrator on 2017/2/20.
  */
@@ -198,7 +196,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
                                                           String provenanceDeliveryCustomer, String provenanceShipper, String provenancePhone,
                                                           String provenanceEixedTelephone, String destinationLat, String destinationLongi, String destinationDistrict,
                                                           String destinationPlaceName, String destinationDetailedAddress, String destinationDeliveryCustomer,
-                                                          String destinationShipper, String destinationPhone, String destinationEixedTelephone) {
+                                                          String destinationShipper, String destinationPhone, String destinationEixedTelephone, int resultCode) {
 
         if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.pleaseEnterDeparturePoint), 0);
@@ -268,7 +266,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         cargoInformationIntent.putExtra("destinationShipper", destinationShipper);
         cargoInformationIntent.putExtra("destinationPhone", destinationPhone);
         cargoInformationIntent.putExtra("destinationEixedTelephone", destinationEixedTelephone);
-        baseFragment.startActivityForResult(cargoInformationIntent, REQUEST_CODE_PHOTO_PREVIEW1);
+        baseFragment.startActivityForResult(cargoInformationIntent, resultCode);
     }
 
 

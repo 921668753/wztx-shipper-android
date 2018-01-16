@@ -28,6 +28,7 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.mine.complaintcenter.ComplaintCenterActivity;
+import com.ruitukeji.zwbh.mine.dialog.InAuthenticationBouncedDialog;
 import com.ruitukeji.zwbh.mine.drivermanagement.DriverManagementActivity;
 import com.ruitukeji.zwbh.mine.helpcenter.HelpCenterActivity;
 import com.ruitukeji.zwbh.mine.invitefriends.SharePoliteActivity;
@@ -181,6 +182,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
     @BindView(id = R.id.ll_systemSettings, click = true)
     private LinearLayout ll_systemSettings;
     private Handler handler = null;
+    private InAuthenticationBouncedDialog inAuthenticationBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -328,7 +330,14 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         } else if (flag == 2) {
             String auth_status = PreferenceHelper.readString(this, StringConstants.FILENAME, "auth_status");
             if (auth_status != null && auth_status.equals("check")) {
-                ViewInject.toast(getString(R.string.inAuthentication) + "," + getString(R.string.pleaseWait));
+                //  ViewInject.toast(getString(R.string.inAuthentication) + "," + getString(R.string.pleaseWait));
+                inAuthenticationBouncedDialog = new InAuthenticationBouncedDialog(aty) {
+                    @Override
+                    public void confirm() {
+                        this.cancel();
+                    }
+                };
+                inAuthenticationBouncedDialog.show();
                 return;
             }
             String type = PreferenceHelper.readString(aty, StringConstants.FILENAME, "type", "all");
@@ -515,6 +524,10 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
             handler = null;
+        }
+        if (inAuthenticationBouncedDialog != null) {
+            inAuthenticationBouncedDialog.cancel();
+            inAuthenticationBouncedDialog = null;
         }
     }
 }

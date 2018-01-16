@@ -320,7 +320,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                         tv_appointmentTime1.getText().toString(), provenanceLat, provenanceLongi, provenanceDistrict, provenancePlaceName,
                         provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
                         destinationLat, destinationLongi, destinationDistrict, destinationPlaceName, destinationDetailedAddress,
-                        destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone);
+                        destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PHOTO_PREVIEW1);
                 break;
         }
     }

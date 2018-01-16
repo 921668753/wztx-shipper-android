@@ -64,7 +64,7 @@ public interface MainFragmentContract {
                                                        String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer, String provenanceShipper,
                                                        String provenancePhone, String provenanceEixedTelephone, String destinationLat, String destinationLongi,
                                                        String destinationDistrict, String destinationPlaceName, String destinationDetailedAddress,
-                                                       String destinationDeliveryCustomer, String destinationShipper, String destinationPhone, String destinationEixedTelephone);
+                                                       String destinationDeliveryCustomer, String destinationShipper, String destinationPhone, String destinationEixedTelephone,int resultCode);
 
     }
 

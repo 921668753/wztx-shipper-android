@@ -55,9 +55,9 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
-import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
-import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
-import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PREVIEW;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PREVIEW1;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_SELECT;
 
 
 /**
@@ -293,7 +293,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 type = 0;
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isProvenance, isOff, type, tran_type, provenanceLat,
                         provenanceLongi, city, provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer,
-                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO);
+                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_SELECT);
                 break;
             case R.id.tv_enterDestination:
                 if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
@@ -307,14 +307,14 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 type = 1;
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isDestination, isOff1, type, tran_type, destinationLat,
                         destinationLongi, city, destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer,
-                        destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PHOTO_PREVIEW);
+                        destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PREVIEW);
                 break;
             case R.id.rl_cargoInformation:
                 ((MainFragmentContract.Presenter) mPresenter).startAddCargoInformationActivityForResult(this, tran_type, type1,
                         tv_appointmentTime1.getText().toString(), provenanceLat, provenanceLongi, provenanceDistrict, provenancePlaceName,
                         provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
                         destinationLat, destinationLongi, destinationDistrict, destinationPlaceName, destinationDetailedAddress,
-                        destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone);
+                        destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PREVIEW1);
                 break;
         }
     }
@@ -476,7 +476,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
             /**
              * 选择始发地页面返回
              */
@@ -493,7 +493,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 18));
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
-        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_PREVIEW && resultCode == RESULT_OK) {
             /**
              * 选择目的地页面返回
              */
@@ -510,7 +510,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             destinationEixedTelephone = data.getStringExtra("eixedTelephone");
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(destinationLat) - 0.0004, StringUtils.toDouble(destinationLongi)), 18));
             tv_enterDestination.setText(destinationPlaceName);
-        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_PREVIEW1 && resultCode == RESULT_OK) {
             /**
              * 目的地信息
              */

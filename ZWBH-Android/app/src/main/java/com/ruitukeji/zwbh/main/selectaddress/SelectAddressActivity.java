@@ -13,12 +13,14 @@ import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.addressmanagement.PioAddressViewAdapter;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.main.selectaddress.selectioncity.SelectionCityActivity;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
@@ -235,7 +237,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
 
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             /**
-             * 地址管理页面返回
+             * 地区选择页面返回
              */
             // 如果等于1
             // 说明是我们的那次请求
@@ -244,7 +246,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             longi = data.getStringExtra("longi");
             district = data.getStringExtra("district");
             placeName = data.getStringExtra("placeName");
-            type = data.getIntExtra("type", 0);
+//            type = data.getIntExtra("type", 0);
             detailedAddress = data.getStringExtra("detailedAddress");
             deliveryCustomer = data.getStringExtra("deliveryCustomer");
             shipper = data.getStringExtra("shipper");
@@ -280,11 +282,13 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             // 如果等于1
             // 说明是我们的那次请求
             // 目的：区分请求，不同的请求要做不同的处理
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", false);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress1", false);
             lat = data.getStringExtra("lat");
             longi = data.getStringExtra("longi");
             district = data.getStringExtra("district");
             placeName = data.getStringExtra("placeName");
-            type = data.getIntExtra("type", 0);
+        //    type = data.getIntExtra("type", 0);
             detailedAddress = data.getStringExtra("detailedAddress");
             deliveryCustomer = data.getStringExtra("deliveryCustomer");
             shipper = data.getStringExtra("shipper");

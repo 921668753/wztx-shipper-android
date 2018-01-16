@@ -242,8 +242,8 @@
     <string name="pleaseEnterReceivingPlace">请输入收货地点</string>
     <string name="commonlyAddress">常用地址</string>
     <string name="setCommonAddress">设为常用地址</string>
-    <string name="enterAddressSameCity">请输入正确的同城地址</string>
-    <string name="enterIntercityAddress">请输入正确的城际地址</string>
+    <string name="enterAddressSameCity">请选择正确的同城地址</string>
+    <string name="enterIntercityAddress">请选择正确的城际地址</string>
 
 
     <!--城市选择-->
