@@ -412,7 +412,7 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
             }
             validityIdentityCard = StringUtils.toLong(individualOwnersBean.getResult().getPic_time());
             String d = DataUtil.formatData(validityIdentityCard, "yyyy-MM-dd");
-            tv_validityIdentityCard.setText(d.substring(0, 10));
+            tv_validityIdentityCard.setText(d);
             Date date = new Date(validityIdentityCard * 1000);
             calendar.setTime(date);
             isUploadYourIdCard = false;
