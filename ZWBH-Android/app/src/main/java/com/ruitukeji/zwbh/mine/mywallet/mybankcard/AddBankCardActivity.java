@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.mywallet.mybankcard;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.mywallet.mybankcard.AddBankCardBean;
 import com.ruitukeji.zwbh.entity.mine.mywallet.mybankcard.BankBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
@@ -126,7 +128,7 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
             case R.id.tv_prepaidImmediately:
                 showLoadingDialog(getString(R.string.submissionLoad));
                 ((AddBankCardContract.Presenter) mPresenter).postAddBankCard(et_cardholder.getText().toString().trim(), et_bankCardNumber.getText().toString().trim(),
-                        bank_id , et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
+                        bank_id, et_openingBank.getText().toString().trim(), et_phone.getText().toString().trim(),
                         et_verificationCode.getText().toString().trim());
                 break;
         }
@@ -188,6 +190,14 @@ public class AddBankCardActivity extends BaseActivity implements AddBankCardCont
                 pvOptions.setPicker(bankList);
             }
         } else if (flag == 2) {
+            AddBankCardBean addBankCardBean = (AddBankCardBean) JsonUtil.json2Obj(success, AddBankCardBean.class);
+            Intent intent = new Intent();
+            // 获取内容
+            intent.putExtra("bankCardName", tv_withdrawalsBank.getText().toString());
+            intent.putExtra("bankCardNun", et_bankCardNumber.getText().toString().trim().substring(et_bankCardNumber.getText().toString().trim().length() - 5));
+            intent.putExtra("bankCardId", addBankCardBean.getResult().getBank_id());
+            // 设置结果 结果码，一个数据
+            setResult(RESULT_OK, intent);
             RxBus.getInstance().post(new MsgEvent<String>("RxBusAddBankCardEvent"));
             finish();
             return;

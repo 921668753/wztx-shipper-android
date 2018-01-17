@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
@@ -109,6 +110,11 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
         ActivityTitleUtils.initToolbar(aty, getString(R.string.withdrawal), getString(R.string.withdrawalRecord), R.id.titlebar, simpleDelegate);
         String withdrawalAmount = PreferenceHelper.readString(this, StringConstants.FILENAME, "withdrawalAmount");
         tv_money.setText(withdrawalAmount);
+        if (StringUtils.isEmpty(bankCardName) || StringUtils.isEmpty(bankCardNun)) {
+            tv_withdrawalBank.setText(getString(R.string.noCard));
+            tv_modification.setText(getString(R.string.addCard));
+            return;
+        }
         tv_withdrawalBank.setText(bankCardName + "  (" + getString(R.string.tail) + bankCardNun + ")");
     }
 

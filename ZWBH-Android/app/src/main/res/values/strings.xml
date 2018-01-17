@@ -639,6 +639,10 @@
     <string name="tail">尾号</string>
     <string name="consent">同意</string>
     <string name="withdrawAgreement">《提现协议》</string>
+    <string name="noCard">暂无</string>
+    <string name="addCard">添加</string>
+
+
 
     <!--提现记录-->
     <string name="withdrawalSuccess">提现成功</string>
