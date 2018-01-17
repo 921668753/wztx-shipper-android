@@ -32,16 +32,16 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     @BindView(id = R.id.img_back, click = true)
     private ImageView img_back;
 
+    /**
+     * 分类
+     */
     @BindView(id = R.id.ll_classification, click = true)
     private LinearLayout ll_classification;
-
     @BindView(id = R.id.tv_classification)
     private TextView tv_classification;
-//
-//    @BindView(id = R.id.img_down)
-//    private ImageView img_down;
+    @BindView(id = R.id.img_down)
+    private ImageView img_down;
 
-    // private OptionsPickerView pvOptions;
 
     /**
      * 已支付
@@ -158,32 +158,12 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     private void chooseClassification() {
         classificationBouncedDialog = new ClassificationBouncedDialog(this);
         classificationBouncedDialog.setClassificationDialogCallBack(this);
-
-//        pvOptions = new OptionsPickerView.Builder(aty, new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-//                //返回的分别是三个级别的选中位置
-//                //  car_type_id = carInfoBean.getResult().get(options1).getId();
-//                // ((TextView) v).setText(trip_chooseList.get(options1).getDescription());
-//                /**
-//                 * 发送消息
-//                 */
-////                RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
-////                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
-////           //     msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
-////                RxBus.getInstance().post(msgEvent);
-//            }
-//        }).build();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         classificationBouncedDialog = null;
-//        if (pvOptions != null && pvOptions.isShowing()) {
-//            pvOptions.dismiss();
-//        }
-//        pvOptions = null;
     }
 
     @Override
