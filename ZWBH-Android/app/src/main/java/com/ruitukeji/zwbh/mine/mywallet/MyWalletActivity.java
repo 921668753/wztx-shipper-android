@@ -127,7 +127,6 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
             case R.id.ll_cashWithdrawal:
                 Intent intent = new Intent(aty, WithdrawalActivity.class);
                 intent.putExtra("bankCardName", bankName);
-                intent.putExtra("bankCardName", bankName);
                 intent.putExtra("bankCardNun", bankCard);
                 intent.putExtra("bankCardId", id);
                 showActivity(aty, intent);
