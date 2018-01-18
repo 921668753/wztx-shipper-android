@@ -29,6 +29,12 @@ public interface AddCargoInformationContract {
                                      String system_price, int tran_type, String kilometres, int spot, double spot_cost, String card_number, int is_driver_dock, String fact_pay,
                                      int is_cargo_receipt, String cargo_man, String cargo_tel, String cargo_address, String cargo_address_detail, int cargo_is_express, int isLongTimeCar);
 
+
+        /**
+         * 是否登录
+         */
+        void isLogin(int flag);
+
     }
 
     interface View extends BaseNewView<Presenter, String> {

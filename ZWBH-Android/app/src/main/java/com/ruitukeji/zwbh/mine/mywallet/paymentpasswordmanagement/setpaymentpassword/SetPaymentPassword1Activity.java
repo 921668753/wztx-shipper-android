@@ -99,8 +99,8 @@ public class SetPaymentPassword1Activity extends BaseActivity implements SetPaym
 
     @Override
     public void getSuccess(String success, int flag) {
-        KJActivityStack.create().finishActivity(SetPaymentPasswordActivity.class);
         PreferenceHelper.write(aty, StringConstants.FILENAME, "is_pay_password", 1);
+        KJActivityStack.create().finishActivity(SetPaymentPasswordActivity.class);
         finish();
         dismissLoadingDialog();
     }

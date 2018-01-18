@@ -234,4 +234,20 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
         submitOrdersBouncedDialog.show();
     }
 
+
+    @Override
+    public void isLogin(int flag) {
+        RequestClient.isLogin(new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, flag);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, flag);
+            }
+        });
+    }
+
 }

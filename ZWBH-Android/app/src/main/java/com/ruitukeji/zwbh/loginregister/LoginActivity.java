@@ -302,6 +302,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         PreferenceHelper.write(this, StringConstants.FILENAME, "accessToken", bean.getResult().getAccessToken());
         PreferenceHelper.write(this, StringConstants.FILENAME, "expireTime", bean.getResult().getExpireTime());
         PreferenceHelper.write(this, StringConstants.FILENAME, "refreshToken", bean.getResult().getRefreshToken());
+        PreferenceHelper.write(this, StringConstants.FILENAME, "auth_status", bean.getResult().getAuth_status());
         PreferenceHelper.write(this, StringConstants.FILENAME, "userId", bean.getResult().getUserId());
         PreferenceHelper.write(this, StringConstants.FILENAME, "timeBefore", System.currentTimeMillis() + "");
         /**

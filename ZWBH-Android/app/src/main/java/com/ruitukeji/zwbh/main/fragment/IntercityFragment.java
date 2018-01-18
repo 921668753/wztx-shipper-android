@@ -263,10 +263,10 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 break;
             case R.id.img_gps:
                 if (location == null) {
-                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.319687, 121.062545), 18));
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.319687, 121.062545), 15));
                     break;
                 }
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude - 0.0004, location.longitude), 18));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude - 0.0004, location.longitude), 15));
                 break;
             case R.id.tv_realTime:
                 type1 = "often";
@@ -402,7 +402,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         provenanceLongi = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLongi", "");
         provenanceDistrict = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDistrict", "");
         provenancePlaceName = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenancePlaceName", "");
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 18));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 15));
         tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         provenanceDetailedAddress = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDetailedAddress", "");
         provenanceDeliveryCustomer = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDeliveryCustomer", "");
@@ -491,7 +491,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             provenancePhone = data.getStringExtra("phone");
             isOff = data.getIntExtra("isOff1", 0);
             provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
-            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 18));
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 15));
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         } else if (requestCode == REQUEST_CODE_PREVIEW && resultCode == RESULT_OK) {
             /**
@@ -508,7 +508,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             destinationPhone = data.getStringExtra("phone");
             isOff1 = data.getIntExtra("isOff1", 0);
             destinationEixedTelephone = data.getStringExtra("eixedTelephone");
-            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(destinationLat) - 0.0004, StringUtils.toDouble(destinationLongi)), 18));
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(destinationLat) - 0.0004, StringUtils.toDouble(destinationLongi)), 15));
             tv_enterDestination.setText(destinationPlaceName);
         } else if (requestCode == REQUEST_CODE_PREVIEW1 && resultCode == RESULT_OK) {
             /**
@@ -618,7 +618,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
                 deactivate();
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 18));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();

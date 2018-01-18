@@ -20,6 +20,7 @@ public class LoginBean extends BaseResult<LoginBean.ResultBean> {
 
         private int userId;
         private String real_name;
+        private String auth_status;
         private String accessToken;
         private String refreshToken;
         private String expireTime;
@@ -34,6 +35,14 @@ public class LoginBean extends BaseResult<LoginBean.ResultBean> {
 
         public String getReal_name() {
             return real_name;
+        }
+
+        public String getAuth_status() {
+            return auth_status;
+        }
+
+        public void setAuth_status(String auth_status) {
+            this.auth_status = auth_status;
         }
 
         public void setReal_name(String real_name) {
