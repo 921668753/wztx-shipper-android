@@ -38,7 +38,7 @@
             <TextView
                 android:id="@+id/tv_classification"
                 style="@style/WrapWrap"
-                android:text="@string/thisWeek"
+                android:text="@string/all"
                 android:textColor="@color/titletextcolors"
                 android:textSize="@dimen/textsize16" />
 

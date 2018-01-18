@@ -10,10 +10,16 @@ import com.ruitukeji.zwbh.common.BaseView;
 
 public interface AccountDetailsContract {
     interface Presenter extends BasePresenter {
+
+        /**
+         * 获取获得时间名称
+         */
+        void getTimeName();
+
         /**
          * 获取订单列表信息
          */
-        void getAccountDetails(int page, int is_pay);
+        void getAccountDetails(int page, int is_pay, int time);
     }
 
     interface View extends BaseNewView<Presenter, String> {

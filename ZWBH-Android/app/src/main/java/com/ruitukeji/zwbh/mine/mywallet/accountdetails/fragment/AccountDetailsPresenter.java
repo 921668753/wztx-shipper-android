@@ -20,12 +20,29 @@ public class AccountDetailsPresenter implements AccountDetailsContract.Presenter
     }
 
     @Override
-    public void getAccountDetails(int page, int is_pay) {
+    public void getTimeName() {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        RequestClient.getTimeName(httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 1);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
+    }
+
+    @Override
+    public void getAccountDetails(int page, int is_pay, int time) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);
-        httpParams.put("is_pay", is_pay);
-        RequestClient.getPayRecord(httpParams, new ResponseListener<String>() {
+        httpParams.put("type", is_pay);
+        httpParams.put("time", time);
+        RequestClient.getIncomeDetails(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 0);

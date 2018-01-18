@@ -384,6 +384,16 @@ public class URLConstants {
     public static String PAY = APIURL + "pay";
 
     /**
+     * 获得时间名称
+     */
+    public static String GRTTIMENAME = APIURL + "Pay/getTimeName";
+
+    /**
+     * 账户明细
+     */
+    public static String INCOMEDETAILS = APIURL + "Pay/IncomeDetails";
+
+    /**
      * 提现
      */
     public static String WITHDRAWAL = APIURL + "pay/withDraw";

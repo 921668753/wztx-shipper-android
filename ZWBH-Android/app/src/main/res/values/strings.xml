@@ -18,7 +18,6 @@
     <string name="shareJumpLoad">分享跳转中&#8230;</string>
     <!--Dialog-->
 
-
     <!--app权限-->
     <string name="readAndWrite">这款应用需要获取读写权限，才能使用</string>
     <string name="sdPermission">您拒绝了「SD卡读写权限」所需要的相关权限!请到「设置」开启权限</string>
@@ -42,15 +41,12 @@
 
     <!--工具类-->
     <string name="forFailure">获取失败</string>
-
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--引导页-->
     <string name="skip">跳过</string>
     <string name="experienceImmediately">立即体验</string>
-
 
     <!--登录-->
     <string name="alphanumeric">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
@@ -111,11 +107,9 @@
     <string name="resetPassword">重置密码</string>
     <string name="hintAccountText1">请输入企业法人的手机号</string>
 
-
     <!--绑定手机号-->
     <string name="bindPhone">绑定手机号</string>
     <string name="bindPhoneSuccessfully">绑定手机号成功！</string>
-
 
     <!--个人认证  基本信息-->
     <string name="personalAuthentication">个人认证</string>
@@ -126,7 +120,6 @@
     <string name="hintIDerrorText">请输入正确的身份证号</string>
     <string name="registeredPhoneNumber">手机号注册</string>
     <string name="information">基本信息</string>
-
     <string name="prompt">请填写您的真实信息，通过后将不能修改</string>
     <string name="realName">真实姓名</string>
     <string name="sex">性别</string>
@@ -134,7 +127,6 @@
     <string name="woman">女</string>
     <string name="unknown">未知</string>
     <string name="IdNumber">身份证号</string>
-
     <string name="holdingIdPhoto">手持身份证照片</string>
     <string name="sample">请参照“示例”，保证身份证号码清晰可见。</string>
     <string name="sample1">遮挡，模糊，或传不相关图片的都将导致审核不通过。</string>
@@ -142,9 +134,7 @@
     <string name="uploudIdCardPhotoBack">请上传身份证反面照片</string>
 
     <!--企业认证  身份认证-->
-
     <string name="qualification">资质认证</string>
-
     <string name="companyName1">请填写营业执照上的公司名字</string>
     <string name="enterpriseName">企业简称</string>
     <string name="registrationNumber">营业执照注册号</string>
@@ -172,7 +162,6 @@
     <string name="sp_front_pic">请上传操作人身份证正面照片</string>
     <string name="sp_back_pic">请上传操作人身份证反面照片</string>
 
-
     <!--账户设置-->
     <string name="accountSettings">账户设置</string>
     <string name="headPortrait">头像</string>
@@ -183,7 +172,6 @@
     <string name="checked">已缴纳</string>
     <string name="frozen">冻结</string>
     <string name="personalCertificate">个人认证</string>
-
     <string name="inAuthentication">认证中</string>
     <string name="certified">认证通过</string>
     <string name="refuse">认证失败</string>
@@ -594,7 +582,6 @@
     <!--账户明细-->
     <string name="paid">已支付</string>
     <string name="unpaid">未支付</string>
-    <string name="thisWeek">本周</string>
 
     <!--我的银行卡-->
     <string name="addBankCard">添加银行卡</string>

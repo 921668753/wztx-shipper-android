@@ -1145,6 +1145,35 @@ public class RequestClient {
     }
 
     /**
+     * 账户明细
+     */
+    public static void getTimeName(HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "getTimeName");
+        HttpRequest.requestGetHttp(URLConstants.GRTTIMENAME, httpParams, listener);
+    }
+
+    /**
+     * 账户明细
+     */
+    public static void getIncomeDetails(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getIncomeDetails");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //   PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.INCOMEDETAILS, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
      * 提现记录
      */
     public static void showCashRecord(HttpParams httpParams, ResponseListener<String> listener) {
@@ -1219,7 +1248,7 @@ public class RequestClient {
     }
 
     /**
-     *修改密码校验
+     * 修改密码校验
      */
     public static void getCheckPayPassword(HttpParams httpParams, ResponseListener<String> listener) {
         doServer(new TokenCallback() {

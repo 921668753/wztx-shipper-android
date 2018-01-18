@@ -11,6 +11,9 @@ import android.widget.ListView;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.mywallet.accountdetails.ClassificationViewAdapter;
 import com.ruitukeji.zwbh.common.BaseDialog;
+import com.ruitukeji.zwbh.entity.mine.mywallet.accountdetails.ClassificationBouncedBean;
+
+import java.util.List;
 
 /**
  * 分类弹框
@@ -19,14 +22,17 @@ import com.ruitukeji.zwbh.common.BaseDialog;
 
 public class ClassificationBouncedDialog extends BaseDialog implements AdapterView.OnItemClickListener {
 
+    private List<ClassificationBouncedBean.ResultBean> list;
     private Context context;
     private ListView lv_classification;
 
     private ClassificationDialogCallBack callBack;//回调
+    private ClassificationViewAdapter classificationViewAdapter;
 
-    public ClassificationBouncedDialog(Context context) {
+    public ClassificationBouncedDialog(Context context, List<ClassificationBouncedBean.ResultBean> list) {
         super(context, R.style.dialog);
         this.context = context;
+        this.list = list;
     }
 
     @Override
@@ -44,8 +50,9 @@ public class ClassificationBouncedDialog extends BaseDialog implements AdapterVi
     private void initView() {
         lv_classification = (ListView) findViewById(R.id.lv_classification);
         lv_classification.setOnItemClickListener(this);
-        ClassificationViewAdapter classificationViewAdapter = new ClassificationViewAdapter(context);
+        classificationViewAdapter = new ClassificationViewAdapter(context);
         lv_classification.setAdapter(classificationViewAdapter);
+        classificationViewAdapter.addMoreData(list);
     }
 
     public void setClassificationDialogCallBack(ClassificationDialogCallBack callBack) {
@@ -55,13 +62,13 @@ public class ClassificationBouncedDialog extends BaseDialog implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (callBack != null) {
-            callBack.confirm();
+            dismiss();
+            callBack.confirm(classificationViewAdapter.getItem(position).getId());
         }
     }
 
-
     public interface ClassificationDialogCallBack {
-        void confirm();
+        void confirm(int position);
     }
 
 }

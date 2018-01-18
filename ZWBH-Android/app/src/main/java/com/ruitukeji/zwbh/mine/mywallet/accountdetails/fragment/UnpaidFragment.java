@@ -16,7 +16,9 @@ import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.entity.mine.mywallet.accountdetails.AccountDetailsBean;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
@@ -45,6 +47,7 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */
@@ -63,6 +66,7 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
      */
     private int is_pay = 0;
 
+    private int time = 0;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -114,7 +118,7 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber, is_pay);
+        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber, is_pay, time);
     }
 
 
@@ -130,7 +134,7 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber, is_pay);
+        ((AccountDetailsContract.Presenter) mPresenter).getAccountDetails(mMorePageNumber, is_pay, time);
         return true;
     }
 
@@ -153,29 +157,26 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-//            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-//        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
-//        mMorePageNumber = orderBean.getResult().getPage();
-//        totalPageNumber = orderBean.getResult().getPageTotal();
-//        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-//            error(getString(R.string.serverReturnsDataNull));
-//            return;
-//        }
-//        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endRefreshing();
-//            mAdapter.clear();
-//            mAdapter.addNewData(orderBean.getResult().getList());
-//        } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
-//            mRefreshLayout.endLoadingMore();
-//            mAdapter.addMoreData(orderBean.getResult().getList());
-//        }
+            AccountDetailsBean accountDetailsBean = (AccountDetailsBean) JsonUtil.getInstance().json2Obj(success, AccountDetailsBean.class);
+            mMorePageNumber = accountDetailsBean.getResult().getPage();
+            totalPageNumber = accountDetailsBean.getResult().getPageTotal();
+            if (accountDetailsBean.getResult().getList() == null || accountDetailsBean.getResult().getList().size() == 0) {
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(accountDetailsBean.getResult().getList());
+            } else if (mMorePageNumber > NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(accountDetailsBean.getResult().getList());
+            }
             dismissLoadingDialog();
         } else if (flag == 1) {
-
             dismissLoadingDialog();
         } else if (flag == 2) {
             mRefreshLayout.beginRefreshing();
@@ -202,7 +203,8 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusUnpaidFragmentEvent")) {
+        if (((String) msgEvent.getMsg()).equals("RxBusUnpaidFragmentEvent")) {
+            time = msgEvent.getType();
             mRefreshLayout.beginRefreshing();
         }
     }

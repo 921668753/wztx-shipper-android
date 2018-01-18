@@ -5,26 +5,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.common.ViewInject;
+import com.ruitukeji.zwbh.entity.mine.mywallet.accountdetails.ClassificationBouncedBean;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.dialog.ClassificationBouncedDialog;
+import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.AccountDetailsContract;
+import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.AccountDetailsPresenter;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.PaidFragment;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.UnpaidFragment;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 import com.ruitukeji.zwbh.utils.rx.RxBus;
+
+import java.util.List;
 
 /**
  * 账户明细
  * Created by Administrator on 2017/12/15.
  */
 
-public class AccountDetailsActivity extends BaseActivity implements ClassificationBouncedDialog.ClassificationDialogCallBack {
-
+public class AccountDetailsActivity extends BaseActivity implements ClassificationBouncedDialog.ClassificationDialogCallBack, AccountDetailsContract.View {
 
     /**
      * 标题栏
@@ -68,6 +71,7 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     private int chageIcon = 0;
     private ClassificationBouncedDialog classificationBouncedDialog = null;
 
+    private List<ClassificationBouncedBean.ResultBean> list;
 
     @Override
     public void setRootView() {
@@ -77,10 +81,13 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     @Override
     public void initData() {
         super.initData();
+        mPresenter = new AccountDetailsPresenter(this);
         contentFragment = new PaidFragment();
         contentFragment1 = new UnpaidFragment();
         chageIcon = getIntent().getIntExtra("chageIcon", 0);
-        chooseClassification();
+        //  chooseClassification();
+        //  showLoadingDialog(getString(R.string.dataLoad));
+        ((AccountDetailsContract.Presenter) mPresenter).getTimeName();
     }
 
     @Override
@@ -115,7 +122,11 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
                 break;
             case R.id.ll_classification:
                 //  img_down.setBackgroundResource(R.mipmap.icon_);
-                classificationBouncedDialog.show();
+                if (classificationBouncedDialog == null && list != null && list.size() > 0) {
+                    chooseClassification(list);
+                } else if (classificationBouncedDialog != null && list != null && list.size() > 0) {
+                    classificationBouncedDialog.show();
+                }
                 break;
             case R.id.ll_paid:
                 chageIcon = 0;
@@ -155,8 +166,9 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     /**
      * 选择分类
      */
-    private void chooseClassification() {
-        classificationBouncedDialog = new ClassificationBouncedDialog(this);
+    private void chooseClassification(List<ClassificationBouncedBean.ResultBean> list) {
+        classificationBouncedDialog = new ClassificationBouncedDialog(this, list);
+        classificationBouncedDialog.setCanceledOnTouchOutside(true);
         classificationBouncedDialog.setClassificationDialogCallBack(this);
     }
 
@@ -167,11 +179,33 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     }
 
     @Override
-    public void confirm() {
+    public void confirm(int id) {
         if (chageIcon == 0) {
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusPaidFragmentEvent"));
+            RxBus.getInstance().post(new MsgEvent(id, "RxBusPaidFragmentEvent"));
             return;
         }
-        RxBus.getInstance().post(new MsgEvent<String>("RxBusUnpaidFragmentEvent"));
+        RxBus.getInstance().post(new MsgEvent(id, "RxBusUnpaidFragmentEvent"));
+    }
+
+    @Override
+    public void setPresenter(AccountDetailsContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void getSuccess(String success, int flag) {
+        ClassificationBouncedBean classificationBouncedBean = (ClassificationBouncedBean) JsonUtil.json2Obj(success, ClassificationBouncedBean.class);
+        if (classificationBouncedBean.getResult() != null && classificationBouncedBean.getResult().size() > 0) {
+            list = classificationBouncedBean.getResult();
+        }
+//        classificationBouncedDialog = new ClassificationBouncedDialog(this, success);
+//        classificationBouncedDialog.setClassificationDialogCallBack(this);
+        //  dismissLoadingDialog();
+    }
+
+    @Override
+    public void errorMsg(String msg, int flag) {
+//        dismissLoadingDialog();
+//        ViewInject.toast(msg);
     }
 }
