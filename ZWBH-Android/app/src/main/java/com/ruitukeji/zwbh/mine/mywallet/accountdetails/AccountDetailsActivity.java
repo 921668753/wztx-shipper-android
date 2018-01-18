@@ -72,6 +72,7 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     private ClassificationBouncedDialog classificationBouncedDialog = null;
 
     private List<ClassificationBouncedBean.ResultBean> list;
+    public int paidId = 0;
 
     @Override
     public void setRootView() {
@@ -179,12 +180,14 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     }
 
     @Override
-    public void confirm(int id) {
+    public void confirm(int id, String name) {
+        tv_classification.setText(name);
+        paidId = id;
         if (chageIcon == 0) {
-            RxBus.getInstance().post(new MsgEvent(id, "RxBusPaidFragmentEvent"));
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusPaidFragmentEvent"));
             return;
         }
-        RxBus.getInstance().post(new MsgEvent(id, "RxBusUnpaidFragmentEvent"));
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusUnpaidFragmentEvent"));
     }
 
     @Override

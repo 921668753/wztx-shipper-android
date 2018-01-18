@@ -62,13 +62,13 @@ public class ClassificationBouncedDialog extends BaseDialog implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (callBack != null) {
-            dismiss();
-            callBack.confirm(classificationViewAdapter.getItem(position).getId());
+            cancel();
+            callBack.confirm(classificationViewAdapter.getItem(position).getId(), classificationViewAdapter.getItem(position).getName_time());
         }
     }
 
     public interface ClassificationDialogCallBack {
-        void confirm(int position);
+        void confirm(int position, String name);
     }
 
 }

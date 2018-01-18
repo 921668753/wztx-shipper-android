@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ClassificationBouncedBean extends BaseResult<List<ClassificationBouncedBean.ResultBean>> {
 
-    public class ResultBean {
+    public static class ResultBean {
         /**
          * id : 1
          * name_time : 本周

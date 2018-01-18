@@ -17,6 +17,7 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.mine.mywallet.accountdetails.AccountDetailsBean;
+import com.ruitukeji.zwbh.entity.mine.mywallet.accountdetails.ClassificationBouncedBean;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.AccountDetailsActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -138,16 +139,15 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
         return true;
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
-//        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-//        if (isRefreshOrder) {
-//            mRefreshLayout.beginRefreshing();
-//        }
+    public void onChange() {
+        super.onChange();
+        if (time == aty.paidId) {
+            return;
+        }
+        time = aty.paidId;
+        mRefreshLayout.beginRefreshing();
     }
-
 
     @Override
     public void setPresenter(AccountDetailsContract.Presenter presenter) {
@@ -203,8 +203,8 @@ public class UnpaidFragment extends BaseFragment implements AccountDetailsContra
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getMsg()).equals("RxBusUnpaidFragmentEvent")) {
-            time = msgEvent.getType();
+        if (((String) msgEvent.getData()).equals("RxBusUnpaidFragmentEvent")) {
+            time = aty.paidId;
             mRefreshLayout.beginRefreshing();
         }
     }
