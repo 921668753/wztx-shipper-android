@@ -194,7 +194,6 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         tran_type = getIntent().getIntExtra("tran_type", 0);
         type = getIntent().getStringExtra("type");
         appoint_at = getIntent().getStringExtra("appoint_at");
-
         provenanceLat = getIntent().getStringExtra("provenanceLat");
         provenanceLongi = getIntent().getStringExtra("provenanceLongi");
         provenanceDistrict = getIntent().getStringExtra("provenanceDistrict");
@@ -532,6 +531,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        authenticationBouncedDialog = null;
         informationKeptBouncedDialog = null;
     }
 }
