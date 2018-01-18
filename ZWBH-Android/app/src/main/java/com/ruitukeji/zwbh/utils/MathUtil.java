@@ -17,7 +17,7 @@ public class MathUtil {
      */
     public static String keepTwo(double originalNumber) {
         java.text.DecimalFormat df = new java.text.DecimalFormat("##0.00");
-        return df.format(originalNumber + 0.001);
+        return df.format(originalNumber);
     }
 
     /**

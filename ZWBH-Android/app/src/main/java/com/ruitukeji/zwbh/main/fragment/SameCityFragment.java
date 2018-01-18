@@ -40,6 +40,7 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
@@ -48,6 +49,7 @@ import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBea
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
 import com.ruitukeji.zwbh.main.Main3Activity;
+import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
@@ -337,6 +339,11 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 day = options1;
                 hours = option2;
                 minutes = options3;
+                String appointmentTime = date_choose.get(options1).getDateStr().trim() + hours_choose.get(option2).getHoursStr() + minutes_choose.get(options3).getMinutesStr();
+                if (type1.equals("appoint") && DataUtil.getStringToDate(appointmentTime, KJActivityStack.create().topActivity().getString(R.string.timeStr)) < System.currentTimeMillis()) {
+                    errorMsg(KJActivityStack.create().topActivity().getString(R.string.greateThanCurrentTime), 0);
+                    return;
+                }
                 ((TextView) v).setText(date_choose.get(options1).getDateStr().trim() + hours_choose.get(option2).getHoursStr() + minutes_choose.get(options3).getMinutesStr());
             }
         })
