@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".mine.setting.aboutus.AboutUsActivity">
+    tools:context=".main.announcement.AnnouncementActivity">
 
 
     <TextView
