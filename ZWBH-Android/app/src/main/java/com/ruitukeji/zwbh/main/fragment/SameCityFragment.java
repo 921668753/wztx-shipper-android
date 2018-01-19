@@ -35,6 +35,7 @@ import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.model.IPickerViewData;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -55,6 +56,7 @@ import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
 import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -201,9 +203,15 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     private Circle mCircle;
 
     private LatLng location;
-    private List<DateChooseBean> date_choose;
-    private List<HoursChooseBean> hours_choose;
-    private List<MinutesChooseBean> minutes_choose;
+
+//    private List<DateChooseBean> date_choose;
+//    private List<HoursChooseBean> hours_choose;
+//    private List<MinutesChooseBean> minutes_choose;
+
+    private List<DateChooseBean> date_choose = null;
+    private List<ArrayList<HoursChooseBean>> hours_choose = null;
+    private List<ArrayList<ArrayList<MinutesChooseBean>>> minutes_choose = null;
+
     private int day = 0;
     private int hours = 0;
     private int minutes = 0;
@@ -339,12 +347,12 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 day = options1;
                 hours = option2;
                 minutes = options3;
-                String appointmentTime = date_choose.get(options1).getDateStr().trim() + hours_choose.get(option2).getHoursStr() + minutes_choose.get(options3).getMinutesStr();
+                String appointmentTime = date_choose.get(options1).getDateStr().trim() + hours_choose.get(options1).get(option2).getHoursStr() + minutes_choose.get(options1).get(option2).get(options3).getMinutesStr();
                 if (type1.equals("appoint") && DataUtil.getStringToDate(appointmentTime, KJActivityStack.create().topActivity().getString(R.string.timeStr)) < System.currentTimeMillis()) {
                     errorMsg(KJActivityStack.create().topActivity().getString(R.string.greateThanCurrentTime), 0);
                     return;
                 }
-                ((TextView) v).setText(date_choose.get(options1).getDateStr().trim() + hours_choose.get(option2).getHoursStr() + minutes_choose.get(options3).getMinutesStr());
+                ((TextView) v).setText(appointmentTime);
             }
         })
                 .setCancelColor(getResources().getColor(R.color.hintcolors))
@@ -354,28 +362,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 .setLineSpacingMultiplier(1.6f)
                 .setTextColorCenter(getResources().getColor(R.color.titletextcolors))
                 .build();
-        pvOptions.setNPicker(date_choose, hours_choose, minutes_choose);
-        day = 0;
-        hours = (new Date()).getHours();
-        minutes = (new Date()).getMinutes();
-        if (minutes <= 10 && minutes >= 0) {
-            minutes = 1;
-        } else if (minutes <= 20 && minutes > 10) {
-            minutes = 2;
-        } else if (minutes <= 30 && minutes > 20) {
-            minutes = 3;
-        } else if (minutes <= 40 && minutes > 30) {
-            minutes = 4;
-        } else if (minutes <= 50 && minutes > 40) {
-            minutes = 5;
-        } else {
-            minutes = 0;
-            hours = hours + 1;
-            if (hours > 23) {
-                hours = 0;
-                day = 1;
-            }
-        }
+        pvOptions.setPicker(date_choose, hours_choose, minutes_choose);
         pvOptions.setSelectOptions(day, hours, minutes);
     }
 

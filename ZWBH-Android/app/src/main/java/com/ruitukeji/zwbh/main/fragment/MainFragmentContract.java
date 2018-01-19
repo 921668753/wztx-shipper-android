@@ -6,7 +6,6 @@ import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.model.Circle;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
@@ -15,6 +14,7 @@ import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
 import com.ruitukeji.zwbh.main.Main3Activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,9 +34,9 @@ public interface MainFragmentContract {
          */
         List<DateChooseBean> addDateChooseBean(List<DateChooseBean> date_choose);
 
-        List<HoursChooseBean> addHoursChooseBean(List<HoursChooseBean> hours_choose);
+        List<ArrayList<HoursChooseBean>> addHoursChooseBean(List<ArrayList<HoursChooseBean>> hours_choose);
 
-        List<MinutesChooseBean> addMinutesChooseBean(List<MinutesChooseBean> minutes_choose);
+        List<ArrayList<ArrayList<MinutesChooseBean>>> addMinutesChooseBean(List<ArrayList<ArrayList<MinutesChooseBean>>> minutes_choose);
 
         /**
          * 地图添加定位点

@@ -14,6 +14,7 @@ import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.bigkoo.pickerview.model.IPickerViewData;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
@@ -32,6 +33,8 @@ import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +44,7 @@ import java.util.List;
 public class MainFragmentPresenter implements MainFragmentContract.Presenter {
 
     private MainFragmentContract.View mView;
+
 
     public MainFragmentPresenter(MainFragmentContract.View view) {
         mView = view;
@@ -93,42 +97,34 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
     }
 
     @Override
-    public List<HoursChooseBean> addHoursChooseBean(List<HoursChooseBean> hours_choose) {
-        hours_choose = new ArrayList<HoursChooseBean>();
-        for (int i = 0; i < 24; i++) {
-            HoursChooseBean hoursChooseBean = new HoursChooseBean();
-            if (i < 10) {
-                hoursChooseBean.setHoursStr("0" + i + KJActivityStack.create().topActivity().getString(R.string.dian));
-            } else {
-                hoursChooseBean.setHoursStr(i + KJActivityStack.create().topActivity().getString(R.string.dian));
-            }
-            hours_choose.add(hoursChooseBean);
-        }
+    public List<ArrayList<HoursChooseBean>> addHoursChooseBean(List<ArrayList<HoursChooseBean>> hours_choose) {
+        hours_choose = new ArrayList<ArrayList<HoursChooseBean>>();
+        ArrayList<HoursChooseBean> hours_chooseList = getTodayHourData();
+        ArrayList<HoursChooseBean> hours_chooseList1 = getHourData();
+        ArrayList<HoursChooseBean> hours_chooseList2 = getHourData();
+        ArrayList<HoursChooseBean> hours_chooseList3 = getHourData();
+        ArrayList<HoursChooseBean> hours_chooseList4 = getHourData();
+        hours_choose.add(hours_chooseList);
+        hours_choose.add(hours_chooseList1);
+        hours_choose.add(hours_chooseList2);
+        hours_choose.add(hours_chooseList3);
+        hours_choose.add(hours_chooseList4);
         return hours_choose;
     }
 
     @Override
-    public List<MinutesChooseBean> addMinutesChooseBean(List<MinutesChooseBean> minutes_choose) {
-        minutes_choose = new ArrayList<MinutesChooseBean>();
-        String minute = KJActivityStack.create().topActivity().getString(R.string.minute);
-        MinutesChooseBean minutesChooseBean = new MinutesChooseBean();
-        minutesChooseBean.setMinutesStr("00" + minute);
-        MinutesChooseBean minutesChooseBean1 = new MinutesChooseBean();
-        minutesChooseBean1.setMinutesStr("10" + minute);
-        MinutesChooseBean minutesChooseBean2 = new MinutesChooseBean();
-        minutesChooseBean2.setMinutesStr("20" + minute);
-        MinutesChooseBean minutesChooseBean3 = new MinutesChooseBean();
-        minutesChooseBean3.setMinutesStr("30" + minute);
-        MinutesChooseBean minutesChooseBean4 = new MinutesChooseBean();
-        minutesChooseBean4.setMinutesStr("40" + minute);
-        MinutesChooseBean minutesChooseBean5 = new MinutesChooseBean();
-        minutesChooseBean5.setMinutesStr("50" + minute);
-        minutes_choose.add(minutesChooseBean);
-        minutes_choose.add(minutesChooseBean1);
-        minutes_choose.add(minutesChooseBean2);
-        minutes_choose.add(minutesChooseBean3);
-        minutes_choose.add(minutesChooseBean4);
-        minutes_choose.add(minutesChooseBean5);
+    public List<ArrayList<ArrayList<MinutesChooseBean>>> addMinutesChooseBean(List<ArrayList<ArrayList<MinutesChooseBean>>> minutes_choose) {
+        minutes_choose = new ArrayList<ArrayList<ArrayList<MinutesChooseBean>>>();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList = getmD2();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList1 = getmD();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList2 = getmD();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList3 = getmD();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList4 = getmD();
+        minutes_choose.add(minutesChooseBeanlList);
+        minutes_choose.add(minutesChooseBeanlList1);
+        minutes_choose.add(minutesChooseBeanlList2);
+        minutes_choose.add(minutesChooseBeanlList3);
+        minutes_choose.add(minutesChooseBeanlList4);
         return minutes_choose;
     }
 
@@ -289,5 +285,144 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         options1.anchor(0.5f, 0.5f);
         options1.position(latlng);
         mLocMarker = aMap.addMarker(options1);
+    }
+
+    private int currentMin() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.MINUTE);
+    }
+
+    private int currentHour() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.HOUR_OF_DAY);
+    }
+
+
+    /**
+     * 今天 点
+     */
+    private ArrayList<HoursChooseBean> getTodayHourData() {
+        int max = currentHour();
+        if (max < 23 && currentMin() > 45) {
+            max = max + 1;
+        }
+        ArrayList<HoursChooseBean> lists = new ArrayList<>();
+        for (int i = max; i < 24; i++) {
+            HoursChooseBean hoursChooseBean = new HoursChooseBean();
+            if (i < 10) {
+                hoursChooseBean.setHoursStr("0" + i + KJActivityStack.create().topActivity().getString(R.string.dian));
+            } else {
+                hoursChooseBean.setHoursStr(i + KJActivityStack.create().topActivity().getString(R.string.dian));
+            }
+            lists.add(hoursChooseBean);
+        }
+        return lists;
+    }
+
+    /**
+     * 明天 后天 点
+     */
+    private ArrayList<HoursChooseBean> getHourData() {
+        ArrayList<HoursChooseBean> lists = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            HoursChooseBean hoursChooseBean = new HoursChooseBean();
+            if (i < 10) {
+                hoursChooseBean.setHoursStr("0" + i + KJActivityStack.create().topActivity().getString(R.string.dian));
+            } else {
+                hoursChooseBean.setHoursStr(i + KJActivityStack.create().topActivity().getString(R.string.dian));
+            }
+            lists.add(hoursChooseBean);
+        }
+        return lists;
+    }
+
+    /**
+     * 明天 后天  分
+     */
+    private ArrayList<MinutesChooseBean> getMinData() {
+        String minute = KJActivityStack.create().topActivity().getString(R.string.minute);
+        ArrayList<MinutesChooseBean> dataArrayList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            MinutesChooseBean minutesChooseBean = new MinutesChooseBean();
+            if (i == 0) {
+                minutesChooseBean.setMinutesStr("00" + minute);
+            } else {
+                minutesChooseBean.setMinutesStr((i * 10) + minute);
+            }
+            dataArrayList.add(minutesChooseBean);
+        }
+        return dataArrayList;
+    }
+
+    /**
+     * 明天 后天
+     */
+    private ArrayList<ArrayList<MinutesChooseBean>> getmD() {
+        ArrayList<ArrayList<MinutesChooseBean>> d = new ArrayList<>();
+        for (int i = 0; i < 24; i++) {
+            d.add(getMinData());
+        }
+        return d;
+    }
+
+    /**
+     * 明天 后天  2222
+     */
+    private ArrayList<ArrayList<MinutesChooseBean>> getmD2() {
+        //14
+        int max = currentHour();
+        if (currentMin() > 45) {
+            max = max + 1;
+        }
+        int value = 24 - max;
+        ArrayList<ArrayList<MinutesChooseBean>> d = new ArrayList<>();
+        for (int i = 0; i < value; i++) {
+            if (i == 0) {
+                d.add(getTodyMinData());
+            } else {
+                d.add(getMinData());
+            }
+
+        }
+        return d;
+    }
+
+    /**
+     * 明天 后天  分2222
+     */
+    private ArrayList<MinutesChooseBean> getTodyMinData() {
+        int min = currentMin();
+        int current = 0;
+        if (min > 35 && min <= 45) {
+            current = 0;
+        } else if (min > 45 && min <= 55) {
+            current = 1;
+        } else if (min > 55) {
+            current = 2;
+        } else if (min <= 5) {
+            current = 2;
+        } else if (min > 5 && min <= 15) {
+            current = 3;
+        } else if (min > 15 && min <= 25) {
+            current = 4;
+        } else if (min > 25 && min <= 35) {
+            current = 5;
+        }
+        int max = currentHour();
+        if (max > 23 && min > 35) {
+            current = 5;
+        }
+        ArrayList<MinutesChooseBean> dataArrayList = new ArrayList<>();
+        String minute = KJActivityStack.create().topActivity().getString(R.string.minute);
+        for (int i = current; i < 6; i++) {
+            MinutesChooseBean minutesChooseBean = new MinutesChooseBean();
+            if (i == 0) {
+                minutesChooseBean.setMinutesStr("00" + minute);
+            } else {
+                minutesChooseBean.setMinutesStr((i * 10) + minute);
+            }
+            dataArrayList.add(minutesChooseBean);
+        }
+        return dataArrayList;
     }
 }

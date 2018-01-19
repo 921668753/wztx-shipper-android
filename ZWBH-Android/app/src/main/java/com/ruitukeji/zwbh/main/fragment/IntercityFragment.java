@@ -50,6 +50,11 @@ import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
 import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
 
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
+import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -194,9 +199,9 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     private Circle mCircle;
 
     private LatLng location;
-    private List<TimeChooseBean.ResultBean.DateChooseBean> date_choose;
-    private List<TimeChooseBean.ResultBean.HoursChooseBean> hours_choose;
-    private List<TimeChooseBean.ResultBean.MinutesChooseBean> minutes_choose;
+    private List<DateChooseBean> date_choose = null;
+    private List<ArrayList<HoursChooseBean>> hours_choose = null;
+    private List<ArrayList<ArrayList<MinutesChooseBean>>> minutes_choose = null;
     private int day = 0;
     private int hours = 0;
     private int minutes = 0;
@@ -332,7 +337,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 day = options1;
                 hours = option2;
                 minutes = options3;
-                String appointmentTime = date_choose.get(options1).getDateStr().trim() + hours_choose.get(option2).getHoursStr() + minutes_choose.get(options3).getMinutesStr();
+                String appointmentTime = date_choose.get(options1).getDateStr().trim() + hours_choose.get(options1).get(option2).getHoursStr() + minutes_choose.get(options1).get(option2).get(options3).getMinutesStr();
                 if (type1.equals("appoint") && DataUtil.getStringToDate(appointmentTime, KJActivityStack.create().topActivity().getString(R.string.timeStr)) < System.currentTimeMillis()) {
                     errorMsg(KJActivityStack.create().topActivity().getString(R.string.greateThanCurrentTime), 0);
                     return;
@@ -347,28 +352,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 .setLineSpacingMultiplier(1.6f)
                 .setTextColorCenter(getResources().getColor(R.color.titletextcolors))
                 .build();
-        pvOptions.setNPicker(date_choose, hours_choose, minutes_choose);
-        day = 0;
-        hours = (new Date()).getHours();
-        minutes = (new Date()).getMinutes();
-        if (minutes <= 10 && minutes >= 0) {
-            minutes = 1;
-        } else if (minutes <= 20 && minutes > 10) {
-            minutes = 2;
-        } else if (minutes <= 30 && minutes > 20) {
-            minutes = 3;
-        } else if (minutes <= 40 && minutes > 30) {
-            minutes = 4;
-        } else if (minutes <= 50 && minutes > 40) {
-            minutes = 5;
-        } else {
-            minutes = 0;
-            hours = hours + 1;
-            if (hours > 23) {
-                hours = 0;
-                day = 1;
-            }
-        }
+        pvOptions.setPicker(date_choose, hours_choose, minutes_choose);
         pvOptions.setSelectOptions(day, hours, minutes);
     }
 
