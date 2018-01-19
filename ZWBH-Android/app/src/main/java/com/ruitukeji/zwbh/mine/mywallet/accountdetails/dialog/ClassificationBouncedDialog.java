@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.mywallet.accountdetails.ClassificationViewAdapter;
@@ -28,6 +29,7 @@ public class ClassificationBouncedDialog extends BaseDialog implements AdapterVi
 
     private ClassificationDialogCallBack callBack;//回调
     private ClassificationViewAdapter classificationViewAdapter;
+    private RelativeLayout rl_classification;
 
     public ClassificationBouncedDialog(Context context, List<ClassificationBouncedBean.ResultBean> list) {
         super(context, R.style.dialog);
@@ -48,6 +50,13 @@ public class ClassificationBouncedDialog extends BaseDialog implements AdapterVi
     }
 
     private void initView() {
+        rl_classification = (RelativeLayout) findViewById(R.id.rl_classification);
+        rl_classification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         lv_classification = (ListView) findViewById(R.id.lv_classification);
         lv_classification.setOnItemClickListener(this);
         classificationViewAdapter = new ClassificationViewAdapter(context);

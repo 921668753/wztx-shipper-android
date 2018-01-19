@@ -9,7 +9,6 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.entity.mine.mywallet.accountdetails.ClassificationBouncedBean;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.dialog.ClassificationBouncedDialog;
 import com.ruitukeji.zwbh.mine.mywallet.accountdetails.fragment.AccountDetailsContract;
