@@ -107,7 +107,6 @@
             android:name=".main.selectaddress.SelectAddressActivity"
             android:screenOrientation="portrait" />
 
-
         <!--主界面  城市选择-->
         <activity
             android:name=".main.selectaddress.selectioncity.SelectionCityActivity"
