@@ -615,8 +615,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
-            if (amapLocation != null
-                    && amapLocation.getErrorCode() == 0) {
+            if (amapLocation != null && amapLocation.getErrorCode() == 0) {
                 location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
                 Log.d("tag", location.latitude + "," + location.longitude);
                 if (!mFirstFix) {
@@ -631,8 +630,13 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                     mLocMarker.setPosition(location);
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
-                deactivate();
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
+                int sameCityFragmentNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sameCityFragmentNum", 0);
+                if (sameCityFragmentNum == 0) {
+                    PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", sameCityFragmentNum + 1);
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
+                    return;
+                }
+
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -652,9 +656,12 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             mLocationOption = new AMapLocationClientOption();
             //设置定位监听
             mlocationClient.setLocationListener(this);
-            mLocationOption.setOnceLocationLatest(true);
+//            mLocationOption.setOnceLocationLatest(true);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            mLocationOption.setInterval(60000);
+            //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+            mLocationOption.setHttpTimeOut(30000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -776,7 +783,6 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             ViewInject.toast(msg);
         }
         dismissLoadingDialog();
-
     }
 
 
