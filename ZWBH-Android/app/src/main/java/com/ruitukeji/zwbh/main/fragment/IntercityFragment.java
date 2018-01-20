@@ -112,7 +112,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     @BindView(id = R.id.tv_pleaseEnterDeparturePoint, click = true)
     private TextView tv_pleaseEnterDeparturePoint;
 
-
     /**
      * 目的地
      */
