@@ -27,7 +27,7 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.MathUtil;
 import com.ruitukeji.zwbh.utils.PickerViewUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
-import com.ruitukeji.zwbh.utils.myview.ChildLiistView;
+import com.ruitukeji.zwbh.utils.myview.ChildListView;
 
 import java.util.List;
 
@@ -157,7 +157,7 @@ public class ApplicationInvoiceFragment extends BaseFragment implements Applicat
      * 账单列表
      */
     @BindView(id = R.id.lv_applicationInvoice)
-    private ChildLiistView lv_applicationInvoice;
+    private ChildListView lv_applicationInvoice;
 
     private ApplicationInvoiceViewAdapter mAdapter = null;
 

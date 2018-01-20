@@ -466,7 +466,7 @@
 
             <TextView style="@style/DividerWidth" />
 
-            <com.ruitukeji.zwbh.utils.myview.ChildLiistView
+            <com.ruitukeji.zwbh.utils.myview.ChildListView
                 android:id="@+id/lv_applicationInvoice"
                 style="@style/MatchWrap"
                 android:layout_marginBottom="@dimen/dimen19"

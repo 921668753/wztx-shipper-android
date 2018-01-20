@@ -8,7 +8,7 @@
 
     <include layout="@layout/common_title" />
 
-    <com.ruitukeji.zwbh.utils.myview.ChildLiistView
+    <com.ruitukeji.zwbh.utils.myview.ChildListView
         android:id="@+id/lv_applicationInvoice"
         style="@style/MatchWrap"
         android:background="@color/white"

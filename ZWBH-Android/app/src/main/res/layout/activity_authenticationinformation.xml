@@ -296,7 +296,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.ruitukeji.zwbh.utils.myview.ChildLiistView xmlns:tools="http://schemas.android.com/tools"
+            <com.ruitukeji.zwbh.utils.myview.ChildListView xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/lv_img"
                 style="@style/MatchAuto"
                 android:layout_marginBottom="@dimen/dimen15"

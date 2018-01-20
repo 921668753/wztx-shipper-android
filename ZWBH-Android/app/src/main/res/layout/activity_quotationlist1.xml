@@ -19,7 +19,7 @@
                 style="@style/MatchWrap"
                 android:orientation="vertical">
 
-                <com.ruitukeji.zwbh.utils.myview.ChildLiistView
+                <com.ruitukeji.zwbh.utils.myview.ChildListView
                     android:id="@+id/lv_quotationlist"
                     style="@style/MatchWrap"
                     android:background="@color/white"

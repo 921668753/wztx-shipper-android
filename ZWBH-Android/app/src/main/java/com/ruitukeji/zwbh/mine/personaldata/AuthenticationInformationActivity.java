@@ -23,7 +23,7 @@ import com.ruitukeji.zwbh.entity.mine.shippercertification.CompanyOwnerBean;
 import com.ruitukeji.zwbh.entity.mine.shippercertification.IndividualOwnersBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
-import com.ruitukeji.zwbh.utils.myview.ChildLiistView;
+import com.ruitukeji.zwbh.utils.myview.ChildListView;
 
 import java.util.ArrayList;
 
@@ -75,7 +75,7 @@ public class AuthenticationInformationActivity extends BaseActivity implements A
 
 
     @BindView(id = R.id.lv_img)
-    private ChildLiistView lv_img;
+    private ChildListView lv_img;
 
     /**
      * 是否是个人
