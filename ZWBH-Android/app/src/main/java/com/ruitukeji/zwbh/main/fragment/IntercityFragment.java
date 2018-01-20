@@ -644,6 +644,8 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             mLocationOption.setInterval(60000);
             //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
             mLocationOption.setHttpTimeOut(30000);
+            //关闭缓存机制
+            mLocationOption.setLocationCacheEnable(false);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
