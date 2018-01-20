@@ -44,7 +44,6 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.main.TimeChooseBean;
 import com.ruitukeji.zwbh.main.Main3Activity;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
@@ -56,7 +55,6 @@ import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;

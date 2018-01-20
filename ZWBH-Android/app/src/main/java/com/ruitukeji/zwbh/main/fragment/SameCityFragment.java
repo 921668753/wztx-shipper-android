@@ -36,7 +36,6 @@ import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.model.IPickerViewData;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -58,7 +57,6 @@ import com.ruitukeji.zwbh.utils.amap.AMapUtil;
 import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
