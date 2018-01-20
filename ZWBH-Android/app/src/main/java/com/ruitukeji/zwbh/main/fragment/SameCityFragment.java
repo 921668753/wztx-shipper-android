@@ -30,6 +30,7 @@ import com.amap.api.services.cloud.CloudItemDetail;
 import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
@@ -220,6 +221,8 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
 
     private Main3Activity aty;
     private GeocodeSearch geocoderSearch = null;
+    private LatLonPoint cameraChangeLatLonPoint = null;
+    private LatLng cameraChangeLatLon = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -563,10 +566,11 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
         Log.d("tag", "1");
 //// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-        RegeocodeQuery query = new RegeocodeQuery(AMapUtil.convertToLatLonPoint(cameraPosition.target), 200, GeocodeSearch.AMAP);
+        cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(cameraPosition.target);
+        RegeocodeQuery query = new RegeocodeQuery(cameraChangeLatLonPoint, 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
         // 设置中心点及检索范围
-        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(AMapUtil.convertToLatLonPoint(cameraPosition.target), 10000);
+        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(cameraChangeLatLonPoint, 10000);
         //设置查询条件 mTableID是将数据存储到数据管理台后获得。
         try {
             CloudSearch.Query mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
@@ -630,13 +634,17 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                     mLocMarker.setPosition(location);
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
+                if (cameraChangeLatLonPoint == null) {
+                    cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(location);
+                }
+                cameraChangeLatLon = AMapUtil.convertToLatLng(cameraChangeLatLonPoint);
                 int sameCityFragmentNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sameCityFragmentNum", 0);
                 if (sameCityFragmentNum == 0) {
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", sameCityFragmentNum + 1);
+                    PreferenceHelper.write(aty, StringConstants.FILENAME, "sameCityFragmentNum", sameCityFragmentNum + 1);
                     aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
                     return;
                 }
-
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraChangeLatLon, 15));
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();

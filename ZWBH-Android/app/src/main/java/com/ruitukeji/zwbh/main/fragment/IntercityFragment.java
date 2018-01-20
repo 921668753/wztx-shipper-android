@@ -29,6 +29,7 @@ import com.amap.api.services.cloud.CloudItemDetail;
 import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
@@ -210,6 +211,8 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
 
     private Main3Activity aty;
     private GeocodeSearch geocoderSearch = null;
+    private LatLonPoint cameraChangeLatLonPoint = null;
+    private LatLng cameraChangeLatLon = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -541,8 +544,9 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     @Override
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
         android.util.Log.d("tag", "2");
+        cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(cameraPosition.target);
 //// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-        RegeocodeQuery query = new RegeocodeQuery(AMapUtil.convertToLatLonPoint(cameraPosition.target), 200, GeocodeSearch.AMAP);
+        RegeocodeQuery query = new RegeocodeQuery(cameraChangeLatLonPoint, 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
         // 设置中心点及检索范围
         CloudSearch.SearchBound bound = new CloudSearch.SearchBound(AMapUtil.convertToLatLonPoint(cameraPosition.target), 10000);
@@ -594,8 +598,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
-            if (amapLocation != null
-                    && amapLocation.getErrorCode() == 0) {
+            if (amapLocation != null && amapLocation.getErrorCode() == 0) {
                 location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
                 Log.d("tag", location.latitude + "," + location.longitude);
                 if (!mFirstFix) {
@@ -608,8 +611,17 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                     mLocMarker.setPosition(location);
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
-                deactivate();
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
+                if (cameraChangeLatLonPoint == null) {
+                    cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(location);
+                }
+                cameraChangeLatLon = AMapUtil.convertToLatLng(cameraChangeLatLonPoint);
+                int intercityFragmentNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "intercityFragmentNum", 0);
+                if (intercityFragmentNum == 0) {
+                    PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityFragmentNum", intercityFragmentNum + 1);
+                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
+                    return;
+                }
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraChangeLatLon, 15));
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -629,9 +641,12 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             mLocationOption = new AMapLocationClientOption();
             //设置定位监听
             mlocationClient.setLocationListener(this);
-            mLocationOption.setOnceLocationLatest(true);
+            //   mLocationOption.setOnceLocationLatest(true);
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            mLocationOption.setInterval(60000);
+            //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+            mLocationOption.setHttpTimeOut(30000);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，

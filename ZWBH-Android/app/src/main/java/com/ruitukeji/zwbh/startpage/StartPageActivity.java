@@ -112,6 +112,8 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
             RxVolley.setRequestQueue(RequestQueue.newRequestQueue(FileUtils.getSaveFolder(StringConstants.CACHEPATH), new OkHttpStack(new OkHttpClient())));
             PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityNum", 0);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", 0);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityFragmentNum", 0);
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "sameCityFragmentNum", 0);
             ((StartPageContract.Presenter) mPresenter).getAppConfig();
         } else {
             // Ask for both permissions
