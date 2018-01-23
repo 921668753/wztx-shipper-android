@@ -426,7 +426,7 @@
     <string name="systemForecast">系统预估</string>
     <string name="userOffer">用户出价</string>
     <string name="place1">起运地</string>
-    <string name="symbol">￥</string>
+    <string name="symbol">¥</string>
     <string name="cancelOrder1">取消订单</string>
     <string name="viewQuotation">查看报价</string>
     <string name="onArrival">到达起运地</string>
