@@ -180,8 +180,8 @@
                     <ImageView
                         android:id="@+id/img_uploadPictureBusinessLicense"
                         android:layout_width="@dimen/dimen161"
-                        android:layout_height="@dimen/dimen103"
-                        android:background="@mipmap/icon_upload"
+                        android:layout_height="@dimen/dimen161"
+                        android:background="@mipmap/icon_upload1"
                         android:padding="@dimen/dimen8" />
 
                     <TextView
@@ -202,10 +202,10 @@
 
                     <ImageView
                         android:layout_width="@dimen/dimen161"
-                        android:layout_height="@dimen/dimen103"
+                        android:layout_height="@dimen/dimen161"
                         android:background="@mipmap/icon_upload"
                         android:padding="@dimen/dimen8"
-                        android:src="@mipmap/pic_idcard_front" />
+                        android:src="@mipmap/yingyezhizhao" />
 
                     <TextView
                         style="@style/WrapWrap"

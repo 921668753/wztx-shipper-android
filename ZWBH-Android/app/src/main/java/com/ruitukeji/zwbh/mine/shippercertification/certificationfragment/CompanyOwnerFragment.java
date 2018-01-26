@@ -355,7 +355,7 @@ public class CompanyOwnerFragment extends BaseFragment implements EasyPermission
             et_companyAddress.setText(companyOwnerBean.getResult().getAddress());
             et_phoneCompany.setText(companyOwnerBean.getResult().getCom_phone());
             uploadPictureBusinessLicenseUrl = companyOwnerBean.getResult().getBuss_pic();
-            GlideImageLoader.glideRoundRectangleLoader(aty, uploadPictureBusinessLicenseUrl + "?imageView2/1/w/161/h/103", 3, img_uploadPictureBusinessLicense, R.mipmap.default_image);
+            GlideImageLoader.glideRoundRectangleLoader(aty, uploadPictureBusinessLicenseUrl + "?imageView2/1/w/161/h/161", 3, img_uploadPictureBusinessLicense, R.mipmap.default_image);
             isUploadPictureBusinessLicense = false;
 
             et_legalPersonName.setText(companyOwnerBean.getResult().getLaw_person());
