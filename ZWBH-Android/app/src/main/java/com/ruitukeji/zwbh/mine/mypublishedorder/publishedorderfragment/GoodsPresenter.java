@@ -51,7 +51,7 @@ public class GoodsPresenter implements GoodsContract.Presenter {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("goods_id", goods_id);
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postCancelGoods(httpParams, new ResponseListener<String>() {
+        RequestClient.postCancelOrder(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
                 mView.getSuccess(response, 1);
