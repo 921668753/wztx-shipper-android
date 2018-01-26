@@ -119,7 +119,9 @@
     <dimen name="dimen210">210dp</dimen>
     <dimen name="dimen230">230dp</dimen>
     <dimen name="dimen233">233dp</dimen>
+    <dimen name="dimen243">243dp</dimen>
     <dimen name="dimen250">250dp</dimen>
+    <dimen name="dimen270">270dp</dimen>
     <dimen name="dimen280">280dp</dimen>
     <dimen name="dimen300">300dp</dimen>
 
@@ -139,7 +141,6 @@
     <dimen name="textsize26">26sp</dimen>
     <dimen name="textsize33">33sp</dimen>
     <dimen name="textsize35">35sp</dimen>
-
 
 
     <!--MIn-->

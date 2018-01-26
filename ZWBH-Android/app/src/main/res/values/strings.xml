@@ -631,7 +631,6 @@
     <string name="addCard">添加</string>
 
 
-
     <!--提现记录-->
     <string name="withdrawalSuccess">提现成功</string>
     <string name="withdrawalFailure">提现失败</string>
@@ -871,6 +870,11 @@
     <string name="quoteOrder">报价中</string>
     <string name="canceledOrder">已取消</string>
     <string name="theBidOrder">报价成功</string>
-    <string name="cancelOrder">确定取消订单吗？</string>
+
+    <!--我的订单  取消订单弹框-->
+    <string name="cancelOrder">该订单需要经司机同意后才能取消，确定取消订单吗？</string>
+    <string name="cancelOrder2">您有一个被取消的订单</string>
+    <string name="checkDetails">查看详情</string>
+
 
 </resources>
