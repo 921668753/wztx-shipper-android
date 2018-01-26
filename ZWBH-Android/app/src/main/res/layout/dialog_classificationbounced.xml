@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_classification"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_classification"
     style="@style/MatchMatch"
     android:background="@android:color/transparent">
 
@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/dimen100"
-        android:layout_marginRight="@dimen/dimen10"
         android:layout_marginTop="@dimen/dimen45"
+        android:layout_marginRight="@dimen/dimen10"
         android:background="@drawable/shape_search"
         android:divider="@color/dividercolors"
         android:dividerHeight="@dimen/dimen1"

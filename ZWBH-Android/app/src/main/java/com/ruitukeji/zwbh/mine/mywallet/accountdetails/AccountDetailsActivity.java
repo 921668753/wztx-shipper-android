@@ -121,7 +121,6 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
                 finish();
                 break;
             case R.id.ll_classification:
-                //  img_down.setBackgroundResource(R.mipmap.icon_);
                 if (classificationBouncedDialog == null && list != null && list.size() > 0) {
                     chooseClassification(list);
                 } else if (classificationBouncedDialog != null && list != null && list.size() > 0) {

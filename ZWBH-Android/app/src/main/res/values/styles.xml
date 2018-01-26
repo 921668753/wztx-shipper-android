@@ -169,4 +169,9 @@
         <item name="android:background">@color/translucent_gray</item>
         <item name="android:layout_gravity">bottom</item>
     </style>
+
+    <style name="dialog_animation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_animation_show</item>
+        <item name="android:windowExitAnimation">@anim/dialog_animation_hide</item>
+    </style>
 </resources>
