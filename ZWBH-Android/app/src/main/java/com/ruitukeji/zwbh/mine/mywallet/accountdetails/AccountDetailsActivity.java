@@ -121,9 +121,7 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
                 finish();
                 break;
             case R.id.ll_classification:
-                if (classificationBouncedDialog == null && list != null && list.size() > 0) {
-                    chooseClassification(list);
-                } else if (classificationBouncedDialog != null && list != null && list.size() > 0) {
+                if (classificationBouncedDialog != null && list != null && list.size() > 0) {
                     classificationBouncedDialog.show();
                 }
                 break;
@@ -174,6 +172,9 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (classificationBouncedDialog != null) {
+            classificationBouncedDialog.cancel();
+        }
         classificationBouncedDialog = null;
     }
 
@@ -199,9 +200,9 @@ public class AccountDetailsActivity extends BaseActivity implements Classificati
         if (classificationBouncedBean.getResult() != null && classificationBouncedBean.getResult().size() > 0) {
             list = classificationBouncedBean.getResult();
         }
-//        classificationBouncedDialog = new ClassificationBouncedDialog(this, success);
-//        classificationBouncedDialog.setClassificationDialogCallBack(this);
-        //  dismissLoadingDialog();
+        if (classificationBouncedDialog == null && list != null && list.size() > 0) {
+            chooseClassification(list);
+        }
     }
 
     @Override
