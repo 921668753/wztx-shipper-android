@@ -18,9 +18,6 @@ import com.ruitukeji.zwbh.common.BaseDialog;
 public abstract class InAuthenticationBouncedDialog extends BaseDialog implements View.OnClickListener {
 
     private Context context;
-    private TextView tv_cancel;
-    private TextView tv_determine;
-    private TextView tv_content;
 
     public InAuthenticationBouncedDialog(Context context) {
         super(context, R.style.dialog);
@@ -40,11 +37,11 @@ public abstract class InAuthenticationBouncedDialog extends BaseDialog implement
     }
 
     private void initView() {
-        tv_content = (TextView) findViewById(R.id.tv_content);
+        TextView tv_content = (TextView) findViewById(R.id.tv_content);
         tv_content.setText(context.getString(R.string.inAuthentication) + "," + context.getString(R.string.pleaseWait) + "！");
-        tv_cancel = (TextView) findViewById(R.id.tv_cancel);
+        TextView tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
-        tv_determine = (TextView) findViewById(R.id.tv_determine);
+         TextView tv_determine = (TextView) findViewById(R.id.tv_determine);
         tv_determine.setOnClickListener(this);
     }
 
