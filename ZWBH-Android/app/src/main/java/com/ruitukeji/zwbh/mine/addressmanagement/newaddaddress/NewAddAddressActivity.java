@@ -177,10 +177,10 @@ public class NewAddAddressActivity extends BaseActivity implements TextWatcher, 
         int orgprovince = poiItem.getProvinceName().indexOf("省");
         if (orgprovince == -1) {
             district = poiItem.getCityName() + poiItem.getAdName();
-            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
         } else {
             district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
-            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
         }
         if (type == 1 || type == 3) {
             Intent intent = new Intent();

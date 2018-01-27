@@ -186,10 +186,10 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         int orgprovince = poiItem.getProvinceName().indexOf("省");
         if (orgprovince == -1) {
             district = poiItem.getCityName() + poiItem.getAdName();
-            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
         } else {
             district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
-            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
         }
         if (getIntent().getIntExtra("isProvenance", 0) == 1) {
             Intent intent = new Intent();
@@ -288,7 +288,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             longi = data.getStringExtra("longi");
             district = data.getStringExtra("district");
             placeName = data.getStringExtra("placeName");
-        //    type = data.getIntExtra("type", 0);
+            //    type = data.getIntExtra("type", 0);
             detailedAddress = data.getStringExtra("detailedAddress");
             deliveryCustomer = data.getStringExtra("deliveryCustomer");
             shipper = data.getStringExtra("shipper");
