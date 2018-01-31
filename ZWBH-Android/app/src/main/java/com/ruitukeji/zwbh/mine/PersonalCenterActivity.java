@@ -444,7 +444,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
 
     @Override
     public void errorMsg(String msg, int flag) {
-        PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
+   //     PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             dismissLoadingDialog();
             mRefreshLayout.setPullDownRefreshEnable(false);
@@ -481,11 +481,11 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
                 }
             }, 600);
         } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
-            //  img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
-            //   GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
             String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
-            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
-            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
+            if (!StringUtils.isEmpty(avatar)) {
+                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+                GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
+            }
         } else if (((String) msgEvent.getData()).equals("RxBusShipperCertificationEvent")) {
             tv_incompleteCertification.setText(getString(R.string.inAuthentication));
             tv_incompleteCertification1.setText(getString(R.string.inAuthentication));
@@ -508,8 +508,6 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
 
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        Log.d("tag", "scrollY" + scrollY);
-        Log.d("tag", "oldScrollY" + oldScrollY);
         if (scrollY == 0) {
             tv_dividerWidth.setVisibility(View.GONE);
             ll_personalData1.setVisibility(View.GONE);
@@ -526,11 +524,11 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         super.onDestroy();
         if (handler != null) {
             handler.removeCallbacksAndMessages(null);
-            handler = null;
         }
+        handler = null;
         if (inAuthenticationBouncedDialog != null) {
             inAuthenticationBouncedDialog.cancel();
-            inAuthenticationBouncedDialog = null;
         }
+        inAuthenticationBouncedDialog = null;
     }
 }
