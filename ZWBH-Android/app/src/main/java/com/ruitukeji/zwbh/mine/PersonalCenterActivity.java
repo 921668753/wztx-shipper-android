@@ -288,16 +288,16 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        boolean isAvatar = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isAvatar", false);
-        if (isAvatar) {
-            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
-            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
-            PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        boolean isAvatar = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isAvatar", false);
+//        if (isAvatar) {
+//            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
+//            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+//            PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
+//        }
+//    }
 
     @Override
     public void setPresenter(PersonalCenterContract.Presenter presenter) {
@@ -483,6 +483,9 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
         } else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
             //  img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));
             //   GlideImageLoader.glideLoader(KJActivityStack.create().topActivity(), msgEvent.getMsg() + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+            String avatar = PreferenceHelper.readString(aty, StringConstants.FILENAME, "avatar", "");
+            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
         } else if (((String) msgEvent.getData()).equals("RxBusShipperCertificationEvent")) {
             tv_incompleteCertification.setText(getString(R.string.inAuthentication));
             tv_incompleteCertification1.setText(getString(R.string.inAuthentication));

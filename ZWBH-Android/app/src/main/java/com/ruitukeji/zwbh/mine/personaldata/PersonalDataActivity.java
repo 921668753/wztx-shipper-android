@@ -30,6 +30,8 @@ import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
 import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -269,12 +271,12 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                 PreferenceHelper.write(this, StringConstants.FILENAME, "avatar", uploadImageBean.getResult().getFile().getUrl());
                 GlideImageLoader.glideLoader(this, uploadImageBean.getResult().getFile().getUrl(), img_user, 0);
                 PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", true);
-//                /**
-//                 * 发送消息
-//                 */
-//                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
-//                msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
-//                RxBus.getInstance().post(msgEvent);
+                /**
+                 * 发送消息
+                 */
+                MsgEvent msgEvent = new MsgEvent<String>("RxBusAvatarEvent");
+                msgEvent.setMsg(uploadImageBean.getResult().getFile().getUrl());
+                RxBus.getInstance().post(msgEvent);
             }
         }
         dismissLoadingDialog();
