@@ -16,7 +16,6 @@ public class URLConstants {
      * 测试服务器地址URL
      */
     public static String APIURL = "http://wuzaishipper.wuzaitianxia56.com/";
-//    public static String SERVERURL1 = "http://wztx.drv.api.zenmechi.cc/";
 
     /**
      * 得到全部城市
@@ -93,7 +92,7 @@ public class URLConstants {
      * 发送验证码
      * reg=注册 restpwd=找回密码 login=登陆 bind=绑定手机号.
      */
-    public static String SENDCAPTCHA = "http://wztx.shp.api.zenmechi.cc/index/sendCaptcha";
+    public static String SENDCAPTCHA = "index/sendCaptcha";
 
     /**
      * 用户注册
