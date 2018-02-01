@@ -42,8 +42,9 @@ public interface MainFragmentContract {
         /**
          * 地图添加定位点
          */
-        void addCircleMarker(LatLng latlng, double radius, AMap aMap, Circle mCircle, Marker mLocMarker);
+        Circle addCircle(LatLng latlng, double radius, AMap aMap, Circle mCircle);
 
+        Marker addMarker(LatLng latlng, double radius, AMap aMap, Marker mLocMarker);
 
         /**
          * 设置状态：实时，加急，预约
@@ -66,11 +67,11 @@ public interface MainFragmentContract {
         /**
          * 跳傳貨物詳情
          */
-        void startAddCargoInformationActivityForResult(BaseFragment baseFragment, int tran_type, String type, String appointmentTime,String provenanceLat, String provenanceLongi, String provenanceDistrict,
+        void startAddCargoInformationActivityForResult(BaseFragment baseFragment, int tran_type, String type, String appointmentTime, String provenanceLat, String provenanceLongi, String provenanceDistrict,
                                                        String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer, String provenanceShipper,
                                                        String provenancePhone, String provenanceEixedTelephone, String destinationLat, String destinationLongi,
                                                        String destinationDistrict, String destinationPlaceName, String destinationDetailedAddress,
-                                                       String destinationDeliveryCustomer, String destinationShipper, String destinationPhone, String destinationEixedTelephone,int resultCode);
+                                                       String destinationDeliveryCustomer, String destinationShipper, String destinationPhone, String destinationEixedTelephone, int resultCode);
 
     }
 

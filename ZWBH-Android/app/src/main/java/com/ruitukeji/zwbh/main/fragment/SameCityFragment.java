@@ -428,8 +428,12 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
         super.onHiddenChanged(hidden);
         if (hidden) {
             aMap.setOnCameraChangeListener(null);
+            aMap.setLocationSource(null);
+            deactivate();
         } else {
             aMap.setOnCameraChangeListener(this);
+            aMap.setLocationSource(this);
+            activate(mListener);
         }
     }
 
@@ -445,7 +449,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             mSensorHelper = null;
         }
         mapView.onPause();
-        deactivate();
+        //    deactivate();
         mFirstFix = false;
     }
 
@@ -465,6 +469,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        mListener = null;
         deactivate();
         date_choose.clear();
         date_choose = null;
@@ -621,7 +626,8 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 Log.d("tag", location.latitude + "," + location.longitude);
                 if (!mFirstFix) {
                     mFirstFix = true;
-                    ((MainFragmentContract.Presenter) mPresenter).addCircleMarker(location, amapLocation.getAccuracy(), aMap, mCircle, mLocMarker);
+                    mCircle = ((MainFragmentContract.Presenter) mPresenter).addCircle(location, amapLocation.getAccuracy(), aMap, mCircle);
+                    mLocMarker = ((MainFragmentContract.Presenter) mPresenter).addMarker(location, amapLocation.getAccuracy(), aMap, mLocMarker);
 //                    addCircle(location, amapLocation.getAccuracy());//添加定位精度圆
 //                    addMarker(location);//添加定位图标
                     mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
@@ -683,7 +689,6 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
      */
     @Override
     public void deactivate() {
-        mListener = null;
         if (mlocationClient != null) {
             mlocationClient.stopLocation();
             mlocationClient.onDestroy();

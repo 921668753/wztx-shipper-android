@@ -272,7 +272,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
 
 
     @Override
-    public void addCircleMarker(LatLng latlng, double radius, AMap aMap, Circle mCircle, Marker mLocMarker) {
+    public Circle addCircle(LatLng latlng, double radius, AMap aMap, Circle mCircle) {
         CircleOptions options = new CircleOptions();
         options.strokeWidth(1f);
         options.fillColor(Color.argb(10, 0, 0, 180));
@@ -280,8 +280,13 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         options.center(latlng);
         options.radius(radius);
         mCircle = aMap.addCircle(options);
+        return mCircle;
+    }
+
+    @Override
+    public Marker addMarker(LatLng latlng, double radius, AMap aMap, Marker mLocMarker) {
         if (mLocMarker != null) {
-            return;
+            return null;
         }
         Bitmap bMap = BitmapFactory.decodeResource(KJActivityStack.create().topActivity().getResources(), R.mipmap.ic_map_mylocation);
         BitmapDescriptor des = BitmapDescriptorFactory.fromBitmap(bMap);
@@ -290,6 +295,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         options1.anchor(0.5f, 0.5f);
         options1.position(latlng);
         mLocMarker = aMap.addMarker(options1);
+        return mLocMarker;
     }
 
     private int currentMin() {

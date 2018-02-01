@@ -376,8 +376,12 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         super.onHiddenChanged(hidden);
         if (hidden) {
             aMap.setOnCameraChangeListener(null);
+            aMap.setLocationSource(null);
+            deactivate();
         } else {
             aMap.setOnCameraChangeListener(this);
+            aMap.setLocationSource(this);
+            activate(mListener);
         }
     }
 
@@ -435,7 +439,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             mSensorHelper = null;
         }
         mapView.onPause();
-        deactivate();
         mFirstFix = false;
     }
 
@@ -455,6 +458,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+        mListener = null;
         deactivate();
         date_choose.clear();
         date_choose = null;
@@ -532,7 +536,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
      */
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
-        android.util.Log.d("tag", cameraPosition.toString());
+        Log.d("tag", cameraPosition.toString());
     }
 
     /**
@@ -540,7 +544,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
      */
     @Override
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
-        android.util.Log.d("tag", "2");
+        Log.d("tag", "2");
         cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(cameraPosition.target);
 //// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
         RegeocodeQuery query = new RegeocodeQuery(cameraChangeLatLonPoint, 200, GeocodeSearch.AMAP);
@@ -601,7 +605,8 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 Log.d("tag", location.latitude + "," + location.longitude);
                 if (!mFirstFix) {
                     mFirstFix = true;
-                    ((MainFragmentContract.Presenter) mPresenter).addCircleMarker(location, amapLocation.getAccuracy(), aMap, mCircle, mLocMarker);
+                    mCircle = ((MainFragmentContract.Presenter) mPresenter).addCircle(location, amapLocation.getAccuracy(), aMap, mCircle);
+                    mLocMarker = ((MainFragmentContract.Presenter) mPresenter).addMarker(location, amapLocation.getAccuracy(), aMap, mLocMarker);
                     mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
                 } else {
                     mCircle.setCenter(location);
@@ -662,7 +667,6 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
      */
     @Override
     public void deactivate() {
-        mListener = null;
         if (mlocationClient != null) {
             mlocationClient.stopLocation();
             mlocationClient.onDestroy();
