@@ -62,9 +62,9 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
      */
     private boolean isShowLoadingMore = false;
     /**
-     * 订单状态（all全部状态，quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
+     * init 初始状态（未分发订单前）quote报价中（分发订单后）quoted已报价-未配送（装货中）distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成）pay_failed（支付失败）/pay_success（支付成功）comment（已评论）
      */
-    private String type = "photo";
+    private String type = "success";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -135,17 +135,15 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
     }
 
     @Override
-    public void getSuccess(String s) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshCompleted", false);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshCompleted1", false);
+    public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
+        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(success, OrderBean.class);
         mMorePageNumber = orderBean.getResult().getPage();
         totalPageNumber = orderBean.getResult().getPageTotal();
         if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-            error(getString(R.string.serverReturnsDataNull));
+            errorMsg(getString(R.string.serverReturnsDataNull),0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -160,7 +158,7 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
     }
 
     @Override
-    public void error(String msg) {
+    public void errorMsg(String msg, int flag) {
         toLigon(msg);
         isShowLoadingMore = false;
         mRefreshLayout.setVisibility(View.GONE);
@@ -177,28 +175,6 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
     @Override
     public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-        boolean isRefreshCompleted1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshCompleted1", false);
-        if (isRefreshCompleted1) {
-            mRefreshLayout.beginRefreshing();
-        }
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        boolean isRefreshCompleted = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshCompleted", false);
-        if (isRefreshCompleted) {
-            mRefreshLayout.beginRefreshing();
-        }
     }
 
 

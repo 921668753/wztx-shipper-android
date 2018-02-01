@@ -1,5 +1,6 @@
 package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 
+import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
 
@@ -15,18 +16,18 @@ public interface OrderContract {
         void getOrder(int page, String type);
     }
 
-    interface View extends BaseView<Presenter> {
-        /**
-         * http请求正确
-         *
-         * @param s
-         */
-        void getSuccess(String s);
-
-        /**
-         * http请求错误
-         */
-        void error(String msg);
+    interface View extends BaseNewView<Presenter,String> {
+//        /**
+//         * http请求正确
+//         *
+//         * @param s
+//         */
+//        void getSuccess(String s);
+//
+//        /**
+//         * http请求错误
+//         */
+//        void error(String msg);
     }
 
 }

@@ -211,7 +211,7 @@ public class MyOrderActivity extends BaseActivity {
         } else if (chageIcon == 4) {
             tv_pendingPayment.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_pendingPayment1.setBackgroundResource(R.color.announcementCloseColors);
-        }else if (chageIcon == 5) {
+        } else if (chageIcon == 5) {
             tv_completed.setTextColor(getResources().getColor(R.color.announcementCloseColors));
             tv_completed1.setBackgroundResource(R.color.announcementCloseColors);
         } else {

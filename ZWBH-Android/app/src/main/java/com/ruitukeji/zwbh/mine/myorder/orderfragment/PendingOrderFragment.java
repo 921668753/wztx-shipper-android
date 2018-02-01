@@ -140,27 +140,15 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        boolean isRefreshQuoteOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshQuoteOrder", false);
-        if (isRefreshQuoteOrder) {
-            mRefreshLayout.beginRefreshing();
-        }
-    }
-
-
-    @Override
-    public void getSuccess(String s) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteOrder", false);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteOrder1", false);
+    public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
+        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(success, OrderBean.class);
         mMorePageNumber = orderBean.getResult().getPage();
         totalPageNumber = orderBean.getResult().getPageTotal();
         if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-            error(getString(R.string.serverReturnsDataNull));
+            errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -175,7 +163,7 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
     }
 
     @Override
-    public void error(String msg) {
+    public void errorMsg(String msg, int flag) {
         toLigon(msg);
         isShowLoadingMore = false;
         mRefreshLayout.setVisibility(View.GONE);
@@ -192,18 +180,6 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
     @Override
     public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-        boolean isRefreshQuoteOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshQuoteOrder1", false);
-        if (isRefreshQuoteOrder1) {
-            mRefreshLayout.beginRefreshing();
-        }
     }
 
 

@@ -72,7 +72,7 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MyOrderActivity) getActivity();
-        return View.inflate(aty, R.layout.fragment_allorder, null);
+        return View.inflate(aty, R.layout.fragment_allorder1, null);
     }
 
     @Override
@@ -144,28 +144,16 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
         return true;
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
-        boolean isRefreshOrder = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-        if (isRefreshOrder) {
-            mRefreshLayout.beginRefreshing();
-        }
-    }
-
-    @Override
-    public void getSuccess(String s) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", false);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
+    public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
+        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(success, OrderBean.class);
         mMorePageNumber = orderBean.getResult().getPage();
         totalPageNumber = orderBean.getResult().getPageTotal();
         if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-            error(getString(R.string.serverReturnsDataNull));
+            errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -180,7 +168,7 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
     }
 
     @Override
-    public void error(String msg) {
+    public void errorMsg(String msg, int flag) {
         toLigon(msg);
         isShowLoadingMore = false;
         mRefreshLayout.setVisibility(View.GONE);
@@ -198,18 +186,7 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
     public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
     }
-
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-        boolean isRefreshAllOrder1 = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshAllOrder1", false);
-        if (isRefreshAllOrder1) {
-            mRefreshLayout.beginRefreshing();
-        }
-    }
+    
 
     @Override
     public void onDestroy() {

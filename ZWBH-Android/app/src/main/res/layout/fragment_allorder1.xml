@@ -8,8 +8,7 @@
         android:id="@+id/mRefreshLayout"
         style="@style/MatchMatch"
         android:paddingLeft="@dimen/dimen10"
-        android:paddingRight="@dimen/dimen10"
-        android:paddingTop="@dimen/dimen10">
+        android:paddingRight="@dimen/dimen10">
 
         <ListView
             android:id="@+id/lv_order"
@@ -17,6 +16,7 @@
             android:divider="@color/background"
             android:dividerHeight="@dimen/dimen10"
             android:overScrollMode="never"
+            android:paddingTop="@dimen/dimen10"
             android:scrollbars="none"
             tools:listitem="@layout/item_order1" />
 

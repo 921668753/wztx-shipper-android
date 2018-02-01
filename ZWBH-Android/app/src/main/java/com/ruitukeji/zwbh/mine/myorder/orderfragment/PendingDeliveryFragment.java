@@ -136,15 +136,15 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
     }
 
     @Override
-    public void getSuccess(String s) {
+    public void getSuccess(String success, int flag) {
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(s, OrderBean.class);
+        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(success, OrderBean.class);
         mMorePageNumber = orderBean.getResult().getPage();
         totalPageNumber = orderBean.getResult().getPageTotal();
         if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-            error(getString(R.string.serverReturnsDataNull));
+            errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
@@ -159,7 +159,7 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
     }
 
     @Override
-    public void error(String msg) {
+    public void errorMsg(String msg, int flag) {
         toLigon(msg);
         isShowLoadingMore = false;
         mRefreshLayout.setVisibility(View.GONE);
