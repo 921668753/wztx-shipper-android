@@ -444,6 +444,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
          center=116.481471,39.990471&radius=500&filter=type:写字楼&limit=10&page=1
          &key=<用户key>
          */
+
         httpParams.put("tableid", StringConstants.NearTableid);
         httpParams.put("center", latLonPoint.getLongitude() + "," + latLonPoint.getLatitude());
         httpParams.put("radius", 10000);
@@ -458,7 +459,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
                 NearbySearchBean nearbySearch = (NearbySearchBean) JsonUtil.getInstance().json2Obj(response, NearbySearchBean.class);
                 if (nearbySearch.getStatus() == NumericConstants.STATUS) {
                     mView.getSuccess(response, 1);
-                }  else {
+                } else {
                     Log.d("nearbySearch", nearbySearch.getStatus() + "");
                     mView.errorMsg("周边搜索出现异常,云端返回数据错误", 0);
                 }

@@ -604,7 +604,7 @@ public class RequestClient {
      * 经度
      * 纬度
      */
-    public static void getNearbySearch(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getNearbySearch(HttpParams httpParams, ResponseListener<String> listener) {
         RxVolley.get(URLConstants.MAINNEARBYSEARCH, httpParams, new HttpCallback() {
             @Override
             public void onSuccess(String t) {

@@ -92,6 +92,7 @@ public class NearbySearchBean {
         private String _updatetime;
         private String _province;
         private String _city;
+        private String online;
         private String _district;
         private String _distance;
 
@@ -177,6 +178,14 @@ public class NearbySearchBean {
 
         public String get_city() {
             return _city;
+        }
+
+        public String getOnline() {
+            return online;
+        }
+
+        public void setOnline(String online) {
+            this.online = online;
         }
 
         public void set_city(String _city) {
