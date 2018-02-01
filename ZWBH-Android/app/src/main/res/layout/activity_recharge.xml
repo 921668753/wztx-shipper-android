@@ -44,6 +44,7 @@
                 android:hint="@string/topUpAmount"
                 android:inputType="numberDecimal"
                 android:paddingBottom="@dimen/dimen5"
+                android:paddingLeft="@dimen/dimen10"
                 android:paddingRight="@dimen/dimen15"
                 android:singleLine="true"
                 android:textColor="@color/f2222Colors"
