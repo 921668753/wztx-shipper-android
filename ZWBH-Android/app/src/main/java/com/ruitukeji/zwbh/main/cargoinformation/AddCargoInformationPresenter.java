@@ -143,8 +143,6 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             map.put("cargo_address", cargo_address);
             map.put("cargo_address_detail", cargo_address_detail);
             map.put("cargo_is_express", cargo_is_express);
-
-            Log.d("tag1111", "11111");
             httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
             RequestClient.postLogistics(httpParams, new ResponseListener<String>() {
                 @Override
