@@ -50,45 +50,7 @@ public class MainPresenter implements MainContract.Presenter {
         });
     }
 
-    /**
-     * 获取周边司机
-     *
-     * @param lat 经度
-     * @param lon 纬度
-     */
-    @Override
-    public void getNearbySearch(double lat, double lon) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        /**
-         * http://yuntuapi.amap.com/datasearch/around?tableid=52b155b6e4b0bc61deeb7629&keywords=阜通东大街&
-         center=116.481471,39.990471&radius=500&filter=type:写字楼&limit=10&page=1
-         &key=<用户key>
-         */
-        httpParams.put("tableid", StringConstants.NearTableid);
-        httpParams.put("center", lon + "," + lat);
-        httpParams.put("radius", 10000);
-        httpParams.put("limit", 100);
-        httpParams.put("sortrule", "_distance:1");
-        httpParams.put("page", 1);
-        httpParams.put("key", BuildConfig.GAODE_WEBKEY);
-        RequestClient.getNearbySearch(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                NearbySearchBean nearbySearch = (NearbySearchBean) JsonUtil.getInstance().json2Obj(response, NearbySearchBean.class);
-                if (nearbySearch.getStatus() == NumericConstants.STATUS) {
-                    mView.getSuccess(response, 0);
-                } else {
-                    Log.d("nearbySearch", nearbySearch.getStatus() + "");
-                    mView.errorMsg("周边搜索出现异常,云端返回数据错误", 0);
-                }
-            }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
-            }
-        });
-    }
 
     @Override
     public void getInfo() {
@@ -134,30 +96,7 @@ public class MainPresenter implements MainContract.Presenter {
         }
     }
 
-    @Override
-    public void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
-        tv_realTime.setTextColor(activity.getResources().getColor(R.color.typecolors));
-        tv_realTime.setBackgroundResource(R.color.mainColor);
-        tv_realTime.setBackgroundResource(R.drawable.shape_main_type2);
-        tv_urgent.setTextColor(activity.getResources().getColor(R.color.typecolors));
-        tv_urgent.setBackgroundResource(R.color.mainColor);
-        tv_makeAppointment.setTextColor(activity.getResources().getColor(R.color.typecolors));
-        tv_makeAppointment.setBackgroundResource(R.color.mainColor);
-        tv_makeAppointment.setBackgroundResource(R.drawable.shape_main_type2);
-        if (type == 0) {
-            tv_realTime.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
-            tv_realTime.setBackgroundResource(R.drawable.shape_main_type1);
-        } else if (type == 1) {
-            tv_urgent.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
-            tv_urgent.setBackgroundResource(R.drawable.shape_main_type1);
-        } else if (type == 2) {
-            tv_makeAppointment.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
-            tv_makeAppointment.setBackgroundResource(R.drawable.shape_main_type1);
-        } else {
-            tv_realTime.setTextColor(activity.getResources().getColor(R.color.announcementCloseColors));
-            tv_realTime.setBackgroundResource(R.drawable.shape_main_type1);
-        }
-    }
+
 
     /**
      * @param updateAppUrl 下载app

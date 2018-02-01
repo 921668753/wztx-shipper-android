@@ -14,12 +14,18 @@ import com.amap.api.maps2d.model.CircleOptions;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.amap.api.services.core.LatLonPoint;
 import com.bigkoo.pickerview.model.IPickerViewData;
+import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.ruitukeji.zwbh.BuildConfig;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.KJActivityStack;
+import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
@@ -29,6 +35,7 @@ import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.DataUtil;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
@@ -424,5 +431,43 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
             dataArrayList.add(minutesChooseBean);
         }
         return dataArrayList;
+    }
+
+    /**
+     * 获取周边司机
+     */
+    @Override
+    public void getNearbySearch(LatLonPoint latLonPoint) {
+        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        /**
+         * http://yuntuapi.amap.com/datasearch/around?tableid=52b155b6e4b0bc61deeb7629&keywords=阜通东大街&
+         center=116.481471,39.990471&radius=500&filter=type:写字楼&limit=10&page=1
+         &key=<用户key>
+         */
+        httpParams.put("tableid", StringConstants.NearTableid);
+        httpParams.put("center", latLonPoint.getLongitude() + "," + latLonPoint.getLatitude());
+        httpParams.put("radius", 10000);
+        httpParams.put("limit", 100);
+        httpParams.put("filter", "online:0");
+        httpParams.put("sortrule", "_distance:1");
+        httpParams.put("page", 1);
+        httpParams.put("key", BuildConfig.GAODE_WEBKEY);
+        RequestClient.getNearbySearch(httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                NearbySearchBean nearbySearch = (NearbySearchBean) JsonUtil.getInstance().json2Obj(response, NearbySearchBean.class);
+                if (nearbySearch.getStatus() == NumericConstants.STATUS) {
+                    mView.getSuccess(response, 1);
+                }  else {
+                    Log.d("nearbySearch", nearbySearch.getStatus() + "");
+                    mView.errorMsg("周边搜索出现异常,云端返回数据错误", 0);
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 }

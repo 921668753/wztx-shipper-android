@@ -45,6 +45,7 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.entity.main.HomeBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
@@ -113,7 +114,6 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
      */
     @BindView(id = R.id.tv_pleaseEnterDeparturePoint, click = true)
     private TextView tv_pleaseEnterDeparturePoint;
-
 
     /**
      * 目的地
@@ -240,7 +240,6 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
             aMap.setMapLanguage(AMap.CHINESE);
             //  aMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_CENTER);// 设置地图logo显示在左下方
         }
-        choiceLocationWrapper();
     }
 
     @Override
@@ -394,7 +393,8 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
         provenanceLongi = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceLongi", "");
         provenanceDistrict = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDistrict", "");
         provenancePlaceName = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenancePlaceName", "");
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 15));
+        cameraChangeLatLon = new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraChangeLatLon, 15));
         tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         provenanceDetailedAddress = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDetailedAddress", "");
         provenanceDeliveryCustomer = PreferenceHelper.readString(aty, StringConstants.FILENAME, "provenanceDeliveryCustomer", "");
@@ -465,9 +465,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        if (null != mlocationClient) {
-            mlocationClient.onDestroy();
-        }
+        deactivate();
         date_choose.clear();
         date_choose = null;
         hours_choose.clear();
@@ -568,14 +566,15 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
         RegeocodeQuery query = new RegeocodeQuery(cameraChangeLatLonPoint, 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
         // 设置中心点及检索范围
-        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(cameraChangeLatLonPoint, 10000);
-        //设置查询条件 mTableID是将数据存储到数据管理台后获得。
-        try {
-            CloudSearch.Query mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
-            mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
-        } catch (AMapException e) {
-            e.printStackTrace();
-        }
+        ((MainFragmentContract.Presenter) mPresenter).getNearbySearch(cameraChangeLatLonPoint);
+//        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(cameraChangeLatLonPoint, 10000);
+//        //设置查询条件 mTableID是将数据存储到数据管理台后获得。
+//        try {
+//            CloudSearch.Query mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
+//            mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
+//        } catch (AMapException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
@@ -633,14 +632,13 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
                 if (cameraChangeLatLonPoint == null) {
-                    cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(location);
+                    cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()));
                 }
                 cameraChangeLatLon = AMapUtil.convertToLatLng(cameraChangeLatLonPoint);
                 int sameCityFragmentNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "sameCityFragmentNum", 0);
                 if (sameCityFragmentNum == 0) {
                     PreferenceHelper.write(aty, StringConstants.FILENAME, "sameCityFragmentNum", sameCityFragmentNum + 1);
-                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
-                    return;
+                    readDefaultAddress();
                 }
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraChangeLatLon, 15));
             } else {
@@ -779,7 +777,14 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationPhone", end_address.getPhone());
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "destinationEixedTelephone", end_address.getTelphone());
             }
-            readDefaultAddress();
+            choiceLocationWrapper();
+            //   readDefaultAddress();
+        } else if (flag == 1) {
+            NearbySearchBean nearbySearch = (NearbySearchBean) JsonUtil.getInstance().json2Obj(success, NearbySearchBean.class);
+            if (nearbySearch.getStatus() == NumericConstants.STATUS && nearbySearch.getDatas() != null && nearbySearch.getDatas() != null && !nearbySearch.getDatas().isEmpty() && nearbySearch.getDatas().size() > 0) {
+                AMapUtil.addEmulateData(aMap, nearbySearch.getDatas());
+            }
+            aty.dismissDialog();
         }
         dismissLoadingDialog();
     }

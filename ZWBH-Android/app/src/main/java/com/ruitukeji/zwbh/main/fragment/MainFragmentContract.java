@@ -6,6 +6,7 @@ import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.model.Circle;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
+import com.amap.api.services.core.LatLonPoint;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
@@ -49,6 +50,11 @@ public interface MainFragmentContract {
          */
         void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
 
+
+        /**
+         * 获取附近信息
+         */
+        void getNearbySearch(LatLonPoint latLonPoint);
 
         /**
          * 始發地/目的地

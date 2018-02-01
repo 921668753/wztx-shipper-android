@@ -44,8 +44,10 @@ import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.main.Main3Activity;
 import com.ruitukeji.zwbh.utils.DataUtil;
+import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.amap.AMapUtil;
 import com.ruitukeji.zwbh.utils.amap.SensorEventHelper;
@@ -453,9 +455,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        if (null != mlocationClient) {
-            mlocationClient.onDestroy();
-        }
+        deactivate();
         date_choose.clear();
         date_choose = null;
         hours_choose.clear();
@@ -546,14 +546,15 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
         RegeocodeQuery query = new RegeocodeQuery(cameraChangeLatLonPoint, 200, GeocodeSearch.AMAP);
         geocoderSearch.getFromLocationAsyn(query);
         // 设置中心点及检索范围
-        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(AMapUtil.convertToLatLonPoint(cameraPosition.target), 10000);
-        //设置查询条件 mTableID是将数据存储到数据管理台后获得。
-        try {
-            CloudSearch.Query mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
-            mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
-        } catch (AMapException e) {
-            e.printStackTrace();
-        }
+        ((MainFragmentContract.Presenter) mPresenter).getNearbySearch(cameraChangeLatLonPoint);
+//        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(AMapUtil.convertToLatLonPoint(cameraPosition.target), 10000);
+//        //设置查询条件 mTableID是将数据存储到数据管理台后获得。
+//        try {
+//            CloudSearch.Query mQuery = new CloudSearch.Query(StringConstants.NearTableid, "", bound);
+//            mCloudSearch.searchCloudAsyn(mQuery);// 异步搜索
+//        } catch (AMapException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
@@ -609,15 +610,15 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
                 if (cameraChangeLatLonPoint == null) {
-                    cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(location);
+                    cameraChangeLatLonPoint = AMapUtil.convertToLatLonPoint(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()));
                 }
                 cameraChangeLatLon = AMapUtil.convertToLatLng(cameraChangeLatLonPoint);
-                int intercityFragmentNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "intercityFragmentNum", 0);
-                if (intercityFragmentNum == 0) {
-                    PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityFragmentNum", intercityFragmentNum + 1);
-                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(amapLocation.getLatitude() - 0.0004, amapLocation.getLongitude()), 15));
-                    return;
-                }
+//                int intercityFragmentNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "intercityFragmentNum", 0);
+//                if (intercityFragmentNum == 0) {
+//                    PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityFragmentNum", intercityFragmentNum + 1);
+//                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(, 15));
+//                    return;
+//                }
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraChangeLatLon, 15));
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
@@ -722,6 +723,17 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
 
     @Override
     public void getSuccess(String success, int flag) {
+        if (flag == 1) {
+            NearbySearchBean nearbySearch = (NearbySearchBean) JsonUtil.getInstance().json2Obj(success, NearbySearchBean.class);
+            if (nearbySearch.getStatus() == NumericConstants.STATUS && nearbySearch.getDatas() != null && nearbySearch.getDatas() != null && !nearbySearch.getDatas().isEmpty() && nearbySearch.getDatas().size() > 0) {
+                AMapUtil.addEmulateData(aMap, nearbySearch.getDatas());
+            }
+            int intercityNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "intercityNum", 0);
+            if (intercityNum == 0) {
+                aty.changeFragment(aty.contentFragment);
+            }
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityNum", intercityNum + 1);
+        }
         dismissLoadingDialog();
     }
 

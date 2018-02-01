@@ -55,7 +55,6 @@ public class AMapUtil {
                 markerOptions.draggable(false);//设置Marker可拖动
                 markerOptions.icon(bitmapDescriptor);
                 String[] latLng = nearbyInfo.get_location().split(",");
-//                Log.d("tag","latLng[0]="+latLng[0]+",latLng[1]="+latLng[1]);
                 markerOptions.position(new LatLng(Double.parseDouble(latLng[1]), Double.parseDouble(latLng[0])));
                 Marker marker = amap.addMarker(markerOptions);
                 marker.setTitle(nearbyInfo.getCar_length() + "/" + nearbyInfo.getCar_type() + "   " + nearbyInfo.getCar_number());
@@ -79,8 +78,6 @@ public class AMapUtil {
                 markerOptions.anchor(0.5f, 0.5f);
                 markerOptions.draggable(false);//设置Marker可拖动
                 markerOptions.icon(bitmapDescriptor);
-                //     String[] latLng = cloudItem.get_location().split(",");
-//                Log.d("tag","latLng[0]="+latLng[0]+",latLng[1]="+latLng[1]);
                 markerOptions.position(convertToLatLng(cloudItem.getLatLonPoint()));
                 Marker marker = amap.addMarker(markerOptions);
                 marker.setTitle(cloudItem.getCustomfield().get("car_length") + "/" + cloudItem.getCustomfield().get("car_type"));

@@ -97,7 +97,7 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
     public static final String KEY_EXTRAS = "extras";
     public BaseFragment contentFragment;
     public BaseFragment contentFragment1;
-    private Handler handler = null;
+   // private Handler handler = null;
 
     @Override
     public void setRootView() {
@@ -110,7 +110,7 @@ public class Main3Activity extends BaseActivity implements MainContract.View {
         initDialog();
         contentFragment = new SameCityFragment();
         contentFragment1 = new IntercityFragment();
-        handler = new Handler();
+      //  handler = new Handler();
         changeFragment(contentFragment1);
         mPresenter = new MainPresenter(this);
         registerMessageReceiver();

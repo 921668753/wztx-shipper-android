@@ -232,7 +232,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_orderdetails);
+        setContentView(R.layout.activity_orderdetails1);
     }
 
     @Override

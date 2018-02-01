@@ -22,10 +22,10 @@ public interface MainContract {
          */
         void getHome();
 
-        /**
-         * 获取附近信息
-         */
-        void getNearbySearch(double lat, double lon);
+//        /**
+//         * 获取附近信息
+//         */
+//        void getNearbySearch(double lat, double lon);
 
         /**
          * 获取用户信息
@@ -58,10 +58,6 @@ public interface MainContract {
          */
         void chooseLogisticsType(Main3Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
 
-        /**
-         * 设置状态：实时，加急，预约
-         */
-        void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
     }
 
     interface View extends BaseNewView<Presenter, String> {
