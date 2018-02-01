@@ -15,7 +15,6 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.services.core.LatLonPoint;
-import com.bigkoo.pickerview.model.IPickerViewData;
 import com.kymjs.common.Log;
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -41,7 +40,6 @@ import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
