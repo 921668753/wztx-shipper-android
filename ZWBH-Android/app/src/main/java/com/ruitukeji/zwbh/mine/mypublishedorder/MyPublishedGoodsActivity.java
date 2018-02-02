@@ -11,8 +11,6 @@ import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.QuoteGood
 import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.TheBidGoodsFragment;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
-
 /**
  * 我发布的订单
  * Created by Administrator on 2017/2/10.
@@ -67,10 +65,6 @@ public class MyPublishedGoodsActivity extends BaseActivity {
     @Override
     public void initWidget() {
         super.initWidget();
-        try {
-            drawer.closeDrawers();
-        } catch (Exception e) {
-        }
         ActivityTitleUtils.initToolbar(aty, getString(R.string.myPublishedOrder), true, R.id.titlebar);
 //        if (chageIcon == 0) {
 //            chageIcon = 0;

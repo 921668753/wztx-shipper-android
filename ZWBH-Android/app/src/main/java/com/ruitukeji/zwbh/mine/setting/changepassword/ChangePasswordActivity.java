@@ -86,7 +86,6 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
         PreferenceHelper.clean(this, StringConstants.FILENAME);
         KJActivityStack.create().finishActivity(SettingsActivity.class);
         PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
-        MainActivity.drawer.closeDrawers();
         dismissLoadingDialog();
         skipActivity(aty, LoginActivity.class);
     }

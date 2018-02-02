@@ -50,7 +50,7 @@ import com.ruitukeji.zwbh.entity.main.HomeBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
-import com.ruitukeji.zwbh.main.Main3Activity;
+import com.ruitukeji.zwbh.main.MainActivity;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
@@ -217,14 +217,14 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
     private int isOff1 = 0;
     private int isOff = 0;
 
-    private Main3Activity aty;
+    private MainActivity aty;
     private GeocodeSearch geocoderSearch = null;
     private LatLonPoint cameraChangeLatLonPoint = null;
     private LatLng cameraChangeLatLon = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (Main3Activity) getActivity();
+        aty = (MainActivity) getActivity();
         View view = View.inflate(aty, R.layout.fragment_intercity, null);
         init(view, bundle);
         return view;

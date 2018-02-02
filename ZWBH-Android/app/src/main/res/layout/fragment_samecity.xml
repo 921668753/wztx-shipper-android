@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     android:fitsSystemWindows="true"
-    tools:context=".main.Main2Activity">
+    tools:context=".main.MainActivity">
 
     <com.amap.api.maps2d.MapView
         android:id="@+id/map"

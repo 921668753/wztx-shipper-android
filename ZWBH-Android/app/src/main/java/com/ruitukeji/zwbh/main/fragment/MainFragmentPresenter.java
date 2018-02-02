@@ -28,7 +28,7 @@ import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
-import com.ruitukeji.zwbh.main.Main3Activity;
+import com.ruitukeji.zwbh.main.MainActivity;
 import com.ruitukeji.zwbh.main.cargoinformation.AddCargoInformationActivity;
 import com.ruitukeji.zwbh.main.selectaddress.ProvenanceActivity;
 import com.ruitukeji.zwbh.main.selectaddress.SelectAddressActivity;
@@ -135,7 +135,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
 
 
     @Override
-    public void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
+    public void settingType(MainActivity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment) {
         tv_realTime.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_realTime.setBackgroundResource(R.color.mainColor);
         tv_realTime.setBackgroundResource(R.drawable.shape_main_type2);

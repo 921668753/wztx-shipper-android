@@ -13,7 +13,7 @@ import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.MinutesChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.HoursChooseBean;
 import com.ruitukeji.zwbh.entity.main.TimeChooseBean.ResultBean.DateChooseBean;
-import com.ruitukeji.zwbh.main.Main3Activity;
+import com.ruitukeji.zwbh.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public interface MainFragmentContract {
         /**
          * 设置状态：实时，加急，预约
          */
-        void settingType(Main3Activity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
+        void settingType(MainActivity activity, int type, TextView tv_realTime, TextView tv_urgent, TextView tv_makeAppointment);
 
 
         /**

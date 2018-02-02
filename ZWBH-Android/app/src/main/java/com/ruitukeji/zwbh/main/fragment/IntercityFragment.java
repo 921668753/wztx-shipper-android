@@ -45,7 +45,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
-import com.ruitukeji.zwbh.main.Main3Activity;
+import com.ruitukeji.zwbh.main.MainActivity;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
@@ -208,14 +208,14 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
     private int isOff1 = 0;
     private int isOff = 0;
 
-    private Main3Activity aty;
+    private MainActivity aty;
     private GeocodeSearch geocoderSearch = null;
     private LatLonPoint cameraChangeLatLonPoint = null;
     private LatLng cameraChangeLatLon = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        aty = (Main3Activity) getActivity();
+        aty = (MainActivity) getActivity();
         View view = View.inflate(aty, R.layout.fragment_intercity, null);
         init(view, bundle);
         return view;

@@ -1,7 +1,5 @@
 package com.ruitukeji.zwbh.startpage;
 
-import android.content.Intent;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +7,7 @@ import android.widget.ImageView;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.main.Main2Activity;
+import com.ruitukeji.zwbh.main.MainActivity;
 
 import java.util.Arrays;
 
@@ -86,10 +84,10 @@ public class GuideViewActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.tv_guide_skip:
-                skipActivity(this, Main2Activity.class);
+                skipActivity(this, MainActivity.class);
                 break;
             case R.id.btn_guide_enter:
-                skipActivity(this, Main2Activity.class);
+                skipActivity(this, MainActivity.class);
                 break;
         }
     }

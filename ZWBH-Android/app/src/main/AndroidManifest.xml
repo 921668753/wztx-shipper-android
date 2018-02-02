@@ -89,11 +89,7 @@
             android:screenOrientation="portrait" />
         <!--主界面-->
         <activity
-            android:name=".main.Main2Activity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".main.Main3Activity"
+            android:name=".main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
@@ -150,9 +146,6 @@
             android:screenOrientation="portrait" />
 
         <!--同城配送  长途干线-->
-        <activity
-            android:name=".main.LogisticsActivity"
-            android:screenOrientation="portrait" />
 
         <!--货物保险-->
         <activity

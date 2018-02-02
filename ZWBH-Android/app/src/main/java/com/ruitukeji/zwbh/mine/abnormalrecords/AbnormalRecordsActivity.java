@@ -54,6 +54,7 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+    private int orderId = 0;
 
 
     @Override
@@ -67,6 +68,7 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
         super.initData();
         mPresenter = new AbnormalRecordsPresenter(this);
         mAdapter = new AbnormalRecordsViewAdapter(this);
+        orderId = getIntent().getIntExtra("order_id", 0);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
         mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
         mRefreshLayout.endRefreshing();
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AbnormalRecordsContract.Presenter) mPresenter).getAbnormalRecords(mMorePageNumber);
+        ((AbnormalRecordsContract.Presenter) mPresenter).getAbnormalRecords(mMorePageNumber, orderId);
     }
 
     @Override
@@ -100,7 +102,7 @@ public class AbnormalRecordsActivity extends BaseActivity implements AbnormalRec
             return false;
         }
         showLoadingDialog(getString(R.string.dataLoad));
-        ((AbnormalRecordsContract.Presenter) mPresenter).getAbnormalRecords(mMorePageNumber);
+        ((AbnormalRecordsContract.Presenter) mPresenter).getAbnormalRecords(mMorePageNumber, orderId);
         return true;
     }
 

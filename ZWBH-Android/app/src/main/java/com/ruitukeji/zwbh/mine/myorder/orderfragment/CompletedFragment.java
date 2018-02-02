@@ -61,15 +61,16 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+
     /**
-     * init 初始状态（未分发订单前）quote报价中（分发订单后）quoted已报价-未配送（装货中）distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成）pay_failed（支付失败）/pay_success（支付成功）comment（已评论）
+     * 订单状态（all全部状态， 待接订 quote quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 待支付 toPay success 完成
      */
     private String type = "success";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MyOrderActivity) getActivity();
-        return View.inflate(aty, R.layout.fragment_allorder, null);
+        return View.inflate(aty, R.layout.fragment_allorder1, null);
     }
 
     @Override
@@ -143,7 +144,7 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
         mMorePageNumber = orderBean.getResult().getPage();
         totalPageNumber = orderBean.getResult().getPageTotal();
         if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-            errorMsg(getString(R.string.serverReturnsDataNull),0);
+            errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {

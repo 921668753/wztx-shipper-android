@@ -19,8 +19,11 @@ public class AbnormalRecordsPresenter implements AbnormalRecordsContract.Present
     }
 
     @Override
-    public void getAbnormalRecords(int page) {
+    public void getAbnormalRecords(int page, int orderId) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
+        if (orderId != 0) {
+            httpParams.put("order_id", orderId);
+        }
         httpParams.put("page", page);
         httpParams.put("pageSize", 10);
         RequestClient.getAbnormalRecords(httpParams, new ResponseListener<String>() {

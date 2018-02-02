@@ -1,14 +1,10 @@
 package com.ruitukeji.zwbh.main;
 
-import android.app.Activity;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps2d.AMap;
 import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
-import com.ruitukeji.zwbh.common.BaseView;
 
 /**
  * Created by Administrator on 2017/2/20.
@@ -56,7 +52,7 @@ public interface MainContract {
          * 选择物流类型
          * 清除颜色，并添加颜色
          */
-        void chooseLogisticsType(Main3Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
+        void chooseLogisticsType(MainActivity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1);
 
     }
 

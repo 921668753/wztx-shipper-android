@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +17,6 @@ import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.GlideApp;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
@@ -393,22 +391,8 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
             img_headPortrait.setImageResource(R.mipmap.avatar);
             img_headPortrait1.setImageResource(R.mipmap.avatar);
         } else {
-            GlideApp.with(this)
-                    .load(avatar + "?imageView2/1/w/70/h/70")
-                    .placeholder(R.mipmap.avatar)
-                    .error(R.mipmap.avatar)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .transform(new GlideCircleTransform(this))
-                    .dontAnimate()//没有任何淡入淡出效果
-                    .into(img_headPortrait);
-            GlideApp.with(this)
-                    .load(avatar + "?imageView2/1/w/70/h/70")
-                    .placeholder(R.mipmap.avatar)
-                    .error(R.mipmap.avatar)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .transform(new GlideCircleTransform(this))
-                    .dontAnimate()//没有任何淡入淡出效果
-                    .into(img_headPortrait1);
+            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait, 0);
+            GlideImageLoader.glideLoader(this, avatar + "?imageView2/1/w/70/h/70", img_headPortrait1, 0);
         }
         tv_name.setVisibility(View.VISIBLE);
         tv_name1.setVisibility(View.VISIBLE);
@@ -444,7 +428,7 @@ public class PersonalCenterActivity extends BaseActivity implements PersonalCent
 
     @Override
     public void errorMsg(String msg, int flag) {
-   //     PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
+        //     PreferenceHelper.write(this, StringConstants.FILENAME, "isAvatar", false);
         if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
             dismissLoadingDialog();
             mRefreshLayout.setPullDownRefreshEnable(false);

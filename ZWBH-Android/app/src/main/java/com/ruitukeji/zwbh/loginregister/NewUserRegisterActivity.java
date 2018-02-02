@@ -22,7 +22,6 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.umeng.analytics.MobclickAgent;
 
-import static com.ruitukeji.zwbh.main.MainActivity.drawer;
 
 /**
  * 新用户注册
@@ -202,7 +201,6 @@ public class NewUserRegisterActivity extends BaseActivity implements RegisterCon
         } else if (flag == 1) {
             time.cancel();
             time = null;
-            drawer.closeDrawers();
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
             LoginBean bean = (LoginBean) JsonUtil.getInstance().json2Obj(s, LoginBean.class);
             MobclickAgent.onProfileSignIn(et_phone.getText().toString());//账号统计

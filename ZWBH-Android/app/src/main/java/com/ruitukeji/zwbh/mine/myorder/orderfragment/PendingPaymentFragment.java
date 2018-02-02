@@ -61,14 +61,14 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
      */
     private boolean isShowLoadingMore = false;
     /**
-     * 订单状态（quote报价中，quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 photo 拍照完毕（订单已完成））
+     * 订单状态（all全部状态， 待接订 quote quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 待支付 toPay success 完成
      */
-    private String type = "photo";
+    private String type = "toPay";
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
         aty = (MyOrderActivity) getActivity();
-        return View.inflate(aty, R.layout.fragment_allorder, null);
+        return View.inflate(aty, R.layout.fragment_allorder1, null);
     }
 
     @Override

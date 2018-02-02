@@ -14,7 +14,7 @@ public interface AbnormalRecordsContract {
         /**
          * 获取异常记录信息
          */
-        void getAbnormalRecords(int page);
+        void getAbnormalRecords(int page, int orderId);
     }
 
     interface View extends BaseView<Presenter> {

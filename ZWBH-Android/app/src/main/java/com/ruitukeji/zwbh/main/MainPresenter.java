@@ -6,17 +6,11 @@ import android.widget.TextView;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.MyLocationStyle;
-import com.kymjs.common.Log;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.kymjs.rxvolley.client.ProgressListener;
-import com.ruitukeji.zwbh.BuildConfig;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.KJActivityStack;
-import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.entity.NearbySearchBean;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
-import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.MathUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
@@ -79,7 +73,7 @@ public class MainPresenter implements MainContract.Presenter {
      * 清除颜色，并添加颜色
      */
     @Override
-    public void chooseLogisticsType(Main3Activity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
+    public void chooseLogisticsType(MainActivity activity, int chageIcon, TextView tv_cityDistribution, TextView tv_cityDistribution1, TextView tv_longTrunk, TextView tv_longTrunk1) {
         tv_cityDistribution.setTextColor(activity.getResources().getColor(R.color.typecolors));
         tv_cityDistribution1.setBackgroundResource(R.color.mainColor);
         tv_longTrunk.setTextColor(activity.getResources().getColor(R.color.typecolors));
