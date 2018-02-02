@@ -20,6 +20,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_orderNumber"
             style="@style/WrapWrap"
             android:paddingLeft="@dimen/dimen10"
             android:text="201712120231"
@@ -28,6 +29,7 @@
 
 
         <ImageView
+            android:id="@+id/img_label"
             android:layout_width="@dimen/dimen33"
             android:layout_height="@dimen/dimen16"
             android:layout_marginLeft="@dimen/dimen10"
@@ -35,12 +37,14 @@
 
 
         <ImageView
+            android:id="@+id/img_zanwu"
             android:layout_width="@dimen/dimen50"
             android:layout_height="@dimen/dimen16"
             android:layout_marginLeft="@dimen/dimen10"
             android:src="@mipmap/label_zanwu" />
 
         <ImageView
+            android:id="@+id/img_yichang"
             android:layout_width="@dimen/dimen33"
             android:layout_height="@dimen/dimen16"
             android:layout_marginLeft="@dimen/dimen10"
@@ -48,6 +52,7 @@
 
 
         <TextView
+            android:id="@+id/tv_orderStatus"
             style="@style/AutoWrap"
             android:gravity="right"
             android:paddingRight="@dimen/dimen15"
@@ -76,6 +81,7 @@
 
 
         <TextView
+            android:id="@+id/tv_orderTime"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen29"
             android:layout_marginTop="@dimen/dimen13"
@@ -87,6 +93,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_appointmentTime"
         style="@style/MatchWrap"
         android:layout_marginTop="@dimen/dimen12"
         android:orientation="horizontal">
@@ -99,6 +106,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_appointmentTime"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen29"
             android:text="2017-12-12 12:12"
@@ -128,6 +136,7 @@
             android:textSize="@dimen/textsize13" />
 
         <TextView
+            android:id="@+id/tv_systemForecast"
             style="@style/WrapWrap"
             android:text="290.00"
             android:textColor="@color/textColor"
@@ -155,6 +164,7 @@
             android:textSize="@dimen/textsize13" />
 
         <TextView
+            android:id="@+id/tv_userOffer"
             style="@style/WrapWrap"
             android:text="290.00"
             android:textColor="@color/announcementCloseColors"
@@ -175,6 +185,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_place"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen43"
             android:paddingRight="@dimen/dimen15"
@@ -198,6 +209,7 @@
             android:textSize="@dimen/textsize14" />
 
         <TextView
+            android:id="@+id/tv_destination"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen43"
             android:paddingRight="@dimen/dimen15"
@@ -212,27 +224,25 @@
         style="@style/DividerWidth"
         android:layout_marginTop="@dimen/dimen15" />
 
-
     <LinearLayout
+        android:id="@+id/ll_startEnd"
         style="@style/MatchWrap"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen10"
-        android:paddingRight="@dimen/dimen10">
+        android:paddingLeft="@dimen/dimen22"
+        android:paddingRight="@dimen/dimen22">
 
         <ImageView
             android:id="@+id/img_start"
-            android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
-            android:layout_marginTop="@dimen/dimen15"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen60"
+            android:paddingRight="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen20"
             android:src="@mipmap/ic_start_selected" />
 
-
         <ImageView
-            style="@style/WrapWrap"
-            android:layout_width="@dimen/dimen90"
+            style="@style/AutoWrap"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen5"
             android:layout_marginTop="@dimen/dimen10"
             android:paddingBottom="@dimen/dimen5"
             android:scaleType="fitXY"
@@ -240,53 +250,53 @@
 
         <ImageView
             android:id="@+id/img_car"
-            android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
-            android:layout_marginLeft="@dimen/dimen5"
-            android:layout_marginTop="@dimen/dimen15"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen60"
+            android:paddingLeft="@dimen/dimen5"
+            android:paddingRight="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen20"
             android:src="@mipmap/ic_car_selected" />
 
         <ImageView
-            style="@style/WrapWrap"
-            android:layout_width="@dimen/dimen90"
+            style="@style/AutoWrap"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/dimen5"
             android:layout_marginTop="@dimen/dimen10"
             android:paddingBottom="@dimen/dimen5"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_renwu_arrow" />
 
-
         <ImageView
             android:id="@+id/img_end"
-            android:layout_width="@dimen/dimen40"
-            android:layout_height="@dimen/dimen40"
-            android:layout_marginLeft="@dimen/dimen5"
-            android:layout_marginTop="@dimen/dimen15"
+            android:layout_width="@dimen/dimen45"
+            android:layout_height="@dimen/dimen60"
+            android:paddingLeft="@dimen/dimen5"
+            android:paddingTop="@dimen/dimen20"
             android:src="@mipmap/ic_end_selected" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_startEnd1"
         style="@style/MatchWrap"
+        android:layout_marginBottom="@dimen/dimen15"
         android:layout_marginTop="@dimen/dimen7"
         android:orientation="horizontal">
 
         <LinearLayout
             style="@style/AutoWrap"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingRight="@dimen/dimen20">
+            android:orientation="vertical">
 
             <TextView
                 style="@style/WrapWrap"
+                android:paddingLeft="@dimen/dimen13"
                 android:text="@string/onArrival"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textsize14" />
 
             <TextView
                 android:id="@+id/tv_onArrival"
-                style="@style/WrapWrap"
+                style="@style/MatchWrap"
+                android:paddingLeft="@dimen/dimen8"
                 android:text="10-31 11:31"
                 android:textColor="@color/aAAAAAColors"
                 android:textSize="@dimen/textsize11" />
@@ -307,7 +317,8 @@
 
             <TextView
                 android:id="@+id/tv_start"
-                style="@style/WrapWrap"
+                style="@style/MatchWrap"
+                android:gravity="center"
                 android:text="10-31 11:31"
                 android:textColor="@color/aAAAAAColors"
                 android:textSize="@dimen/textsize11" />
@@ -315,29 +326,30 @@
 
         <LinearLayout
             style="@style/AutoMatch"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/dimen30">
+            android:gravity="right"
+            android:orientation="vertical">
 
             <TextView
                 style="@style/WrapWrap"
+                android:paddingRight="@dimen/dimen13"
                 android:text="@string/destination1"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textsize14" />
 
             <TextView
                 android:id="@+id/tv_destination1"
-                style="@style/WrapWrap"
+                style="@style/MatchWrap"
+                android:gravity="right"
+                android:paddingRight="@dimen/dimen8"
                 android:text="10-31 11:31"
                 android:textColor="@color/aAAAAAColors"
                 android:textSize="@dimen/textsize11" />
         </LinearLayout>
     </LinearLayout>
 
-
     <TextView
-        style="@style/DividerWidth"
-        android:layout_marginTop="@dimen/dimen15" />
+        android:id="@+id/tv_divider"
+        style="@style/DividerWidth" />
 
     <include layout="@layout/item_order_bottom" />
 </LinearLayout>

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.OrderViewAdapter;
+import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;

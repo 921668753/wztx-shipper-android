@@ -428,6 +428,7 @@
     <string name="place1">起运地</string>
     <string name="symbol">¥</string>
     <string name="cancelOrder1">取消订单</string>
+    <string name="canceledOrder">已取消</string>
     <string name="viewQuotation">查看报价</string>
     <string name="onArrival">到达起运地</string>
     <string name="start">发车</string>
@@ -436,6 +437,9 @@
     <string name="viewShippingTrack">查看运输轨迹</string>
     <string name="contactDriver">联系司机</string>
     <string name="evaluationDriver">评价司机</string>
+    <string name="confirmPayment">确认支付</string>
+    <string name="seeEvaluation">查看评价</string>
+
 
     <!--订单详情-->
     <string name="orderDetails">订单详情</string>
@@ -482,7 +486,7 @@
     <string name="checkeValuation">查看评价</string>
     <string name="lookMap">查看地图</string>
     <string name="checkVoucher">查看凭证</string>
-    <string name="confirmPayment">确认支付</string>
+
     <string name="paymentVoucherAudit">支付凭证审核中</string>
     <string name="payAgain">重新支付</string>
 
@@ -868,7 +872,7 @@
     <string name="quoteDetails">报价详情</string>
     <string name="toQuoteOrder">待报价</string>
     <string name="quoteOrder">报价中</string>
-    <string name="canceledOrder">已取消</string>
+
     <string name="theBidOrder">报价成功</string>
 
     <!--我的订单  取消订单弹框-->

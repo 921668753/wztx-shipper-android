@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.adapter;
+package com.ruitukeji.zwbh.adapter.mine.myorder;
 
 import android.content.Context;
 import android.view.View;
@@ -64,7 +64,7 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          * 木材/312
          */
-        viewHolderHelper.setText(R.id.tv_goods, listBean.getGoods_name() + "/" + listBean.getWeight() + KJActivityStack.create().topActivity().getString(R.string.tonne));
+       // viewHolderHelper.setText(R.id.tv_goods, listBean.getGoods_name() + "/" + listBean.getWeight() + KJActivityStack.create().topActivity().getString(R.string.tonne));
         /**
          *订单状态
          */

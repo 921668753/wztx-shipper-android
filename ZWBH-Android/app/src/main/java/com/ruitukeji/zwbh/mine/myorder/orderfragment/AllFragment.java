@@ -12,13 +12,14 @@ import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.OrderViewAdapter;
+import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -96,21 +97,9 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "AllOrderFragment");
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        if (mAdapter.getItem(i).getStatus() != null && mAdapter.getItem(i).getStatus().equals("quote")) {
-            intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
-        }
         aty.showActivity(aty, intent);
-    }
-
-    @Override
-    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
-        mRefreshLayout.endRefreshing();
-        showLoadingDialog(getString(R.string.dataLoad));
-        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
     }
 
 
@@ -125,6 +114,14 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
                 mRefreshLayout.beginRefreshing();
                 break;
         }
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+        mRefreshLayout.endRefreshing();
+        showLoadingDialog(getString(R.string.dataLoad));
+        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
     }
 
 
@@ -186,7 +183,7 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
     public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
     }
-    
+
 
     @Override
     public void onDestroy() {
@@ -198,10 +195,37 @@ public class AllFragment extends BaseFragment implements OrderContract.View, Ada
 
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
-        if (view.getId() == R.id.tv_driverQuotation) {
+        if (view.getId() == R.id.tv_checkAbnormal) {
+            Intent intent = new Intent(aty, AbnormalRecordsActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_cancelOrder) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-            intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_viewQuotation) {
+            Intent intent = new Intent(aty, QuotationListActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_viewShippingTrack) {
+            Intent intent = new Intent(aty, QuotationListActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_confirmPayment) {
+            Intent intent = new Intent(aty, QuotationListActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_contactDriver) {
+            Intent intent = new Intent(aty, QuotationListActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_evaluationDriver) {
+            Intent intent = new Intent(aty, QuotationListActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            aty.showActivity(aty, intent);
+        } else if (view.getId() == R.id.tv_seeEvaluation) {
+            Intent intent = new Intent(aty, QuotationListActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
             aty.showActivity(aty, intent);
         }
     }

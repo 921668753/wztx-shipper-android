@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_bottom"
     style="@style/Match50"
     android:background="@color/white"
     android:gravity="center_vertical|right"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:visibility="gone">
 
     <TextView
+        android:id="@+id/tv_checkAbnormal"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen15"
@@ -17,6 +20,7 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_cancelOrder"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen15"
@@ -24,9 +28,11 @@
         android:gravity="center"
         android:text="@string/cancelOrder1"
         android:textColor="@color/titletextcolors"
-        android:textSize="@dimen/textsize13" />
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_viewQuotation"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen15"
@@ -39,6 +45,7 @@
 
 
     <TextView
+        android:id="@+id/tv_viewShippingTrack"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen15"
@@ -51,6 +58,19 @@
 
 
     <TextView
+        android:id="@+id/tv_confirmPayment"
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/confirmPayment"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_contactDriver"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen15"
@@ -59,15 +79,28 @@
         android:text="@string/contactDriver"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize13"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_evaluationDriver"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"
         android:layout_marginRight="@dimen/dimen15"
         android:background="@drawable/shape_login"
         android:gravity="center"
         android:text="@string/evaluationDriver"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_seeEvaluation"
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/seeEvaluation"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize13"
         android:visibility="gone" />

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.adapter.OrderViewAdapter;
+import com.ruitukeji.zwbh.adapter.mine.myorder.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
@@ -97,7 +97,7 @@ public class ToQuoteGoodsFragment extends BaseFragment implements GoodsContract.
         PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "QuoteOrderFragment");
         Intent intent = new Intent(aty, GoodsDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
+       // intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
@@ -219,7 +219,7 @@ public class ToQuoteGoodsFragment extends BaseFragment implements GoodsContract.
         if (view.getId() == R.id.tv_driverQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-            intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
+          //  intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
             aty.showActivity(aty, intent);
         }
     }
