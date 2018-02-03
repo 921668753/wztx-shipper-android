@@ -17,7 +17,7 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.BillBean;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.OrderDetailsActivity;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.BillActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;

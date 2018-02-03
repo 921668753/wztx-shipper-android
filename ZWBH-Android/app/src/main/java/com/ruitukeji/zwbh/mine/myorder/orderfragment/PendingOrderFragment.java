@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
@@ -18,6 +19,7 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
+import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -73,6 +75,7 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
      * 订单状态（all全部状态， 待接订 quote quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 待支付 toPay success 完成
      */
     private String type = "quote";
+    private CancelOrderBouncedDialog cancelOrderBouncedDialog = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -145,7 +148,6 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
-
             isShowLoadingMore = true;
             ll_commonError.setVisibility(View.GONE);
             mRefreshLayout.setVisibility(View.VISIBLE);
@@ -181,9 +183,6 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
             } else {
                 mRefreshLayout.endLoadingMore();
             }
-        } else if (flag == 1) {
-
-
         }
         dismissLoadingDialog();
     }
@@ -193,22 +192,36 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
         mPresenter = presenter;
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (cancelOrderBouncedDialog != null) {
+            cancelOrderBouncedDialog.cancel();
+        }
+        cancelOrderBouncedDialog = null;
         mAdapter.clear();
         mAdapter = null;
     }
 
     @Override
-    public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
+    public void onItemChildClick(ViewGroup viewGroup, View view, int position) {
         if (view.getId() == R.id.tv_cancelOrder) {
-
-
+            if (cancelOrderBouncedDialog != null && !cancelOrderBouncedDialog.isShowing()) {
+                cancelOrderBouncedDialog.show();
+                cancelOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id(), 0);
+                return;
+            }
+            cancelOrderBouncedDialog = new CancelOrderBouncedDialog(aty, mAdapter.getItem(position).getOrder_id(), 0) {
+                @Override
+                public void confirm() {
+                    this.cancel();
+                    mRefreshLayout.beginRefreshing();
+                }
+            };
+            cancelOrderBouncedDialog.show();
         } else if (view.getId() == R.id.tv_viewQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
-            intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
             startActivityForResult(intent, REQUEST_CODE_SELECT);
         }
     }
@@ -219,7 +232,6 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
         if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
             mRefreshLayout.beginRefreshing();
         }
-
     }
 }
 

@@ -53,6 +53,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PERMISSION_CALL;
+
 
 /**
  * 物流定位
@@ -60,8 +62,6 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 public class LogisticsPositioningActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, LocationSource, AMapLocationListener, LogisticsPositioningContract.View, CloudSearch.OnCloudSearchListener, RouteSearch.OnRouteSearchListener {
-
-    private static final int REQUEST_CODE_PERMISSION_CALL = 2;
 
     private MapView mapView;
     private AMap aMap;
@@ -132,7 +132,6 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
         tv_name.setText(real_name + " • " + card_number);
         phone = getIntent().getStringExtra("phone");
         tv_phone.setText(phone);
-
         org_address = getIntent().getStringExtra("org_address");
         org_address_maps = getIntent().getStringExtra("org_address_maps");
         dest_address_maps = getIntent().getStringExtra("dest_address_maps");
@@ -282,7 +281,7 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
             dismissLoadingDialog();
         } else {
             dismissLoadingDialog();
-            ViewInject.toast("周边搜索为空");
+            ViewInject.toast(getString(R.string.surroundingSearchEmpty));
         }
     }
 
@@ -309,7 +308,7 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
 // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
             aMap.setMyLocationEnabled(true);
         } else {
-            EasyPermissions.requestPermissions(this, "定位选择需要以下权限:\n\n1.访问设备上的gps\n\n2.读写权限", NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.locationPermissions), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
         }
     }
 
@@ -320,7 +319,7 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
         if (EasyPermissions.hasPermissions(this, perms)) {
             showDialog(title, phone);
         } else {
-            EasyPermissions.requestPermissions(this, "拨打电话选择需要以下权限:\n\n访问设备上的电话拨打权限", REQUEST_CODE_PERMISSION_CALL, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.phoneCallPermissions), REQUEST_CODE_PERMISSION_CALL, perms);
         }
     }
 
@@ -338,9 +337,9 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (requestCode == REQUEST_CODE_PERMISSION_CALL) {
-            ViewInject.toast("您拒绝了「拨打电话」所需要的相关权限!");
+            ViewInject.toast(getString(R.string.phoneCallPermissions1));
         } else if (requestCode == NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER) {
-            ViewInject.toast("您拒绝了「定位」所需要的相关权限!");
+            ViewInject.toast(getString(R.string.locationPermissions1));
         }
     }
 

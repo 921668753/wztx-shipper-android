@@ -984,7 +984,7 @@ public class RequestClient {
     /**
      * 显示订单详情
      */
-    public static void getOrderInfo(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getOrderDetails(HttpParams httpParams, final ResponseListener<String> listener) {
         Log.d("tag", "getOrderInfo");
         doServer(new TokenCallback() {
             @Override
@@ -996,7 +996,7 @@ public class RequestClient {
                     return;
                 }
                 httpParams.putHeaders("authorization-token", accessToken);
-                HttpRequest.requestGetHttp(URLConstants.SHOWORDERINFO, httpParams, listener);
+                HttpRequest.requestGetHttp(URLConstants.ORDERDETAIL, httpParams, listener);
             }
         }, listener);
     }

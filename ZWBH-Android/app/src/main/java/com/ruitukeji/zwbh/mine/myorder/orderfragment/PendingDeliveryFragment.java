@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
@@ -23,6 +22,7 @@ import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
@@ -210,10 +210,10 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
         if (childView.getId() == R.id.tv_cancelOrder) {
             if (cancelOrderBouncedDialog != null && !cancelOrderBouncedDialog.isShowing()) {
                 cancelOrderBouncedDialog.show();
-                cancelOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id());
+                cancelOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id(), 1);
                 return;
             }
-            cancelOrderBouncedDialog = new CancelOrderBouncedDialog(aty, mAdapter.getItem(position).getOrder_id()) {
+            cancelOrderBouncedDialog = new CancelOrderBouncedDialog(aty, mAdapter.getItem(position).getOrder_id(), 1) {
                 @Override
                 public void confirm() {
                     this.cancel();

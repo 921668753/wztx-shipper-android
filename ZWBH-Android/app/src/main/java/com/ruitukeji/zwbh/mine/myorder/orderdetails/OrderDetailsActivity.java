@@ -21,8 +21,6 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.EvaluationShareActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.LogisticsPositioningActivity;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.OrderDetailsContract;
-import com.ruitukeji.zwbh.mine.myorder.orderfragment.OrderDetailsPresenter;
 import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -33,6 +31,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PERMISSION_CALL;
+
 /**
  * 订单详情
  * Created by Administrator on 2017/2/16.
@@ -40,26 +40,57 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class OrderDetailsActivity extends BaseActivity implements OrderDetailsContract.View, EasyPermissions.PermissionCallbacks {
 
-    private final int REQUEST_CODE_PERMISSION_CALL = 1;
 
     /**
      * 订单状态
      */
     @BindView(id = R.id.tv_orderStatus)
     private TextView tv_orderStatus;
+
+    /**
+     * 订单时间
+     */
+    @BindView(id = R.id.tv_orderTime)
+    private TextView tv_orderTime;
+
+    /**
+     * 订单预约时间
+     */
+    @BindView(id = R.id.ll_appointmentTime)
+    private LinearLayout ll_appointmentTime;
+    @BindView(id = R.id.tv_appointmentTime)
+    private TextView tv_appointmentTime;
+
     /**
      * 订单号
      */
-    @BindView(id = R.id.ll_orderNumber)
-    private LinearLayout ll_orderNumber;
-
     @BindView(id = R.id.tv_orderNumber)
     private TextView tv_orderNumber;
+
+    /**
+     * 预估价格
+     */
+    @BindView(id = R.id.tv_rderForecastPrice)
+    private TextView tv_rderForecastPrice;
+
+    /**
+     * 实际支付价格
+     */
+    @BindView(id = R.id.tv_actualPayment)
+    private TextView tv_actualPayment;
+
+    /**
+     * 公司名称
+     */
+    @BindView(id = R.id.tv_companyName)
+    private TextView tv_companyName;
+
     /**
      * 货物名称
      */
     @BindView(id = R.id.tv_descriptionGoods)
     private TextView tv_descriptionGoods;
+
 
     /**
      * 重量
@@ -68,37 +99,53 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private TextView tv_weight;
 
     /**
-     * 货物回单
+     * 体积
      */
-    @BindView(id = R.id.tv_receiptGoods)
-    private TextView tv_receiptGoods;
+    @BindView(id = R.id.tv_volume)
+    private TextView tv_volume;
 
     /**
-     * 货物在途时效
+     * 货物签收单
      */
-    @BindView(id = R.id.ll_inTransitTime)
-    private LinearLayout ll_inTransitTime;
-    @BindView(id = R.id.tv_inTransitTime)
-    private TextView tv_inTransitTime;
+    @BindView(id = R.id.tv_cargoReceipt)
+    private TextView tv_cargoReceipt;
+
+    /**
+     * 起运地
+     */
+    @BindView(id = R.id.tv_place)
+    private TextView tv_place;
+
+    /**
+     * 联系方式
+     */
+    @BindView(id = R.id.tv_contactInformation)
+    private TextView tv_contactInformation;
+
+    /**
+     * 固定电话
+     */
+    @BindView(id = R.id.ll_eixedTelephone)
+    private LinearLayout ll_eixedTelephone;
+    @BindView(id = R.id.tv_eixedTelephone)
+    private TextView tv_eixedTelephone;
 
 
     /**
-     * 保险单号
+     * 发货客户
      */
-    @BindView(id = R.id.ll_insurancePolicy)
-    private LinearLayout ll_insurancePolicy;
+    @BindView(id = R.id.ll_deliveryCustomer)
+    private LinearLayout ll_deliveryCustomer;
+    @BindView(id = R.id.tv_deliveryCustomer)
+    private TextView tv_deliveryCustomer;
 
-    @BindView(id = R.id.tv_insurancePolicy)
-    private TextView tv_insurancePolicy;
-
-    @BindView(id = R.id.tv_checkDetails, click = true)
-    private TextView tv_checkDetails;
 
     /**
-     * 起始地
+     * 联系人
      */
-    @BindView(id = R.id.tv_origin)
-    private TextView tv_origin;
+    @BindView(id = R.id.tv_contactPerson)
+    private TextView tv_contactPerson;
+
     /**
      * 目的地
      */
@@ -106,112 +153,172 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private TextView tv_destination;
 
     /**
-     * 发货人信息
+     * 联系方式
      */
-    @BindView(id = R.id.ll_shipperInformation)
-    private LinearLayout ll_shipperInformation;
+    @BindView(id = R.id.tv_contactInformation1)
+    private TextView tv_contactInformation1;
 
     /**
-     * 收货人姓名
+     * 固定电话
      */
-    @BindView(id = R.id.tv_consigneeName)
-    private TextView tv_consigneeName;
-    /**
-     * 收货人电话
-     */
-    @BindView(id = R.id.tv_consigneeTelephone, click = true)
-    private TextView tv_consigneeTelephone;
-    /**
-     * 收货人地址
-     */
-    @BindView(id = R.id.tv_consigneeAddress)
-    private TextView tv_consigneeAddress;
-    @BindView(id = R.id.tv_consigneeAddress1)
-    private TextView tv_consigneeAddress1;
-    /**
-     * 寄件人姓名
-     */
-    @BindView(id = R.id.tv_senderName)
-    private TextView tv_senderName;
-    /**
-     * 寄件人电话
-     */
-    @BindView(id = R.id.tv_senderPhone, click = true)
-    private TextView tv_senderPhone;
-    /**
-     * 寄件人地址
-     */
-    @BindView(id = R.id.tv_senderAddress)
-    private TextView tv_senderAddress;
-    @BindView(id = R.id.tv_senderAddress1)
-    private TextView tv_senderAddress1;
+    @BindView(id = R.id.ll_eixedTelephone1)
+    private LinearLayout ll_eixedTelephone1;
+    @BindView(id = R.id.tv_eixedTelephone1)
+    private TextView tv_eixedTelephone1;
 
     /**
-     * 用车时间
+     * 收货客户
      */
+    @BindView(id = R.id.ll_receivingCustomer)
+    private LinearLayout ll_receivingCustomer;
+    @BindView(id = R.id.tv_receivingCustomer)
+    private TextView tv_receivingCustomer;
+
+    /**
+     * 联系人
+     */
+    @BindView(id = R.id.tv_contactPerson1)
+    private TextView tv_contactPerson1;
+
+    /**
+     * 车长
+     */
+    @BindView(id = R.id.tv_conductor)
+    private TextView tv_conductor;
+
+    /**
+     * 车型
+     */
+    @BindView(id = R.id.tv_models)
+    private TextView tv_models;
+
+    /**
+     * 司机装卸货
+     */
+    @BindView(id = R.id.tv_driverCargo)
+    private TextView tv_driverCargo;
+
+    /**
+     * 运输时长
+     */
+    @BindView(id = R.id.ll_transportTime)
+    private LinearLayout ll_transportTime;
+
     @BindView(id = R.id.tv_transportTime)
     private TextView tv_transportTime;
 
     /**
-     * 发货时间
+     * 配送点
      */
-    @BindView(id = R.id.ll_deliveryTime1)
-    private LinearLayout ll_deliveryTime1;
-    @BindView(id = R.id.tv_arrivalTime)
-    private TextView tv_arrivalTime;
+    @BindView(id = R.id.tv_peiSongDian)
+    private TextView tv_peiSongDian;
+
+    /**
+     * 配送点费用
+     */
+    @BindView(id = R.id.tv_costDistribution)
+    private TextView tv_costDistribution;
+
+    /**
+     * 收藏
+     */
+    @BindView(id = R.id.ll_driverInformation)
+    private LinearLayout ll_driverInformation;
+    @BindView(id = R.id.tv_collect, click = true)
+    private TextView tv_collect;
+
+    /**
+     * 投诉
+     */
+    @BindView(id = R.id.tv_complaints, click = true)
+    private TextView tv_complaints;
+
+    /**
+     * 司机姓名
+     */
+    @BindView(id = R.id.ll_userName)
+    private LinearLayout ll_userName;
+    @BindView(id = R.id.tv_userName)
+    private TextView tv_userName;
+
+    /**
+     * 车牌号
+     */
+    @BindView(id = R.id.ll_licensePlateNumber)
+    private LinearLayout ll_licensePlateNumber;
+    @BindView(id = R.id.tv_licensePlateNumber)
+    private TextView tv_licensePlateNumber;
+
+    /**
+     * 车长
+     */
+    @BindView(id = R.id.ll_vehicleInformation)
+    private LinearLayout ll_vehicleInformation;
+    @BindView(id = R.id.tv_conductor1)
+    private TextView tv_conductor1;
+
+    /**
+     * 车型
+     */
+    @BindView(id = R.id.tv_models1)
+    private TextView tv_models1;
 
 
     /**
-     * 到达时间
+     * 底部按钮
      */
-    @BindView(id = R.id.ll_arrivalTime)
-    private LinearLayout ll_arrivalTime;
-    @BindView(id = R.id.tv_deliveryTime1)
-    private TextView tv_deliveryTime1;
-
-    /**
-     * 车主姓名
-     */
-    @BindView(id = R.id.ll_ownerName)
-    private LinearLayout ll_ownerName;
-    @BindView(id = R.id.tv_ownerName)
-    private TextView tv_ownerName;
-
-    /**
-     * 联系电话
-     */
-    @BindView(id = R.id.ll_contactPhoneNumber)
-    private LinearLayout ll_contactPhoneNumber;
-    @BindView(id = R.id.tv_contactPhoneNumber, click = true)
-    private TextView tv_contactPhoneNumber;
-
-    /**
-     * 总运费
-     */
-    @BindView(id = R.id.ll_totalFreight)
-    private LinearLayout ll_totalFreight;
-    @BindView(id = R.id.tv_totalFreight)
-    private TextView tv_totalFreight;
+    @BindView(id = R.id.ll_bottom)
+    private LinearLayout ll_bottom;
 
 
     /**
-     * 备注
+     * 查看异常
      */
-    @BindView(id = R.id.tv_remark)
-    private TextView tv_remark;
+    @BindView(id = R.id.tv_checkAbnormal, click = true)
+    private TextView tv_checkAbnormal;
 
     /**
-     * 查看凭证
+     * 取消订单
      */
-    @BindView(id = R.id.ll_commonBottombar)
-    private LinearLayout ll_commonBottombar;
-
+    @BindView(id = R.id.tv_cancelOrder, click = true)
+    private TextView tv_cancelOrder;
 
     /**
      * 查看报价
      */
-    @BindView(id = R.id.tv_bottombar, click = true)
-    private TextView tv_bottombar;
+    @BindView(id = R.id.tv_viewQuotation, click = true)
+    private TextView tv_viewQuotation;
+
+    /**
+     * 查看运输轨迹
+     */
+    @BindView(id = R.id.tv_viewShippingTrack, click = true)
+    private TextView tv_viewShippingTrack;
+
+    /**
+     * 确认支付
+     */
+    @BindView(id = R.id.tv_confirmPayment, click = true)
+    private TextView tv_confirmPayment;
+
+
+    /**
+     * 联系司机
+     */
+    @BindView(id = R.id.tv_contactDriver, click = true)
+    private TextView tv_contactDriver;
+
+    /**
+     * 评价司机
+     */
+    @BindView(id = R.id.tv_evaluationDriver, click = true)
+    private TextView tv_evaluationDriver;
+
+    /**
+     * 查看评价
+     */
+    @BindView(id = R.id.tv_seeEvaluation, click = true)
+    private TextView tv_seeEvaluation;
 
     /**
      * 订单状态
@@ -219,16 +326,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private String status = "";
 
     private OrderDetailsContract.Presenter mPresenter;
-    private int orderId;
-    private String avatar;
-    private String card_number;
-    private String total_amount = "";
-    private String dest_address_maps;
-    private String org_address_maps;
-    private String map_code;
-    private SweetAlertDialog sweetAlertDialog = null;
-    private int goods_id;
-    private String per_status;
+
+    private int orderId = 0;
+    private int is_collect = 0;
 
     @Override
     public void setRootView() {
@@ -239,242 +339,71 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     public void initData() {
         super.initData();
         mPresenter = new OrderDetailsPresenter(this);
+        orderId = getIntent().getIntExtra("order_id", 0);
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        //  mPresenter.getOrderDetails();
-//    }
 
     @Override
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.orderDetails), true, R.id.titlebar);
-        orderId = getIntent().getIntExtra("order_id", 0);
-        goods_id = getIntent().getIntExtra("goods_id", 0);
+        showLoadingDialog(getString(R.string.dataLoad));
         ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
     }
 
-    @Override
-    public void getSuccess(String s) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrderDetailsActivity", false);
-        OrderDetailsBean orderDetailsBean = (OrderDetailsBean) JsonUtil.getInstance().json2Obj(s, OrderDetailsBean.class);
-        OrderDetailsBean.ResultBean result = orderDetailsBean.getResult();
-        status = result.getStatus();
-        getOrderStatus(status);
-        tv_orderNumber.setText(result.getOrder_code());
-        tv_descriptionGoods.setText(result.getGoods_name());
-        tv_weight.setText(result.getWeight() + "吨");
-        avatar = result.getAvatar();
-        card_number = result.getCard_number();
-        if (result.getIs_receipt() == 1) {
-            tv_receiptGoods.setText(getString(R.string.is));
-        } else {
-            tv_receiptGoods.setText(getString(R.string.no));
-        }
-        if (StringUtils.isEmpty(result.getPolicy_code())) {
-            ll_insurancePolicy.setVisibility(View.GONE);
-        } else {
-            ll_insurancePolicy.setVisibility(View.VISIBLE);
-            tv_insurancePolicy.setText(result.getPolicy_code());
-        }
-        if (result.getEffective_time() == 0) {
-            ll_inTransitTime.setVisibility(View.GONE);
-        } else {
-            ll_inTransitTime.setVisibility(View.VISIBLE);
-            int hour = result.getEffective_time() / 60;
-            int minute = result.getEffective_time() % 60;
-            if (hour > 0) {
-                tv_inTransitTime.setText(hour + getString(R.string.hour) + minute + getString(R.string.minute));
-            } else {
-                tv_inTransitTime.setText(minute + getString(R.string.minute));
-            }
-        }
-        dest_address_maps = result.getDest_address_maps();
-        org_address_maps = result.getOrg_address_maps();
-        map_code = result.getMap_code();
-        tv_origin.setText(result.getOrg_city());
-        tv_destination.setText(result.getDest_city());
-        tv_consigneeName.setText(result.getDest_receive_name());
-        if (StringUtils.isEmpty(result.getDest_telphone())) {
-            tv_consigneeTelephone.setText(result.getDest_phone());
-        } else {
-            tv_consigneeTelephone.setText(result.getDest_phone() + "(" + result.getDest_telphone() + ")");
-        }
-        per_status = result.getPer_status();
-        if (StringUtils.isEmpty(result.getDest_address_detail())) {
-            tv_consigneeAddress.setText(result.getDest_city());
-            tv_consigneeAddress1.setText(result.getDest_address_name().substring(result.getDest_city().length()));
-        } else {
-            tv_consigneeAddress.setText(result.getDest_address_name());
-            tv_consigneeAddress1.setText(result.getDest_address_detail());
-        }
-        tv_senderName.setText(result.getOrg_send_name());
-        if (StringUtils.isEmpty(result.getOrg_telphone())) {
-            tv_senderPhone.setText(result.getOrg_phone());
-        } else {
-            tv_senderPhone.setText(result.getOrg_phone() + "(" + result.getOrg_telphone() + ")");
-        }
-        if (StringUtils.isEmpty(result.getOrg_address_detail())) {
-            tv_senderAddress.setText(result.getOrg_city());
-            tv_senderAddress1.setText(result.getOrg_address_name().substring(result.getOrg_city().length()));
-        } else {
-            tv_senderAddress.setText(result.getOrg_address_name());
-            tv_senderAddress1.setText(result.getOrg_address_detail());
-        }
-        if (StringUtils.isEmpty(result.getUsecar_time()) || result.getUsecar_time().equals("0")) {
-            tv_transportTime.setText("");
-        } else {
-            tv_transportTime.setText(result.getUsecar_time().substring(0, 16));
-        }
-
-        if (StringUtils.isEmpty(result.getSend_time()) || result.getSend_time().equals("0")) {
-            tv_deliveryTime1.setText("");
-        } else {
-            tv_deliveryTime1.setText(result.getSend_time().substring(0, 16));
-        }
-        if (StringUtils.isEmpty(result.getArr_time()) || result.getArr_time().equals("0")) {
-            tv_arrivalTime.setText("");
-        } else {
-            tv_arrivalTime.setText(result.getArr_time().substring(0, 16));
-        }
-        if (StringUtils.isEmpty(result.getRemark())) {
-            tv_remark.setVisibility(View.GONE);
-        } else {
-            tv_remark.setVisibility(View.VISIBLE);
-            tv_remark.setText(getString(R.string.note1) + result.getRemark());
-        }
-        tv_ownerName.setText(result.getReal_name());
-        tv_contactPhoneNumber.setText(result.getPhone());
-        total_amount = result.getFinal_price();
-        tv_totalFreight.setText(result.getFinal_price() + "元");
-        dismissLoadingDialog();
-    }
-
-    @Override
-    public void error(String msg) {
-        if (msg != null && msg.equals("" + NumericConstants.TOLINGIN)) {
-            dismissLoadingDialog();
-            skipActivity(aty, LoginActivity.class);
-            return;
-        }
-        dismissLoadingDialog();
-        ViewInject.toast(msg);
-    }
-
-    /**
-     * 根据当前状态更改订单详情布局
-     * 1.报价中  2.待发货 3.发货中 4.已完成  5.评价 6.分享
-     *
-     * @param status
-     */
-    public void getOrderStatus(String status) {
-        if (status.equals("quote")) {
-            tv_orderStatus.setText(getString(R.string.quoteOrder));
-            ll_orderNumber.setVisibility(View.GONE);
-//            ll_shipperInformation.setVisibility(View.GONE);
-            ll_ownerName.setVisibility(View.GONE);
-            ll_contactPhoneNumber.setVisibility(View.GONE);
-            ll_totalFreight.setVisibility(View.GONE);
-            ll_deliveryTime1.setVisibility(View.GONE);
-            ll_arrivalTime.setVisibility(View.GONE);
-            ll_commonBottombar.setVisibility(View.VISIBLE);
-            tv_bottombar.setText(R.string.viewQuotation);
-        } else if (status.equals("quoted")) {
-            tv_orderStatus.setText(getString(R.string.toSendGoods));
-            ll_orderNumber.setVisibility(View.VISIBLE);
-            ll_deliveryTime1.setVisibility(View.GONE);
-            ll_arrivalTime.setVisibility(View.GONE);
-            ll_commonBottombar.setVisibility(View.GONE);
-        } else if (status.equals("distribute")) {
-            tv_orderStatus.setText(getString(R.string.delivery));
-            ll_arrivalTime.setVisibility(View.GONE);
-            ll_commonBottombar.setVisibility(View.VISIBLE);
-            tv_bottombar.setText(R.string.lookMap);
-        } else if (status.equals("photo")) {
-            tv_orderStatus.setText(getString(R.string.completed));
-            ll_commonBottombar.setVisibility(View.VISIBLE);
-//            ll_ownerName.setVisibility(View.VISIBLE);
-//            ll_contactPhoneNumber.setVisibility(View.GONE);
-//            ll_totalFreight.setVisibility(View.GONE);
-//            tv_check.setVisibility(View.GONE);
-            tv_bottombar.setText(R.string.checkVoucher);
-        } else if (status.equals("pay_success")) {
-            tv_orderStatus.setText(getString(R.string.noEvaluation));
-            ll_commonBottombar.setVisibility(View.VISIBLE);
-            tv_bottombar.setText(R.string.evaluation);
-        } else if (status.equals("comment")) {
-            tv_orderStatus.setText(getString(R.string.haveEvaluation));
-            ll_commonBottombar.setVisibility(View.VISIBLE);
-            tv_bottombar.setText(R.string.checkeValuation);
-        }else if (status.equals("hang")) {
-            tv_orderStatus.setText(getString(R.string.hang));
-            ll_deliveryTime1.setVisibility(View.GONE);
-            ll_arrivalTime.setVisibility(View.GONE);
-            ll_commonBottombar.setVisibility(View.GONE);
-        }
-    }
 
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.tv_bottombar:
-                if (status.equals("quote")) {
-                    Intent intent = new Intent(aty, QuotationListActivity.class);
-                    intent.putExtra("order_id", orderId);
-                    intent.putExtra("goods_id", goods_id);
-                    showActivity(aty, intent);
-                } else if (status.equals("quoted")) {
-                    //  showActivity(aty, CheckVoucherActivity.class);
-                } else if (status.equals("distribute")) {
-                    Intent intent = new Intent(aty, LogisticsPositioningActivity.class);
-                    intent.putExtra("order_id", orderId);
-                    intent.putExtra("real_name", tv_ownerName.getText().toString());
-                    intent.putExtra("phone", tv_contactPhoneNumber.getText().toString());
-                    intent.putExtra("card_number", card_number);
-                    intent.putExtra("avatar", avatar);
-                    intent.putExtra("org_address", tv_origin.getText().toString());
-                    intent.putExtra("org_address_maps", org_address_maps);
-                    intent.putExtra("dest_address_maps", dest_address_maps);
-                    intent.putExtra("dest_address", tv_destination.getText().toString());
-                    intent.putExtra("map_code", map_code);
-                    showActivity(aty, intent);
-                } else if (status.equals("photo") || status.equals("pay_failed")) {
-                    Intent intent = new Intent(aty, CheckVoucherActivity.class);
-                    intent.putExtra("order_id", orderId);
-                    intent.putExtra("total_amount", total_amount);
-                    intent.putExtra("per_status", per_status);
-                    showActivity(aty, intent);
-                } else if (status.equals("pay_success")) {
-                    Intent intent = new Intent(aty, EvaluationShareActivity.class);
-                    intent.putExtra("order_id", orderId);
-                    intent.putExtra("status", "pay_success");
-                    showActivity(aty, intent);
-                } else if (status.equals("comment")) {
-                    Intent intent = new Intent(aty, EvaluationShareActivity.class);
-                    intent.putExtra("order_id", orderId);
-                    intent.putExtra("status", "comment");
-                    showActivity(aty, intent);
-                }
+            case R.id.tv_contactInformation:
+                choiceCallWrapper("", tv_contactInformation.getText().toString());
                 break;
-            case R.id.tv_checkDetails:
+            case R.id.tv_eixedTelephone:
+                choiceCallWrapper("", tv_eixedTelephone.getText().toString());
+                break;
+            case R.id.tv_contactInformation1:
+                choiceCallWrapper("", tv_contactInformation1.getText().toString());
+                break;
+            case R.id.tv_eixedTelephone1:
+                choiceCallWrapper("", tv_eixedTelephone1.getText().toString());
+                break;
+            case R.id.tv_collect:
+                if (is_collect == 1) {
+
+                    return;
+                }
+
+
+                break;
+            case R.id.tv_complaints:
+
+
+                break;
+            case R.id.tv_checkAbnormal:
+
+                break;
+            case R.id.tv_cancelOrder:
                 //保单详情
 
                 break;
-            case R.id.tv_senderPhone:
-                choiceCallWrapper(getString(R.string.contactPhoneNumber), tv_senderPhone.getText().toString());
-                break;
+            case R.id.tv_viewQuotation:
 
-            case R.id.tv_consigneeTelephone:
-                choiceCallWrapper(getString(R.string.contactPhoneNumber), tv_consigneeTelephone.getText().toString());
                 break;
+            case R.id.tv_viewShippingTrack:
 
-            case R.id.tv_contactPhoneNumber:
-                choiceCallWrapper(getString(R.string.contactPhoneNumber), tv_contactPhoneNumber.getText().toString());
                 break;
+            case R.id.tv_confirmPayment:
 
+                break;
+            case R.id.tv_contactDriver:
+
+                break;
+            case R.id.tv_evaluationDriver:
+
+                break;
+            case R.id.tv_seeEvaluation:
+
+                break;
         }
     }
 
@@ -484,31 +413,200 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        boolean isRefreshOrderDetailsActivity = PreferenceHelper.readBoolean(aty, StringConstants.FILENAME, "isRefreshOrderDetailsActivity", false);
-        if (isRefreshOrderDetailsActivity) {
-            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+    public void getSuccess(String success, int flag) {
+        OrderDetailsBean orderDetailsBean = (OrderDetailsBean) JsonUtil.getInstance().json2Obj(success, OrderDetailsBean.class);
+        OrderDetailsBean.ResultBean result = orderDetailsBean.getResult();
+        status = result.getStatus();
+        getOrderStatus(status);
+        tv_orderTime.setText(result.getCreate_at());
+        if (!StringUtils.isEmpty(result.getType()) && result.getType().equals("appoint")) {
+            ll_appointmentTime.setVisibility(View.VISIBLE);
+            tv_appointmentTime.setText(result.getAppoint_at());
+        } else {
+            ll_appointmentTime.setVisibility(View.GONE);
         }
+        tv_orderNumber.setText(result.getOrder_code());
+        tv_rderForecastPrice.setText(result.getSystem_price());
+        tv_actualPayment.setText(result.getFinal_price());
+        tv_descriptionGoods.setText(result.getGoods_name());
+        tv_weight.setText(result.getWeight());
+        tv_volume.setText(result.getVolume());
+        if (result.getIs_cargo_receipt() == 1) {
+            tv_cargoReceipt.setText(getString(R.string.require));
+        } else {
+            tv_cargoReceipt.setText(getString(R.string.noRequire));
+        }
+        tv_place.setText(result.getOrg_address_name() + result.getOrg_address_detail());
+        tv_contactInformation.setText(result.getOrg_phone());
+        if (StringUtils.isEmpty(result.getOrg_telphone())) {
+            ll_eixedTelephone.setVisibility(View.GONE);
+        } else {
+            ll_eixedTelephone.setVisibility(View.VISIBLE);
+            tv_eixedTelephone.setText(result.getOrg_telphone());
+        }
+        if (StringUtils.isEmpty(result.getOrg_send_client())) {
+            ll_deliveryCustomer.setVisibility(View.GONE);
+        } else {
+            ll_deliveryCustomer.setVisibility(View.VISIBLE);
+            tv_deliveryCustomer.setText(result.getOrg_send_client());
+        }
+        tv_contactPerson.setText(result.getOrg_send_name());
+        tv_destination.setText(result.getDest_address_name() + result.getOrg_address_detail());
+        tv_contactInformation1.setText(result.getDest_phone());
+
+        if (StringUtils.isEmpty(result.getDest_telphone())) {
+            ll_eixedTelephone1.setVisibility(View.GONE);
+        } else {
+            ll_eixedTelephone1.setVisibility(View.VISIBLE);
+            tv_eixedTelephone1.setText(result.getDest_telphone());
+        }
+        if (StringUtils.isEmpty(result.getDest_receive_client())) {
+            ll_receivingCustomer.setVisibility(View.GONE);
+        } else {
+            ll_receivingCustomer.setVisibility(View.VISIBLE);
+            tv_receivingCustomer.setText(result.getDest_receive_client());
+        }
+        tv_contactPerson1.setText(result.getDest_receive_name());
+        tv_conductor.setText(result.getCar_style_length());
+        tv_models.setText(result.getCar_style_type());
+        if (result.getIs_driver_dock() == 1) {
+            tv_driverCargo.setText(getString(R.string.require));
+        } else {
+            tv_driverCargo.setText(getString(R.string.noRequire));
+        }
+        if (StringUtils.isEmpty(result.getUsecar_time()) || result.getUsecar_time().equals("0")) {
+            ll_transportTime.setVisibility(View.GONE);
+        } else {
+            ll_transportTime.setVisibility(View.VISIBLE);
+            tv_transportTime.setText(result.getUsecar_time());
+        }
+        tv_peiSongDian.setText(result.getSpot());
+        tv_costDistribution.setText(result.getSpot_cost());
+
+        is_collect = result.getIs_collect();
+        if (is_collect == 1) {
+            tv_collect.setText(getString(R.string.cancelCollection));
+        } else {
+            tv_collect.setText(getString(R.string.collect));
+        }
+        tv_userName.setText(result.getDr_name());
+        tv_licensePlateNumber.setText(result.getCard_number());
+        tv_conductor1.setText(result.getCar_length_info());
+        tv_models1.setText(result.getCar_style_info());
+        if (result.getIs_quote() == 1) {
+            tv_viewQuotation.setVisibility(View.VISIBLE);
+        } else {
+            tv_viewQuotation.setVisibility(View.GONE);
+        }
+        dismissLoadingDialog();
     }
 
+    @Override
+    public void errorMsg(String msg, int flag) {
+        toLigon1(msg);
+        dismissLoadingDialog();
+    }
 
     /**
-     * 弹框设置
+     * 根据当前状态更改订单详情布局
+     * 1.报价中  2.待发货 3.发货中 4.已完成  5.评价 6.分享
+     *
+     * @param status
      */
-
-    private void initDialog() {
-        sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-        sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.setCancelText(getString(R.string.cancel1))
-                .setConfirmText(getString(R.string.confirm))
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismiss();
-                    }
-                });
+    public void getOrderStatus(String status) {
+        if (!StringUtils.isEmpty(status) && status.equals("hang")) {
+            tv_orderStatus.setText(getString(R.string.hang));
+            ll_bottom.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.GONE);
+            ll_licensePlateNumber.setVisibility(View.GONE);
+            ll_vehicleInformation.setVisibility(View.GONE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("quote")) {
+            tv_orderStatus.setText(getString(R.string.pendingOrder));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_checkAbnormal.setVisibility(View.GONE);
+            tv_cancelOrder.setVisibility(View.VISIBLE);
+            tv_viewShippingTrack.setVisibility(View.GONE);
+            tv_confirmPayment.setVisibility(View.GONE);
+            tv_contactDriver.setVisibility(View.GONE);
+            tv_evaluationDriver.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.GONE);
+            ll_driverInformation.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.GONE);
+            ll_licensePlateNumber.setVisibility(View.GONE);
+            ll_vehicleInformation.setVisibility(View.GONE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("quoted")) {
+            tv_orderStatus.setText(getString(R.string.pendingDelivery));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_checkAbnormal.setVisibility(View.GONE);
+            tv_cancelOrder.setVisibility(View.VISIBLE);
+            tv_viewQuotation.setVisibility(View.GONE);
+            tv_viewShippingTrack.setVisibility(View.GONE);
+            tv_confirmPayment.setVisibility(View.GONE);
+            tv_contactDriver.setVisibility(View.VISIBLE);
+            tv_evaluationDriver.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.VISIBLE);
+            ll_licensePlateNumber.setVisibility(View.VISIBLE);
+            ll_vehicleInformation.setVisibility(View.VISIBLE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("distribute") || !StringUtils.isEmpty(status) && status.equals("arrive")) {
+            tv_orderStatus.setText(getString(R.string.transportation));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_cancelOrder.setVisibility(View.GONE);
+            tv_viewQuotation.setVisibility(View.GONE);
+            tv_viewShippingTrack.setVisibility(View.VISIBLE);
+            tv_contactDriver.setVisibility(View.VISIBLE);
+            tv_confirmPayment.setVisibility(View.GONE);
+            tv_evaluationDriver.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.VISIBLE);
+            ll_licensePlateNumber.setVisibility(View.VISIBLE);
+            ll_vehicleInformation.setVisibility(View.VISIBLE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("photo") || !StringUtils.isEmpty(status) && status.equals("pay_failed")) {
+            tv_orderStatus.setText(getString(R.string.pendingPayment));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_cancelOrder.setVisibility(View.GONE);
+            tv_viewQuotation.setVisibility(View.GONE);
+            tv_viewShippingTrack.setVisibility(View.GONE);
+            tv_contactDriver.setVisibility(View.GONE);
+            tv_confirmPayment.setVisibility(View.VISIBLE);
+            tv_evaluationDriver.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.VISIBLE);
+            ll_licensePlateNumber.setVisibility(View.VISIBLE);
+            ll_vehicleInformation.setVisibility(View.VISIBLE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("pay_success")) {
+            tv_orderStatus.setText(getString(R.string.pendingPayment));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_cancelOrder.setVisibility(View.GONE);
+            tv_viewQuotation.setVisibility(View.GONE);
+            tv_viewShippingTrack.setVisibility(View.VISIBLE);
+            tv_contactDriver.setVisibility(View.GONE);
+            tv_confirmPayment.setVisibility(View.GONE);
+            tv_evaluationDriver.setVisibility(View.VISIBLE);
+            tv_seeEvaluation.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.VISIBLE);
+            ll_licensePlateNumber.setVisibility(View.VISIBLE);
+            ll_vehicleInformation.setVisibility(View.VISIBLE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("comment")) {
+            tv_orderStatus.setText(getString(R.string.pendingPayment));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_cancelOrder.setVisibility(View.GONE);
+            tv_viewQuotation.setVisibility(View.GONE);
+            tv_viewShippingTrack.setVisibility(View.VISIBLE);
+            tv_contactDriver.setVisibility(View.GONE);
+            tv_confirmPayment.setVisibility(View.GONE);
+            tv_evaluationDriver.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.VISIBLE);
+            ll_userName.setVisibility(View.VISIBLE);
+            ll_licensePlateNumber.setVisibility(View.VISIBLE);
+            ll_vehicleInformation.setVisibility(View.VISIBLE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("cancel")) {
+            tv_orderStatus.setText(getString(R.string.canceledOrder));
+            ll_bottom.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.GONE);
+            ll_licensePlateNumber.setVisibility(View.GONE);
+            ll_vehicleInformation.setVisibility(View.GONE);
+        }
     }
 
 
@@ -516,9 +614,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private void choiceCallWrapper(String title, String phone) {
         String[] perms = {Manifest.permission.CALL_PHONE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            showDialog(title, phone);
+
+
         } else {
-            EasyPermissions.requestPermissions(this, "拨打电话选择需要以下权限:\n\n访问设备上的电话拨打权限", REQUEST_CODE_PERMISSION_CALL, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.phoneCallPermissions), REQUEST_CODE_PERMISSION_CALL, perms);
         }
     }
 
@@ -536,33 +635,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if (requestCode == REQUEST_CODE_PERMISSION_CALL) {
-            ViewInject.toast("您拒绝了「拨打电话」所需要的相关权限!");
+            ViewInject.toast(getString(R.string.phoneCallPermissions1));
         }
-    }
-
-
-    public void showDialog(String title, String phone) {
-        if (sweetAlertDialog == null) {
-            initDialog();
-        }
-        sweetAlertDialog.setTitleText(title)
-                .setContentText(phone)
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.dismiss();
-                        sDialog = null;
-                        Uri uri = Uri.parse("tel:" + phone);
-                        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
-                        //     系统打电话界面：
-                        startActivity(intent);
-                    }
-                }).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sweetAlertDialog = null;
+
+
     }
 }

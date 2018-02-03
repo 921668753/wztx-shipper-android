@@ -24,10 +24,11 @@ public class CancelOrderBouncedPresenter implements CancelOrderBouncedContract.P
     }
 
     @Override
-    public void postCancelOrder(int orderId) {
+    public void postCancelOrder(int orderId, int type) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("goods_id", orderId);
+        map.put("type", type);
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postCancelOrder(httpParams, new ResponseListener<String>() {
             @Override

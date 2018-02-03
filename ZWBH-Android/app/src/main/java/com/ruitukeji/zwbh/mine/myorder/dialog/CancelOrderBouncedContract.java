@@ -15,7 +15,7 @@ public interface CancelOrderBouncedContract {
         /**
          * 获取取消订单弹框
          */
-        void postCancelOrder(int orderId);
+        void postCancelOrder(int orderId, int type);
     }
 
     interface View extends BaseNewView<Presenter, String> {

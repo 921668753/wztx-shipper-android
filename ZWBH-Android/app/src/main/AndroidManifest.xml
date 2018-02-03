@@ -188,10 +188,10 @@
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 订单详情-->
-        <activity
-            android:name=".mine.myorder.orderfragment.OrderDetailsActivity"
-            android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mine.myorder.orderdetails.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 物流定位-->
         <activity
@@ -417,16 +417,6 @@
             android:name=".mine.mywallet.BillActivity"
             android:screenOrientation="portrait" />
 
-
-        <!--我发布的订单-->
-        <activity
-            android:name=".mine.mypublishedorder.MyPublishedGoodsActivity"
-            android:screenOrientation="portrait" />
-
-        <!--我发布的订单详情-->
-        <activity
-            android:name=".mine.mypublishedorder.publishedorderfragment.GoodsDetailsActivity"
-            android:screenOrientation="portrait" />
 
         <!--司机报价列表-->
         <activity

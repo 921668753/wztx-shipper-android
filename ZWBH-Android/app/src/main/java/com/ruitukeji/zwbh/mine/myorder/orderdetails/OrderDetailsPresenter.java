@@ -1,8 +1,9 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.orderdetails;
 
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsContract;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
 import com.ruitukeji.zwbh.utils.httputil.ResponseListener;
@@ -25,15 +26,15 @@ public class OrderDetailsPresenter implements OrderDetailsContract.Presenter {
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("order_id", order_id);
-        RequestClient.getOrderInfo(httpParams, new ResponseListener<String>() {
+        RequestClient.getOrderDetails(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response);
+                mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg);
+                mView.errorMsg(msg, 0);
             }
         });
     }

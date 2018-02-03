@@ -21,15 +21,17 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 
 public abstract class CancelOrderBouncedDialog extends BaseDialog implements View.OnClickListener, CancelOrderBouncedContract.View {
 
+    private int type = 0;
     private int orderId = 0;
     private Context context;
 
     private CancelOrderBouncedContract.Presenter mPresenter;
 
-    public CancelOrderBouncedDialog(Context context, int orderId) {
+    public CancelOrderBouncedDialog(Context context, int orderId, int type) {
         super(context, R.style.dialog);
         this.context = context;
         this.orderId = orderId;
+        this.type = type;
     }
 
     @Override
@@ -49,7 +51,11 @@ public abstract class CancelOrderBouncedDialog extends BaseDialog implements Vie
         TextView tv_determine = (TextView) findViewById(R.id.tv_determine);
         tv_determine.setOnClickListener(this);
         TextView tv_content = (TextView) findViewById(R.id.tv_content);
-        tv_content.setText(context.getString(R.string.cancelOrder));
+        if (type == 0) {
+            tv_content.setText(context.getString(R.string.cancelOrder3));
+        } else {
+            tv_content.setText(context.getString(R.string.cancelOrder));
+        }
         TextView tv_cancel = (TextView) findViewById(R.id.tv_cancel);
         tv_cancel.setOnClickListener(this);
     }
@@ -62,7 +68,7 @@ public abstract class CancelOrderBouncedDialog extends BaseDialog implements Vie
                 break;
             case R.id.tv_determine:
                 showLoadingDialog(context.getString(R.string.submissionLoad));
-                mPresenter.postCancelOrder(orderId);
+                mPresenter.postCancelOrder(orderId, type);
                 break;
         }
     }
@@ -90,8 +96,15 @@ public abstract class CancelOrderBouncedDialog extends BaseDialog implements Vie
         ViewInject.toast(msg);
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(int orderId, int type) {
         this.orderId = orderId;
+        this.type = type;
+        TextView tv_content = (TextView) findViewById(R.id.tv_content);
+        if (type == 0) {
+            tv_content.setText(context.getString(R.string.cancelOrder3));
+        } else {
+            tv_content.setText(context.getString(R.string.cancelOrder));
+        }
     }
 
     public abstract void confirm();

@@ -328,7 +328,7 @@ public class URLConstants {
     /**
      * 显示订单详情
      */
-    public static String SHOWORDERINFO = APIURL + "order/showOrderInfo";
+    public static String ORDERDETAIL = APIURL + "goods/orderDetail";
 
     /**
      * 查看凭证

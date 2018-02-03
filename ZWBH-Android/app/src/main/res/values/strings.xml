@@ -199,6 +199,7 @@
     <string name="urgent">加急</string>
     <string name="makeAppointment">预约</string>
     <string name="appointmentTime1">预约时间</string>
+    <string name="appointmentTime3">预约时间：</string>
     <string name="enterAddressSameCity1">您选择的是同城专线，请输入同城地址</string>
     <string name="appointmentTime2">请选择预约时间</string>
     <string name="pleaseEnterDeparturePoint">请输入出发地</string>
@@ -457,7 +458,7 @@
     <string name="actualPayment1">实际支付费用：</string>
     <string name="parametersGoods">货物参数</string>
     <string name="volume">体积</string>
-    <string name="cubic">立方</string>
+    <string name="cubic">立方米</string>
     <string name="require">需要</string>
     <string name="noRequire">不需要</string>
     <string name="deliveryInformation1">寄货人信息</string>
@@ -468,6 +469,7 @@
     <string name="minutes">分钟</string>
     <string name="driverInformation">司机信息</string>
     <string name="collect">收藏</string>
+    <string name="cancelCollection">取消收藏</string>
     <string name="complaints">投诉</string>
     <string name="complaintsAboutDriver">投诉司机</string>
     <string name="describeSpecificReasons">请描述具体原因</string>
@@ -859,6 +861,8 @@
     <string name="checkPositioning">查看定位</string>
     <string name="phoneCall">拨打电话</string>
     <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="surroundingSearchEmpty">周边搜索为空</string>
+
 
     <!--报价列表-->
     <string name="quotationList">报价列表</string>
@@ -889,6 +893,7 @@
 
     <!--我的订单  取消订单弹框-->
     <string name="cancelOrder">该订单需要经司机同意后才能取消，确定取消订单吗？</string>
+    <string name="cancelOrder3">确定取消订单吗？</string>
     <string name="cancelOrder2">您有一个被取消的订单</string>
     <string name="checkDetails">查看详情</string>
 

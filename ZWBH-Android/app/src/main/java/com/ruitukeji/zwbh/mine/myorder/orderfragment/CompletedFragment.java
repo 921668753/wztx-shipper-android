@@ -20,6 +20,7 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
