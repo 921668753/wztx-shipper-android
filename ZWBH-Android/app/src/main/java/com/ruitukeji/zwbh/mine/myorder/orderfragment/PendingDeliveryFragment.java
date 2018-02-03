@@ -1,7 +1,9 @@
 package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +21,29 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
+import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
+import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
+import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
+import java.util.List;
+
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PERMISSION_CALL;
 
 /**
  * 待发货
  * Created by Administrator on 2017/2/16.
  */
 
-public class PendingDeliveryFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class PendingDeliveryFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, OrderContract.View, AdapterView.OnItemClickListener, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -66,6 +79,8 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
      * 订单状态（all全部状态， 待接订 quote quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 待支付 toPay success 完成
      */
     private String type = "quoted";
+    private CancelOrderBouncedDialog cancelOrderBouncedDialog = null;
+    private ContactDriverBouncedDialog contactDriverBouncedDialog = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -87,12 +102,12 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
         ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "SendGoodsFragment");
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
         aty.showActivity(aty, intent);
@@ -178,19 +193,79 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
         mPresenter = presenter;
     }
 
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (cancelOrderBouncedDialog != null) {
+            cancelOrderBouncedDialog.cancel();
+        }
+        cancelOrderBouncedDialog = null;
+        if (contactDriverBouncedDialog != null) {
+            contactDriverBouncedDialog.cancel();
+        }
+        contactDriverBouncedDialog = null;
         mAdapter.clear();
         mAdapter = null;
     }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_cancelOrder) {
+            if (cancelOrderBouncedDialog != null && !cancelOrderBouncedDialog.isShowing()) {
+                cancelOrderBouncedDialog.show();
+                cancelOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id());
+                return;
+            }
+            cancelOrderBouncedDialog = new CancelOrderBouncedDialog(aty, mAdapter.getItem(position).getOrder_id()) {
+                @Override
+                public void confirm() {
+                    this.cancel();
+                    mRefreshLayout.beginRefreshing();
+                }
+            };
+            cancelOrderBouncedDialog.show();
+        } else if (childView.getId() == R.id.tv_contactDriver) {
+            choiceCallWrapper(mAdapter.getItem(position).getSend_time());
+        }
+    }
+
+
+    @AfterPermissionGranted(REQUEST_CODE_PERMISSION_CALL)
+    private void choiceCallWrapper(String phone) {
+        String[] perms = {Manifest.permission.CALL_PHONE};
+        if (EasyPermissions.hasPermissions(aty, perms)) {
+            if (contactDriverBouncedDialog != null && !contactDriverBouncedDialog.isShowing()) {
+                contactDriverBouncedDialog.setPhone(phone);
+                contactDriverBouncedDialog.show();
+                return;
+            }
+            if (contactDriverBouncedDialog == null) {
+                contactDriverBouncedDialog = new ContactDriverBouncedDialog(getActivity(), phone);
+            }
+            contactDriverBouncedDialog.show();
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.phoneCallPermissions), REQUEST_CODE_PERMISSION_CALL, perms);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (requestCode == REQUEST_CODE_PERMISSION_CALL) {
+            ViewInject.toast(getString(R.string.phoneCallPermissions1));
+        }
+    }
+
+
 }
 

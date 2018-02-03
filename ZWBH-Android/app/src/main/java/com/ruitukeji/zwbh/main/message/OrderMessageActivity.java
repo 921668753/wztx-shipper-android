@@ -2,8 +2,6 @@ package com.ruitukeji.zwbh.main.message;
 
 
 import android.content.Intent;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +26,12 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.titlebar.BGATitleBar;
-import cn.jpush.android.api.JPushInterface;
 
 /**
  * 订单消息
@@ -229,6 +225,10 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
             mAdapter.closeOpenedSwipeItemLayoutWithAnim();
             if (messageBean.getResult().getList() == null || messageBean.getResult().getList().size() == 0) {
                 errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                isEdit = 0;
+                isSelected = 0;
+                titlebar.setRightText(getString(R.string.edit));
+                ll_bottom.setVisibility(View.GONE);
                 return;
             }
             visibilityImg(isEdit, messageBean.getResult().getList());
@@ -244,6 +244,7 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
             }
             dismissLoadingDialog();
         } else if (flag == 1 || flag == 2) {
+            isSelected = 0;
             mRefreshLayout.beginRefreshing();
         }
     }
@@ -264,6 +265,12 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
             } else {
                 mRefreshLayout.endLoadingMore();
             }
+            if (msg.equals(getString(R.string.noInformation))) {
+                isEdit = 0;
+                isSelected = 0;
+                titlebar.setRightText(getString(R.string.edit));
+                ll_bottom.setVisibility(View.GONE);
+            }
         } else {
             ViewInject.toast(msg);
         }
@@ -272,6 +279,17 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (isEdit == 1) {
+            ImageView img_checkbox = (ImageView) view.findViewById(R.id.img_checkbox);
+            if (mAdapter.getItem(position).getIsSelected() == 0) {
+                img_checkbox.setImageResource(R.mipmap.ic_checkbox_select);
+                mAdapter.getItem(position).setIsSelected(1);
+                return;
+            }
+            img_checkbox.setImageResource(R.mipmap.ic_checkbox_unselect);
+            mAdapter.getItem(position).setIsSelected(0);
+            return;
+        }
         Intent intent = new Intent();
         intent.putExtra("messageId", mAdapter.getItem(position).getId());
         intent.setClass(getApplicationContext(), SystemMessageDetailsActivity.class);

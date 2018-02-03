@@ -330,6 +330,7 @@
     <string name="delete1">删除</string>
     <string name="markedRead1">您还未选择任何信息！无法标记已读！</string>
     <string name="delete2">您还未选择任何信息！无法删除消息！</string>
+    <string name="noInformation">暂无信息</string>
 
     <!--订单消息-->
     <string name="orderUser">下单用户：</string>
@@ -439,6 +440,13 @@
     <string name="evaluationDriver">评价司机</string>
     <string name="confirmPayment">确认支付</string>
     <string name="seeEvaluation">查看评价</string>
+
+
+    <!--我的订单   联系司机-->
+    <string name="contactDriver1">赶快联系司机吧!</string>
+    <string name="call">呼叫</string>
+    <string name="phoneCallPermissions">拨打电话选择需要以下权限:\n\n访问设备上的电话拨打权限</string>
+    <string name="phoneCallPermissions1">您拒绝了「拨打电话」所需要的相关权限!</string>
 
 
     <!--订单详情-->
@@ -858,7 +866,6 @@
     <string name="totalOrderNum">单/司机等级</string>
     <string name="serviceLevel">/服务等级</string>
     <string name="complaintsNum">次投诉</string>
-
 
 
     <!--付款-->

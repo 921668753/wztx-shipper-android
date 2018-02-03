@@ -22,11 +22,10 @@
         <TextView
             android:id="@+id/tv_orderNumber"
             style="@style/WrapWrap"
-            android:paddingLeft="@dimen/dimen10"
+            android:paddingLeft="@dimen/dimen5"
             android:text="201712120231"
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize14" />
-
 
         <ImageView
             android:id="@+id/img_label"
