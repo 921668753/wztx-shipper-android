@@ -9,6 +9,7 @@
 
 
     <ImageView
+        android:id="@+id/img_avatar"
         android:layout_width="@dimen/dimen60"
         android:layout_height="@dimen/dimen60"
         android:scaleType="fitXY"
@@ -24,6 +25,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_plateNumber"
                 style="@style/WrapWrap"
                 android:text="戴师傅·苏EA5670"
                 android:textColor="@color/titletextcolors"
@@ -31,6 +33,7 @@
 
 
             <TextView
+                android:id="@+id/tv_price"
                 style="@style/AutoWrap"
                 android:gravity="right"
                 android:text="￥300.00"
@@ -39,6 +42,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_sypeLength"
             style="@style/WrapWrap"
             android:layout_marginTop="@dimen/dimen5"
             android:text="4.2米/厢式货车"
@@ -51,15 +55,69 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_totalOrderNum"
                 style="@style/WrapWrap"
                 android:layout_marginTop="@dimen/dimen5"
-                android:text="200单/司机等级4.9/服务等级4.9/3次投诉"
+                android:text="200"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/totalOrderNum"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/tv_driverLevel"
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="4.9"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/serviceLevel"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/tv_serviceLevel"
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="3"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="/"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                android:id="@+id/tv_complaintsNum"
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="3"
+                android:textColor="@color/aAAAAAColors"
+                android:textSize="@dimen/textsize12" />
+
+            <TextView
+                style="@style/WrapWrap"
+                android:layout_marginTop="@dimen/dimen5"
+                android:text="@string/complaintsNum"
                 android:textColor="@color/aAAAAAColors"
                 android:textSize="@dimen/textsize12" />
 
             <TextView style="@style/AutoWrap" />
 
             <ImageView
+                android:id="@+id/img_selected"
                 android:layout_width="@dimen/dimen28"
                 android:layout_height="@dimen/dimen22"
                 android:paddingLeft="@dimen/dimen8"

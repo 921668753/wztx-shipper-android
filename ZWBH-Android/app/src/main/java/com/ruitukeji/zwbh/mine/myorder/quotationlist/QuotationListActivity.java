@@ -1,19 +1,18 @@
-package com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment;
+package com.ruitukeji.zwbh.mine.myorder.quotationlist;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.QuotationListViewAdapter;
+import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.QuotationListBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -30,7 +29,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 public class QuotationListActivity extends BaseActivity implements QuotationListContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
-
     private QuotationListViewAdapter quotationListViewAdapter;
 
     @BindView(id = R.id.lv_quotationlist)
@@ -39,26 +37,32 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
-    @BindView(id = R.id.ll_bottombar)
-    private LinearLayout ll_bottombar;
 
-    @BindView(id = R.id.tv_nextType, click = true)
-    private TextView tv_nextType;
+    @BindView(id = R.id.ll_submit)
+    private LinearLayout ll_submit;
+
+
+    @BindView(id = R.id.tv_submit, click = true)
+    private TextView tv_submit;
+
     /**
      * 错误提示页
      */
     @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
+
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
-    private int goods_id;
-    private List<QuotationListBean.ResultBean.ListBean> quotationList;
-    private QuotationListBean.ResultBean.ListBean quotationBean;
 
+    private int order_id = 0;
+
+    private List<QuotationListBean.ResultBean> quotationList;
+
+    private QuotationListBean.ResultBean quotationBean;
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_quotationlist);
+        setContentView(R.layout.activity_quotationlist1);
     }
 
     @Override
@@ -72,10 +76,9 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.quotationList), true, R.id.titlebar);
-        tv_nextType.setText(getString(R.string.submit));
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, aty, false);
-        goods_id = getIntent().getIntExtra("goods_id", 0);
-        ((QuotationListContract.Presenter) mPresenter).getQuotationList(goods_id);
+        order_id = getIntent().getIntExtra("order_id", 0);
+        ((QuotationListContract.Presenter) mPresenter).getQuotationList(order_id);
         lv_quotationlist.setAdapter(quotationListViewAdapter);
         lv_quotationlist.setOnItemClickListener(this);
     }
@@ -84,12 +87,12 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
     public void widgetClick(View v) {
         super.widgetClick(v);
         switch (v.getId()) {
-            case R.id.tv_nextType:
-                //     showActivity(aty, PaymentActivity.class);
-                ((QuotationListContract.Presenter) mPresenter).postQuotation(quotationBean.getId(), goods_id);
+            case R.id.tv_submit:
+                showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
+                ((QuotationListContract.Presenter) mPresenter).postQuotation(quotationBean.getId(), order_id);
                 break;
             case R.id.tv_hintText:
-                ((QuotationListContract.Presenter) mPresenter).getQuotationList(goods_id);
+                mRefreshLayout.beginRefreshing();
                 break;
         }
     }
@@ -103,28 +106,21 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
             ll_commonError.setVisibility(View.GONE);
+            ll_submit.setVisibility(View.VISIBLE);
             mRefreshLayout.setVisibility(View.VISIBLE);
-            ll_bottombar.setVisibility(View.VISIBLE);
             QuotationListBean quotationListBean = (QuotationListBean) JsonUtil.getInstance().json2Obj(s, QuotationListBean.class);
-            quotationList = quotationListBean.getResult().getList();
+            quotationList = quotationListBean.getResult();
             if (quotationList == null || quotationList.size() == 0) {
-                error(getString(R.string.serverReturnsDataNull));
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
                 return;
             }
             mRefreshLayout.endRefreshing();
             refreshList(0);
         } else if (flag == 1) {
-            PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteGoods1", true);
-            //  String fragment = PreferenceHelper.readString(aty, StringConstants.FILENAME, "refreshGoodsFragment", "AllOrderFragment");
-//            if (fragment.equals("AllOrderFragment")) {
-//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", true);
-//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteOrder1", true);
-//            } else if (fragment.equals("QuoteOrderFragment")) {
-//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshQuoteOrder", true);
-//                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder1", true);
-//            }
             ViewInject.toast(getString(R.string.submittedSuccessfully));
-            KJActivityStack.create().finishActivity(GoodsDetailsActivity.class);
+            Intent intent = new Intent();
+            // 设置结果 结果码，一个数据
+            setResult(RESULT_OK, intent);
             finish();
         }
         dismissLoadingDialog();
@@ -133,12 +129,12 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
     private void refreshList(int position) {
         quotationListViewAdapter.clear();
         for (int i = 0; i < quotationList.size(); i++) {
-            QuotationListBean.ResultBean.ListBean bean = quotationList.get(i);
+            QuotationListBean.ResultBean bean = quotationList.get(i);
             if (position == i) {
                 quotationBean = quotationList.get(i);
-                bean.setIs_selected(true);
+                bean.setIs_selected(1);
             } else {
-                bean.setIs_selected(false);
+                bean.setIs_selected(0);
             }
         }
         quotationListViewAdapter.addNewData(quotationList);
@@ -146,11 +142,17 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
 
 
     @Override
-    public void error(String msg) {
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_bottombar.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setText(msg + getString(R.string.clickRefresh));
+    public void errorMsg(String msg, int flag) {
+        if (flag == 0) {
+            toLigon(msg);
+            mRefreshLayout.setVisibility(View.GONE);
+            ll_submit.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setText(msg + getString(R.string.clickRefresh));
+        } else if (flag == 1) {
+            toLigon1(msg);
+        }
+
         dismissLoadingDialog();
     }
 
@@ -163,7 +165,8 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
     @Override
     public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
         mRefreshLayout.endRefreshing();
-        ((QuotationListContract.Presenter) mPresenter).getQuotationList(goods_id);
+        showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
+        ((QuotationListContract.Presenter) mPresenter).getQuotationList(order_id);
     }
 
     @Override
@@ -171,6 +174,7 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
         mRefreshLayout.endLoadingMore();
         return false;
     }
+
 
     @Override
     protected void onDestroy() {

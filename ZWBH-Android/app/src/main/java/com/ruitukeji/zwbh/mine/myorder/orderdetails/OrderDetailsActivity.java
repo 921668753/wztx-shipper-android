@@ -23,7 +23,7 @@ import com.ruitukeji.zwbh.mine.myorder.orderfragment.EvaluationShareActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.LogisticsPositioningActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.OrderDetailsContract;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.OrderDetailsPresenter;
-import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.QuotationListActivity;
+import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 

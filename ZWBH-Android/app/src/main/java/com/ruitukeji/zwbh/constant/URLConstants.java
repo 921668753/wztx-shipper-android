@@ -320,7 +320,7 @@ public class URLConstants {
     /**
      * 显示司机报价列表
      */
-    public static String SHOWDRIVERQUOTELIST = APIURL + "quote/showDriverQuoteList";
+    public static String SHOWDRIVERQUOTELIST = APIURL + "quote/quoteList";
 
     /**
      * 提交司机报价

@@ -18,7 +18,7 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderDetailsBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
-import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.QuotationListActivity;
+import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 

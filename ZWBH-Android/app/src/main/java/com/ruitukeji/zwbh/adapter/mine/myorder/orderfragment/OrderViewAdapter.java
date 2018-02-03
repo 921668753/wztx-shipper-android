@@ -17,6 +17,7 @@ import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
  */
 
 public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
+
     public OrderViewAdapter(Context context) {
         super(context, R.layout.item_order1);
     }

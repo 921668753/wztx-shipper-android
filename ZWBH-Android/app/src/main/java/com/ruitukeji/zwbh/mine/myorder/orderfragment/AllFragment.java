@@ -10,18 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
-import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.QuotationListActivity;
+import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 

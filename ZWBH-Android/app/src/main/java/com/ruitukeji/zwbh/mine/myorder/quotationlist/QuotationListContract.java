@@ -1,7 +1,7 @@
-package com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment;
+package com.ruitukeji.zwbh.mine.myorder.quotationlist;
 
+import com.ruitukeji.zwbh.common.BaseNewView;
 import com.ruitukeji.zwbh.common.BasePresenter;
-import com.ruitukeji.zwbh.common.BaseView;
 
 /**
  * Created by Administrator on 2017/3/6.
@@ -20,17 +20,7 @@ public interface QuotationListContract {
         void postQuotation(int quote_id, int order_id);
     }
 
-    interface View extends BaseView<Presenter> {
-        /**
-         * http请求正确
-         *
-         * @param s
-         */
-        void getSuccess(String s, int flag);
+    interface View extends BaseNewView<Presenter, String> {
 
-        /**
-         * http请求错误
-         */
-        void error(String msg);
     }
 }

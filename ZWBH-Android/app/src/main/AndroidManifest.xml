@@ -430,7 +430,7 @@
 
         <!--司机报价列表-->
         <activity
-            android:name=".mine.mypublishedorder.publishedorderfragment.QuotationListActivity"
+            android:name=".mine.myorder.quotationlist.QuotationListActivity"
             android:screenOrientation="portrait" />
 
         <!--在线客服-->

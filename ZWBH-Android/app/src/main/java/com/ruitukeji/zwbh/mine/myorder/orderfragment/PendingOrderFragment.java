@@ -10,22 +10,23 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.kymjs.common.PreferenceHelper;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
-import com.ruitukeji.zwbh.mine.mypublishedorder.publishedorderfragment.QuotationListActivity;
+import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static android.app.Activity.RESULT_OK;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_SELECT;
 
 /**
  * 待接单
@@ -52,18 +53,22 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 总页码
      */
     private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+
     /**
      * 订单状态（all全部状态， 待接订 quote quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 待支付 toPay success 完成
      */
@@ -95,10 +100,8 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "QuoteOrderFragment");
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-      //  intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
         aty.showActivity(aty, intent);
     }
 
@@ -141,38 +144,46 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
 
     @Override
     public void getSuccess(String success, int flag) {
-        isShowLoadingMore = true;
-        ll_commonError.setVisibility(View.GONE);
-        mRefreshLayout.setVisibility(View.VISIBLE);
-        OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(success, OrderBean.class);
-        mMorePageNumber = orderBean.getResult().getPage();
-        totalPageNumber = orderBean.getResult().getPageTotal();
-        if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
-            errorMsg(getString(R.string.serverReturnsDataNull), 0);
-            return;
-        }
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-            mAdapter.clear();
-            mAdapter.addNewData(orderBean.getResult().getList());
-        } else {
-            mRefreshLayout.endLoadingMore();
-            mAdapter.addMoreData(orderBean.getResult().getList());
+        if (flag == 0) {
+
+            isShowLoadingMore = true;
+            ll_commonError.setVisibility(View.GONE);
+            mRefreshLayout.setVisibility(View.VISIBLE);
+            OrderBean orderBean = (OrderBean) JsonUtil.getInstance().json2Obj(success, OrderBean.class);
+            mMorePageNumber = orderBean.getResult().getPage();
+            totalPageNumber = orderBean.getResult().getPageTotal();
+            if (orderBean.getResult().getList() == null || orderBean.getResult().getList().size() == 0) {
+                errorMsg(getString(R.string.serverReturnsDataNull), 0);
+                return;
+            }
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+                mAdapter.clear();
+                mAdapter.addNewData(orderBean.getResult().getList());
+            } else {
+                mRefreshLayout.endLoadingMore();
+                mAdapter.addMoreData(orderBean.getResult().getList());
+            }
         }
         dismissLoadingDialog();
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
-        toLigon(msg);
-        isShowLoadingMore = false;
-        mRefreshLayout.setVisibility(View.GONE);
-        ll_commonError.setVisibility(View.VISIBLE);
-        tv_hintText.setText(msg + getString(R.string.clickRefresh));
-        if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
-            mRefreshLayout.endRefreshing();
-        } else {
-            mRefreshLayout.endLoadingMore();
+        if (flag == 0) {
+            toLigon(msg);
+            isShowLoadingMore = false;
+            mRefreshLayout.setVisibility(View.GONE);
+            ll_commonError.setVisibility(View.VISIBLE);
+            tv_hintText.setText(msg + getString(R.string.clickRefresh));
+            if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
+                mRefreshLayout.endRefreshing();
+            } else {
+                mRefreshLayout.endLoadingMore();
+            }
+        } else if (flag == 1) {
+
+
         }
         dismissLoadingDialog();
     }
@@ -192,14 +203,22 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
 
     @Override
     public void onItemChildClick(ViewGroup viewGroup, View view, int i) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "QuoteOrderFragment");
-        if (view.getId() == R.id.tv_driverQuotation) {
+        if (view.getId() == R.id.tv_cancelOrder) {
+
+
+        } else if (view.getId() == R.id.tv_viewQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-          //  intent.putExtra("goods_id", mAdapter.getItem(i).getGoods_id());
-            aty.showActivity(aty, intent);
+            startActivityForResult(intent, REQUEST_CODE_SELECT);
         }
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
+            mRefreshLayout.beginRefreshing();
+        }
 
     }
 }
