@@ -195,17 +195,17 @@
 
         <!--个人中心 我的订单 物流定位-->
         <activity
-            android:name=".mine.myorder.orderfragment.LogisticsPositioningActivity"
+            android:name=".mine.myorder.logisticspositioning.LogisticsPositioningActivity"
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单  查看凭证-->
         <activity
-            android:name=".mine.myorder.orderfragment.CheckVoucherActivity"
+            android:name=".mine.myorder.payment.CheckVoucherActivity"
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 付款-->
         <activity
-            android:name=".mine.myorder.orderfragment.PaymentActivity"
+            android:name=".mine.myorder.payment.PaymentActivity"
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 查看评价-->

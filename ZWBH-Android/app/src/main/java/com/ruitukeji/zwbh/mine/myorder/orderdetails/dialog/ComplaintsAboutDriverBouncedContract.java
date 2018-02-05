@@ -14,7 +14,7 @@ public class ComplaintsAboutDriverBouncedContract {
         /**
          * 提交投诉司机内容
          */
-        void postComplaintsAboutDriver(String id, String content);
+        void postComplaintsAboutDriver(int dr_id, String reason);
     }
 
     interface View extends BaseView<Presenter> {

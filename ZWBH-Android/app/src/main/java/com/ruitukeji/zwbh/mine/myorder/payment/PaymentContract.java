@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.payment;
 
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
@@ -30,20 +30,7 @@ public interface PaymentContract {
          */
         void getAlipay(int orderId, String total_amount);
 
-        /**
-         * 上传支付凭证
-         */
-        void uploadCerPic(int orderId, String img_url);
 
-        /**
-         * 上传图片
-         */
-        void upLoadImg(String path);
-
-        /**
-         * 获取配置参数
-         */
-        void getAppConfig();
     }
 
     interface View extends BaseView<Presenter> {

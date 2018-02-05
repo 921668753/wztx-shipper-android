@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.payment;
 
 import android.content.Intent;
 import android.view.View;

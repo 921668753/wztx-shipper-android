@@ -15,6 +15,19 @@ public interface OrderDetailsContract {
          * 获取订单详情信息
          */
         void getOrderDetails(int orderId);
+
+        /**
+         * 收藏司机信息
+         */
+        void postCollectDriver(int orderId);
+
+        /**
+         * 删除收藏司机
+         */
+        void postDelCollectDriver(int orderId);
+
+
+
     }
 
     interface View extends BaseNewView<Presenter, String> {

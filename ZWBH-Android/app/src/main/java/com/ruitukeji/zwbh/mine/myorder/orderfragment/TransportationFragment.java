@@ -21,8 +21,8 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
-import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
+import com.ruitukeji.zwbh.mine.myorder.logisticspositioning.LogisticsPositioningActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -213,19 +213,18 @@ public class TransportationFragment extends BaseFragment implements EasyPermissi
             startActivity(intent);
         } else if (childView.getId() == R.id.tv_viewShippingTrack) {
             Intent intent = new Intent(aty, LogisticsPositioningActivity.class);
-            intent.putExtra("map_code", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("real_name", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("card_number", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("avatar", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("phone", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("org_address", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("org_address", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("org_address_maps", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("dest_address_maps", mAdapter.getItem(position).getOrder_id());
-            intent.putExtra("dest_address", mAdapter.getItem(position).getOrder_id());
+            intent.putExtra("map_code", mAdapter.getItem(position).getMap_code());
+            intent.putExtra("real_name", mAdapter.getItem(position).getDr_name());
+            intent.putExtra("card_number", mAdapter.getItem(position).getCard_number());
+            intent.putExtra("avatar", mAdapter.getItem(position).getAvatar());
+            intent.putExtra("phone", mAdapter.getItem(position).getDr_phone());
+            intent.putExtra("org_address", mAdapter.getItem(position).getOrg_city());
+            intent.putExtra("org_address_maps", mAdapter.getItem(position).getOrg_address_maps());
+            intent.putExtra("dest_address_maps", mAdapter.getItem(position).getDest_address_maps());
+            intent.putExtra("dest_address", mAdapter.getItem(position).getDest_city());
             startActivity(intent);
         } else if (childView.getId() == R.id.tv_contactDriver) {
-            choiceCallWrapper(mAdapter.getItem(position).getSend_time());
+            choiceCallWrapper(mAdapter.getItem(position).getDr_phone());
         }
     }
 
@@ -235,8 +234,8 @@ public class TransportationFragment extends BaseFragment implements EasyPermissi
         String[] perms = {Manifest.permission.CALL_PHONE};
         if (EasyPermissions.hasPermissions(aty, perms)) {
             if (contactDriverBouncedDialog != null && !contactDriverBouncedDialog.isShowing()) {
-                contactDriverBouncedDialog.setPhone(phone);
                 contactDriverBouncedDialog.show();
+                contactDriverBouncedDialog.setPhone(phone);
                 return;
             }
             if (contactDriverBouncedDialog == null) {

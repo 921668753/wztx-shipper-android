@@ -43,6 +43,7 @@
 
 
         <EditText
+            android:id="@+id/et_describeSpecificReasons"
             style="@style/MatchWrap"
             android:layout_marginLeft="@dimen/dimen26"
             android:layout_marginRight="@dimen/dimen26"

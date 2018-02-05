@@ -19,6 +19,7 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
@@ -52,12 +53,12 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
     @BindView(id = R.id.lv_order)
     private ListView lv_order;
 
-
     /**
      * 错误提示页
      */
     @BindView(id = R.id.ll_commonError)
     private LinearLayout ll_commonError;
+
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
     /**
@@ -207,7 +208,11 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-        if (childView.getId() == R.id.tv_cancelOrder) {
+        if (childView.getId() == R.id.tv_checkAbnormal) {
+            Intent intent = new Intent(aty, AbnormalRecordsActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            startActivity(intent);
+        } else if (childView.getId() == R.id.tv_cancelOrder) {
             if (cancelOrderBouncedDialog != null && !cancelOrderBouncedDialog.isShowing()) {
                 cancelOrderBouncedDialog.show();
                 cancelOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id(), 1);
@@ -222,7 +227,7 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
             };
             cancelOrderBouncedDialog.show();
         } else if (childView.getId() == R.id.tv_contactDriver) {
-            choiceCallWrapper(mAdapter.getItem(position).getSend_time());
+            choiceCallWrapper(mAdapter.getItem(position).getDr_phone());
         }
     }
 

@@ -177,6 +177,7 @@
     <string name="refuse">认证失败</string>
     <string name="delete">后台删除</string>
     <string name="noData">没有数据</string>
+    <string name="noData1">请拍照后再提交</string>
     <string name="pleaseWait">请耐心等待</string>
     <string name="pleaseWait1">请联系客服，进行处理</string>
     <string name="imagePathError">图片路径错误</string>
@@ -878,6 +879,8 @@
     <string name="uploadProofPayment">上传付款凭证</string>
     <string name="balancePayment">余额支付</string>
     <string name="uploadProofPayment1">请上传付款凭证</string>
+
+
 
     <!--认证信息-->
     <string name="authenticationInformation">认证信息</string>

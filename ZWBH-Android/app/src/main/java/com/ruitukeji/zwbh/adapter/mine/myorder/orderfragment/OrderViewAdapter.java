@@ -112,7 +112,16 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          * 用户出价
          */
-        viewHolderHelper.setText(R.id.tv_userOffer, listBean.getFinal_price());
+        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && !StringUtils.isEmpty(listBean.getMind_price())) {
+            viewHolderHelper.setVisibility(R.id.ll_userOffer, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_userOffer, listBean.getMind_price());
+        } else if (!StringUtils.isEmpty(listBean.getFinal_price())) {
+            viewHolderHelper.setVisibility(R.id.ll_userOffer, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_userOffer, listBean.getFinal_price());
+        } else {
+            viewHolderHelper.setVisibility(R.id.ll_userOffer, View.GONE);
+        }
+
 
         /**
          * 起运地
@@ -150,6 +159,12 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.tv_destination1, View.VISIBLE);
             viewHolderHelper.setText(R.id.tv_destination1, listBean.getSend_time());
         }
+        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") ||
+                !StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quoted") && listBean.getIs_cancel() == 0) {
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.VISIBLE);
+        } else {
+            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+        }
         if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("hang")) {
             viewHolderHelper.setVisibility(R.id.ll_startEnd, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.ll_startEnd1, View.VISIBLE);
@@ -162,7 +177,7 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_checkAbnormal, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmPayment, View.GONE);
-            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.VISIBLE);
+
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_evaluationDriver, View.GONE);
@@ -172,7 +187,6 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_startEnd1, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_divider, View.GONE);
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_viewQuotation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.VISIBLE);
@@ -185,7 +199,6 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_startEnd1, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_divider, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewQuotation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.VISIBLE);
@@ -198,7 +211,6 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_startEnd1, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_divider, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewQuotation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.GONE);
@@ -211,7 +223,6 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_startEnd1, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_divider, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewQuotation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.GONE);
@@ -224,7 +235,6 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_startEnd1, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_divider, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
-            viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewQuotation, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.GONE);

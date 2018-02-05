@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +14,6 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseDialog;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
-import com.ruitukeji.zwbh.entity.MessageBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
 
 /**
@@ -19,32 +21,37 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
  * Created by Administrator on 2017/11/28.
  */
 
-public abstract class ComplaintsAboutDriverBouncedDialog extends BaseDialog implements View.OnClickListener, ComplaintsAboutDriverBouncedContract.View {
+public class ComplaintsAboutDriverBouncedDialog extends BaseDialog implements View.OnClickListener, ComplaintsAboutDriverBouncedContract.View {
 
     private Context context;
-    private ImageView img_cancel;
-    private TextView tv_submit;
-    private ListBean listBean;
+    private int dr_id = 0;
     private ComplaintsAboutDriverBouncedContract.Presenter mPresenter;
+    private EditText et_describeSpecificReasons;
 
-    public ComplaintsAboutDriverBouncedDialog(Context context, ListBean listBean) {
-        super(context, R.style.MyDialog);
+    public ComplaintsAboutDriverBouncedDialog(Context context, int dr_id) {
+        super(context, R.style.dialog);
         this.context = context;
-        this.listBean = listBean;
+        this.dr_id = dr_id;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_complaintsaboutdriverbounced);
+        Window dialogWindow = getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialogWindow.setAttributes(lp);
         initView();
     }
 
     private void initView() {
-        img_cancel = (ImageView) findViewById(R.id.img_cancel);
+        ImageView img_cancel = (ImageView) findViewById(R.id.img_cancel);
         img_cancel.setOnClickListener(this);
-        tv_submit = (TextView) findViewById(R.id.tv_submit);
+        TextView tv_submit = (TextView) findViewById(R.id.tv_submit);
         tv_submit.setOnClickListener(this);
+        et_describeSpecificReasons = (EditText) findViewById(R.id.et_describeSpecificReasons);
         mPresenter = new ComplaintsAboutDriverBouncedPresenter(this);
     }
 
@@ -52,23 +59,18 @@ public abstract class ComplaintsAboutDriverBouncedDialog extends BaseDialog impl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_cancel:
-                dismiss();
+                cancel();
                 break;
             case R.id.tv_submit:
-//                if (listBean.getMind_price() == null || listBean.getMind_price().equals("0.00")) {
-//                    mPresenter.getQuoteAdd(listBean.getId(), listBean.getSystem_price(), 1);
-//                    break;
-//                }
-//                mPresenter.getQuoteAdd(listBean.getId(), listBean.getMind_price(), 1);
+                showLoadingDialog(context.getString(R.string.sendingLoad));
+                mPresenter.postComplaintsAboutDriver(dr_id, et_describeSpecificReasons.getText().toString().trim());
                 break;
         }
     }
 
     @Override
     public void getSuccess(String s, int flag) {
-        if (flag == 0) {
-            confirm();
-        }
+        cancel();
         dismissLoadingDialog();
     }
 
@@ -76,6 +78,12 @@ public abstract class ComplaintsAboutDriverBouncedDialog extends BaseDialog impl
     public void setPresenter(ComplaintsAboutDriverBouncedContract.Presenter presenter) {
         mPresenter = presenter;
     }
+
+
+    public void setDriverId(int dr_id) {
+        this.dr_id = dr_id;
+    }
+
 
     @Override
     public void error(String msg) {
@@ -88,6 +96,4 @@ public abstract class ComplaintsAboutDriverBouncedDialog extends BaseDialog impl
         dismissLoadingDialog();
         ViewInject.toast(msg);
     }
-
-    public abstract void confirm();
 }

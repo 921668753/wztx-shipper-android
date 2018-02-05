@@ -1,20 +1,19 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.payment;
 
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
 
 /**
- * Created by Administrator on 2017/2/21.
+ * Created by Administrator on 2017/2/16.
  */
 
-public interface LogisticsPositioningContract {
-
+public interface CheckVoucherContract {
 
     interface Presenter extends BasePresenter {
         /**
-         * 获取订单轨迹信息
+         * 获取凭证列表
          */
-        void getTrajectory(String id);
+        void getCheckVoucher(int order_id);
     }
 
     interface View extends BaseView<Presenter> {
@@ -29,7 +28,5 @@ public interface LogisticsPositioningContract {
          * http请求错误
          */
         void error(String msg);
-
     }
-
 }

@@ -17,11 +17,14 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
+import com.ruitukeji.zwbh.mine.myorder.payment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -29,7 +32,7 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
  * Created by Administrator on 2017/2/16.
  */
 
-public class PendingPaymentFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class PendingPaymentFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
 
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
@@ -83,17 +86,10 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     protected void initWidget(View parentView) {
         super.initWidget(parentView);
         RefreshLayoutUtil.initRefreshLayout(mRefreshLayout, this, getActivity(), true);
-        ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(aty, OrderDetailsActivity.class);
-        intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        aty.showActivity(aty, intent);
+        mAdapter.setOnItemChildClickListener(this);
+        mRefreshLayout.beginRefreshing();
     }
 
     @Override
@@ -130,6 +126,30 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
             case R.id.tv_hintText:
                 mRefreshLayout.beginRefreshing();
                 break;
+        }
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Intent intent = new Intent(aty, OrderDetailsActivity.class);
+        intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+        aty.showActivity(aty, intent);
+    }
+
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_checkAbnormal) {
+            Intent intent = new Intent(aty, AbnormalRecordsActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            startActivity(intent);
+        } else if (childView.getId() == R.id.tv_confirmPayment) {
+            Intent intent = new Intent(aty, CheckVoucherActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            intent.putExtra("total_amount", mAdapter.getItem(position).getFinal_price());
+            intent.putExtra("per_status", mAdapter.getItem(position).getPer_status());
+            startActivity(intent);
         }
     }
 
@@ -176,19 +196,12 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         mPresenter = presenter;
     }
 
-    /**
-     * 当通过changeFragment()显示时会被调用(类似于onResume)
-     */
-    @Override
-    public void onChange() {
-        super.onChange();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         mAdapter.clear();
         mAdapter = null;
     }
+
 }
 

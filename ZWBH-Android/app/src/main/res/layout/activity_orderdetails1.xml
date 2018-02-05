@@ -649,29 +649,11 @@
                     android:id="@+id/tv_transportTime"
                     style="@style/WrapWrap"
                     android:paddingLeft="@dimen/dimen28"
+                    android:paddingRight="@dimen/dimen15"
                     android:text="1"
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize14" />
 
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:text="@string/hour2"
-                    android:textColor="@color/a1A1AColors"
-                    android:textSize="@dimen/textsize14" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:text="36"
-                    android:textColor="@color/a1A1AColors"
-                    android:textSize="@dimen/textsize14" />
-
-                <TextView
-                    style="@style/WrapWrap"
-                    android:paddingRight="@dimen/dimen15"
-                    android:text="@string/minutes"
-                    android:textColor="@color/a1A1AColors"
-                    android:textSize="@dimen/textsize14" />
             </LinearLayout>
 
             <LinearLayout

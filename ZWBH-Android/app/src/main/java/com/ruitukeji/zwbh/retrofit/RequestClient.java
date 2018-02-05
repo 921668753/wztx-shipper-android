@@ -1002,6 +1002,46 @@ public class RequestClient {
     }
 
     /**
+     * 收藏司机
+     */
+    public static void postCollectDriver(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "postCollectDriver");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.COLLECTDRIVER, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
+     * 收藏司机
+     */
+    public static void postComplaintDriver(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "postComplaintDriver");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.COMPLAINTDRIVER, httpParams, listener);
+            }
+        }, listener);
+    }
+
+
+    /**
      * 查看凭证
      */
     public static void getShowCerPic(HttpParams httpParams, final ResponseListener<String> listener) {

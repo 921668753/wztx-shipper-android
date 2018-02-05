@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.logisticspositioning;
 
 import com.kymjs.common.Log;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -8,6 +8,7 @@ import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
+import com.ruitukeji.zwbh.mine.myorder.logisticspositioning.LogisticsPositioningContract;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;

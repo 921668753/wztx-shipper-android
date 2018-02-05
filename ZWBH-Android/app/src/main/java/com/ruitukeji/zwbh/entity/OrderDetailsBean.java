@@ -9,62 +9,67 @@ public class OrderDetailsBean extends BaseResult<OrderDetailsBean.ResultBean> {
 
     public class ResultBean {
         /**
-         * dr_id : 61
+         * order_id : 296
+         * avatar : http://ot090bmn8.bkt.clouddn.com/8ff17e7a74bd8742055e760bc32c6330.jpg
+         * dr_id : 62
+         * dr_phone : 17051335257
          * car_length_info : 4.2米
-         * car_style_info : 箱车
-         * map_code : 164
-         * dr_tel :
-         * appoint_at : 2018-01-20 12:57:30
-         * order_code : 2018012097491005
-         * system_price : 1335.10
-         * final_price : 1335.10
-         * real_name : 骚年
-         * goods_name : 测i货物
+         * car_style_info : 面包车
+         * map_code : 162
+         * dr_tel : null
+         * appoint_at : 2018-01-10 20:13:34
+         * order_code : null
+         * system_price : 111.15
+         * final_price : 111.15
+         * real_name : 看见了
+         * goods_name : 快递
          * weight : 2吨
-         * volume : 2立方米
+         * volume : 15立方米
          * is_cargo_receipt : 0
-         * org_address_name : 江苏省苏州市昆山市花桥镇昆山市仁之源劳务服务有限公司两岸新天地
-         * org_address_detail : 测试
-         * org_phone : 13748754275
+         * org_address_name : 江苏省苏州市昆山市花桥镇海星路5号两岸新天地
+         * org_address_detail :
+         * org_phone : 17509148610
          * org_telphone :
-         * org_send_name : 测试人
-         * dest_address_name : 江苏省苏州市常熟市尚湖镇练塘道林路常熟巨达建材
-         * dest_address_detail : 啊哈
-         * dest_phone : 13748754248
+         * org_send_name : 刘艳锋
+         * dest_address_name : 江苏省苏州市昆山市昆山市昆山市
+         * dest_address_detail :
+         * dest_phone : 17608808610
          * dest_telphone :
-         * dest_receive_name : 测试人
+         * dest_receive_name : 刘艳锋
          * car_style_type : 箱车
          * car_style_type_id : 1004
-         * car_style_length : 12.5米
-         * car_style_length_id : 1014
-         * is_driver_dock : 1
-         * usecar_time : 4小时2分钟
-         * spot : 2
-         * spot_cost : 0
+         * car_style_length : 4.2米
+         * car_style_length_id : 1009
+         * is_driver_dock : 0
+         * usecar_time : 0
+         * spot :
+         * spot_cost :
          * dr_name :
          * card_number :
-         * org_address_maps : 121.062544,31.320191
-         * dest_address_maps : 121.062544,31.320191
-         * status : quote
+         * org_address_maps : 121.062752,31.320404
+         * dest_address_maps : 120.980737,31.385598
+         * status : distribute
          * is_cancel : 0
          * type : often
-         * create_at : 2018-01-20 12:57:30
+         * create_at : 2018-01-10 20:13:34
          * is_quote : 0
          * is_collect : 0
-         * org_send_client : 测试人
-         * dest_receive_client : 测试人
+         * org_send_client : 物载天下网络科技
+         * dest_receive_client : 京东
+         * mind_price :
          */
 
+        private int order_id;
+        private String avatar;
         private int dr_id;
+        private String dr_phone;
         private String car_length_info;
         private String car_style_info;
         private String map_code;
-        private String dr_tel;
         private String appoint_at;
         private String order_code;
         private String system_price;
         private String final_price;
-        private String real_name;
         private String goods_name;
         private String weight;
         private String volume;
@@ -99,6 +104,26 @@ public class OrderDetailsBean extends BaseResult<OrderDetailsBean.ResultBean> {
         private int is_collect;
         private String org_send_client;
         private String dest_receive_client;
+        private String mind_price;
+        private int is_abnormal;
+        private String per_status;
+
+
+        public int getOrder_id() {
+            return order_id;
+        }
+
+        public void setOrder_id(int order_id) {
+            this.order_id = order_id;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
 
         public int getDr_id() {
             return dr_id;
@@ -106,6 +131,14 @@ public class OrderDetailsBean extends BaseResult<OrderDetailsBean.ResultBean> {
 
         public void setDr_id(int dr_id) {
             this.dr_id = dr_id;
+        }
+
+        public String getDr_phone() {
+            return dr_phone;
+        }
+
+        public void setDr_phone(String dr_phone) {
+            this.dr_phone = dr_phone;
         }
 
         public String getCar_length_info() {
@@ -130,14 +163,6 @@ public class OrderDetailsBean extends BaseResult<OrderDetailsBean.ResultBean> {
 
         public void setMap_code(String map_code) {
             this.map_code = map_code;
-        }
-
-        public String getDr_tel() {
-            return dr_tel;
-        }
-
-        public void setDr_tel(String dr_tel) {
-            this.dr_tel = dr_tel;
         }
 
         public String getAppoint_at() {
@@ -170,14 +195,6 @@ public class OrderDetailsBean extends BaseResult<OrderDetailsBean.ResultBean> {
 
         public void setFinal_price(String final_price) {
             this.final_price = final_price;
-        }
-
-        public String getReal_name() {
-            return real_name;
-        }
-
-        public void setReal_name(String real_name) {
-            this.real_name = real_name;
         }
 
         public String getGoods_name() {
@@ -450,6 +467,30 @@ public class OrderDetailsBean extends BaseResult<OrderDetailsBean.ResultBean> {
 
         public void setDest_receive_client(String dest_receive_client) {
             this.dest_receive_client = dest_receive_client;
+        }
+
+        public String getMind_price() {
+            return mind_price;
+        }
+
+        public void setMind_price(String mind_price) {
+            this.mind_price = mind_price;
+        }
+
+        public int getIs_abnormal() {
+            return is_abnormal;
+        }
+
+        public void setIs_abnormal(int is_abnormal) {
+            this.is_abnormal = is_abnormal;
+        }
+
+        public String getPer_status() {
+            return per_status;
+        }
+
+        public void setPer_status(String per_status) {
+            this.per_status = per_status;
         }
     }
 }

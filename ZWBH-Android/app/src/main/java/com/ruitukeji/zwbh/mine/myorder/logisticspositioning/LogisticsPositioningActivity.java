@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.logisticspositioning;
 
 import android.Manifest;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.myorder.orderfragment;
+package com.ruitukeji.zwbh.mine.myorder.payment;
 
 import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
@@ -7,6 +7,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.constant.StringConstants;
+import com.ruitukeji.zwbh.mine.myorder.payment.PaymentContract;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.picturerelated.BitmapCoreUtil;
 import com.ruitukeji.zwbh.utils.DataCleanManager;
@@ -88,65 +89,6 @@ public class PaymentPresenter implements PaymentContract.Presenter {
         });
     }
 
-    @Override
-    public void uploadCerPic(int orderId, String img_url) {
-        mView.showLoadingDialog(MyApplication.getContext().getString(R.string.crossLoad));
-        if (StringUtils.isEmpty(img_url)) {
-            mView.error(KJActivityStack.create().topActivity().getString(R.string.uploadProofPayment1),0);
-            return;
-        }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("order_id", orderId);
-        map.put("img_url", img_url);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.uploadCerPic(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 3);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg,0);
-            }
-        });
-
-
-    }
-
-    @Override
-    public void upLoadImg(String path) {
-        mView.showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.crossLoad));
-        File oldFile = new File(path);
-        if (!(FileUtil.isFileExists(oldFile))) {
-            mView.error(KJActivityStack.create().topActivity().getString(R.string.imagePathError),0);
-            return;
-        }
-        long fileSize = 0;
-        try {
-            fileSize = DataCleanManager.getFileSize(oldFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fileSize = 0;
-        }
-        if (fileSize >= StringConstants.COMPRESSION_SIZE) {
-            oldFile = BitmapCoreUtil.customCompression(oldFile);
-        }
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        httpParams.put("file", oldFile);
-        RequestClient.upLoadImg(httpParams, 1, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 4);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg,0);
-            }
-        });
-    }
 
     @Override
     public void getMyWallet() {
@@ -154,32 +96,17 @@ public class PaymentPresenter implements PaymentContract.Presenter {
         RequestClient.getPay(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 5);
+                mView.getSuccess(response, 3);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.error(msg, 5);
+                mView.error(msg, 3);
             }
         });
     }
 
 
-    @Override
-    public void getAppConfig() {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        RequestClient.getAppConfig(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 6);
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg, 6);
-            }
-        });
-    }
 
 
 }
