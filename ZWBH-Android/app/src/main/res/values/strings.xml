@@ -848,6 +848,7 @@
     <string name="QQFriends">QQ好友</string>
     <string name="Qzone">QQ空间</string>
 
+
     <!--评价-->
     <string name="share">分享</string>
     <string name="deliveryTime">发货时效</string>
@@ -878,9 +879,9 @@
     <string name="broughtAccount">物载天下对公账号：</string>
     <string name="uploadProofPayment">上传付款凭证</string>
     <string name="balancePayment">余额支付</string>
+    <string name="lackBalance">余额不足</string>
     <string name="uploadProofPayment1">请上传付款凭证</string>
-
-
+    <string name="currentBalance">当前余额: ¥</string>
 
     <!--认证信息-->
     <string name="authenticationInformation">认证信息</string>

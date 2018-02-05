@@ -22,7 +22,6 @@
         <TextView
             android:id="@+id/tv_orderNumber"
             style="@style/WrapWrap"
-            android:paddingLeft="@dimen/dimen5"
             android:text="201712120231"
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize14" />
@@ -31,7 +30,7 @@
             android:id="@+id/img_label"
             android:layout_width="@dimen/dimen33"
             android:layout_height="@dimen/dimen16"
-            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen8"
             android:src="@mipmap/label_yuyue" />
 
 
@@ -39,14 +38,14 @@
             android:id="@+id/img_zanwu"
             android:layout_width="@dimen/dimen50"
             android:layout_height="@dimen/dimen16"
-            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen8"
             android:src="@mipmap/label_zanwu" />
 
         <ImageView
             android:id="@+id/img_yichang"
             android:layout_width="@dimen/dimen33"
             android:layout_height="@dimen/dimen16"
-            android:layout_marginLeft="@dimen/dimen10"
+            android:layout_marginLeft="@dimen/dimen8"
             android:src="@mipmap/label_yichang" />
 
 
@@ -54,6 +53,7 @@
             android:id="@+id/tv_orderStatus"
             style="@style/AutoWrap"
             android:gravity="right"
+            android:paddingLeft="@dimen/dimen1"
             android:paddingRight="@dimen/dimen15"
             android:text="@string/pendingOrder"
             android:textColor="@color/typecolors"
@@ -78,7 +78,6 @@
             android:textColor="@color/aAAAAAColors"
             android:textSize="@dimen/textsize14" />
 
-
         <TextView
             android:id="@+id/tv_orderTime"
             style="@style/WrapWrap"
@@ -87,7 +86,6 @@
             android:text="2017-12-12 12:12"
             android:textColor="@color/textColor"
             android:textSize="@dimen/textsize14" />
-
 
     </LinearLayout>
 

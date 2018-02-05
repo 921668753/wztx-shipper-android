@@ -18,20 +18,10 @@ public interface EvaluationDriverContract {
         /**
          * 发送评价信息
          */
-        void postEvaluationShare(int order_id, float deliveryTime, float serviceAttitude, float satisfaction, String note);
+        void postEvaluationShare(int order_id, int deliveryTime, int serviceAttitude);
     }
 
     interface View extends BaseNewView<Presenter,String> {
-//        /**
-//         * http请求正确
-//         *
-//         * @param s
-//         */
-//        void getSuccess(String s, int flag);
-//
-//        /**
-//         * http请求错误
-//         */
-//        void error(String msg);
+
     }
 }

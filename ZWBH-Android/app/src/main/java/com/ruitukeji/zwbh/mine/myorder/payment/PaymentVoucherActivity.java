@@ -118,7 +118,7 @@ public class PaymentVoucherActivity extends BaseActivity implements EasyPermissi
                     images.add(imageItem);
                     //打开预览
                     toImagePreviewDelActivity(img_proofPayment, images, NumericConstants.READ_AND_WRITE_CODE);
-                    return;
+                    break;
                 }
                 choicePhotoWrapper();
                 break;
@@ -136,7 +136,7 @@ public class PaymentVoucherActivity extends BaseActivity implements EasyPermissi
 
     @Override
     public void getSuccess(String success, int flag) {
-
+        dismissLoadingDialog();
         if (flag == 0) {
             AppConfigBean appConfigBean = (AppConfigBean) JsonUtil.getInstance().json2Obj(success, AppConfigBean.class);
             PreferenceHelper.write(this, StringConstants.FILENAME, "lastApkUrl", appConfigBean.getResult().getLastApkUrl());
@@ -162,7 +162,9 @@ public class PaymentVoucherActivity extends BaseActivity implements EasyPermissi
             tv_broughtAccount.setText(getString(R.string.broughtAccount) + appConfigBean.getResult().getTran_account());
         } else if (flag == 1) {
             ViewInject.toast(getString(R.string.submittedSuccessfully));
-            KJActivityStack.create().finishActivity(CheckVoucherActivity.class);
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+//            // 结束该activity 结束之后，前面的activity才可以处理结果
             finish();
         } else if (flag == REQUEST_CODE) {
             UploadImageBean uploadImageBean = (UploadImageBean) JsonUtil.getInstance().json2Obj(success, UploadImageBean.class);
@@ -178,8 +180,10 @@ public class PaymentVoucherActivity extends BaseActivity implements EasyPermissi
     public void errorMsg(String msg, int flag) {
         if (flag == 0) {
             ((PaymentVoucherContract.Presenter) mPresenter).getAppConfig();
+        } else {
+            dismissLoadingDialog();
+            toLigon1(msg);
         }
-
     }
 
     @AfterPermissionGranted(NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER)
@@ -187,8 +191,7 @@ public class PaymentVoucherActivity extends BaseActivity implements EasyPermissi
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         if (EasyPermissions.hasPermissions(this, perms)) {
             Intent intent = new Intent(this, ImageGridActivity.class);
-            intent.putExtra(ImageGridActivity.EXTRAS_IMAGES, images);
-            //ImagePicker.getInstance().setSelectedImages(images);
+            intent.putExtra(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
             startActivityForResult(intent, NumericConstants.REQUEST_CODE_CHOOSE_PHOTO);
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.needPermission), NumericConstants.REQUEST_CODE_PERMISSION_PHOTO_PICKER, perms);
@@ -242,6 +245,7 @@ public class PaymentVoucherActivity extends BaseActivity implements EasyPermissi
                 ViewInject.toast(getString(R.string.noData));
                 return;
             }
+            showLoadingDialog(getString(R.string.crossLoad));
             ((PaymentVoucherContract.Presenter) mPresenter).postUpLoadImg(images.get(0).path, REQUEST_CODE);
         }
     }

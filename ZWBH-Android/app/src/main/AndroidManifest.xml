@@ -208,9 +208,14 @@
             android:name=".mine.myorder.payment.PaymentActivity"
             android:screenOrientation="portrait" />
 
-        <!--个人中心 我的订单 查看评价-->
+        <!--个人中心 我的订单 付款 付款凭证-->
         <activity
-            android:name=".mine.myorder.orderfragment.EvaluationShareActivity"
+            android:name=".mine.myorder.payment.PaymentVoucherActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心 我的订单 查看/评价司机-->
+        <activity
+            android:name=".mine.myorder.orderdetails.EvaluationDriverActivity"
             android:screenOrientation="portrait" />
 
         <!--个人中心  地址管理-->

@@ -1,5 +1,7 @@
 package com.ruitukeji.zwbh.mine.myorder.payment;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,8 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.PayUtils;
 
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+
 /**
  * 付款
  * Created by Administrator on 2017/2/24.
@@ -42,13 +46,20 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     @BindView(id = R.id.ll_balancePayment)
     private LinearLayout ll_balancePayment;
 
+    @BindView(id = R.id.tv_balance)
+    private TextView tv_balance;
+
     @BindView(id = R.id.tv_balancePayment)
     private TextView tv_balancePayment;
 
+    @BindView(id = R.id.img_balancePayment, click = true)
+    private ImageView img_balancePayment;
 
-    @BindView(id = R.id.img_balancePayment1, click = true)
-    private ImageView img_balancePayment1;
-
+    /**
+     * 上传支付凭证
+     */
+    @BindView(id = R.id.img_uploadProofPayment, click = true)
+    private ImageView img_uploadProofPayment;
 
     /**
      * 微信支付
@@ -67,7 +78,6 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     @BindView(id = R.id.img_alipayPay, click = true)
     private ImageView img_alipayPay;
 
-
     /**
      * 确定
      */
@@ -75,7 +85,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     private TextView tv_determine;
 
     /**
-     * 选择支付方式  1 余额   2  微信  3  支付宝
+     * 选择支付方式  1   余额   2   微信  3   支付宝 4   上传支付凭证
      */
     private int methodPayment = 0;
 
@@ -110,24 +120,33 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     @Override
     public void widgetClick(View v) {
         super.widgetClick(v);
-
         switch (v.getId()) {
-            case R.id.img_balancePayment1:
-                img_balancePayment1.setImageResource(R.mipmap.selected);
-                img_weChatPay.setImageResource(R.mipmap.selected1);
-                img_alipayPay.setImageResource(R.mipmap.selected1);
+            case R.id.img_balancePayment:
+                img_balancePayment.setImageResource(R.mipmap.ic_checkbox_select);
+                img_weChatPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_alipayPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_uploadProofPayment.setImageResource(R.mipmap.ic_checkbox_unselect);
                 methodPayment = 1;
                 break;
+            case R.id.img_uploadProofPayment:
+                img_balancePayment.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_weChatPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_alipayPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_uploadProofPayment.setImageResource(R.mipmap.ic_checkbox_select);
+                methodPayment = 4;
+                break;
             case R.id.img_weChatPay:
-                img_balancePayment1.setImageResource(R.mipmap.selected1);
-                img_weChatPay.setImageResource(R.mipmap.selected);
-                img_alipayPay.setImageResource(R.mipmap.selected1);
+                img_balancePayment.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_weChatPay.setImageResource(R.mipmap.ic_checkbox_select);
+                img_alipayPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_uploadProofPayment.setImageResource(R.mipmap.ic_checkbox_unselect);
                 methodPayment = 2;
                 break;
             case R.id.img_alipayPay:
-                img_balancePayment1.setImageResource(R.mipmap.selected1);
-                img_weChatPay.setImageResource(R.mipmap.selected1);
-                img_alipayPay.setImageResource(R.mipmap.selected);
+                img_balancePayment.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_weChatPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_alipayPay.setImageResource(R.mipmap.ic_checkbox_select);
+                img_uploadProofPayment.setImageResource(R.mipmap.ic_checkbox_unselect);
                 methodPayment = 3;
                 break;
             case R.id.tv_determine:
@@ -138,6 +157,10 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
                     ((PaymentContract.Presenter) mPresenter).getWxPay(order_id, total_amount);
                 } else if (methodPayment == 3) {
                     ((PaymentContract.Presenter) mPresenter).getAlipay(order_id, total_amount);
+                } else if (methodPayment == 4) {
+                    Intent intent = new Intent(aty, PaymentVoucherActivity.class);
+                    intent.putExtra("order_id", order_id);
+                    startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 }
                 break;
         }
@@ -148,6 +171,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
         mPresenter = presenter;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
@@ -176,19 +200,22 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
             String balance = myWalletBean.getResult().getBalance();
             tv_choicePayment.setText(getString(R.string.choicePayment));
             if (StringUtils.toDouble(total_amount) > StringUtils.toDouble(balance)) {
-                tv_balancePayment.setText("余额不足");
-                img_balancePayment1.setVisibility(View.GONE);
-                // 微信
-                ll_weChatPay.setVisibility(View.VISIBLE);
-                img_weChatPay.setImageResource(R.mipmap.selected);
-                img_alipayPay.setImageResource(R.mipmap.selected1);
-                methodPayment = 2;
+                tv_balancePayment.setText(getString(R.string.lackBalance));
+                tv_balance.setVisibility(View.GONE);
+                img_balancePayment.setVisibility(View.GONE);
+                img_uploadProofPayment.setImageResource(R.mipmap.ic_checkbox_select);
+                img_weChatPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_alipayPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                methodPayment = 4;
             } else {
                 tv_balancePayment.setText(getString(R.string.balancePayment));
-                img_balancePayment1.setVisibility(View.VISIBLE);
-                img_balancePayment1.setImageResource(R.mipmap.selected);
-                img_weChatPay.setImageResource(R.mipmap.selected1);
-                img_alipayPay.setImageResource(R.mipmap.selected1);
+                img_balancePayment.setVisibility(View.VISIBLE);
+                tv_balance.setVisibility(View.VISIBLE);
+                tv_balance.setText(getString(R.string.currentBalance) + balance);
+                img_balancePayment.setImageResource(R.mipmap.ic_checkbox_select);
+                img_uploadProofPayment.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_weChatPay.setImageResource(R.mipmap.ic_checkbox_unselect);
+                img_alipayPay.setImageResource(R.mipmap.ic_checkbox_unselect);
                 methodPayment = 1;
             }
         }
@@ -210,6 +237,15 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onDestroy() {

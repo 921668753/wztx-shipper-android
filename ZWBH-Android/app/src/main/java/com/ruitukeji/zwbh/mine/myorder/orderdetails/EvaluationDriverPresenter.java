@@ -24,28 +24,27 @@ public class EvaluationDriverPresenter implements EvaluationDriverContract.Prese
     }
 
     @Override
-    public void postEvaluationShare(int order_id, float deliveryTime, float serviceAttitude, float satisfaction, String note) {
+    public void postEvaluationShare(int order_id, int deliveryTime, int serviceAttitude) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("order_id", order_id);
-        map.put("limit_ship", (int) deliveryTime);
-        map.put("attitude", (int) serviceAttitude);
-        map.put("satisfaction", (int) satisfaction);
-        if (StringUtils.isEmpty(note)) {
-        } else {
-            map.put("content", note);
-        }
+        map.put("limit_ship", deliveryTime);
+        map.put("attitude", serviceAttitude);
+        //    map.put("satisfaction", (int) satisfaction);
+//        if (StringUtils.isEmpty(note)) {
+//        } else {
+//            map.put("content", note);
+//        }
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-
         RequestClient.postEvaluationShare(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
+                mView.getSuccess(response, 1);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 0);
+                mView.errorMsg(msg, 1);
             }
         });
     }
@@ -57,12 +56,12 @@ public class EvaluationDriverPresenter implements EvaluationDriverContract.Prese
         RequestClient.getEvaluationShare(httpParams, new ResponseListener<String>() {
             @Override
             public void onSuccess(String response) {
-                mView.getSuccess(response, 1);
+                mView.getSuccess(response, 0);
             }
 
             @Override
             public void onFailure(String msg) {
-                mView.errorMsg(msg, 1);
+                mView.errorMsg(msg, 0);
             }
         });
     }

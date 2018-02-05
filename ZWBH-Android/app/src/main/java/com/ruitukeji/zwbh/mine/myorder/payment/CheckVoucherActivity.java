@@ -23,6 +23,8 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+
 
 /**
  * 查看凭证
@@ -112,7 +114,7 @@ public class CheckVoucherActivity extends BaseActivity implements CheckVoucherCo
                 Intent intent = new Intent(aty, PaymentActivity.class);
                 intent.putExtra("order_id", order_id);
                 intent.putExtra("total_amount", total_amount);
-                showActivity(aty, intent);
+                startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.tv_hintText:
                 showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
@@ -165,6 +167,16 @@ public class CheckVoucherActivity extends BaseActivity implements CheckVoucherCo
         intentPreview.putExtra(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
         intentPreview.putExtra(ImagePicker.EXTRA_FROM_ITEMS, true);
         showActivity(aty, intentPreview);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     @Override

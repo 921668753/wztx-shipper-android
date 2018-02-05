@@ -27,6 +27,9 @@ import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
+import static android.app.Activity.RESULT_OK;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+
 /**
  * 待支付
  * Created by Administrator on 2017/2/16.
@@ -52,18 +55,22 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */
     private int mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 总页码
      */
     private int totalPageNumber = NumericConstants.START_PAGE_NUMBER;
+
     /**
      * 是否加载更多
      */
     private boolean isShowLoadingMore = false;
+
     /**
      * 订单状态（all全部状态， 待接订 quote quoted已报价，待发货 distribute配送中（在配送-未拍照）发货中 待支付 toPay success 完成
      */
@@ -134,7 +141,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
-        aty.showActivity(aty, intent);
+        startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
     }
 
 
@@ -149,7 +156,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
             intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
             intent.putExtra("total_amount", mAdapter.getItem(position).getFinal_price());
             intent.putExtra("per_status", mAdapter.getItem(position).getPer_status());
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
         }
     }
 
@@ -194,6 +201,15 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     @Override
     public void setPresenter(OrderContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            mRefreshLayout.beginRefreshing();
+        }
     }
 
     @Override

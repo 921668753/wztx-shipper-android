@@ -19,19 +19,26 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.OrderBean;
+import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
+import com.ruitukeji.zwbh.mine.myorder.logisticspositioning.LogisticsPositioningActivity;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.EvaluationDriverActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static android.app.Activity.RESULT_OK;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 
 /**
  * 已完成
  * Created by Administrator on 2017/2/16.
  */
 
-public class CompletedFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
+public class CompletedFragment extends BaseFragment implements OrderContract.View, AdapterView.OnItemClickListener, BGAOnItemChildClickListener, BGARefreshLayout.BGARefreshLayoutDelegate {
     @BindView(id = R.id.mRefreshLayout)
     private BGARefreshLayout mRefreshLayout;
 
@@ -88,12 +95,55 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
         ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         lv_order.setAdapter(mAdapter);
         lv_order.setOnItemClickListener(this);
+        mAdapter.setOnItemChildClickListener(this);
     }
 
+    /**
+     * 控件监听事件
+     */
+    @Override
+    public void widgetClick(View v) {
+        super.widgetClick(v);
+        switch (v.getId()) {
+            case R.id.tv_hintText:
+                mRefreshLayout.beginRefreshing();
+                break;
+        }
+    }
+
+    @Override
+    public void onItemChildClick(ViewGroup parent, View childView, int position) {
+        if (childView.getId() == R.id.tv_checkAbnormal) {
+            Intent intent = new Intent(aty, AbnormalRecordsActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            startActivity(intent);
+        } else if (childView.getId() == R.id.tv_viewShippingTrack) {
+            Intent intent = new Intent(aty, LogisticsPositioningActivity.class);
+            intent.putExtra("map_code", mAdapter.getItem(position).getMap_code());
+            intent.putExtra("real_name", mAdapter.getItem(position).getDr_name());
+            intent.putExtra("card_number", mAdapter.getItem(position).getCard_number());
+            intent.putExtra("avatar", mAdapter.getItem(position).getAvatar());
+            intent.putExtra("phone", mAdapter.getItem(position).getDr_phone());
+            intent.putExtra("org_address", mAdapter.getItem(position).getOrg_city());
+            intent.putExtra("org_address_maps", mAdapter.getItem(position).getOrg_address_maps());
+            intent.putExtra("dest_address_maps", mAdapter.getItem(position).getDest_address_maps());
+            intent.putExtra("dest_address", mAdapter.getItem(position).getDest_city());
+            startActivity(intent);
+        } else if (childView.getId() == R.id.tv_evaluationDriver) {
+            Intent intent = new Intent(aty, EvaluationDriverActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            intent.putExtra("status", mAdapter.getItem(position).getStatus());
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+        } else if (childView.getId() == R.id.tv_seeEvaluation) {
+            Intent intent = new Intent(aty, EvaluationDriverActivity.class);
+            intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+            intent.putExtra("status", mAdapter.getItem(position).getStatus());
+            startActivity(intent);
+        }
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "CompletedFragment");
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
         aty.showActivity(aty, intent);
@@ -123,18 +173,6 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
         return true;
     }
 
-    /**
-     * 控件监听事件
-     */
-    @Override
-    public void widgetClick(View v) {
-        super.widgetClick(v);
-        switch (v.getId()) {
-            case R.id.tv_hintText:
-                mRefreshLayout.beginRefreshing();
-                break;
-        }
-    }
 
     @Override
     public void getSuccess(String success, int flag) {
@@ -179,6 +217,13 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
         mPresenter = presenter;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            mRefreshLayout.beginRefreshing();
+        }
+    }
 
     @Override
     public void onDestroy() {
@@ -186,5 +231,6 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Vie
         mAdapter.clear();
         mAdapter = null;
     }
+
 }
 

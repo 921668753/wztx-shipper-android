@@ -31,7 +31,7 @@
             android:layout_width="@dimen/dimen30"
             android:layout_height="@dimen/dimen30"
             android:layout_marginLeft="@dimen/dimen15"
-            android:src="@mipmap/balancepayment" />
+            android:src="@mipmap/yue" />
 
         <TextView
             android:id="@+id/tv_balancePayment"
@@ -41,17 +41,59 @@
             android:textColor="@color/titletextcolors"
             android:textSize="@dimen/textsize15" />
 
+        <TextView
+            android:id="@+id/tv_balance"
+            style="@style/WrapWrap"
+            android:layout_marginRight="@dimen/dimen4"
+            android:text="@string/currentBalance"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize13" />
+
         <ImageView
-            android:id="@+id/img_balancePayment1"
+            android:id="@+id/img_balancePayment"
             android:layout_width="@dimen/dimen50"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dimen19"
             android:paddingTop="@dimen/dimen19"
-            android:src="@mipmap/selected" />
+            android:src="@mipmap/ic_checkbox_select" />
 
     </LinearLayout>
 
     <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen60"
+        android:background="@color/mainColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dimen30"
+            android:layout_height="@dimen/dimen30"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:src="@mipmap/balancepayment" />
+
+        <TextView
+            style="@style/AutoWrap"
+            android:layout_marginLeft="@dimen/dimen16"
+            android:text="@string/uploadProofPayment"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <ImageView
+            android:id="@+id/img_uploadProofPayment"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dimen19"
+            android:paddingTop="@dimen/dimen19"
+            android:src="@mipmap/ic_checkbox_unselect" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/commom_dividerwidth1"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_weChatPay"
@@ -59,7 +101,8 @@
         android:layout_height="@dimen/dimen60"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="@dimen/dimen30"
@@ -80,7 +123,7 @@
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dimen19"
             android:paddingTop="@dimen/dimen19"
-            android:src="@mipmap/selected1" />
+            android:src="@mipmap/ic_checkbox_unselect" />
 
     </LinearLayout>
 
@@ -113,23 +156,20 @@
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dimen19"
             android:paddingTop="@dimen/dimen19"
-            android:src="@mipmap/selected1" />
+            android:src="@mipmap/ic_checkbox_unselect" />
     </LinearLayout>
-
 
 
     <TextView
         android:id="@+id/tv_determine"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen40"
+        style="@style/Match45"
         android:layout_marginLeft="@dimen/dimen15"
         android:layout_marginRight="@dimen/dimen15"
-        android:layout_marginTop="@dimen/dimen32"
+        android:layout_marginTop="@dimen/dimen26"
         android:background="@drawable/shape_login"
         android:gravity="center"
         android:text="@string/determine"
         android:textColor="@color/mainColor"
-        android:textSize="@dimen/textsize12" />
-
+        android:textSize="@dimen/textsize16" />
 
 </LinearLayout>

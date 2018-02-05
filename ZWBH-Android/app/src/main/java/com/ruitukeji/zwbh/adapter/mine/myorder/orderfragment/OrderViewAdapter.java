@@ -99,7 +99,7 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("photo") || !StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("pay_failed")) {
             viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.pendingPayment));
         } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("pay_success") || !StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("comment")) {
-            viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.pendingPayment));
+            viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.completed));
         } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("cancel")) {
             viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.canceledOrder));
         }
@@ -177,7 +177,6 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.ll_bottom, View.VISIBLE);
             viewHolderHelper.setVisibility(R.id.tv_checkAbnormal, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_confirmPayment, View.GONE);
-
             viewHolderHelper.setVisibility(R.id.tv_viewShippingTrack, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_contactDriver, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_evaluationDriver, View.GONE);

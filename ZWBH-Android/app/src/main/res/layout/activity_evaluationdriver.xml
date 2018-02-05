@@ -26,6 +26,7 @@
             android:textSize="@dimen/textsize14" />
 
         <com.azhong.ratingbar.RatingBar
+            android:id="@+id/rb_deliveryTime"
             android:layout_width="@dimen/dimen210"
             android:layout_height="@dimen/dimen46"
             android:layout_marginLeft="@dimen/dimen16"
@@ -56,6 +57,7 @@
             android:textSize="@dimen/textsize14" />
 
         <com.azhong.ratingbar.RatingBar
+            android:id="@+id/rb_serviceAttitude"
             android:layout_width="@dimen/dimen210"
             android:layout_height="@dimen/dimen46"
             android:layout_marginLeft="@dimen/dimen16"

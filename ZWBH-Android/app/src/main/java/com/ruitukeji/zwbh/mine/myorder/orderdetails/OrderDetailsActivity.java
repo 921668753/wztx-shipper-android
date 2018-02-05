@@ -25,10 +25,13 @@ import com.ruitukeji.zwbh.utils.JsonUtil;
 
 import java.util.List;
 
+import cn.bingoogolapple.titlebar.BGATitleBar;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PERMISSION_CALL;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PREVIEW;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_SELECT;
 
 /**
@@ -343,6 +346,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private String avatar = "";
     private ContactDriverBouncedDialog contactDriverBouncedDialog = null;
     private String per_status = "init";
+    private boolean isRefresh = false;
 
     @Override
     public void setRootView() {
@@ -359,7 +363,26 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.orderDetails), true, R.id.titlebar);
+        //   ActivityTitleUtils.initToolbar(aty, , true, R.id.titlebar);
+
+        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
+            @Override
+            public void onClickLeftCtv() {
+                super.onClickLeftCtv();
+                if (isRefresh) {
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                }
+                finish();
+            }
+
+            @Override
+            public void onClickRightCtv() {
+                super.onClickRightCtv();
+
+            }
+        };
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.orderDetails), "", R.id.titlebar, simpleDelegate);
         showLoadingDialog(getString(R.string.dataLoad));
         ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
     }
@@ -451,18 +474,22 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 checkVoucherIntent.putExtra("order_id", orderId);
                 checkVoucherIntent.putExtra("total_amount", tv_actualPayment.getText().toString().trim());
                 checkVoucherIntent.putExtra("per_status", per_status);
-                startActivity(checkVoucherIntent);
+                startActivityForResult(checkVoucherIntent, REQUEST_CODE_PREVIEW);
                 break;
             case R.id.tv_contactDriver:
                 choiceCallWrapper(dr_phone);
                 break;
             case R.id.tv_evaluationDriver:
-
-
+                Intent evaluationDriverIntent1 = new Intent(aty, EvaluationDriverActivity.class);
+                evaluationDriverIntent1.putExtra("order_id", orderId);
+                evaluationDriverIntent1.putExtra("status", status);
+                startActivityForResult(evaluationDriverIntent1, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.tv_seeEvaluation:
-
-
+                Intent evaluationDriverIntent = new Intent(aty, EvaluationDriverActivity.class);
+                evaluationDriverIntent.putExtra("order_id", orderId);
+                evaluationDriverIntent.putExtra("status", status);
+                startActivity(evaluationDriverIntent);
                 break;
         }
     }
@@ -748,6 +775,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
             showLoadingDialog(getString(R.string.dataLoad));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+        } else if (requestCode == REQUEST_CODE_PREVIEW && resultCode == RESULT_OK) {
+            showLoadingDialog(getString(R.string.dataLoad));
+            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+            isRefresh = true;
+        } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            showLoadingDialog(getString(R.string.dataLoad));
+            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+            isRefresh = true;
         }
     }
 
