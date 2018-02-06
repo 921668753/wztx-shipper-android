@@ -486,6 +486,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
             provenancePhone = data.getStringExtra("phone");
             isOff = data.getIntExtra("isOff1", 0);
             provenanceEixedTelephone = data.getStringExtra("eixedTelephone");
+
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 15));
             tv_pleaseEnterDeparturePoint.setText(provenancePlaceName);
         } else if (requestCode == REQUEST_CODE_PREVIEW && resultCode == RESULT_OK) {
@@ -510,6 +511,7 @@ public class IntercityFragment extends BaseFragment implements EasyPermissions.P
              * 目的地信息
              */
             cleanDestination();
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 15));
         }
     }
 

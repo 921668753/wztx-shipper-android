@@ -68,6 +68,7 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
     private LinearLayout ll_commonError;
     @BindView(id = R.id.tv_hintText, click = true)
     private TextView tv_hintText;
+
     /**
      * 当前页码
      */

@@ -166,7 +166,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
 
     private String card_number = "";
 
-    private int driverCargo = 1;
+    private int driverCargo = 0;
     private String vehicleModel;
     private String vehicleLength;
     private String m;

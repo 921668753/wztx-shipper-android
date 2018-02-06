@@ -125,6 +125,7 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
     @Override
     public void initWidget() {
         super.initWidget();
+        tv_determine.setClickable(false);
         et_detailedAddress.addTextChangedListener(this);
         et_deliveryCustomer.addTextChangedListener(this);
         et_shipper.addTextChangedListener(this);

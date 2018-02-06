@@ -531,6 +531,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
              * 目的地信息
              */
             cleanDestination();
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(StringUtils.toDouble(provenanceLat) - 0.0004, StringUtils.toDouble(provenanceLongi)), 15));
         }
     }
 

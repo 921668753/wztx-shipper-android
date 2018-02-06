@@ -135,6 +135,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     @Override
     public void initWidget() {
         super.initWidget();
+        tv_determine.setClickable(false);
         et_detailedAddress.addTextChangedListener(this);
         et_deliveryCustomer.addTextChangedListener(this);
         et_shipper.addTextChangedListener(this);
@@ -284,13 +285,13 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         setResult(RESULT_OK, intent);
         finish();
 
-        if (flag == 0) {
-
-
-        } else if (flag == 1) {
-
-
-        }
+//        if (flag == 0) {
+//
+//
+//        } else if (flag == 1) {
+//
+//
+//        }
         //    dismissLoadingDialog();
     }
 

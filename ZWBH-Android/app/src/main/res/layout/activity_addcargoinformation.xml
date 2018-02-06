@@ -259,7 +259,7 @@
                     android:layout_width="@dimen/dimen50"
                     android:layout_height="@dimen/dimen28"
                     android:layout_marginRight="@dimen/dimen15"
-                    android:src="@mipmap/switch_btn_on" />
+                    android:src="@mipmap/switch_btn_off" />
 
             </LinearLayout>
 

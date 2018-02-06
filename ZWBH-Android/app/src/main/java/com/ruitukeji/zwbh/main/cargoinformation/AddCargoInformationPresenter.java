@@ -72,26 +72,20 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseEnter) + MyApplication.getContext().getString(R.string.descriptionGoods), 0);
             return;
         }
-
         if (StringUtils.isEmpty(weight)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseEnter) + MyApplication.getContext().getString(R.string.totalWeight), 0);
             return;
         }
-
         if (StringUtils.isEmpty(volume)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseEnter) + MyApplication.getContext().getString(R.string.totalVolume), 0);
             return;
         }
-
         if (StringUtils.isEmpty(car_style_length) || StringUtils.isEmpty(car_style_type)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.vehicleRequirements), 0);
             return;
         }
         if (!type.equals("appoint")) {
             appoint_at = String.valueOf(System.currentTimeMillis() / 1000);
-        }
-        if (StringUtils.isEmpty(fact_pay)) {
-            fact_pay = system_price;
         }
         if (!StringUtils.isEmpty(card_number)) {
             mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
@@ -130,15 +124,15 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             map.put("system_price", system_price);
             map.put("tran_type", tran_type);
             map.put("kilometres", kilometres);
-
             map.put("spot", spot);
             map.put("spot_cost", spot_cost);
             map.put("card_number", card_number);
             map.put("is_driver_dock", is_driver_dock);
-            map.put("fact_pay", fact_pay);
+            if (!StringUtils.isEmpty(fact_pay)) {
+                map.put("mind_price", fact_pay);
+            }
             map.put("is_cargo_receipt", is_cargo_receipt);
             map.put("cargo_man", cargo_man);
-
             map.put("cargo_tel", cargo_tel);
             map.put("cargo_address", cargo_address);
             map.put("cargo_address_detail", cargo_address_detail);
@@ -159,7 +153,6 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
         }
         submitOrdersBouncedDialog = null;
         String finalAppoint_at = appoint_at;
-        String finalFact_pay = fact_pay;
         submitOrdersBouncedDialog = new SubmitOrdersBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
             public void confirm() {
@@ -193,19 +186,19 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                 map.put("car_style_type", car_style_type);
                 map.put("car_style_type_id", car_style_type_id);
                 map.put("car_style_length", car_style_length);
-
                 map.put("car_style_length_id", car_style_length_id);
                 map.put("effective_time", effective_time);
                 map.put("is_receipt", is_receipt);
                 map.put("system_price", system_price);
                 map.put("tran_type", tran_type);
                 map.put("kilometres", kilometres);
-
                 map.put("spot", spot);
                 map.put("spot_cost", spot_cost);
                 map.put("card_number", card_number);
                 map.put("is_driver_dock", is_driver_dock);
-                map.put("fact_pay", finalFact_pay);
+                if (!StringUtils.isEmpty(fact_pay)) {
+                    map.put("mind_price", fact_pay);
+                }
                 map.put("is_cargo_receipt", is_cargo_receipt);
                 map.put("cargo_man", cargo_man);
 
@@ -214,7 +207,6 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                 map.put("cargo_address_detail", cargo_address_detail);
                 map.put("cargo_is_express", cargo_is_express);
 
-                Log.d("tag1111", "11111");
                 httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
                 RequestClient.postLogistics(httpParams, new ResponseListener<String>() {
                     @Override

@@ -727,6 +727,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_orderStatus.setText(getString(R.string.canceledOrder));
             ll_bottom.setVisibility(View.GONE);
             ll_userName.setVisibility(View.GONE);
+            ll_driverInformation.setVisibility(View.GONE);
             ll_licensePlateNumber.setVisibility(View.GONE);
             ll_vehicleInformation.setVisibility(View.GONE);
         }
