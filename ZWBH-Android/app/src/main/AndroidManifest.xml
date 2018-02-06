@@ -153,9 +153,6 @@
             android:screenOrientation="portrait" />
 
         <!--发货信息-->
-        <activity
-            android:name=".main.DeliveryInformationActivity"
-            android:screenOrientation="portrait" />
 
         <!--消息中心-->
         <activity
