@@ -63,7 +63,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                                         String dest_address_name, String dest_address_detail, String dest_receive_client,
                                         String dest_receive_name, String dest_phone, String dest_telphone, String goods_name,
                                         String volume, String weight, String car_style_type, int car_style_type_id, String car_style_length,
-                                        int car_style_length_id, long effective_time, int is_receipt, String system_price, int tran_type,
+                                        int car_style_length_id, long effective_time, String system_price, int tran_type,
                                         String kilometres, int spot, double spot_cost, String card_number, int is_driver_dock, String fact_pay,
                                         int is_cargo_receipt, String cargo_man, String cargo_tel, String cargo_address, String cargo_address_detail,
                                         int cargo_is_express, int isLongTimeCar) {
@@ -86,6 +86,11 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
         }
         if (!type.equals("appoint")) {
             appoint_at = String.valueOf(System.currentTimeMillis() / 1000);
+        }
+
+        if (!StringUtils.isEmpty(fact_pay) && StringUtils.toDouble(fact_pay) <= 0) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseEnterCorrectPaymentPrice), 0);
+            return;
         }
         if (!StringUtils.isEmpty(card_number)) {
             mView.showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
@@ -120,7 +125,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
             map.put("is_longtime_car", isLongTimeCar);
             map.put("car_style_length_id", car_style_length_id);
             map.put("effective_time", effective_time);
-            map.put("is_receipt", is_receipt);
+            //   map.put("is_receipt", is_receipt);
             map.put("system_price", system_price);
             map.put("tran_type", tran_type);
             map.put("kilometres", kilometres);
@@ -188,7 +193,7 @@ public class AddCargoInformationPresenter implements AddCargoInformationContract
                 map.put("car_style_length", car_style_length);
                 map.put("car_style_length_id", car_style_length_id);
                 map.put("effective_time", effective_time);
-                map.put("is_receipt", is_receipt);
+                //    map.put("is_receipt", is_receipt);
                 map.put("system_price", system_price);
                 map.put("tran_type", tran_type);
                 map.put("kilometres", kilometres);

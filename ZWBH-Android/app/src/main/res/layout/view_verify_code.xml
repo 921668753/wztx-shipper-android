@@ -68,13 +68,13 @@
 
         <View style="@style/textview_codeStyle" />
 
-        <View style="@style/AutoWrap" />
+        <!--<View style="@style/AutoWrap" />-->
 
-        <View style="@style/textview_codeStyle" />
+        <!--<View style="@style/textview_codeStyle" />-->
 
-        <View style="@style/AutoWrap" />
+        <!--<View style="@style/AutoWrap" />-->
 
-        <View style="@style/textview_codeStyle" />
+        <!--<View style="@style/textview_codeStyle" />-->
 
     </LinearLayout>
 

@@ -762,6 +762,7 @@
     <string name="unauthorized1">您还未认证或者认证失败，认证通过后才能发布订单</string>
     <string name="submittedSuccessfully">提交成功</string>
     <string name="submittedInformation">提交后如要修改请联系客服！！</string>
+    <string name="pleaseEnterCorrectPaymentPrice">请输入正确的支付价格</string>
 
     <!--发货信息-->
     <string name="deliveryInformation">发货信息</string>
