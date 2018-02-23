@@ -1,5 +1,9 @@
 package com.ruitukeji.zwbh.mine.myorder.logisticspositioning;
 
+import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.model.Circle;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
 import com.ruitukeji.zwbh.common.BasePresenter;
 import com.ruitukeji.zwbh.common.BaseView;
 
@@ -15,6 +19,12 @@ public interface LogisticsPositioningContract {
          * 获取订单轨迹信息
          */
         void getTrajectory(String id);
+        /**
+         * 地图添加定位点
+         */
+        Circle addCircle(LatLng latlng, double radius, AMap aMap, Circle mCircle);
+
+        Marker addMarker(LatLng latlng, double radius, AMap aMap, Marker mLocMarker);
     }
 
     interface View extends BaseView<Presenter> {

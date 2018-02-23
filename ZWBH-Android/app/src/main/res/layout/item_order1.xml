@@ -33,6 +33,12 @@
             android:layout_marginLeft="@dimen/dimen7"
             android:src="@mipmap/label_yuyue" />
 
+        <ImageView
+            android:id="@+id/img_zhipai"
+            android:layout_width="@dimen/dimen50"
+            android:layout_height="@dimen/dimen16"
+            android:layout_marginLeft="@dimen/dimen7"
+            android:src="@mipmap/label_zhipai" />
 
         <ImageView
             android:id="@+id/img_zanwu"

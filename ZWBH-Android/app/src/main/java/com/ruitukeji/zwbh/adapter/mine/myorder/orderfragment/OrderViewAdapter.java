@@ -70,6 +70,13 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         } else {
             viewHolderHelper.setVisibility(R.id.img_label, View.GONE);
         }
+
+        if (listBean.getIs_assigned() == 0) {
+            viewHolderHelper.setVisibility(R.id.img_zhipai, View.GONE);
+        } else {
+            viewHolderHelper.setVisibility(R.id.img_zhipai, View.VISIBLE);
+        }
+
         if (listBean.getIs_quote() == 0) {
             viewHolderHelper.setVisibility(R.id.tv_viewQuotation, View.GONE);
             viewHolderHelper.setVisibility(R.id.img_zanwu, View.VISIBLE);

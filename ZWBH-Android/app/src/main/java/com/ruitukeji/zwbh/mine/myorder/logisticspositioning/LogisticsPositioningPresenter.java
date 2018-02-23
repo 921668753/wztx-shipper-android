@@ -1,14 +1,26 @@
 package com.ruitukeji.zwbh.mine.myorder.logisticspositioning;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+
+import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.model.BitmapDescriptor;
+import com.amap.api.maps2d.model.BitmapDescriptorFactory;
+import com.amap.api.maps2d.model.Circle;
+import com.amap.api.maps2d.model.CircleOptions;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.kymjs.common.Log;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.BuildConfig;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
+import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.NearbySearchBean;
-import com.ruitukeji.zwbh.mine.myorder.logisticspositioning.LogisticsPositioningContract;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
@@ -65,5 +77,32 @@ public class LogisticsPositioningPresenter implements LogisticsPositioningContra
                 mView.error(msg);
             }
         });
+    }
+
+    @Override
+    public Circle addCircle(LatLng latlng, double radius, AMap aMap, Circle mCircle) {
+        CircleOptions options = new CircleOptions();
+        options.strokeWidth(1f);
+        options.fillColor(Color.argb(10, 0, 0, 180));
+        options.strokeColor(Color.argb(180, 3, 145, 255));
+        options.center(latlng);
+        options.radius(radius);
+        mCircle = aMap.addCircle(options);
+        return mCircle;
+    }
+
+    @Override
+    public Marker addMarker(LatLng latlng, double radius, AMap aMap, Marker mLocMarker) {
+        if (mLocMarker != null) {
+            return null;
+        }
+        Bitmap bMap = BitmapFactory.decodeResource(KJActivityStack.create().topActivity().getResources(), R.mipmap.ic_map_mylocation);
+        BitmapDescriptor des = BitmapDescriptorFactory.fromBitmap(bMap);
+        MarkerOptions options1 = new MarkerOptions();
+        options1.icon(des);
+        options1.anchor(0.5f, 0.5f);
+        options1.position(latlng);
+        mLocMarker = aMap.addMarker(options1);
+        return mLocMarker;
     }
 }

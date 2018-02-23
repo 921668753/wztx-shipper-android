@@ -186,10 +186,10 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         int orgprovince = poiItem.getProvinceName().indexOf("省");
         if (orgprovince == -1) {
             district = poiItem.getCityName() + poiItem.getAdName();
-            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
+            placeName = poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
         } else {
             district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
-            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet();
+            placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
         }
         if (getIntent().getIntExtra("isProvenance", 0) == 1) {
             Intent intent = new Intent();

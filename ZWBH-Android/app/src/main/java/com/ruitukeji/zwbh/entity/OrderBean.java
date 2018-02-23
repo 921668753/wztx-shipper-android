@@ -97,6 +97,7 @@ public class OrderBean extends BaseResult<OrderBean.ResultBean> {
             private String card_number;
             private String avatar;
             private int is_abnormal;
+            private int is_assigned;
             private String map_code;
             private String appoint_at;
             private String create_at;
@@ -132,6 +133,14 @@ public class OrderBean extends BaseResult<OrderBean.ResultBean> {
 
             public void setDr_phone(String dr_phone) {
                 this.dr_phone = dr_phone;
+            }
+
+            public int getIs_assigned() {
+                return is_assigned;
+            }
+
+            public void setIs_assigned(int is_assigned) {
+                this.is_assigned = is_assigned;
             }
 
             public String getCard_number() {

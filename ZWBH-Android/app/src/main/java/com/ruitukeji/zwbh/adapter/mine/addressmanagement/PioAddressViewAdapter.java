@@ -26,11 +26,6 @@ public class PioAddressViewAdapter extends BGAAdapterViewAdapter<PoiItem> {
     public void fillData(BGAViewHolderHelper viewHolderHelper, int position, PoiItem model) {
         if (model.getLatLonPoint() != null && !StringUtils.isEmpty(String.valueOf(model.getLatLonPoint().getLongitude()))) {
             viewHolderHelper.setText(R.id.tv_placeName, model.getTitle());
-            Log.d("tag", model.getProvinceName());
-            Log.d("tag", model.getCityName());
-            Log.d("tag", model.getAdName());
-            Log.d("tag", model.getSnippet());
-            Log.d("tag", model.getTitle());
             int orgprovince = model.getProvinceName().indexOf("省");
             if (orgprovince == -1) {
                 viewHolderHelper.setText(R.id.tv_district, model.getCityName() + model.getAdName() + model.getSnippet());

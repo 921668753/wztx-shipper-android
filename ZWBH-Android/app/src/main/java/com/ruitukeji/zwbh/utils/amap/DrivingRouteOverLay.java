@@ -60,6 +60,33 @@ public class DrivingRouteOverLay extends RouteOverlay {
         this.throughPointList = throughPointList;
     }
 
+    /**
+     * 根据给定的参数，构造一个导航路线图层类对象。
+     *
+     * @param amap 地图对象。
+     */
+    public DrivingRouteOverLay(Context context, AMap amap) {
+        super(context);
+        mContext = context;
+        mAMap = amap;
+    }
+
+    public void setDrivePath(DrivePath path) {
+        this.drivePath = path;
+    }
+
+    public void setStartLatLonPoint(LatLonPoint start) {
+        this.startPoint = AMapUtil.convertToLatLng(start);
+    }
+
+    public void setEndLatLonPoint(LatLonPoint end) {
+        this.endPoint = AMapUtil.convertToLatLng(end);
+    }
+
+    public void setThroughPointList(List<LatLonPoint> throughPointList) {
+        this.throughPointList = throughPointList;
+    }
+
     public float getRouteWidth() {
         return mWidth;
     }
@@ -129,7 +156,7 @@ public class DrivingRouteOverLay extends RouteOverlay {
 
     public void addStartAndEndMarker(String startTitle, String endTitle) {
         super.addStartAndEndMarker();
-      //  int startcity = startTitle.indexOf("市");
+        //  int startcity = startTitle.indexOf("市");
         //startTitle.substring(0, startcity + 1)).snippet(startTitle.substring(startcity + 1))
         startMarker = mAMap.addMarker((new MarkerOptions())
                 .position(startPoint).icon(getStartBitmapDescriptor())
@@ -138,6 +165,7 @@ public class DrivingRouteOverLay extends RouteOverlay {
         int orgcity = endTitle.indexOf("市");
         endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
                 .icon(getEndBitmapDescriptor()).title(endTitle.substring(0, orgcity + 1)).snippet(endTitle.substring(orgcity + 1)));
+       //  mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, mAMap.getCameraPosition().zoom - 1));
 //        endMarker=  AMapUtil.customMarker(mAMap,endPoint,endTitle);
     }
 
