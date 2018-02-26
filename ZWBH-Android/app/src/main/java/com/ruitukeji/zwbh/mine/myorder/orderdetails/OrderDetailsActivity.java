@@ -417,6 +417,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 if (complaintsAboutDriverBouncedDialog != null && !complaintsAboutDriverBouncedDialog.isShowing()) {
                     complaintsAboutDriverBouncedDialog.show();
                     complaintsAboutDriverBouncedDialog.setDriverId(dr_id);
+                    break;
                 }
                 complaintsAboutDriverBouncedDialog = new ComplaintsAboutDriverBouncedDialog(aty, dr_id);
                 complaintsAboutDriverBouncedDialog.show();
@@ -527,9 +528,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             }
             tv_orderNumber.setText(result.getOrder_code());
             tv_rderForecastPrice.setText(result.getSystem_price());
-            if (!StringUtils.isEmpty(status) && status.equals("quote") && !StringUtils.isEmpty(result.getMind_price())) {
+            if (!StringUtils.isEmpty(status) && status.equals("quote") && !StringUtils.isEmpty(result.getMind_price()) && StringUtils.toDouble(result.getMind_price()) > 0) {
                 tv_actualPayment.setText(result.getMind_price());
-            } else if (!StringUtils.isEmpty(result.getFinal_price())) {
+            } else if (!StringUtils.isEmpty(result.getFinal_price()) && StringUtils.toDouble(result.getFinal_price()) > 0) {
                 tv_actualPayment.setText(result.getFinal_price());
             } else {
                 tv_actualPayment.setText(result.getSystem_price());

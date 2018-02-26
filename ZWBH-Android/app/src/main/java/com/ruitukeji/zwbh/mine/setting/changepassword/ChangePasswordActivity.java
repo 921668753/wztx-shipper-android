@@ -16,6 +16,8 @@ import com.ruitukeji.zwbh.loginregister.LoginActivity;
 import com.ruitukeji.zwbh.main.MainActivity;
 import com.ruitukeji.zwbh.mine.setting.SettingsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 /**
  * 修改密码
@@ -83,9 +85,17 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
 
     @Override
     public void getSuccess(String s) {
-        PreferenceHelper.clean(this, StringConstants.FILENAME);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "userId", 0);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "phone", "");
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "accessToken", "");
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshToken", "");
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "expireTime", "0");
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "timeBefore", "0");
+        /**
+         * 发送消息
+         */
+        RxBus.getInstance().post(new MsgEvent<String>("RxBusLoginEvent"));
         KJActivityStack.create().finishActivity(SettingsActivity.class);
-        PreferenceHelper.write(aty, StringConstants.FILENAME, "isAvatar", true);
         dismissLoadingDialog();
         skipActivity(aty, LoginActivity.class);
     }

@@ -31,6 +31,7 @@ import com.ruitukeji.zwbh.mine.myorder.payment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
 
 import java.util.List;
@@ -280,6 +281,14 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
         }
     }
 
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusAllOrderFragmentEvent")) {
+            ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
+        }
+    }
 
     @Override
     public void onDestroy() {

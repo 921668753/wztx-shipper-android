@@ -45,7 +45,7 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          * 订单时间
          */
-        viewHolderHelper.setText(R.id.tv_orderStatus, listBean.getCreate_at());
+        viewHolderHelper.setText(R.id.tv_orderTime, listBean.getCreate_at());
 
         /**
          * 预约时间
