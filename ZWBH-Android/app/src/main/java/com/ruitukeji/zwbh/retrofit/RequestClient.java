@@ -703,12 +703,12 @@ public class RequestClient {
     /**
      * 获取消息详情
      */
-    public static void getMessageDetails(HttpParams httpParams, final ResponseListener<String> listener) {
+    public static void getMessageDetails(HttpParams httpParams, ResponseListener<String> listener) {
         String accessToken = PreferenceHelper.readString(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "accessToken");
         if (!StringUtils.isEmpty(accessToken)) {
             httpParams.putHeaders("authorization-token", accessToken);
         }
-        HttpRequest.requestGetHttp(URLConstants.MESSAGEDETAIL + "/706", httpParams, listener);
+        HttpRequest.requestGetHttp(URLConstants.MESSAGEDETAIL, httpParams, listener);
     }
 
     /**

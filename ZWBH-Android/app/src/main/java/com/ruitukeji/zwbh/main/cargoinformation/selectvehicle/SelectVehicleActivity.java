@@ -88,7 +88,7 @@ public class SelectVehicleActivity extends BaseActivity implements SelectVehicle
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 Intent intent = new Intent(aty, AboutUsActivity.class);
-                intent.putExtra("type", "type");
+                intent.putExtra("type", "shipper_costs_that");
                 showActivity(aty, intent);
             }
         };

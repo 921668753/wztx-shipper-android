@@ -12,13 +12,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen72"
+        android:layout_height="@dimen/dimen57"
         android:layout_marginTop="@dimen/dimen10"
         android:background="@color/mainColor"
         android:orientation="horizontal">
 
         <TextView
             style="@style/WrapWrap"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen15"
             android:layout_marginTop="@dimen/dimen30"
             android:text="@string/deliveryTime"
@@ -43,13 +44,13 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen72"
+        style="@style/MatchWrap"
         android:background="@color/mainColor"
         android:orientation="horizontal">
 
         <TextView
             style="@style/WrapWrap"
+            android:layout_marginBottom="@dimen/dimen14"
             android:layout_marginLeft="@dimen/dimen15"
             android:layout_marginTop="@dimen/dimen14"
             android:text="@string/serviceAttitude"
@@ -70,8 +71,57 @@
             a_zhon:star_img="@mipmap/star1"
             a_zhon:unstar_img="@mipmap/star" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen57"
+        android:background="@color/mainColor"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="@dimen/dimen15"
+            android:paddingBottom="@dimen/dimen28"
+            android:text="@string/satisfaction"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+        <com.azhong.ratingbar.RatingBar
+            android:id="@+id/rb_satisfactionAttitude"
+            android:layout_width="@dimen/dimen210"
+            android:layout_height="@dimen/dimen46"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/dimen15"
+            android:layout_marginLeft="@dimen/dimen31"
+            a_zhon:clickable="true"
+            a_zhon:image_height="@dimen/dimen42"
+            a_zhon:image_padding="@dimen/dimen9"
+            a_zhon:image_width="@dimen/dimen42"
+            a_zhon:star="0"
+            a_zhon:star_count="5"
+            a_zhon:star_img="@mipmap/star1"
+            a_zhon:unstar_img="@mipmap/star" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_note"
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:gravity="top"
+        android:hint="@string/comment"
+        android:inputType="textMultiLine"
+        android:minHeight="@dimen/dimen100"
+        android:paddingBottom="@dimen/dimen10"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen10"
+        android:textColorHint="@color/hintcolors"
+        android:textCursorDrawable="@drawable/shape_cursor"
+        android:textSize="@dimen/textsize14" />
 
 
     <TextView

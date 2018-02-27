@@ -22,6 +22,8 @@ import com.ruitukeji.zwbh.mine.myorder.payment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.mine.myorder.quotationlist.QuotationListActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 import java.util.List;
 
@@ -558,7 +560,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 tv_deliveryCustomer.setText(result.getOrg_send_client());
             }
             tv_contactPerson.setText(result.getOrg_send_name());
-            tv_destination.setText(result.getDest_address_name() + result.getOrg_address_detail());
+            tv_destination.setText(result.getDest_address_name() + result.getDest_address_detail());
             tv_contactInformation1.setText(result.getDest_phone());
 
             if (StringUtils.isEmpty(result.getDest_telphone())) {
@@ -622,6 +624,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else {
                 tv_checkAbnormal.setVisibility(View.VISIBLE);
             }
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusOrderMessageDetailsEvent"));
         } else if (flag == 1) {
             is_collect = 1;
             tv_collect.setText(getString(R.string.cancelCollection));
@@ -629,6 +632,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             is_collect = 0;
             tv_collect.setText(getString(R.string.collect));
         }
+
         dismissLoadingDialog();
     }
 
@@ -785,6 +789,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             showLoadingDialog(getString(R.string.dataLoad));
             ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
             isRefresh = true;
+        }
+    }
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusPaymentPaySuccessEvent")) {
+            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
         }
     }
 

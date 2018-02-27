@@ -222,8 +222,9 @@ public class PayPwdEditText extends RelativeLayout {
     }
 
     public void setFocus() {
-        editText.requestFocus();
         editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
         showKeyBord(editText);
     }
 

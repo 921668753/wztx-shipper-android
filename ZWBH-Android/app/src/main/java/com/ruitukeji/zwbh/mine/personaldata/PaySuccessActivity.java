@@ -15,6 +15,8 @@ import com.ruitukeji.zwbh.mine.myorder.payment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.mine.myorder.payment.PaymentActivity;
 import com.ruitukeji.zwbh.mine.mywallet.recharge.RechargeActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
+import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 /**
  * 支付成功
@@ -22,7 +24,6 @@ import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
  */
 
 public class PaySuccessActivity extends BaseActivity {
-
 
     @BindView(id = R.id.tv_topUpSuccess)
     private TextView tv_topUpSuccess;
@@ -58,29 +59,20 @@ public class PaySuccessActivity extends BaseActivity {
             String rechargeMoney = PreferenceHelper.readString(this, StringConstants.FILENAME, "rechargeMoney");
             topUpAmount.setText(getString(R.string.topUpAmount) + rechargeMoney + getString(R.string.yuan));
         } else if (payClass.contains("PaymentActivity")) {//订单  个人  //订单  企业
-            String fragment = PreferenceHelper.readString(aty, StringConstants.FILENAME, "refreshOrderFragment", "AllOrderFragment");
-            if (fragment.equals("AllOrderFragment")) {
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshCompleted1", true);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder", true);
-            } else if (fragment.equals("CompletedFragment")) {
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshCompleted", true);
-                PreferenceHelper.write(aty, StringConstants.FILENAME, "isRefreshOrder1", true);
-            }
             KJActivityStack.create().finishActivity(OrderDetailsActivity.class);
             KJActivityStack.create().finishActivity(CheckVoucherActivity.class);
             KJActivityStack.create().finishActivity(PaymentActivity.class);
             ActivityTitleUtils.initToolbar(aty, getString(R.string.payResult), true, R.id.titlebar);
             topUpAmount.setVisibility(View.GONE);
             tv_topUpSuccess.setText(getString(R.string.paySuccess));
+            /**
+             * 发送消息
+             */
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusPaymentPaySuccessEvent"));
         } else {
             finish();
         }
         PreferenceHelper.write(this, StringConstants.FILENAME, "payClass", "");
-    }
-
-    @Override
-    public void initWidget() {
-        super.initWidget();
     }
 
     @Override

@@ -149,23 +149,24 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.tv_onArrival, View.VISIBLE);
         }
 
-        if (StringUtils.isEmpty(listBean.getArr_time())) {
+        if (StringUtils.isEmpty(listBean.getSend_time())) {
             viewHolderHelper.setImageResource(R.id.img_car, R.mipmap.ic_car_unselected);
             viewHolderHelper.setVisibility(R.id.tv_start, View.GONE);
         } else {
             viewHolderHelper.setImageResource(R.id.img_car, R.mipmap.ic_car_selected);
             viewHolderHelper.setVisibility(R.id.tv_start, View.VISIBLE);
-            viewHolderHelper.setText(R.id.tv_start, listBean.getArr_time());
+            viewHolderHelper.setText(R.id.tv_start, listBean.getSend_time());
         }
 
-        if (StringUtils.isEmpty(listBean.getSend_time())) {
+        if (StringUtils.isEmpty(listBean.getArr_time())) {
             viewHolderHelper.setImageResource(R.id.img_end, R.mipmap.ic_end_unselected);
             viewHolderHelper.setVisibility(R.id.tv_destination1, View.GONE);
         } else {
             viewHolderHelper.setImageResource(R.id.img_end, R.mipmap.ic_end_selected);
             viewHolderHelper.setVisibility(R.id.tv_destination1, View.VISIBLE);
-            viewHolderHelper.setText(R.id.tv_destination1, listBean.getSend_time());
+            viewHolderHelper.setText(R.id.tv_destination1, listBean.getArr_time());
         }
+
         if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") ||
                 !StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quoted") && listBean.getIs_cancel() == 0) {
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.VISIBLE);

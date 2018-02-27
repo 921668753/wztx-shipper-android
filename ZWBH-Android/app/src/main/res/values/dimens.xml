@@ -71,6 +71,7 @@
     <dimen name="dimen54">54dp</dimen>
     <dimen name="dimen55">55dp</dimen>
     <dimen name="dimen56">56dp</dimen>
+    <dimen name="dimen57">57dp</dimen>
     <dimen name="dimen58">58dp</dimen>
     <dimen name="dimen59">59dp</dimen>
     <dimen name="dimen60">60dp</dimen>
@@ -124,6 +125,7 @@
     <dimen name="dimen250">250dp</dimen>
     <dimen name="dimen270">270dp</dimen>
     <dimen name="dimen280">280dp</dimen>
+    <dimen name="dimen285">285dp</dimen>
     <dimen name="dimen300">300dp</dimen>
 
     <dimen name="textsize11">11sp</dimen>

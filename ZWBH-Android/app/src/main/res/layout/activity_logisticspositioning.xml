@@ -28,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen80"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dimen15"
-        android:layout_marginLeft="@dimen/dimen15"
-        android:layout_marginRight="@dimen/dimen15"
+        android:layout_marginBottom="@dimen/dimen10"
+        android:layout_marginLeft="@dimen/dimen10"
+        android:layout_marginRight="@dimen/dimen10"
         android:background="@color/mainColor"
         android:gravity="center_vertical"
         android:orientation="horizontal">

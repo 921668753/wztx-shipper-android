@@ -22,6 +22,7 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.entity.main.message.OrderMessageBean;
 import com.ruitukeji.zwbh.entity.main.message.OrderMessageBean.ResultBean.ListBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
@@ -291,8 +292,8 @@ public class OrderMessageActivity extends BaseActivity implements OrderMessageCo
             return;
         }
         Intent intent = new Intent();
-        intent.putExtra("messageId", mAdapter.getItem(position).getId());
-        intent.setClass(getApplicationContext(), SystemMessageDetailsActivity.class);
+        intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
+        intent.setClass(getApplicationContext(), OrderDetailsActivity.class);
         showActivity(aty, intent);
     }
 

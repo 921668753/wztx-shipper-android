@@ -26,7 +26,7 @@ public interface AddCargoInformationContract {
                                      String org_phone, String org_telphone, String dest_address_maps, String dest_city, String dest_address_name, String dest_address_detail,
                                      String dest_receive_client, String dest_receive_name, String dest_phone, String dest_telphone, String goods_name, String volume, String weight,
                                      String car_style_type, int car_style_type_id, String car_style_length, int car_style_length_id, long effective_time,
-                                     String system_price, int tran_type, String kilometres, int spot, double spot_cost, String card_number, int is_driver_dock, String fact_pay,
+                                     String system_price, int tran_type, String kilometres, int spot, double spot_cost, int is_card_number, int is_driver_dock, String fact_pay,
                                      int is_cargo_receipt, String cargo_man, String cargo_tel, String cargo_address, String cargo_address_detail, int cargo_is_express, int isLongTimeCar);
 
 

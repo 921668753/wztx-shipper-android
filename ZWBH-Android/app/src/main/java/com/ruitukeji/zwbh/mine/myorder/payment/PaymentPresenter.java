@@ -33,24 +33,7 @@ public class PaymentPresenter implements PaymentContract.Presenter {
     }
 
 
-    @Override
-    public void postScorePay(int orderId) {
-        HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("order_id", orderId);
-        httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
-        RequestClient.postScorePay(httpParams, new ResponseListener<String>() {
-            @Override
-            public void onSuccess(String response) {
-                mView.getSuccess(response, 0);
-            }
 
-            @Override
-            public void onFailure(String msg) {
-                mView.error(msg,0);
-            }
-        });
-    }
 
 
     @Override

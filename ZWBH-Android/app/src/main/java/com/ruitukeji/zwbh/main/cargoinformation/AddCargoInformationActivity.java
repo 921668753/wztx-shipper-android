@@ -164,8 +164,6 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     private String destinationPhone;
     private String destinationEixedTelephone;
 
-    private String card_number = "";
-
     private int driverCargo = 0;
     private String vehicleModel;
     private String vehicleLength;
@@ -345,7 +343,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                         (destinationLongi + "," + destinationLat), destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone,
                         et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
                         StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), tv_transportationEstimated.getText().toString(),
-                        tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
+                        tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), 0,
                         driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery, isTemporaryCar);
             } else {
                 authenticationBouncedDialog = new AuthenticationBouncedDialog(this, getString(R.string.notPassedCertification)) {
@@ -377,21 +375,13 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                     ViewInject.toast(getString(R.string.correctNumberMinutes));
                     return;
                 }
-                assignedVehicleBouncedDialog = null;
-                assignedVehicleBouncedDialog = new AssignedVehicleBouncedDialog(this) {
-                    @Override
-                    public void confirm(String pleaseLicensePlateNumber) {
-                        card_number = pleaseLicensePlateNumber;
-                        ((AddCargoInformationContract.Presenter) mPresenter).postAddCargoInformation(submitOrdersBouncedDialog, type, appoint_at, "", "", (provenanceLongi + "," + provenanceLat),
-                                provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
-                                (destinationLongi + "," + destinationLat), destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone,
-                                et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
-                                StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), tv_transportationEstimated.getText().toString(),
-                                tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), card_number,
-                                driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery, isTemporaryCar);
-                    }
-                };
-                assignedVehicleBouncedDialog.show();
+                ((AddCargoInformationContract.Presenter) mPresenter).postAddCargoInformation(submitOrdersBouncedDialog, type, appoint_at, "", "", (provenanceLongi + "," + provenanceLat),
+                        provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer, provenanceShipper, provenancePhone, provenanceEixedTelephone,
+                        (destinationLongi + "," + destinationLat), destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer, destinationShipper, destinationPhone, destinationEixedTelephone,
+                        et_descriptionGoods.getText().toString().trim(), et_volumeGoods.getText().toString().trim(), et_goodsWeight.getText().toString().trim(), vehicleModel, vehicleModelId, vehicleLength, vehicleLengthId,
+                        StringUtils.toInt(et_hour.getText().toString().trim()) * 60 + StringUtils.toInt(et_minute.getText().toString().trim()), tv_transportationEstimated.getText().toString(),
+                        tran_type, kilometres, StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0), StringUtils.toDouble(et_costDistribution.getText().toString().trim()), 1,
+                        driverCargo, et_actualPayment.getText().toString().trim(), cargoReceipt, contactPerson, contactInformation, inArea, detailedAddressInformation, expressDelivery, isTemporaryCar);
             } else {
                 authenticationBouncedDialog = new AuthenticationBouncedDialog(this, getString(R.string.notPassedCertification)) {
                     @Override
@@ -406,13 +396,14 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
                 authenticationBouncedDialog.show();
             }
         }
+
         dismissLoadingDialog();
+
     }
 
     @Override
     public void errorMsg(String msg, int flag) {
         dismissLoadingDialog();
-        card_number = "";
         if (!toLigon1(msg)) {
             return;
         }

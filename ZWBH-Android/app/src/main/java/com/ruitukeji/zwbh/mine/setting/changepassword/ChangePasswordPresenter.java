@@ -5,7 +5,6 @@ import com.kymjs.common.StringUtils;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.KJActivityStack;
-import com.ruitukeji.zwbh.mine.setting.changepassword.ChangePasswordContract;
 import com.ruitukeji.zwbh.retrofit.RequestClient;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.httputil.HttpUtilParams;
@@ -59,11 +58,11 @@ public class ChangePasswordPresenter implements ChangePasswordContract.Presenter
             mView.clear(3);
             return;
         }
-        if (originalPassword.equals(newPassword)) {
-            mView.error(KJActivityStack.create().topActivity().getString(R.string.notRepeated));
-            mView.clear(3);
-            return;
-        }
+//        if (originalPassword.equals(newPassword)) {
+//            mView.error(KJActivityStack.create().topActivity().getString(R.string.notRepeated));
+//            mView.clear(3);
+//            return;
+//        }
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("old_password", CipherUtils.md5("WUZAI" + originalPassword + "TIANXIA"));

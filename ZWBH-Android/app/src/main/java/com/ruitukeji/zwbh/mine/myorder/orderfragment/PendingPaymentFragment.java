@@ -23,6 +23,7 @@ import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.mine.myorder.payment.CheckVoucherActivity;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
+import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
@@ -209,6 +210,15 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             mRefreshLayout.beginRefreshing();
+        }
+    }
+
+    @Override
+    public void callMsgEvent(MsgEvent msgEvent) {
+        super.callMsgEvent(msgEvent);
+        if (((String) msgEvent.getData()).equals("RxBusPaymentPaySuccessEvent")) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         }
     }
 

@@ -15,10 +15,6 @@ public interface PaymentContract {
          */
         void getMyWallet();
 
-        /**
-         * 通过余额支付
-         */
-        void postScorePay(int orderId);
 
         /**
          * 获取微信支付信息

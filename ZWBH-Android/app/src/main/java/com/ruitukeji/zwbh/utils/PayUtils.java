@@ -83,7 +83,6 @@ public class PayUtils {
                     String resultStatus = payResult.getResultStatus();
                     if (!StringUtils.isEmpty(result)) {
                         if (TextUtils.equals(resultStatus, "9000")) {// 操作成功
-//                    ViewInject.toast(MyApplication.getContext().getString(R.string.alipay_succeed));
                             PreferenceHelper.write(context, StringConstants.FILENAME, "payClass", context.getClass().getName());
                             context.startActivity(new Intent(context, cls));
                         } else if (TextUtils.equals(resultStatus, "4000")) {// 系统异常

@@ -16,6 +16,4 @@ public class CostDescriptionActivity extends BaseActivity {
         setContentView(R.layout.activity_costdescription);
     }
 
-
-
 }

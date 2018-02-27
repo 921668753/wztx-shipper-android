@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.EnvUtils;
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
@@ -16,10 +17,13 @@ import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.mywallet.recharge.AlipayBean;
 import com.ruitukeji.zwbh.entity.mine.mywallet.MyWalletBean;
 import com.ruitukeji.zwbh.entity.mine.mywallet.recharge.WxPayBean;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.mine.myorder.payment.dialog.PayPasswordBouncedDialogActivity;
+import com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.setpaymentpassword.SetPaymentPasswordActivity;
 import com.ruitukeji.zwbh.mine.personaldata.PaySuccessActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
@@ -93,6 +97,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     private String total_amount = "";
 
     private PayUtils payUtils = null;
+    private PayPasswordBouncedDialogActivity payPasswordBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -152,7 +157,27 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
             case R.id.tv_determine:
                 showLoadingDialog(getString(R.string.submissionLoad));
                 if (methodPayment == 1) {
-                    ((PaymentContract.Presenter) mPresenter).postScorePay(order_id);
+                    dismissLoadingDialog();
+                    int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
+                    if (is_pay_password == 0) {
+                        Intent intent = new Intent(aty, SetPaymentPasswordActivity.class);
+                        aty.startActivity(intent);
+                        return;
+                    }
+                    Intent intent = new Intent(aty, PayPasswordBouncedDialogActivity.class);
+                    intent.putExtra("order_id", order_id);
+                    startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
+//                    if (payPasswordBouncedDialog != null && !payPasswordBouncedDialog.isShowing()) {
+//                        payPasswordBouncedDialog.show();
+//                        return;
+//                    }
+//                    payPasswordBouncedDialog = new PayPasswordBouncedDialogActivity(this, order_id) {
+//                        @Override
+//                        public void confirm() {
+//                            PaymentActivity.this.getSuccess("", 0);
+//                        }
+//                    };
+//                    payPasswordBouncedDialog.show();
                 } else if (methodPayment == 2) {
                     ((PaymentContract.Presenter) mPresenter).getWxPay(order_id, total_amount);
                 } else if (methodPayment == 3) {
@@ -175,9 +200,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     @Override
     public void getSuccess(String s, int flag) {
         if (flag == 0) {
-            KJActivityStack.create().finishActivity(CheckVoucherActivity.class);
-            showActivity(aty, PaySuccessActivity.class);
-            finish();
+
         } else if (flag == 1) {
             //微信
             WxPayBean wxPayBean = (WxPayBean) JsonUtil.getInstance().json2Obj(s, WxPayBean.class);
@@ -244,6 +267,11 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
             finish();
+        } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+            PreferenceHelper.write(aty, StringConstants.FILENAME, "payClass", getClass().getName());
+            KJActivityStack.create().finishActivity(CheckVoucherActivity.class);
+            showActivity(aty, PaySuccessActivity.class);
+            finish();
         }
     }
 
@@ -251,5 +279,9 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
     protected void onDestroy() {
         super.onDestroy();
         payUtils = null;
+//        if (payPasswordBouncedDialog != null) {
+//            payPasswordBouncedDialog.cancel();
+//        }
+//        payPasswordBouncedDialog = null;
     }
 }

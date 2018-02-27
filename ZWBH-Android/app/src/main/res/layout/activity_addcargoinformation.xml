@@ -432,7 +432,7 @@
                     android:id="@+id/tv_transportationEstimated"
                     style="@style/WrapWrap"
                     android:layout_marginLeft="@dimen/dimen10"
-                    android:maxWidth="@dimen/dimen60"
+                    android:maxWidth="@dimen/dimen175"
                     android:text="0.00"
                     android:textColor="@color/titletextcolors"
                     android:textSize="@dimen/textsize15" />

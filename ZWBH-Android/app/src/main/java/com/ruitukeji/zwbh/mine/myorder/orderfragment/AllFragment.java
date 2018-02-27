@@ -285,7 +285,8 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
     @Override
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
-        if (((String) msgEvent.getData()).equals("RxBusAllOrderFragmentEvent")) {
+        if (((String) msgEvent.getData()).equals("RxBusAllOrderFragmentEvent") || ((String) msgEvent.getData()).equals("RxBusPaymentPaySuccessEvent")) {
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
             ((OrderContract.Presenter) mPresenter).getOrder(mMorePageNumber, type);
         }
     }

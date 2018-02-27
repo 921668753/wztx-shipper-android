@@ -379,7 +379,8 @@ public class SystemMessageActivity extends BaseActivity implements SystemMessage
     public void callMsgEvent(MsgEvent msgEvent) {
         super.callMsgEvent(msgEvent);
         if (((String) msgEvent.getData()).equals("RxBusSystemMessageDetailsEvent")) {
-            mRefreshLayout.beginRefreshing();
+            mMorePageNumber = NumericConstants.START_PAGE_NUMBER;
+            ((SystemMessageContract.Presenter) mPresenter).getMessage(push_type, mMorePageNumber);
         }
 //        else if (((String) msgEvent.getData()).equals("RxBusAvatarEvent")) {
 ////            img_headPortrait.setImageURI(Uri.parse(msgEvent.getMsg() + "?imageView2/1/w/70/h/70"));

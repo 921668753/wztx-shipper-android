@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
-import com.nanchen.compresshelper.StringUtil;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;

@@ -155,14 +155,8 @@
         <!--发货信息-->
 
         <!--消息中心-->
-        <activity
-            android:name=".main.message.MessageCenterActivity"
-            android:screenOrientation="portrait" />
 
         <!--消息列表-->
-        <activity
-            android:name=".main.message.MessageActivity"
-            android:screenOrientation="portrait" />
 
         <!--消息中心详情-->
         <activity
@@ -203,6 +197,13 @@
         <!--个人中心 我的订单 付款-->
         <activity
             android:name=".mine.myorder.payment.PaymentActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心 我的订单 付款  输入支付密码-->
+        <activity
+            android:name=".mine.myorder.payment.dialog.PayPasswordBouncedDialogActivity"
+            android:theme="@style/transcutestyle"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 付款 付款凭证-->

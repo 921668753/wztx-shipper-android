@@ -78,7 +78,7 @@ public class InvoiceManagementActivity extends BaseActivity {
             public void onClickRightCtv() {
                 super.onClickRightCtv();
                 Intent intent = new Intent(aty, AboutUsActivity.class);
-                intent.putExtra("type", "shipper_registration_protocol");
+                intent.putExtra("type", "shipper_invoice_instructions");
                 showActivity(aty, intent);
             }
         };

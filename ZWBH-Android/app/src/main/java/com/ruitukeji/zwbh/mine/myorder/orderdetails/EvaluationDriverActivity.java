@@ -17,8 +17,6 @@ import com.ruitukeji.zwbh.entity.EvaluationShareBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
-import cn.bingoogolapple.titlebar.BGATitleBar;
-
 /**
  * 评价司机
  * Created by Administrator on 2017/12/14.
@@ -31,6 +29,12 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
 
     @BindView(id = R.id.rb_serviceAttitude)
     private RatingBar rb_serviceAttitude;
+
+    @BindView(id = R.id.rb_satisfactionAttitude)
+    private RatingBar rb_satisfactionAttitude;
+
+    @BindView(id = R.id.et_note)
+    private EditText et_note;
 
     @BindView(id = R.id.tv_submit, click = true)
     private TextView tv_submit;
@@ -79,7 +83,7 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
 //            }
 //        };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.evaluationDriver), true, R.id.titlebar);
-     //   ActivityTitleUtils.initToolbar(aty, getString(R.string.evaluationDriver), R.id.titlebar);
+        //   ActivityTitleUtils.initToolbar(aty, getString(R.string.evaluationDriver), R.id.titlebar);
     }
 
 
@@ -102,11 +106,22 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
     @Override
     public void getSuccess(String success, int flag) {
         if (flag == 0) {
+            et_note.setEnabled(false);
+            et_note.setFocusable(false);
+            et_note.setFocusableInTouchMode(false);
             EvaluationShareBean evaluationShareBean = (EvaluationShareBean) JsonUtil.getInstance().json2Obj(success, EvaluationShareBean.class);
             rb_deliveryTime.setStar(evaluationShareBean.getResult().getLimit_ship());
             rb_deliveryTime.setClickable(false);
             rb_serviceAttitude.setStar(evaluationShareBean.getResult().getAttitude());
             rb_serviceAttitude.setClickable(false);
+            rb_satisfactionAttitude.setStar(evaluationShareBean.getResult().getSatisfaction());
+            rb_satisfactionAttitude.setClickable(false);
+            if (StringUtils.isEmpty(evaluationShareBean.getResult().getContent())) {
+                et_note.setVisibility(View.GONE);
+            } else {
+                et_note.setVisibility(View.VISIBLE);
+                et_note.setText(evaluationShareBean.getResult().getContent());
+            }
             tv_submit.setVisibility(View.GONE);
         } else if (flag == 1) {
             ViewInject.toast(getString(R.string.commentSecc));

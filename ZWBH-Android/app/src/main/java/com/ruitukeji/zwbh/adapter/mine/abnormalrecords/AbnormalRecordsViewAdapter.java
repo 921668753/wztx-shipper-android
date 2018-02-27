@@ -43,7 +43,7 @@ public class AbnormalRecordsViewAdapter extends BGAAdapterViewAdapter<ListBean> 
         /**
          * 车长
          */
-        viewHolderHelper.setText(R.id.tv_carLength, listBean.getCard_number());
+        viewHolderHelper.setText(R.id.tv_carLength, listBean.getCar_length());
 
         /**
          * 车型
