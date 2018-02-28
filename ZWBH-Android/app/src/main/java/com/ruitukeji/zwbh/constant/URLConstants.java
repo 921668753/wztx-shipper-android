@@ -45,7 +45,7 @@ public class URLConstants {
     /**
      * 首页
      */
-    public static String HOME = APIURL + "index/home";
+    public static String HOME = APIURL + "Help/home";
 
     /**
      * 公告详情

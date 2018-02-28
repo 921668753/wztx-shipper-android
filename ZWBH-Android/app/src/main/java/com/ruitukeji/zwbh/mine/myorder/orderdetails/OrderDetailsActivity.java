@@ -113,6 +113,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @BindView(id = R.id.tv_cargoReceipt)
     private TextView tv_cargoReceipt;
 
+    @BindView(id = R.id.tv_checkReceipt, click = true)
+    private TextView tv_checkReceipt;
+
     /**
      * 起运地
      */
@@ -406,6 +409,16 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             case R.id.tv_eixedTelephone1:
                 choiceCallWrapper(tv_eixedTelephone1.getText().toString());
                 break;
+            case R.id.tv_checkReceipt:
+
+
+
+
+
+
+
+
+                break;
             case R.id.tv_collect:
                 if (is_collect == 1) {
                     showLoadingDialog(getString(R.string.dataLoad));
@@ -543,8 +556,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_volume.setText(result.getVolume());
             if (result.getIs_cargo_receipt() == 1) {
                 tv_cargoReceipt.setText(getString(R.string.require));
+                tv_checkReceipt.setVisibility(View.VISIBLE);
             } else {
                 tv_cargoReceipt.setText(getString(R.string.noRequire));
+                tv_checkReceipt.setVisibility(View.GONE);
             }
             tv_place.setText(result.getOrg_address_name() + result.getOrg_address_detail());
             tv_contactInformation.setText(result.getOrg_phone());

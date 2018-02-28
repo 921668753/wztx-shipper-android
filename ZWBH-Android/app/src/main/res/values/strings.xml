@@ -471,6 +471,7 @@
     <string name="minutes">分钟</string>
     <string name="driverInformation">司机信息</string>
     <string name="collect">收藏</string>
+    <string name="checkReceipt">查看签收单</string>
     <string name="cancelCollection">取消收藏</string>
     <string name="complaints">投诉</string>
     <string name="complaintsAboutDriver">投诉司机</string>
