@@ -37,6 +37,8 @@ public class DrivingRouteOverLay extends RouteOverlay {
     private boolean isColorfulline = true;
     private float mWidth = 8;
     private List<LatLng> mLatLngsOfPath;
+    private Marker endMarker = null;
+    private LatLng endPoint;
 
     public void setIsColorfulline(boolean iscolorfulline) {
         this.isColorfulline = iscolorfulline;
@@ -56,7 +58,7 @@ public class DrivingRouteOverLay extends RouteOverlay {
         mAMap = amap;
         this.drivePath = path;
         startPoint = AMapUtil.convertToLatLng(start);
-        endPoint = AMapUtil.convertToLatLng(end);
+        driveEndPoint = AMapUtil.convertToLatLng(end);
         this.throughPointList = throughPointList;
     }
 
@@ -77,6 +79,10 @@ public class DrivingRouteOverLay extends RouteOverlay {
 
     public void setStartLatLonPoint(LatLonPoint start) {
         this.startPoint = AMapUtil.convertToLatLng(start);
+    }
+
+    public void setDriveEndLatLonPoint(LatLonPoint driveEnd) {
+        this.driveEndPoint = AMapUtil.convertToLatLng(driveEnd);
     }
 
     public void setEndLatLonPoint(LatLonPoint end) {
@@ -127,10 +133,14 @@ public class DrivingRouteOverLay extends RouteOverlay {
                     mLatLngsOfPath.add(convertToLatLng(latlonpoint));
                 }
             }
-            mPolylineOptions.add(endPoint);
+            mPolylineOptions.add(driveEndPoint);
             if (startMarker != null) {
                 startMarker.remove();
                 startMarker = null;
+            }
+            if (driveMarker != null) {
+                driveMarker.remove();
+                driveMarker = null;
             }
             if (endMarker != null) {
                 endMarker.remove();
@@ -151,22 +161,32 @@ public class DrivingRouteOverLay extends RouteOverlay {
 
     @Override
     protected BitmapDescriptor getEndBitmapDescriptor() {
+        return BitmapDescriptorFactory.fromResource(R.mipmap.end);
+    }
+
+    @Override
+    protected BitmapDescriptor getDriveBitmapDescriptor() {
         return BitmapDescriptorFactory.fromResource(R.mipmap.icon_car);
     }
 
-    public void addStartAndEndMarker(String startTitle, String endTitle) {
+    public void addStartAndEndMarker(String startTitle, String driveTitle, String endTitle, int isEnd) {
         super.addStartAndEndMarker();
-        //  int startcity = startTitle.indexOf("市");
-        //startTitle.substring(0, startcity + 1)).snippet(startTitle.substring(startcity + 1))
         startMarker = mAMap.addMarker((new MarkerOptions())
                 .position(startPoint).icon(getStartBitmapDescriptor())
                 .title(startTitle));
-        // startMarker.showInfoWindow();
+        if (isEnd == 0) {
+            int orgcity = driveTitle.indexOf("市");
+            driveMarker = mAMap.addMarker((new MarkerOptions()).position(driveEndPoint)
+                    .icon(getDriveBitmapDescriptor()).title(driveTitle.substring(0, orgcity + 1)).snippet(driveTitle.substring(orgcity + 1)));
+        } else {
+            if (driveMarker != null) {
+                driveMarker.remove();
+                driveMarker = null;
+            }
+        }
         int orgcity = endTitle.indexOf("市");
         endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
                 .icon(getEndBitmapDescriptor()).title(endTitle.substring(0, orgcity + 1)).snippet(endTitle.substring(orgcity + 1)));
-       //  mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, mAMap.getCameraPosition().zoom - 1));
-//        endMarker=  AMapUtil.customMarker(mAMap,endPoint,endTitle);
     }
 
     /**
@@ -221,7 +241,7 @@ public class DrivingRouteOverLay extends RouteOverlay {
             if (i == tmcSection.size() - 1 && mPolylineOptionscolor != null) {
                 addPolyLine(mPolylineOptionscolor.color(getcolor(status)));
                 addPolyLine(new PolylineOptions().add(
-                        AMapUtil.convertToLatLng(mployline.get(mployline.size() - 1)), endPoint)
+                        AMapUtil.convertToLatLng(mployline.get(mployline.size() - 1)), driveEndPoint)
                         .setDottedLine(true));
             }
         }
@@ -263,7 +283,7 @@ public class DrivingRouteOverLay extends RouteOverlay {
     protected LatLngBounds getLatLngBounds() {
         LatLngBounds.Builder b = LatLngBounds.builder();
         b.include(new LatLng(startPoint.latitude, startPoint.longitude));
-        b.include(new LatLng(endPoint.latitude, endPoint.longitude));
+        b.include(new LatLng(driveEndPoint.latitude, driveEndPoint.longitude));
         if (this.throughPointList != null && this.throughPointList.size() > 0) {
             for (int i = 0; i < this.throughPointList.size(); i++) {
                 b.include(new LatLng(

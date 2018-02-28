@@ -118,6 +118,8 @@
             android:name=".main.cargoinformation.AddCargoInformationActivity"
             android:screenOrientation="portrait" />
 
+
+
         <!--主界面  添加货物信息  填写货物签收单-->
         <activity
             android:name=".main.cargoinformation.FillCargoReceiptFormActivity"
@@ -126,6 +128,13 @@
         <!--主界面  添加货物信息  选择车辆-->
         <activity
             android:name=".main.cargoinformation.selectvehicle.SelectVehicleActivity"
+            android:screenOrientation="portrait" />
+
+        <!--主界面  添加货物信息  指派车辆-->
+        <activity
+            android:name=".main.dialog.AssignedVehicleBouncedDialogActivity"
+            android:theme="@style/transcutestyle"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <!--主界面  系统消息-->

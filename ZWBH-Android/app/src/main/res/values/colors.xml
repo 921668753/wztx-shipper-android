@@ -62,6 +62,9 @@
     <color name="fF9C0FColors">#FF9C0F</color>
     <color name="fDF0F0Colors">#FDF0F0</color>
 
+    <!--指派车辆-->
+    <color name="checkDriverColors">#FEF9F9</color>
+
     <!--公告通知-->
     <color name="announcementColors">#2c2e35</color>
 

@@ -112,13 +112,15 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
     private Circle mCircle;
     private LatLng location = null;
     private DrivingRouteOverLay drivingRouteOverlay = null;
+    private String dest_address_maps = null;
+    private String dest_address = null;
+    private String status = "init";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);
-        // ((LogisticsPositioningContract.Presenter) mPresenter).getTrajectory();
     }
 
     private void init(Bundle savedInstanceState) {
@@ -129,7 +131,6 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
             //设置成中文地图
             aMap.setMapLanguage(AMap.CHINESE);
         }
-        //  setupLocationStyle();
         choiceLocationWrapper();
     }
 
@@ -151,15 +152,21 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
         phone = getIntent().getStringExtra("phone");
         org_address = getIntent().getStringExtra("org_address");
         org_address_maps = getIntent().getStringExtra("org_address_maps");
-//        dest_address_maps = getIntent().getStringExtra("dest_address_maps");
-//        dest_address = getIntent().getStringExtra("dest_address");
+        dest_address_maps = getIntent().getStringExtra("dest_address_maps");
+        dest_address = getIntent().getStringExtra("dest_address");
         map_code = getIntent().getStringExtra("map_code");
+        if (StringUtils.isEmpty(map_code)) {
+            ViewInject.toast(getString(R.string.driverInformationError));
+            finish();
+            return;
+        }
+        status = getIntent().getStringExtra("status");
     }
 
     @Override
     public void initWidget() {
         super.initWidget();
-        ActivityTitleUtils.initToolbar(aty, getString(R.string.checkPositioning), true, R.id.titlebar);
+        ActivityTitleUtils.initToolbar(aty, getString(R.string.viewShippingTrack), true, R.id.titlebar);
         if (mSensorHelper != null) {
             mSensorHelper.registerSensorListener();
         }
@@ -171,9 +178,24 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
             tv_phone.setText(phone.substring(0, 3) + "****" + phone.substring(phone.length() - 4));
         }
         mCloudSearch.setOnCloudSearchListener(this);// 设置回调函数
-        mCloudSearch.searchCloudDetailAsyn(StringConstants.NearTableid, map_code);
         routeSearch.setRouteSearchListener(this);
         showLoadingDialog(getString(R.string.dataLoad));
+        if (!StringUtils.isEmpty(status) && status.equals("distribute") || !StringUtils.isEmpty(status) && status.equals("arrive")
+                || !StringUtils.isEmpty(status) && status.equals("photo")) {
+            mCloudSearch.searchCloudDetailAsyn(StringConstants.NearTableid, map_code);
+            return;
+        }
+        endtitle = dest_address;
+        String[] latLng = org_address_maps.split(",");
+        LatLonPoint mStartPoint = new LatLonPoint(Double.parseDouble(latLng[1]), Double.parseDouble(latLng[0]));//起点，116.335891,39.942295
+        String[] destLatLng = dest_address_maps.split(",");
+        LatLonPoint mEndPoint = new LatLonPoint(Double.parseDouble(destLatLng[1]), Double.parseDouble(destLatLng[0]));//起点，116.335891,39.942295
+        RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(mStartPoint, mEndPoint);
+        // 驾车路径规划
+        RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DrivingDefault, null,
+                null, "");// 第一个参数表示路径规划的起点和终点，第二个参数表示驾车模式，第三个参数表示途经点，第四个参数表示避让区域，第五个参数表示避让道路
+        routeSearch.calculateDriveRouteAsyn(query);// 异步路径规划驾车模式查询
+
     }
 
     @Override
@@ -188,7 +210,10 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.latitude, location.longitude), aMap.getCameraPosition().zoom));
                 break;
             case R.id.ll_driver:
-                choiceCallWrapper(phone);
+                if (!StringUtils.isEmpty(status) && status.equals("distribute") || !StringUtils.isEmpty(status) && status.equals("photo")
+                        || !StringUtils.isEmpty(status) && status.equals("arrive") || !StringUtils.isEmpty(status) && status.equals("pay_failed")) {
+                    choiceCallWrapper(phone);
+                }
                 break;
         }
     }
@@ -260,10 +285,9 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
                     mLocMarker.setPosition(location);
                 }
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", amapLocation.getCity());
-                //aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
-                // mId 数据_id 信息
-                Log.d("tag", "1111111");
-                mCloudSearch.searchCloudDetailAsyn(StringConstants.NearTableid, map_code);
+                if (!StringUtils.isEmpty(status) && status.equals("distribute") || !StringUtils.isEmpty(status) && status.equals("arrive") || !StringUtils.isEmpty(status) && status.equals("photo")) {
+                    mCloudSearch.searchCloudDetailAsyn(StringConstants.NearTableid, map_code);
+                }
             } else {
                 PreferenceHelper.write(aty, StringConstants.FILENAME, "locationCity", getString(R.string.locateFailure));
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -397,9 +421,6 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
         Log.d("tag", cloudItemDetail.getSnippet() + cloudItemDetail.getLatLonPoint().toString());
         if (rCode == AMapException.CODE_AMAP_SUCCESS && cloudItemDetail != null) {
             endtitle = cloudItemDetail.getSnippet();
-            //    AMapUtil.customMarker(aMap, new LatLng(cloudItemDetail.getLatLonPoint().getLatitude(), cloudItemDetail.getLatLonPoint().getLongitude()), cloudItemDetail.getSnippet());
-//        RouteSearch.DriveRouteQuery query = new RouteSearch.DriveRouteQuery(fromAndTo, drivingMode, null, null, "");
-//        routeSearch.calculateDriveRouteAsyn(query);
             String[] latLng = org_address_maps.split(",");
             LatLonPoint mStartPoint = new LatLonPoint(Double.parseDouble(latLng[1]), Double.parseDouble(latLng[0]));//起点，116.335891,39.942295
             RouteSearch.FromAndTo fromAndTo = new RouteSearch.FromAndTo(mStartPoint, cloudItemDetail.getLatLonPoint());
@@ -435,7 +456,7 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
                     Log.d("tag", "222222");
                     drivingRouteOverlay.setDrivePath(drivePath);
                     drivingRouteOverlay.setStartLatLonPoint(driveRouteResult.getStartPos());
-                    drivingRouteOverlay.setEndLatLonPoint(driveRouteResult.getTargetPos());
+                    drivingRouteOverlay.setDriveEndLatLonPoint(driveRouteResult.getTargetPos());
                     drivingRouteOverlay.setThroughPointList(null);
                     drivingRouteOverlay.setNodeIconVisibility(false);//设置节点marker是否显示
                     drivingRouteOverlay.setIsColorfulline(false);//是否用颜色展示交通拥堵情况，默认true
@@ -443,11 +464,19 @@ public class LogisticsPositioningActivity extends BaseActivity implements EasyPe
                     drivingRouteOverlay.addToMap();
                     int logisticsPositioningNum = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "logisticsPositioningNum", 0);
                     if (logisticsPositioningNum == 0) {
+                        String[] destLatLng = dest_address_maps.split(",");
+                        LatLonPoint mEndPoint = new LatLonPoint(Double.parseDouble(destLatLng[1]), Double.parseDouble(destLatLng[0]));//起点，116.335891,39.942295
+                        drivingRouteOverlay.setEndLatLonPoint(mEndPoint);
                         drivingRouteOverlay.zoomToSpan();
                         PreferenceHelper.write(aty, StringConstants.FILENAME, "logisticsPositioningNum", logisticsPositioningNum + 1);
                         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(AMapUtil.convertToLatLng(driveRouteResult.getStartPos()), aMap.getCameraPosition().zoom - 1));
                     }
-                    drivingRouteOverlay.addStartAndEndMarker(org_address, endtitle);
+                    if (!StringUtils.isEmpty(status) && status.equals("distribute") || !StringUtils.isEmpty(status) && status.equals("arrive")
+                            || !StringUtils.isEmpty(status) && status.equals("photo")) {
+                        drivingRouteOverlay.addStartAndEndMarker(org_address, endtitle, dest_address, 0);
+                    } else {
+                        drivingRouteOverlay.addStartAndEndMarker(org_address, endtitle, dest_address, 1);
+                    }
                 } else if (driveRouteResult != null && driveRouteResult.getPaths() == null) {
                     ViewInject.toast(getString(R.string.no_result));
                 }

@@ -23,9 +23,9 @@ public class RouteOverlay {
     protected List<Marker> stationMarkers = new ArrayList<Marker>();
     protected List<Polyline> allPolyLines = new ArrayList<Polyline>();
     protected Marker startMarker;
-    protected Marker endMarker;
+    protected Marker driveMarker;
     protected LatLng startPoint;
-    protected LatLng endPoint;
+    protected LatLng driveEndPoint;
     protected AMap mAMap;
     private Context mContext;
     private Bitmap startBit, endBit, busBit, walkBit, driveBit;
@@ -45,8 +45,8 @@ public class RouteOverlay {
             startMarker.remove();
 
         }
-        if (endMarker != null) {
-            endMarker.remove();
+        if (driveMarker != null) {
+            driveMarker.remove();
         }
         for (Marker marker : stationMarkers) {
             marker.remove();
@@ -97,7 +97,7 @@ public class RouteOverlay {
      * @since V2.1.0
      */
     protected BitmapDescriptor getEndBitmapDescriptor() {
-        return BitmapDescriptorFactory.fromResource(R.mipmap.endpoint);
+        return BitmapDescriptorFactory.fromResource(R.mipmap.end);
     }
 
 
@@ -111,7 +111,7 @@ public class RouteOverlay {
                 .title("\u8D77\u70B9"));
         // startMarker.showInfoWindow();
 
-        endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
+        driveMarker = mAMap.addMarker((new MarkerOptions()).position(driveEndPoint)
                 .icon(getEndBitmapDescriptor()).title("\u7EC8\u70B9"));
       //  mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, mAMap.getUiSettings().getZoomPosition() - 1));
     }
@@ -138,7 +138,7 @@ public class RouteOverlay {
     protected LatLngBounds getLatLngBounds() {
         LatLngBounds.Builder b = LatLngBounds.builder();
         b.include(new LatLng(startPoint.latitude, startPoint.longitude));
-        b.include(new LatLng(endPoint.latitude, endPoint.longitude));
+        b.include(new LatLng(driveEndPoint.latitude, driveEndPoint.longitude));
         return b.build();
     }
 
@@ -169,7 +169,6 @@ public class RouteOverlay {
         if (marker != null) {
             stationMarkers.add(marker);
         }
-
     }
 
     protected void addPolyLine(PolylineOptions options) {

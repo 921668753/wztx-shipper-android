@@ -63,15 +63,12 @@ public class DriverManagementActivity extends BaseActivity {
         tv_deliveryAddress.setText(getText(R.string.commonlyUsedDriver));
         tv_shippingAddress.setText(getText(R.string.blacklist));
         if (chageIcon == 0) {
-            chageIcon = 0;
             cleanColors(0);
             changeFragment(contentFragment);
         } else if (chageIcon == 1) {
-            chageIcon = 1;
             cleanColors(1);
             changeFragment(contentFragment1);
         } else {
-            chageIcon = 0;
             cleanColors(0);
             changeFragment(contentFragment);
         }
@@ -86,12 +83,13 @@ public class DriverManagementActivity extends BaseActivity {
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.ll_deliveryAddress:
-                chageIcon = 0;
                 cleanColors(0);
                 changeFragment(contentFragment);
                 break;
             case R.id.ll_shippingAddress:
-                chageIcon = 1;
+                if (chageIcon == 2) {
+                    break;
+                }
                 cleanColors(1);
                 changeFragment(contentFragment1);
                 break;

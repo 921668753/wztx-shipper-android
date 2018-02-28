@@ -21,7 +21,7 @@ import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.dialog.InformationKeptBouncedDialog;
 import com.ruitukeji.zwbh.entity.main.cargoinformation.DistanceBean;
 import com.ruitukeji.zwbh.main.cargoinformation.selectvehicle.SelectVehicleActivity;
-import com.ruitukeji.zwbh.main.dialog.AssignedVehicleBouncedDialog;
+import com.ruitukeji.zwbh.main.dialog.AssignedVehicleBouncedDialogActivity;
 import com.ruitukeji.zwbh.main.dialog.AuthenticationBouncedDialog;
 import com.ruitukeji.zwbh.main.dialog.SubmitOrdersBouncedDialog;
 import com.ruitukeji.zwbh.mine.dialog.InAuthenticationBouncedDialog;
@@ -34,6 +34,7 @@ import cn.bingoogolapple.titlebar.BGATitleBar;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PHOTO_PREVIEW1;
 
 /**
  * 添加货物信息
@@ -175,7 +176,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     private int tran_type = 0;
     private String type = "often";
     private String appoint_at = "0";
-    private AssignedVehicleBouncedDialog assignedVehicleBouncedDialog = null;
+    private AssignedVehicleBouncedDialogActivity assignedVehicleBouncedDialog = null;
     private SubmitOrdersBouncedDialog submitOrdersBouncedDialog = null;
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
     private InAuthenticationBouncedDialog inAuthenticationBouncedDialog = null;
@@ -441,6 +442,11 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
             vehicleModelId = data.getIntExtra("vehicleModelId", 0);
             vehicleLengthId = data.getIntExtra("vehicleLengthId", 0);
             distance();
+        } else if (requestCode == REQUEST_CODE_PHOTO_PREVIEW1 && resultCode == RESULT_OK) {
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            // 结束该activity 结束之后，前面的activity才可以处理结果
+            finish();
         }
     }
 

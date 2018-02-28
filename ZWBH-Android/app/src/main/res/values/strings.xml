@@ -220,6 +220,7 @@
     <string name="licensePlateNumber">车牌号</string>
     <string name="pleaseLicensePlateNumber">请输入车牌号</string>
     <string name="confirmAssigned">确认指派</string>
+    <string name="checkDriver">查看我的司机</string>
 
     <!--选择地址-->
     <string name="dateStr">yyyy年MM月dd日</string>
@@ -865,7 +866,7 @@
     <string name="phoneCall">拨打电话</string>
     <string name="no_result">对不起，没有搜索到相关数据！</string>
     <string name="surroundingSearchEmpty">周边搜索为空</string>
-
+    <string name="driverInformationError">司机信息错误</string>
 
     <!--报价列表-->
     <string name="quotationList">报价列表</string>
@@ -873,7 +874,6 @@
     <string name="totalOrderNum">单/司机等级</string>
     <string name="serviceLevel">/服务等级</string>
     <string name="complaintsNum">次投诉</string>
-
 
     <!--付款-->
     <string name="payment">付款</string>

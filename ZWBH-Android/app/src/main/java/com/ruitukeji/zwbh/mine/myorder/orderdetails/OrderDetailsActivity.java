@@ -470,6 +470,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 viewShippingTrackIntent.putExtra("org_address_maps", org_address_maps);
                 viewShippingTrackIntent.putExtra("dest_address_maps", dest_address_maps);
                 viewShippingTrackIntent.putExtra("dest_address", dest_address);
+                viewShippingTrackIntent.putExtra("status", status);
                 startActivity(viewShippingTrackIntent);
                 break;
             case R.id.tv_confirmPayment:

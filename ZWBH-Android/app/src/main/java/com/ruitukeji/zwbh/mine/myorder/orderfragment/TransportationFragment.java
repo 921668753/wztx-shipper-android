@@ -222,6 +222,7 @@ public class TransportationFragment extends BaseFragment implements EasyPermissi
             intent.putExtra("org_address_maps", mAdapter.getItem(position).getOrg_address_maps());
             intent.putExtra("dest_address_maps", mAdapter.getItem(position).getDest_address_maps());
             intent.putExtra("dest_address", mAdapter.getItem(position).getDest_city());
+            intent.putExtra("status",  mAdapter.getItem(position).getStatus());
             startActivity(intent);
         } else if (childView.getId() == R.id.tv_contactDriver) {
             choiceCallWrapper(mAdapter.getItem(position).getDr_phone());

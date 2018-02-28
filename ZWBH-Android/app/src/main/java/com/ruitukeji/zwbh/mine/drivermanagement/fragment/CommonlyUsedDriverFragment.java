@@ -1,6 +1,7 @@
 package com.ruitukeji.zwbh.mine.drivermanagement.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.ruitukeji.zwbh.utils.RefreshLayoutUtil;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * 常用司机
@@ -94,9 +97,11 @@ public class CommonlyUsedDriverFragment extends BaseFragment implements DriverMa
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //  PreferenceHelper.write(aty, StringConstants.FILENAME, "refreshOrderFragment", "AllOrderFragment");
-//        Intent intent = new Intent(aty, NewAddAddress1Activity.class);
-//        intent.putExtra("address_id", mAdapter.getItem(i).getOrder_id());
-//        aty.showActivity(aty, intent);
+        Intent intent = new Intent();
+        intent.putExtra("licensePlateNumber", mAdapter.getItem(i).getCard_code());
+        aty.setResult(RESULT_OK, intent);
+        // 结束该activity 结束之后，前面的activity才可以处理结果
+        aty.finish();
     }
 
     @Override

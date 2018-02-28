@@ -11,7 +11,6 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
-import com.ruitukeji.zwbh.common.KJActivityStack;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.entity.EvaluationShareBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
@@ -65,25 +64,7 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
     @Override
     public void initWidget() {
         super.initWidget();
-//        BGATitleBar.SimpleDelegate simpleDelegate = new BGATitleBar.SimpleDelegate() {
-//            @Override
-//            public void onClickLeftCtv() {
-//                super.onClickLeftCtv();
-//                if (isRefresh) {
-//                    Intent intent = new Intent();
-//                    setResult(RESULT_OK, intent);
-//                }
-//                finish();
-//            }
-//
-//            @Override
-//            public void onClickRightCtv() {
-//                super.onClickRightCtv();
-//
-//            }
-//        };
         ActivityTitleUtils.initToolbar(aty, getString(R.string.evaluationDriver), true, R.id.titlebar);
-        //   ActivityTitleUtils.initToolbar(aty, getString(R.string.evaluationDriver), R.id.titlebar);
     }
 
 
@@ -125,7 +106,6 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
             tv_submit.setVisibility(View.GONE);
         } else if (flag == 1) {
             ViewInject.toast(getString(R.string.commentSecc));
-            KJActivityStack.create().finishActivity(OrderDetailsActivity.class);
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
             finish();
