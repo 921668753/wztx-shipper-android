@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.KJActivityStack;
-import com.ruitukeji.zwbh.entity.OrderBean.ResultBean.ListBean;
+import com.ruitukeji.zwbh.entity.mine.myorder.orderfragment.OrderBean.ResultBean.ListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;

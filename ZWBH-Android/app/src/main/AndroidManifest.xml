@@ -118,8 +118,6 @@
             android:name=".main.cargoinformation.AddCargoInformationActivity"
             android:screenOrientation="portrait" />
 
-
-
         <!--主界面  添加货物信息  填写货物签收单-->
         <activity
             android:name=".main.cargoinformation.FillCargoReceiptFormActivity"
@@ -188,9 +186,13 @@
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 订单详情-->
-
         <activity
             android:name=".mine.myorder.orderdetails.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--个人中心 我的订单 订单详情   查看签收单-->
+        <activity
+            android:name=".mine.myorder.orderdetails.CheckReceiptActivity"
             android:screenOrientation="portrait" />
 
         <!--个人中心 我的订单 物流定位-->

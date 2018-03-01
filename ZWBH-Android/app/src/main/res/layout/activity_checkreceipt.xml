@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchMatch"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_title" />
+
+    <TextView
+        android:id="@+id/tv_billReceipt"
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:paddingBottom="@dimen/dimen15"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen20"
+        android:text="@string/billReceipt"
+        android:textColor="@color/ff9A06Colors" />
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/mailingAddress"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            android:id="@+id/tv_mailingAddress"
+            style="@style/MatchWrap"
+            android:paddingLeft="@dimen/dimen23"
+            android:text="江苏省昆山市花桥镇"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen15">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/recipient1"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            android:id="@+id/tv_recipient"
+            style="@style/MatchWrap"
+            android:paddingLeft="@dimen/dimen36"
+            android:text="戴志浩"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen20"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen15">
+
+        <TextView
+            style="@style/WrapWrap"
+            android:text="@string/contactInformation3"
+            android:textColor="@color/hintcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+        <TextView
+            android:id="@+id/tv_contactInformation"
+            style="@style/MatchWrap"
+            android:paddingLeft="@dimen/dimen20"
+            android:text="13965236321"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize14" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_expressNumber"
+        style="@style/MatchWrap"
+        android:layout_marginTop="@dimen/dimen10"
+        android:background="@color/mainColor"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen18"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen18">
+
+        <TextView
+            style="@style/WrapMatch"
+            android:text="@string/expressNumber"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_expressNumber"
+            style="@style/MatchMatch"
+            android:background="@android:color/transparent"
+            android:digits="0123456789"
+            android:hint="@string/pleaseFillOut"
+            android:inputType="number"
+            android:paddingLeft="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+    <include layout="@layout/commom_dividerwidth1" />
+
+    <LinearLayout
+        android:id="@+id/ll_expressCompany"
+        style="@style/MatchWrap"
+        android:background="@color/mainColor"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen18"
+        android:paddingLeft="@dimen/dimen15"
+        android:paddingRight="@dimen/dimen15"
+        android:paddingTop="@dimen/dimen18">
+
+        <TextView
+            style="@style/WrapMatch"
+            android:text="@string/expressCompany"
+            android:textColor="@color/titletextcolors"
+            android:textSize="@dimen/textsize15" />
+
+        <TextView
+            android:id="@+id/tv_expressCompany"
+            style="@style/MatchMatch"
+            android:background="@android:color/transparent"
+            android:hint="@string/pleaseFillOut"
+            android:paddingLeft="@dimen/dimen15"
+            android:textColor="@color/titletextcolors"
+            android:textColorHint="@color/c7C7CDColors"
+            android:textCursorDrawable="@drawable/shape_cursor"
+            android:textSize="@dimen/textsize15" />
+
+    </LinearLayout>
+
+</LinearLayout>

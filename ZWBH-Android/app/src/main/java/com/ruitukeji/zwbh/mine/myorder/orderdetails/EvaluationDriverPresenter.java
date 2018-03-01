@@ -24,17 +24,17 @@ public class EvaluationDriverPresenter implements EvaluationDriverContract.Prese
     }
 
     @Override
-    public void postEvaluationShare(int order_id, int deliveryTime, int serviceAttitude) {
+    public void postEvaluationShare(int order_id, int deliveryTime, int serviceAttitude, int satisfaction, String content) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("order_id", order_id);
         map.put("limit_ship", deliveryTime);
         map.put("attitude", serviceAttitude);
-        //    map.put("satisfaction", (int) satisfaction);
-//        if (StringUtils.isEmpty(note)) {
-//        } else {
-//            map.put("content", note);
-//        }
+        map.put("satisfaction", satisfaction);
+        if (StringUtils.isEmpty(content)) {
+        } else {
+            map.put("content", content);
+        }
         httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
         RequestClient.postEvaluationShare(httpParams, new ResponseListener<String>() {
             @Override

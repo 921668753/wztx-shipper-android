@@ -26,16 +26,16 @@ public class CheckReceiptPresenter implements CheckReceiptContract.Presenter {
     public void getReceiptInformation(int g_id) {
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         httpParams.put("order_id", g_id);
-//        RequestClient.getCarGoInfo(httpParams, new ResponseListener<String>() {
-//            @Override
-//            public void onSuccess(String response) {
-//                mView.getSuccess(response, 0);
-//            }
-//
-//            @Override
-//            public void onFailure(String msg) {
-//                mView.errorMsg(msg, 0);
-//            }
-//        });
+        RequestClient.getCarGoInfo(httpParams, new ResponseListener<String>() {
+            @Override
+            public void onSuccess(String response) {
+                mView.getSuccess(response, 0);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mView.errorMsg(msg, 0);
+            }
+        });
     }
 }

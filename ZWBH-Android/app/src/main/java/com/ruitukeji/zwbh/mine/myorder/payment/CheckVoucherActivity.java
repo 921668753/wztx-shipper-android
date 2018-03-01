@@ -16,7 +16,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.GlideImageLoader;
 import com.ruitukeji.zwbh.common.ImagePreviewNoDelActivity;
-import com.ruitukeji.zwbh.entity.CheckVoucherBean;
+import com.ruitukeji.zwbh.entity.mine.myorder.payment.CheckVoucherBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 

@@ -12,7 +12,7 @@ import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.entity.OrderDetailsBean;
+import com.ruitukeji.zwbh.entity.mine.myorder.orderdetails.OrderDetailsBean;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
@@ -410,14 +410,9 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 choiceCallWrapper(tv_eixedTelephone1.getText().toString());
                 break;
             case R.id.tv_checkReceipt:
-
-
-
-
-
-
-
-
+                Intent checkReceiptIntent = new Intent(aty, CheckReceiptActivity.class);
+                checkReceiptIntent.putExtra("order_id", orderId);
+                showActivity(aty, checkReceiptIntent);
                 break;
             case R.id.tv_collect:
                 if (is_collect == 1) {

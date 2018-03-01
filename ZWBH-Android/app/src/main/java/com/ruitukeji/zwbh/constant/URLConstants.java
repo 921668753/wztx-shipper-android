@@ -330,6 +330,11 @@ public class URLConstants {
     public static String ORDERDETAIL = APIURL + "goods/orderDetail";
 
     /**
+     * 获取货物签收单信息
+     */
+    public static String CARGOINFO = APIURL + "goods/getCarGoInfo";
+
+    /**
      * 收藏司机
      */
     public static String COLLECTDRIVER = APIURL + "Car/CollectDriver";

@@ -18,7 +18,7 @@ public interface EvaluationDriverContract {
         /**
          * 发送评价信息
          */
-        void postEvaluationShare(int order_id, int deliveryTime, int serviceAttitude);
+        void postEvaluationShare(int order_id, int deliveryTime, int serviceAttitude,int satisfaction,String content);
     }
 
     interface View extends BaseNewView<Presenter,String> {

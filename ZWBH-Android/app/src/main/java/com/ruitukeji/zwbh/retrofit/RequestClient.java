@@ -1002,6 +1002,26 @@ public class RequestClient {
     }
 
     /**
+     * 获取货物签收单信息
+     */
+    public static void getCarGoInfo(HttpParams httpParams, final ResponseListener<String> listener) {
+        Log.d("tag", "getCarGoInfo");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    //    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestGetHttp(URLConstants.CARGOINFO, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 收藏司机
      */
     public static void postCollectDriver(HttpParams httpParams, final ResponseListener<String> listener) {

@@ -271,7 +271,6 @@
                     android:textColor="@color/a1A1AColors"
                     android:textSize="@dimen/textsize14" />
 
-
                 <TextView
                     android:id="@+id/tv_checkReceipt"
                     android:layout_width="wrap_content"
@@ -285,9 +284,7 @@
                     android:textSize="@dimen/textsize13"
                     android:visibility="gone" />
 
-
             </LinearLayout>
-
 
             <TextView
                 style="@style/Match50"

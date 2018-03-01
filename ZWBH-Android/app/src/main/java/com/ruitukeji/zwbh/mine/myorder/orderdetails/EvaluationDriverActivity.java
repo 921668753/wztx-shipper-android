@@ -12,7 +12,7 @@ import com.ruitukeji.zwbh.application.MyApplication;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
-import com.ruitukeji.zwbh.entity.EvaluationShareBean;
+import com.ruitukeji.zwbh.entity.mine.myorder.orderdetails.EvaluationDriverBean;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 
@@ -41,8 +41,6 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
     private int order_id;
 
     private String status;
-
-    private boolean isRefresh = false;
 
     @Override
     public void setRootView() {
@@ -74,7 +72,8 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
         switch (v.getId()) {
             case R.id.tv_submit:
                 showLoadingDialog(MyApplication.getContext().getString(R.string.submissionLoad));
-                ((EvaluationDriverContract.Presenter) mPresenter).postEvaluationShare(order_id, rb_deliveryTime.getStar(), rb_serviceAttitude.getStar());
+                ((EvaluationDriverContract.Presenter) mPresenter).postEvaluationShare(order_id, rb_deliveryTime.getStar(), rb_serviceAttitude.getStar(),
+                        rb_satisfactionAttitude.getStar(), et_note.getText().toString().trim());
                 break;
         }
     }
@@ -90,7 +89,7 @@ public class EvaluationDriverActivity extends BaseActivity implements Evaluation
             et_note.setEnabled(false);
             et_note.setFocusable(false);
             et_note.setFocusableInTouchMode(false);
-            EvaluationShareBean evaluationShareBean = (EvaluationShareBean) JsonUtil.getInstance().json2Obj(success, EvaluationShareBean.class);
+            EvaluationDriverBean evaluationShareBean = (EvaluationDriverBean) JsonUtil.getInstance().json2Obj(success, EvaluationDriverBean.class);
             rb_deliveryTime.setStar(evaluationShareBean.getResult().getLimit_ship());
             rb_deliveryTime.setClickable(false);
             rb_serviceAttitude.setStar(evaluationShareBean.getResult().getAttitude());

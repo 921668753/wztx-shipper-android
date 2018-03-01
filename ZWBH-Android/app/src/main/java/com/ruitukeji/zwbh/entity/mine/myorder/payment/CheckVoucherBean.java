@@ -1,4 +1,6 @@
-package com.ruitukeji.zwbh.entity;
+package com.ruitukeji.zwbh.entity.mine.myorder.payment;
+
+import com.ruitukeji.zwbh.entity.BaseResult;
 
 import java.util.List;
 
