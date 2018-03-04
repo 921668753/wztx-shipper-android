@@ -180,6 +180,11 @@ public class URLConstants {
     public static String INFOADDRESS = APIURL + "Address/InfoAddress";
 
     /**
+     * 查询始发地目的地
+     */
+    public static String ADDRESSBOUNCED = APIURL + "Help/getAddress";
+
+    /**
      * 删除始发地目的地
      */
     public static String DELADDRESS = APIURL + "Address/DelAddress";

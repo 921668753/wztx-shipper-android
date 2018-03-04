@@ -99,10 +99,10 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.phoneNumber1), 0);
             return;
         }
-//        if (StringUtils.isEmpty(buss_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadPictureBusinessLicense), 0);
-//            return;
-//        }
+        if (StringUtils.isEmpty(buss_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadPictureBusinessLicense), 0);
+            return;
+        }
         if (StringUtils.isEmpty(law_person)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.legalPersonName), 0);
             return;
@@ -122,18 +122,18 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.legalPersonIdNumber1), 0);
             return;
         }
-//        if (StringUtils.isEmpty(front_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.front_pic), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(back_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.back_pic), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(hold_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.hold_pic), 0);
-//            return;
-//        }
+        if (StringUtils.isEmpty(front_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.front_pic), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(back_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.back_pic), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(hold_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.hold_pic), 0);
+            return;
+        }
         if (StringUtils.isEmpty(sp_identity_name)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseFillOut) + MyApplication.getContext().getString(R.string.operationName), 0);
             return;
@@ -152,18 +152,18 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
             mView.errorMsg(MyApplication.getContext().getString(R.string.operationIdNumber1), 0);
             return;
         }
-//        if (StringUtils.isEmpty(sp_front_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_front_pic), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(sp_back_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_back_pic), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(sp_hold_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_hold_pic), 0);
-//            return;
-//        }
+        if (StringUtils.isEmpty(sp_front_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_front_pic), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(sp_back_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_back_pic), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(sp_hold_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.sp_hold_pic), 0);
+            return;
+        }
 //        if (pic_time <= 0) {
 //            mView.errorMsg(MyApplication.getContext().getString(R.string.pleaseSelect) + MyApplication.getContext().getString(R.string.validityIdentityCard), 0);
 //            return;
@@ -179,17 +179,17 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
                 map.put("com_buss_num", com_buss_num);
                 map.put("address", address);
                 map.put("phone", phone);
-                map.put("buss_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("buss_pic", buss_pic);
                 map.put("law_person", law_person);
                 map.put("identity", identity);
-                map.put("hold_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
-                map.put("front_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
-                map.put("back_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("hold_pic", hold_pic);
+                map.put("front_pic", front_pic);
+                map.put("back_pic", back_pic);
                 map.put("sp_identity_name", sp_identity_name);
                 map.put("sp_identity", sp_identity);
-                map.put("sp_hold_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
-                map.put("sp_front_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
-                map.put("sp_back_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("sp_hold_pic", sp_hold_pic);
+                map.put("sp_front_pic", sp_front_pic);
+                map.put("sp_back_pic", sp_back_pic);
                 httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());
                 RequestClient.postEnterpriseInformation(httpParams, new ResponseListener<String>() {
                     @Override

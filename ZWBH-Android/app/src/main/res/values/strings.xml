@@ -246,6 +246,11 @@
     <string name="hotCity">热门城市</string>
     <string name="hot">热门</string>
     <string name="locateFailure">定位失败请重新定位！</string>
+    <string name="selectProvince">选择省份:</string>
+    <string name="currentRegion">当前地区:</string>
+    <string name="returnUpperLevel">返回上一级</string>
+    <string name="back">返回</string>
+    <string name="all1">不限</string>
 
 
     <!--始发地-->

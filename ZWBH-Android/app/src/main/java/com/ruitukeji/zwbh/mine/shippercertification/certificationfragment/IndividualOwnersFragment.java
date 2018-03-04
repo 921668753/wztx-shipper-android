@@ -31,6 +31,7 @@ import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.mine.shippercertification.ShipperCertificationActivity;
 import com.ruitukeji.zwbh.utils.DataUtil;
 import com.ruitukeji.zwbh.utils.JsonUtil;
+import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
 import com.ruitukeji.zwbh.utils.rx.RxBus;
 
@@ -238,6 +239,7 @@ public class IndividualOwnersFragment extends BaseFragment implements EasyPermis
                 img_woman.setImageResource(R.mipmap.ic_checkbox_select);
                 break;
             case R.id.ll_validityIdentityCard:
+                SoftKeyboardUtils.packUpKeyboard(aty);
                 pvTime.setDate(calendar);
                 //弹出时间选择器
                 pvTime.show(tv_validityIdentityCard);

@@ -310,6 +310,13 @@ public class RequestClient {
     }
 
     /**
+     * 始发地目的地--弹框
+     */
+    public static void getAddressBounced(HttpParams httpParams, ResponseListener<String> listener) {
+        HttpRequest.requestGetHttp(URLConstants.ADDRESSBOUNCED, httpParams, listener);
+    }
+
+    /**
      * 查询始发地目的地
      */
     public static void getDelAddress(HttpParams httpParams, final ResponseListener<String> listener) {

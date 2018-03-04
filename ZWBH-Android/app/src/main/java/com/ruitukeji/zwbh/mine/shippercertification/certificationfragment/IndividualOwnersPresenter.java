@@ -57,18 +57,18 @@ public class IndividualOwnersPresenter implements IndividualOwnersContract.Prese
             mView.errorMsg(MyApplication.getContext().getString(R.string.aboveCurrentTime), 0);
             return;
         }
-//        if (StringUtils.isEmpty(front_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadYourIdCard), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(back_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadClearYourIdCard), 0);
-//            return;
-//        }
-//        if (StringUtils.isEmpty(hold_pic)) {
-//            mView.errorMsg(MyApplication.getContext().getString(R.string.uploudHoldingIdPhoto), 0);
-//            return;
-//        }
+        if (StringUtils.isEmpty(front_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadYourIdCard), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(back_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.uploadClearYourIdCard), 0);
+            return;
+        }
+        if (StringUtils.isEmpty(hold_pic)) {
+            mView.errorMsg(MyApplication.getContext().getString(R.string.uploudHoldingIdPhoto), 0);
+            return;
+        }
         SubmitBouncedDialog submitBouncedDialog = new SubmitBouncedDialog(KJActivityStack.create().topActivity()) {
             @Override
             public void confirm() {
@@ -79,9 +79,9 @@ public class IndividualOwnersPresenter implements IndividualOwnersContract.Prese
                 map.put("real_name", real_name);
                 map.put("sex", sex);
                 map.put("identity", identity);
-                map.put("hold_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
-                map.put("front_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
-                map.put("back_pic", "http://ot090bmn8.bkt.clouddn.com/37bfbbf2e59ee54286762726db5881c5.png");
+                map.put("hold_pic", hold_pic);
+                map.put("front_pic", front_pic);
+                map.put("back_pic", back_pic);
                 map.put("tel", tel);
                 map.put("pic_time", pic_time);
                 httpParams.putJsonParams(JsonUtil.getInstance().obj2JsonString(map).toString());

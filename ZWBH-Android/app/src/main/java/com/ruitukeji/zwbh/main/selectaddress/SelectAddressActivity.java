@@ -21,7 +21,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.StringConstants;
-import com.ruitukeji.zwbh.main.selectaddress.selectioncity.SelectionCityActivity;
+import com.ruitukeji.zwbh.main.selectaddress.dialog.AddressProvinceBouncedDialog;
 import com.ruitukeji.zwbh.mine.addressmanagement.AddressManagementActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 
@@ -76,6 +76,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
     private String city = "";
     private PoiSearch.Query query;
     private PoiSearch poiSearch;
+    private AddressProvinceBouncedDialog addressProvinceBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -135,11 +136,23 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
                 if (tran_type == 0 && type != 0) {
                     return;
                 }
-                Intent intent = new Intent(aty, SelectionCityActivity.class);
+//                Intent intent = new Intent(aty, SelectionCityActivity.class);
 //                intent.putExtra("lat", lat);
 //                intent.putExtra("longi", longi);
 //                intent.putExtra("district", district);
-                startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
+//                startActivityForResult(intent, REQUEST_CODE_PHOTO_PREVIEW);
+                if (addressProvinceBouncedDialog != null && !addressProvinceBouncedDialog.isShowing()) {
+                    addressProvinceBouncedDialog.show();
+                    return;
+                }
+                addressProvinceBouncedDialog = new AddressProvinceBouncedDialog(aty, "", 0) {
+                    @Override
+                    public void confirmProvince(String provinceName, String addressName, int provinceId, int cityId) {
+                        this.cancel();
+                        tv_city.setText(addressName);
+                    }
+                };
+                addressProvinceBouncedDialog.show();
                 break;
         }
     }
@@ -345,4 +358,16 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (addressProvinceBouncedDialog != null) {
+            addressProvinceBouncedDialog.cancel();
+        }
+        pioAddressViewAdapter.clear();
+        pioAddressViewAdapter = null;
+        addressProvinceBouncedDialog = null;
+    }
+
 }
