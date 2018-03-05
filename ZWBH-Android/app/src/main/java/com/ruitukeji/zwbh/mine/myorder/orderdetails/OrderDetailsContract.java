@@ -26,7 +26,10 @@ public interface OrderDetailsContract {
          */
         void postDelCollectDriver(int orderId);
 
-
+        /**
+         * 货主确认 取消订单功能
+         */
+        void postCancelGoodsComplete(int orderId, int type);
 
     }
 

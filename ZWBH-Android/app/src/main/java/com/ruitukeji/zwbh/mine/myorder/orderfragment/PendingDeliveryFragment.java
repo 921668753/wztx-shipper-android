@@ -34,7 +34,9 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+import static android.app.Activity.RESULT_OK;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PERMISSION_CALL;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_SELECT;
 
 /**
  * 待发货
@@ -108,7 +110,7 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        aty.showActivity(aty, intent);
+        startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 
     @Override
@@ -268,6 +270,13 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {// 如果等于1
+            mRefreshLayout.beginRefreshing();
+        }
+    }
 
 }
 

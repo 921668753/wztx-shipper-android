@@ -13,6 +13,7 @@ import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BindView;
 import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.entity.mine.myorder.orderdetails.OrderDetailsBean;
+import com.ruitukeji.zwbh.main.dialog.AuthenticationBouncedDialog;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
@@ -307,6 +308,17 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     @BindView(id = R.id.tv_confirmPayment, click = true)
     private TextView tv_confirmPayment;
 
+    /**
+     * 拒绝取消
+     */
+    @BindView(id = R.id.tv_refusedLift, click = true)
+    private TextView tv_refusedLift;
+
+    /**
+     * 同意取消
+     */
+    @BindView(id = R.id.tv_agreedCancel, click = true)
+    private TextView tv_agreedCancel;
 
     /**
      * 联系司机
@@ -352,6 +364,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private ContactDriverBouncedDialog contactDriverBouncedDialog = null;
     private String per_status = "init";
     private boolean isRefresh = false;
+    private AuthenticationBouncedDialog authenticationBouncedDialog1 = null;
+    private AuthenticationBouncedDialog authenticationBouncedDialog2 = null;
 
     @Override
     public void setRootView() {
@@ -488,6 +502,43 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 checkVoucherIntent.putExtra("per_status", per_status);
                 startActivityForResult(checkVoucherIntent, REQUEST_CODE_PREVIEW);
                 break;
+
+            case R.id.tv_refusedLift:
+
+                if (authenticationBouncedDialog1 != null && !authenticationBouncedDialog1.isShowing()) {
+                    authenticationBouncedDialog1.show();
+                    return;
+                }
+                //不同意
+                authenticationBouncedDialog1 = new AuthenticationBouncedDialog(this, getString(R.string.confirmAgreeCancelOrder1)) {
+                    @Override
+                    public void confirm() {
+                        this.cancel();
+                        //不同意
+                        // showLoadingDialog(getString(R.string.submissionLoad));
+                        ((OrderDetailsContract.Presenter) mPresenter).postCancelGoodsComplete(orderId, 0);
+                    }
+                };
+                authenticationBouncedDialog1.show();
+                break;
+            case R.id.tv_agreedCancel:
+                if (authenticationBouncedDialog2 != null && !authenticationBouncedDialog2.isShowing()) {
+                    authenticationBouncedDialog2.show();
+                    return;
+                }
+                //同意
+                authenticationBouncedDialog2 = new AuthenticationBouncedDialog(this, getString(R.string.confirmAgreeCancelOrder)) {
+                    @Override
+                    public void confirm() {
+                        this.cancel();
+                        //同意
+                        //   showLoadingDialog(getString(R.string.submissionLoad));
+                        ((OrderDetailsContract.Presenter) mPresenter).postCancelGoodsComplete(orderId, 1);
+                    }
+                };
+                authenticationBouncedDialog2.show();
+                break;
+
             case R.id.tv_contactDriver:
                 choiceCallWrapper(dr_phone);
                 break;
@@ -630,21 +681,35 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             } else {
                 tv_cancelOrder.setVisibility(View.GONE);
             }
+
+            if (!StringUtils.isEmpty(status) && status.equals("quoted") && is_cancel == 1) {
+                tv_refusedLift.setVisibility(View.VISIBLE);
+                tv_agreedCancel.setVisibility(View.VISIBLE);
+            } else {
+                tv_refusedLift.setVisibility(View.GONE);
+                tv_agreedCancel.setVisibility(View.GONE);
+            }
+
             if (result.getIs_abnormal() == 0) {
                 tv_checkAbnormal.setVisibility(View.GONE);
             } else {
                 tv_checkAbnormal.setVisibility(View.VISIBLE);
             }
             RxBus.getInstance().post(new MsgEvent<String>("RxBusOrderMessageDetailsEvent"));
+            dismissLoadingDialog();
         } else if (flag == 1) {
             is_collect = 1;
             tv_collect.setText(getString(R.string.cancelCollection));
+            dismissLoadingDialog();
         } else if (flag == 2) {
             is_collect = 0;
             tv_collect.setText(getString(R.string.collect));
+            dismissLoadingDialog();
+        } else if (flag == 3) {
+            isRefresh = true;
+            showLoadingDialog(getString(R.string.dataLoad));
+            ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
         }
-
-        dismissLoadingDialog();
     }
 
     @Override

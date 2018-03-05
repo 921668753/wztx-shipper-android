@@ -436,7 +436,10 @@
     <string name="userOffer">用户出价</string>
     <string name="place1">起运地</string>
     <string name="symbol">¥</string>
+    <string name="actualPrice">实际价格</string>
     <string name="cancelOrder1">取消订单</string>
+    <string name="refusedLift">拒绝取消</string>
+    <string name="agreedCancel">同意取消</string>
     <string name="canceledOrder">已取消</string>
     <string name="viewQuotation">查看报价</string>
     <string name="onArrival">到达起运地</string>
@@ -448,7 +451,8 @@
     <string name="evaluationDriver">评价司机</string>
     <string name="confirmPayment">确认支付</string>
     <string name="seeEvaluation">查看评价</string>
-
+    <string name="confirmAgreeCancelOrder1">确认不同意取消该接单？</string>
+    <string name="confirmAgreeCancelOrder">确认同意取消该接单？</string>
 
     <!--我的订单   联系司机-->
     <string name="contactDriver1">赶快联系司机吧!</string>

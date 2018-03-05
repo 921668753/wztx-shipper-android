@@ -156,7 +156,7 @@
         <TextView
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/dimen15"
-            android:text="@string/userOffer"
+            android:text="@string/actualPrice"
             android:textColor="@color/aAAAAAColors"
             android:textSize="@dimen/textsize14" />
 

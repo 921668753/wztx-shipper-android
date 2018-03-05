@@ -119,9 +119,12 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          * 用户出价
          */
-        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && !StringUtils.isEmpty(listBean.getMind_price()) && !(listBean.getMind_price().equals("0.00"))) {
+        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && !StringUtils.isEmpty(listBean.getMind_price()) && StringUtils.toDouble(listBean.getMind_price()) > 0) {
             viewHolderHelper.setVisibility(R.id.ll_userOffer, View.VISIBLE);
             viewHolderHelper.setText(R.id.tv_userOffer, listBean.getMind_price());
+        } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && !StringUtils.isEmpty(listBean.getMind_price()) && StringUtils.toDouble(listBean.getMind_price()) <= 0) {
+            viewHolderHelper.setVisibility(R.id.ll_userOffer, View.VISIBLE);
+            viewHolderHelper.setText(R.id.tv_userOffer, listBean.getSystem_price());
         } else if (!StringUtils.isEmpty(listBean.getFinal_price())) {
             viewHolderHelper.setVisibility(R.id.ll_userOffer, View.VISIBLE);
             viewHolderHelper.setText(R.id.tv_userOffer, listBean.getFinal_price());

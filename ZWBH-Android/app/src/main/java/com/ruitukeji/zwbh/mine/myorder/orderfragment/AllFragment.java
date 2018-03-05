@@ -44,6 +44,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static android.app.Activity.RESULT_OK;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_PERMISSION_CALL;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_SELECT;
 
 /**
  * 全部
@@ -201,7 +202,7 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        aty.showActivity(aty, intent);
+        startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
     }
 
 
