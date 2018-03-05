@@ -99,6 +99,9 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     private int isOff1 = 0;
     private String placeName1 = "";
 
+    private int isfinish = 0;
+
+
     @Override
     public void setRootView() {
         setContentView(R.layout.activity_provenance);
@@ -250,7 +253,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
             case R.id.tv_determine:
                 if (tv_address.getText().toString().trim().equals(placeName1) && et_detailedAddress.getText().toString().trim().equals(detailedAddress)
                         && et_deliveryCustomer.getText().toString().trim().equals(deliveryCustomer) && et_shipper.getText().toString().trim().equals(shipper)
-                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && isOff == isOff1) {
+                        && et_phone.getText().toString().trim().equals(phone) && et_eixedTelephone.getText().toString().trim().equals(eixedTelephone) && isOff == isOff1 && isfinish == 0) {
                     aty.finish();
                     return;
                 }
@@ -368,6 +371,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 finish();
                 return;
             }
+            isfinish = 1;
             lat = data.getStringExtra("lat");
             longi = data.getStringExtra("longi");
             district = data.getStringExtra("district");
@@ -379,6 +383,9 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (informationKeptBouncedDialog != null) {
+            informationKeptBouncedDialog.cancel();
+        }
         informationKeptBouncedDialog = null;
     }
 }

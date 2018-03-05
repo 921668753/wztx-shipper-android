@@ -297,16 +297,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             // 目的：区分请求，不同的请求要做不同的处理
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", false);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress1", false);
-            lat = data.getStringExtra("lat");
-            longi = data.getStringExtra("longi");
-            district = data.getStringExtra("district");
             placeName = data.getStringExtra("placeName");
-            //    type = data.getIntExtra("type", 0);
-            detailedAddress = data.getStringExtra("detailedAddress");
-            deliveryCustomer = data.getStringExtra("deliveryCustomer");
-            shipper = data.getStringExtra("shipper");
-            phone = data.getStringExtra("phone");
-            eixedTelephone = data.getStringExtra("eixedTelephone");
             if (tran_type == 0 && !placeName.contains(city) && type == 1) {
                 ViewInject.toast(getString(R.string.enterAddressSameCity));
                 return;
@@ -315,6 +306,15 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
                 ViewInject.toast(getString(R.string.enterIntercityAddress));
                 return;
             }
+            lat = data.getStringExtra("lat");
+            longi = data.getStringExtra("longi");
+            district = data.getStringExtra("district");
+            //    type = data.getIntExtra("type", 0);
+            detailedAddress = data.getStringExtra("detailedAddress");
+            deliveryCustomer = data.getStringExtra("deliveryCustomer");
+            shipper = data.getStringExtra("shipper");
+            phone = data.getStringExtra("phone");
+            eixedTelephone = data.getStringExtra("eixedTelephone");
             Intent intent = new Intent();
             intent.putExtra("lat", lat);
             intent.putExtra("longi", longi);

@@ -23,7 +23,6 @@ import com.ruitukeji.zwbh.utils.rx.RxBus;
 
 public class SystemMessageDetailsActivity extends BaseActivity implements SystemMessageDetailsContract.View {
 
-
     /**
      * 标题
      */
@@ -52,6 +51,7 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
 
 
     private int messageId;
+    private String name = null;
 
     @Override
     public void setRootView() {
@@ -61,6 +61,8 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
     @Override
     public void initData() {
         super.initData();
+        name = getIntent().getStringExtra("name");
+        messageId = getIntent().getIntExtra("messageId", 0);
         mPresenter = new SystemMessageDetailsPresenter(this);
     }
 
@@ -68,7 +70,6 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
     public void initWidget() {
         super.initWidget();
         ActivityTitleUtils.initToolbar(aty, getString(R.string.messageDetails), true, R.id.titlebar);
-        messageId = getIntent().getIntExtra("messageId", 0);
         showLoadingDialog(KJActivityStack.create().topActivity().getString(R.string.dataLoad));
         ((SystemMessageDetailsContract.Presenter) mPresenter).getMessageDetails(messageId);
     }
@@ -115,9 +116,14 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
                     + "</body></html>";
             web_content.loadDataWithBaseURL("baseurl", code, "text/html", "utf-8", null);
         }
-        RxBus.getInstance().post(new MsgEvent<String>("RxBusSystemMessageDetailsEvent"));
+        if (!StringUtils.isEmpty(name) && name.equals("RxBusOrderMessageDetailsEvent")) {
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusOrderMessageDetailsEvent"));
+        } else {
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusSystemMessageDetailsEvent"));
+        }
         dismissLoadingDialog();
     }
+
 
     @Override
     public void error(String msg) {
@@ -128,6 +134,7 @@ public class SystemMessageDetailsActivity extends BaseActivity implements System
         tv_hintText.setText(msg + getString(R.string.clickRefresh));
         dismissLoadingDialog();
     }
+
 
     @Override
     public void setPresenter(SystemMessageDetailsContract.Presenter presenter) {
