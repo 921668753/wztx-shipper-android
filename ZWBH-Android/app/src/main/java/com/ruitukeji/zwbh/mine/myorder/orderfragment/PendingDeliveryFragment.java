@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kymjs.common.PreferenceHelper;
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
@@ -85,7 +86,6 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
     private CancelOrderBouncedDialog cancelOrderBouncedDialog = null;
     private ContactDriverBouncedDialog contactDriverBouncedDialog = null;
     private int isShowingOrderNotic1 = 0;
-    private Handler handler = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -96,7 +96,6 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
     @Override
     protected void initData() {
         super.initData();
-        handler = new Handler();
         mPresenter = new OrderPresenter(this);
         mAdapter = new OrderViewAdapter(getActivity());
     }
@@ -167,6 +166,14 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
+        for (int i = 0; i < orderBean.getResult().getList().size(); i++) {
+            OrderBean.ResultBean.ListBean listBean = orderBean.getResult().getList().get(i);
+            if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quoted") && listBean.getIs_cancel() == 1) {
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 1);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "orderId", listBean.getOrder_id());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "orderCode", listBean.getOrder_code());
+            }
+        }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
@@ -175,22 +182,17 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(orderBean.getResult().getList());
         }
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int isShowingOrderNotic = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
-                if (isShowingOrderNotic == 1 && isShowingOrderNotic1 == 0) {
-                    if (aty.cancelOrderNoticBouncedDialog != null && !aty.cancelOrderNoticBouncedDialog.isShowing()) {
-                        aty.cancelOrderNoticBouncedDialog.show();
-                        PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
-                        isShowingOrderNotic1 = 1;
-                        int orderId = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "orderId", 0);
-                        String orderCode = PreferenceHelper.readString(aty, StringConstants.FILENAME, "orderCode", "");
-                        aty.cancelOrderNoticBouncedDialog.setOrderId(orderId, orderCode);
-                    }
-                }
+        int isShowingOrderNotic = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
+        if (isShowingOrderNotic == 1 && isShowingOrderNotic1 == 0) {
+            if (aty.cancelOrderNoticBouncedDialog != null && !aty.cancelOrderNoticBouncedDialog.isShowing()) {
+                aty.cancelOrderNoticBouncedDialog.show();
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
+                isShowingOrderNotic1 = 1;
+                int orderId = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "orderId", 0);
+                String orderCode = PreferenceHelper.readString(aty, StringConstants.FILENAME, "orderCode", "");
+                aty.cancelOrderNoticBouncedDialog.setOrderId(orderId, orderCode);
             }
-        }, 1000);
+        }
         dismissLoadingDialog();
     }
 
@@ -217,10 +219,6 @@ public class PendingDeliveryFragment extends BaseFragment implements EasyPermiss
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
-        handler = null;
         if (cancelOrderBouncedDialog != null) {
             cancelOrderBouncedDialog.cancel();
         }

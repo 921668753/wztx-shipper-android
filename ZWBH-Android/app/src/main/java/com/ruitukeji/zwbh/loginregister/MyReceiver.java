@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.ruitukeji.zwbh.main.message.SystemMessageActivity;
+import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +47,15 @@ public class MyReceiver extends BroadcastReceiver {
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+            if (bundle.getString("cn.jpush.android.NOTIFICATION_CONTENT_TITLE").startsWith("您有一条被取消的订单")) {
+                //"cn.jpush.android.NOTIFICATION_CONTENT_TITLE"
+                Intent intent1 = new Intent(context, MyOrderActivity.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.putExtra("newChageIcon", 0);
+                context.startActivity(intent1);
+                Log.d(TAG, "[MyReceiver] 用户点击打开了通知 MyOrderActivity");
+                return;
+            }
 //        	//打开自定义的Activity
             Intent i = new Intent(context, SystemMessageActivity.class);
             i.putExtras(bundle);
@@ -62,6 +72,7 @@ public class MyReceiver extends BroadcastReceiver {
         } else {
             Log.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
         }
+
     }
 
     // 打印所有的 intent extra 数据

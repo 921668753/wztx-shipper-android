@@ -96,7 +96,6 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
     private CancelOrderBouncedDialog cancelOrderBouncedDialog = null;
     public int isShowingOrderNotic1 = 0;
 
-    private Handler handler = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -107,7 +106,6 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
     @Override
     protected void initData() {
         super.initData();
-        handler = new Handler();
         mPresenter = new OrderPresenter(this);
         mAdapter = new OrderViewAdapter(getActivity());
     }
@@ -249,6 +247,14 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
             errorMsg(getString(R.string.serverReturnsDataNull), 0);
             return;
         }
+        for (int i = 0; i < orderBean.getResult().getList().size(); i++) {
+            OrderBean.ResultBean.ListBean listBean = orderBean.getResult().getList().get(i);
+            if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quoted") && listBean.getIs_cancel() == 1) {
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 1);
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "orderId", listBean.getOrder_id());
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "orderCode", listBean.getOrder_code());
+            }
+        }
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             mAdapter.clear();
@@ -257,9 +263,9 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(orderBean.getResult().getList());
         }
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
                 int isShowingOrderNotic = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
                 if (isShowingOrderNotic == 1 && isShowingOrderNotic1 == 0) {
                     if (aty.cancelOrderNoticBouncedDialog != null && !aty.cancelOrderNoticBouncedDialog.isShowing()) {
@@ -271,8 +277,8 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
                         aty.cancelOrderNoticBouncedDialog.setOrderId(orderId, orderCode);
                     }
                 }
-            }
-        }, 1000);
+      //      }
+//        }, 1000);
         dismissLoadingDialog();
     }
 
@@ -318,10 +324,6 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
-        handler = null;
         if (cancelOrderBouncedDialog != null) {
             cancelOrderBouncedDialog.cancel();
         }
@@ -372,9 +374,6 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
 
     public void showCancelOrderNoticBouncedDialog() {
         isShowingOrderNotic1 = 0;
-        if (mRefreshLayout.isLoadingMore()) {
-            return;
-        }
         mRefreshLayout.beginRefreshing();
     }
 }

@@ -156,11 +156,11 @@ public class MyOrderActivity extends BaseActivity {
         int newChageIcon = intent.getIntExtra("newChageIcon", 6);
         Log.d("newChageIcon", newChageIcon + "");
         if (newChageIcon == 0) {
-            setSimulateClick(tv_all, 160, 100);
             isAll = 1;
+            setSimulateClick(tv_all, 160, 100);
         } else if (newChageIcon == 2) {
-            setSimulateClick(tv_pendingDelivery, 160, 100);
             isPendingDelivery = 1;
+            setSimulateClick(tv_pendingDelivery, 160, 100);
         }
     }
 
