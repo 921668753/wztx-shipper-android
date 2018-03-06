@@ -369,7 +369,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_orderdetails1);
+        setContentView(R.layout.activity_orderdetails);
     }
 
     @Override

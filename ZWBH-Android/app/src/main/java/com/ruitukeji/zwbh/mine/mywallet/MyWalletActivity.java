@@ -96,7 +96,7 @@ public class MyWalletActivity extends BaseActivity implements MyWalletContract.V
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_mywallet1);
+        setContentView(R.layout.activity_mywallet);
     }
 
     @Override

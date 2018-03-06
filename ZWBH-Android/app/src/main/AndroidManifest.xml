@@ -465,50 +465,22 @@
 
 
         <!--选择注册类型-->
-        <activity
-            android:name=".loginregister.SelectRegisterTypeActivity"
-            android:screenOrientation="portrait" />
 
         <!--新用户注册-->
-        <activity
-            android:name=".loginregister.NewUserRegisterActivity"
-            android:screenOrientation="portrait" />
 
         <!--个人认证  基本信息-->
-        <activity
-            android:name=".loginregister.PersonalInformationActivity"
-            android:screenOrientation="portrait" />
 
         <!--个人认证 身份认证-->
-        <activity
-            android:name=".loginregister.PersonalIdentityAuthenticationActivity"
-            android:screenOrientation="portrait" />
 
         <!--企业认证 企业信息-->
-        <activity
-            android:name=".loginregister.EnterpriseInformationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <!--企业认证  资质认证-->
-        <activity
-            android:name=".loginregister.EnterpriseQualificationCertificateActivity"
-            android:screenOrientation="portrait" />
 
         <!--企业认证  操作人信息-->
-        <activity
-            android:name=".loginregister.EnterpriseOperatingInformationActivity"
-            android:screenOrientation="portrait" />
 
         <!--注册 找回密码-->
-        <activity
-            android:name=".loginregister.RetrievePasswordActivity"
-            android:screenOrientation="portrait" />
 
         <!--注册协议-->
-        <activity
-            android:name=".loginregister.RegistrationAgreementActivity"
-            android:screenOrientation="portrait" />
 
         <!--图片选择-->
         <activity

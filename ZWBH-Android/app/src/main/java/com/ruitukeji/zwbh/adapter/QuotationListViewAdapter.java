@@ -18,7 +18,7 @@ public class QuotationListViewAdapter extends BGAAdapterViewAdapter<ResultBean> 
 
 
     public QuotationListViewAdapter(Context context) {
-        super(context, R.layout.item_quotationlist1);
+        super(context, R.layout.item_quotationlist);
     }
 
     @Override

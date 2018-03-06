@@ -9,7 +9,6 @@
     <dimen name="liftdistance">10dp</dimen>
     <dimen name="mian_font_size">16sp</dimen>
 
-    <!--SelectRegisterTypeActivity-->
     <dimen name="dimen0">0dp</dimen>
     <dimen name="dimen0.5">0.5dp</dimen>
     <dimen name="dimen1">1dp</dimen>

@@ -26,8 +26,6 @@ import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.UploadImageBean;
 import com.ruitukeji.zwbh.entity.mine.PersonalCenterBean;
-import com.ruitukeji.zwbh.loginregister.EnterpriseInformationActivity;
-import com.ruitukeji.zwbh.loginregister.PersonalInformationActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
 import com.ruitukeji.zwbh.utils.JsonUtil;
 import com.ruitukeji.zwbh.utils.rx.MsgEvent;
@@ -148,15 +146,6 @@ public class PersonalDataActivity extends BaseActivity implements PersonalDataCo
                     break;
                 }
                 PreferenceHelper.write(this, StringConstants.FILENAME, "isRefreshPersonalDataActivity", true);
-                if (type.equals("person")) {
-                    Intent personalInformation = new Intent(aty, PersonalInformationActivity.class);
-                    personalInformation.putExtra("auth_status", auth_status);
-                    showActivity(aty, personalInformation);
-                } else {
-                    Intent enterpriseInformation = new Intent(aty, EnterpriseInformationActivity.class);
-                    enterpriseInformation.putExtra("auth_status", auth_status);
-                    showActivity(aty, enterpriseInformation);
-                }
                 break;
         }
     }

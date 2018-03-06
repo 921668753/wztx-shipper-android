@@ -62,7 +62,7 @@ public class QuotationListActivity extends BaseActivity implements QuotationList
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_quotationlist1);
+        setContentView(R.layout.activity_quotationlist);
     }
 
     @Override
