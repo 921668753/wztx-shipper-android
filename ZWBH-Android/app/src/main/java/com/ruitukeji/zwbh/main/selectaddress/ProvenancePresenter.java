@@ -29,12 +29,16 @@ public class ProvenancePresenter implements ProvenanceContract.Presenter {
 
     @Override
     public void postAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int isOff, int type) {
-        if (isOff == 0) {
-            mView.getSuccess("", 0);
-            return;
-        }
         if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
+            return;
+        }
+        if (deliveryCustomer.length() > 16 || deliveryCustomer.length() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.deliveryCustomer1), 0);
+            return;
+        }
+        if (isOff == 0) {
+            mView.getSuccess("", 0);
             return;
         }
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));

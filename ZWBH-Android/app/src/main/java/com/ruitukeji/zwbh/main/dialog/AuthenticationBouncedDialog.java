@@ -23,10 +23,10 @@ public abstract class AuthenticationBouncedDialog extends BaseDialog implements 
     private TextView tv_determine;
     private TextView tv_content;
 
-    public AuthenticationBouncedDialog(Context context, String s) {
+    public AuthenticationBouncedDialog(Context context, String content) {
         super(context, R.style.dialog);
         this.context = context;
-        this.content = s;
+        this.content = content;
     }
 
     @Override

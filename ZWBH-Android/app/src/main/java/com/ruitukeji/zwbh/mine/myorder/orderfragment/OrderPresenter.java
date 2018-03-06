@@ -1,5 +1,9 @@
 package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 
+import android.os.SystemClock;
+import android.view.MotionEvent;
+import android.view.View;
+
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
@@ -38,5 +42,19 @@ public class OrderPresenter implements OrderContract.Presenter {
                 mView.errorMsg(msg, 0);
             }
         });
+    }
+
+    @Override
+    public void setSimulateClick(View view, float x, float y) {
+        long downTime = SystemClock.uptimeMillis();
+        final MotionEvent downEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_DOWN, x, y, 0);
+        downTime += 1000;
+        final MotionEvent upEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_UP, x, y, 0);
+        view.onTouchEvent(downEvent);
+        view.onTouchEvent(upEvent);
+        downEvent.recycle();
+        upEvent.recycle();
     }
 }

@@ -51,6 +51,10 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
+        if (deliveryCustomer.length() > 16 || deliveryCustomer.length() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.deliveryCustomer1), 0);
+            return;
+        }
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();

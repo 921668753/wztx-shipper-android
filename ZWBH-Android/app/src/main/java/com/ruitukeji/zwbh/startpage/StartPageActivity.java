@@ -88,6 +88,9 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
     }
 
     private void jumpTo() {
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "orderId", 0);
+        PreferenceHelper.write(aty, StringConstants.FILENAME, "orderCode", "");
         boolean isFirst = PreferenceHelper.readBoolean(this, StringConstants.FILENAME, "isFirst", true);
         Intent jumpIntent = new Intent();
         jumpIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -97,7 +100,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
         }
         jumpIntent.putExtra("isFirst", isFirst);
         jumpIntent.setAction("android.intent.action.MAIN");
-       // jumpIntent.addCategory("android.intent.category.LAUNCHER");
+        // jumpIntent.addCategory("android.intent.category.LAUNCHER");
         jumpIntent.putExtra("img", R.mipmap.startpage);
         jumpIntent.setClass(this, MainActivity.class);
         skipActivity(aty, jumpIntent);
@@ -114,7 +117,7 @@ public class StartPageActivity extends BaseInstrumentedActivity implements Start
             RxVolley.setRequestQueue(RequestQueue.newRequestQueue(FileUtils.getSaveFolder(StringConstants.CACHEPATH), new OkHttpStack(new OkHttpClient())));
             PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityNum", 0);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "personalCenterNum", 0);
-          //  PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityFragmentNum", 0);
+            //  PreferenceHelper.write(aty, StringConstants.FILENAME, "intercityFragmentNum", 0);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "sameCityFragmentNum", 0);
             ((StartPageContract.Presenter) mPresenter).getAppConfig();
         } else {

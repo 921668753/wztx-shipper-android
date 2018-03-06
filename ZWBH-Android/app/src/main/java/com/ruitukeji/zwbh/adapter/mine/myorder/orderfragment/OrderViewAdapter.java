@@ -3,8 +3,10 @@ package com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment;
 import android.content.Context;
 import android.view.View;
 
+import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.myorder.orderfragment.OrderBean.ResultBean.ListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
@@ -268,6 +270,14 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.tv_divider1, View.GONE);
             viewHolderHelper.setVisibility(R.id.tv_divider, View.GONE);
         }
+
+        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quoted") && listBean.getIs_cancel() == 1) {
+            PreferenceHelper.write(mContext, StringConstants.FILENAME, "isShowingOrderNotic", 1);
+            PreferenceHelper.write(mContext, StringConstants.FILENAME, "orderId", listBean.getOrder_id());
+            PreferenceHelper.write(mContext, StringConstants.FILENAME, "orderCode", listBean.getOrder_code());
+        }
+
+
     }
 
 }

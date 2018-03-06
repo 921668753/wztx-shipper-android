@@ -14,6 +14,16 @@ public interface OrderContract {
          * 获取订单列表信息
          */
         void getOrder(int page, String type);
+
+        /**
+         * 模拟点击
+         *
+         * @param view
+         * @param x
+         * @param y
+         */
+        void setSimulateClick(android.view.View view, float x, float y);
+
     }
 
     interface View extends BaseNewView<Presenter,String> {

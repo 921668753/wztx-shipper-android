@@ -1,12 +1,17 @@
 package com.ruitukeji.zwbh.mine.myorder;
 
+import android.content.Intent;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.kymjs.common.Log;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.common.BaseActivity;
 import com.ruitukeji.zwbh.common.BaseFragment;
 import com.ruitukeji.zwbh.common.BindView;
+import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderNoticBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.AllFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.CompletedFragment;
 import com.ruitukeji.zwbh.mine.myorder.orderfragment.PendingDeliveryFragment;
@@ -36,7 +41,6 @@ public class MyOrderActivity extends BaseActivity {
     private TextView tv_pendingOrder;
     @BindView(id = R.id.tv_pendingOrder1)
     private TextView tv_pendingOrder1;
-
 
     /**
      * 待发货
@@ -70,18 +74,20 @@ public class MyOrderActivity extends BaseActivity {
     @BindView(id = R.id.tv_completed1)
     private TextView tv_completed1;
 
-
     private BaseFragment contentFragment;
     private BaseFragment contentFragment1;
     private BaseFragment contentFragment2;
     private BaseFragment contentFragment3;
     private BaseFragment contentFragment4;
     private BaseFragment contentFragment5;
+
     /**
      * 用来表示移动的Fragment
      */
     private int chageIcon;
-
+    public CancelOrderNoticBouncedDialog cancelOrderNoticBouncedDialog = null;
+    private int isAll = 0;
+    private int isPendingDelivery = 0;
 
     @Override
     public void setRootView() {
@@ -91,6 +97,7 @@ public class MyOrderActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
+        cancelOrderNoticBouncedDialog = new CancelOrderNoticBouncedDialog(this, 0, "");
         contentFragment = new AllFragment();
         contentFragment1 = new PendingOrderFragment();
         contentFragment2 = new PendingDeliveryFragment();
@@ -135,6 +142,29 @@ public class MyOrderActivity extends BaseActivity {
         }
     }
 
+    /**
+     * Activity的启动模式变为singleTask
+     * 调用onNewIntent(Intent intent)方法。
+     * Fragment调用的时候，一定要在onResume方法中。
+     *
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        int newChageIcon = intent.getIntExtra("newChageIcon", 6);
+        Log.d("newChageIcon", newChageIcon + "");
+        if (newChageIcon == 0) {
+            setSimulateClick(tv_all, 160, 100);
+            isAll = 1;
+        } else if (newChageIcon == 2) {
+            setSimulateClick(tv_pendingDelivery, 160, 100);
+            isPendingDelivery = 1;
+        }
+    }
+
+
     public void changeFragment(BaseFragment targetFragment) {
         super.changeFragment(R.id.main_content, targetFragment);
         //  transaction.commit();
@@ -148,17 +178,24 @@ public class MyOrderActivity extends BaseActivity {
                 chageIcon = 0;
                 cleanColors(0);
                 changeFragment(contentFragment);
+                if (isAll == 1) {
+                    isAll = 0;
+                    ((AllFragment) contentFragment).showCancelOrderNoticBouncedDialog();
+                }
                 break;
             case R.id.tv_pendingOrder:
                 chageIcon = 1;
                 cleanColors(1);
                 changeFragment(contentFragment1);
                 break;
-
             case R.id.tv_pendingDelivery:
                 chageIcon = 2;
                 cleanColors(2);
                 changeFragment(contentFragment2);
+                if (isPendingDelivery == 1) {
+                    isPendingDelivery = 0;
+                    ((PendingDeliveryFragment) contentFragment2).showCancelOrderNoticBouncedDialog();
+                }
                 break;
             case R.id.tv_transportation:
                 chageIcon = 3;
@@ -219,4 +256,34 @@ public class MyOrderActivity extends BaseActivity {
             tv_all1.setBackgroundResource(R.color.announcementCloseColors);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (cancelOrderNoticBouncedDialog != null) {
+            cancelOrderNoticBouncedDialog.cancel();
+        }
+        cancelOrderNoticBouncedDialog = null;
+    }
+
+    /**
+     * 模拟点击
+     *
+     * @param view
+     * @param x
+     * @param y
+     */
+    public void setSimulateClick(View view, float x, float y) {
+        long downTime = SystemClock.uptimeMillis();
+        final MotionEvent downEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_DOWN, x, y, 0);
+        downTime += 1000;
+        final MotionEvent upEvent = MotionEvent.obtain(downTime, downTime,
+                MotionEvent.ACTION_UP, x, y, 0);
+        view.onTouchEvent(downEvent);
+        view.onTouchEvent(upEvent);
+        downEvent.recycle();
+        upEvent.recycle();
+    }
+
 }

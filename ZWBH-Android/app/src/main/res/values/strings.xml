@@ -257,6 +257,7 @@
     <string name="provenance">始发地</string>
     <string name="pleaseDetailedAddress">请输入详细地址，如街道、楼牌号等</string>
     <string name="deliveryCustomer">发货客户</string>
+    <string name="deliveryCustomer1">发货客户名字长度不能超过15位</string>
     <string name="shipper">发货人</string>
     <string name="eixedTelephone">固定电话</string>
     <string name="pleaseFillOut">请填写</string>
