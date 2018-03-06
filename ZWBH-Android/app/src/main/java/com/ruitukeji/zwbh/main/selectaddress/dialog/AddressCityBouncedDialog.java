@@ -116,6 +116,11 @@ public abstract class AddressCityBouncedDialog extends BaseDialog implements Ada
             errorMsg(context.getString(R.string.serverReturnsDataNull), 0);
             return;
         }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(context.getString(R.string.all1))) {
+                list.remove(i);
+            }
+        }
         cityBeanlist = list;
         selectCity(cityId);
         dismissLoadingDialog();

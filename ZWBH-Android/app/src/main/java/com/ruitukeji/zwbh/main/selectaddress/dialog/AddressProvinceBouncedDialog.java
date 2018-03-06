@@ -86,11 +86,6 @@ public abstract class AddressProvinceBouncedDialog extends BaseDialog implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         provinceBean = addressProvinceViewAdapter.getItem(position);
         selectProvince(provinceBean.getId());
-        if (provinceBean.getName().startsWith(context.getString(R.string.all1))) {
-            cancel();
-            confirmProvince(provinceBean.getName(), provinceBean.getName(), provinceBean.getId(), 0);
-            return;
-        }
         if (addressCityBouncedDialog != null && !addressCityBouncedDialog.isShowing()) {
             addressCityBouncedDialog.show();
             addressCityBouncedDialog.setProvinceId(provinceBean.getName(), provinceBean.getId());
@@ -124,6 +119,11 @@ public abstract class AddressProvinceBouncedDialog extends BaseDialog implements
         if (list == null || list.size() == 0) {
             errorMsg(context.getString(R.string.serverReturnsDataNull), 0);
             return;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(context.getString(R.string.all1))) {
+                list.remove(i);
+            }
         }
         provinceBeanlist = list;
         selectProvince(provinceId);

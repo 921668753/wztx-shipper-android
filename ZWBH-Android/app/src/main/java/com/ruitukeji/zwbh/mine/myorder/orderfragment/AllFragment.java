@@ -263,22 +263,17 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
             mRefreshLayout.endLoadingMore();
             mAdapter.addMoreData(orderBean.getResult().getList());
         }
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-                int isShowingOrderNotic = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
-                if (isShowingOrderNotic == 1 && isShowingOrderNotic1 == 0) {
-                    if (aty.cancelOrderNoticBouncedDialog != null && !aty.cancelOrderNoticBouncedDialog.isShowing()) {
-                        aty.cancelOrderNoticBouncedDialog.show();
-                        PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
-                        isShowingOrderNotic1 = 1;
-                        int orderId = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "orderId", 0);
-                        String orderCode = PreferenceHelper.readString(aty, StringConstants.FILENAME, "orderCode", "");
-                        aty.cancelOrderNoticBouncedDialog.setOrderId(orderId, orderCode);
-                    }
-                }
-      //      }
-//        }, 1000);
+        int isShowingOrderNotic = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
+        if (isShowingOrderNotic == 1 && isShowingOrderNotic1 == 0) {
+            if (aty.cancelOrderNoticBouncedDialog != null && !aty.cancelOrderNoticBouncedDialog.isShowing()) {
+                aty.cancelOrderNoticBouncedDialog.show();
+                PreferenceHelper.write(aty, StringConstants.FILENAME, "isShowingOrderNotic", 0);
+                isShowingOrderNotic1 = 1;
+                int orderId = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "orderId", 0);
+                String orderCode = PreferenceHelper.readString(aty, StringConstants.FILENAME, "orderCode", "");
+                aty.cancelOrderNoticBouncedDialog.setOrderId(orderId, orderCode);
+            }
+        }
         dismissLoadingDialog();
     }
 

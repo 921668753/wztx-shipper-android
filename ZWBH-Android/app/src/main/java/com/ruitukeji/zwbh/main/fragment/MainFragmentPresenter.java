@@ -109,11 +109,15 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         ArrayList<HoursChooseBean> hours_chooseList2 = getHourData();
         ArrayList<HoursChooseBean> hours_chooseList3 = getHourData();
         ArrayList<HoursChooseBean> hours_chooseList4 = getHourData();
+        ArrayList<HoursChooseBean> hours_chooseList5 = getHourData();
+        ArrayList<HoursChooseBean> hours_chooseList6 = getHourData();
         hours_choose.add(hours_chooseList);
         hours_choose.add(hours_chooseList1);
         hours_choose.add(hours_chooseList2);
         hours_choose.add(hours_chooseList3);
         hours_choose.add(hours_chooseList4);
+        hours_choose.add(hours_chooseList5);
+        hours_choose.add(hours_chooseList6);
         return hours_choose;
     }
 
@@ -125,11 +129,16 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
         ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList2 = getmD();
         ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList3 = getmD();
         ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList4 = getmD();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList5 = getmD();
+        ArrayList<ArrayList<MinutesChooseBean>> minutesChooseBeanlList6 = getmD();
+
         minutes_choose.add(minutesChooseBeanlList);
         minutes_choose.add(minutesChooseBeanlList1);
         minutes_choose.add(minutesChooseBeanlList2);
         minutes_choose.add(minutesChooseBeanlList3);
         minutes_choose.add(minutesChooseBeanlList4);
+        minutes_choose.add(minutesChooseBeanlList5);
+        minutes_choose.add(minutesChooseBeanlList6);
         return minutes_choose;
     }
 

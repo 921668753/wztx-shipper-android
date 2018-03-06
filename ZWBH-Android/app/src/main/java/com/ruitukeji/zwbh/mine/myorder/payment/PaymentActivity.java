@@ -160,6 +160,7 @@ public class PaymentActivity extends BaseActivity implements PaymentContract.Vie
                     dismissLoadingDialog();
                     int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
                     if (is_pay_password == 0) {
+                        ViewInject.toast(getString(R.string.notPaymentPassword));
                         Intent intent = new Intent(aty, SetPaymentPasswordActivity.class);
                         aty.startActivity(intent);
                         return;
