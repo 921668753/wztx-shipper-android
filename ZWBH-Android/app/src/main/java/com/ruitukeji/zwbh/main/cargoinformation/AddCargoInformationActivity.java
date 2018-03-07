@@ -509,28 +509,32 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         if (StringUtils.isEmpty(et_goodsWeight.getText().toString().trim()) || StringUtils.isEmpty(m) || StringUtils.isEmpty(initiatePrice) || StringUtils.isEmpty(kmFee) || StringUtils.isEmpty(freight)) {
             return;
         }
-        double distance1 = distance - StringUtils.toDouble(m);
-        if (distance1 <= 0) {
-            distance1 = 0;
-        }
         double weight = StringUtils.toDouble(et_goodsWeight.getText().toString().trim());
         if (weight <= 0) {
             return;
         }
-        double finalDistance = distance1;
         if (thread != null) {
             thread = null;
         }
         thread = new Thread(new Runnable() {
+            private double systemPrice = 0;
+
             @Override
             public void run() {
-                double systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(kmFee) * (finalDistance) + StringUtils.toDouble(freight) * (finalDistance) * weight
-                        + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
+                double distance1 = distance - StringUtils.toDouble(m);
+                if (distance1 <= 0) {
+                    systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(freight) * (distance) * weight
+                            + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
+                } else {
+                    systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(kmFee) * (distance1) + StringUtils.toDouble(freight) * (distance1) * weight
+                            + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
+                }
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Log.d("tag", "initiatePrice" + initiatePrice);
                         Log.d("tag", "kmFee" + kmFee);
-                        Log.d("tag", "distance1" + finalDistance);
+                        Log.d("tag", "distance" + distance);
+                        Log.d("tag", "distance1" + distance1);
                         Log.d("tag", "freight" + freight);
                         Log.d("tag", "weight" + weight);
                         tv_transportationEstimated.setText(MathUtil.keepTwo(systemPrice));
