@@ -3,10 +3,8 @@ package com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment;
 import android.content.Context;
 import android.view.View;
 
-import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
-import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.entity.mine.myorder.orderfragment.OrderBean.ResultBean.ListBean;
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
@@ -28,6 +26,7 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
     protected void setItemChildListener(BGAViewHolderHelper viewHolderHelper) {
         viewHolderHelper.setItemChildClickListener(R.id.tv_checkAbnormal);
         viewHolderHelper.setItemChildClickListener(R.id.tv_cancelOrder);
+        viewHolderHelper.setItemChildClickListener(R.id.tv_releaseAgain);
         viewHolderHelper.setItemChildClickListener(R.id.tv_viewQuotation);
         viewHolderHelper.setItemChildClickListener(R.id.tv_viewShippingTrack);
         viewHolderHelper.setItemChildClickListener(R.id.tv_confirmPayment);
@@ -177,6 +176,11 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.VISIBLE);
         } else {
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
+        }
+        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && listBean.getIs_cancel() == 0) {
+            viewHolderHelper.setVisibility(R.id.tv_releaseAgain, View.VISIBLE);
+        } else {
+            viewHolderHelper.setVisibility(R.id.tv_releaseAgain, View.GONE);
         }
         if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("hang")) {
             viewHolderHelper.setVisibility(R.id.img_zanwu, View.GONE);

@@ -448,6 +448,7 @@
     <string name="destination1">到达目的地</string>
     <string name="checkAbnormal">查看异常</string>
     <string name="viewShippingTrack">查看运输轨迹</string>
+    <string name="releaseAgain">再次发布</string>
     <string name="contactDriver">联系司机</string>
     <string name="evaluationDriver">评价司机</string>
     <string name="confirmPayment">确认支付</string>

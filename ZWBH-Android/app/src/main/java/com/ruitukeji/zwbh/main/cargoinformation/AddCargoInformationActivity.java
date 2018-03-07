@@ -181,6 +181,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     private InformationKeptBouncedDialog informationKeptBouncedDialog = null;
     private InAuthenticationBouncedDialog inAuthenticationBouncedDialog = null;
     private AuthenticationBouncedDialog authenticationBouncedDialog = null;
+    private Thread thread = null;
 
     @Override
     public void setRootView() {
@@ -313,6 +314,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
             DistanceBean distanceBean = (DistanceBean) JsonUtil.getInstance().json2Obj(success, DistanceBean.class);
             if (!(distanceBean.getStatus().equals("1"))) {
                 ViewInject.toast(getString(R.string.distanceErr));
+                return;
             }
             kilometres = String.valueOf(StringUtils.toDouble(distanceBean.getResults().get(0).getDistance()) / 1000);
             systemPrice(kilometres);
@@ -463,6 +465,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
     @Override
     public void afterTextChanged(Editable s) {
         if (et_goodsWeight.getText().toString().trim().length() <= 0) {
+            tv_transportationEstimated.setText("0.00");
             return;
         }
         distance();
@@ -514,20 +517,35 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
         if (weight <= 0) {
             return;
         }
-        double systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(kmFee) * (distance1) + StringUtils.toDouble(freight) * (distance1) * weight
-                + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
-        Log.d("tag", "initiatePrice" + initiatePrice);
-        Log.d("tag", "kmFee" + kmFee);
-        Log.d("tag", "distance1" + distance1);
-        Log.d("tag", "freight" + freight);
-        Log.d("tag", "weight" + weight);
-        tv_transportationEstimated.setText(MathUtil.keepTwo(systemPrice));
+        double finalDistance = distance1;
+        if (thread != null) {
+            thread = null;
+        }
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                double systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(kmFee) * (finalDistance) + StringUtils.toDouble(freight) * (finalDistance) * weight
+                        + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Log.d("tag", "initiatePrice" + initiatePrice);
+                        Log.d("tag", "kmFee" + kmFee);
+                        Log.d("tag", "distance1" + finalDistance);
+                        Log.d("tag", "freight" + freight);
+                        Log.d("tag", "weight" + weight);
+                        tv_transportationEstimated.setText(MathUtil.keepTwo(systemPrice));
+                    }
+                });
+            }
+        });
+        thread.start();
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        thread = null;
         authenticationBouncedDialog = null;
         informationKeptBouncedDialog = null;
     }

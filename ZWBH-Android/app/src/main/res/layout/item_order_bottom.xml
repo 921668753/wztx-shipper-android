@@ -32,6 +32,18 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tv_releaseAgain"
+        android:layout_width="@dimen/dimen86"
+        android:layout_height="@dimen/dimen32"
+        android:layout_marginRight="@dimen/dimen15"
+        android:background="@drawable/shape_login"
+        android:gravity="center"
+        android:text="@string/releaseAgain"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize13"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/tv_refusedLift"
         android:layout_width="@dimen/dimen86"
         android:layout_height="@dimen/dimen32"

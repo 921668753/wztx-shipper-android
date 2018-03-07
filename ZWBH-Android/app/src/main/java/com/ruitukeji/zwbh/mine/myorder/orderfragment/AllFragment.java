@@ -164,6 +164,13 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
                 }
             };
             cancelOrderBouncedDialog.show();
+        } else if (view.getId() == R.id.tv_releaseAgain) {
+
+
+
+
+
+
         } else if (view.getId() == R.id.tv_viewQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
