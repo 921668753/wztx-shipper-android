@@ -233,8 +233,8 @@ public class NewAddAddress1Activity extends BaseActivity implements NewAddAddres
         dismissLoadingDialog();
         if (flag == 0) {
             NewAddAddress1Bean newAddAddress1Bean = (NewAddAddress1Bean) JsonUtil.getInstance().json2Obj(success, NewAddAddress1Bean.class);
-            lat = newAddAddress1Bean.getResult().getAddress_maps().split(",")[0];
-            longi = newAddAddress1Bean.getResult().getAddress_maps().split(",")[1];
+            longi = newAddAddress1Bean.getResult().getAddress_maps().split(",")[0];
+            lat = newAddAddress1Bean.getResult().getAddress_maps().split(",")[1];
             district = newAddAddress1Bean.getResult().getCity();
             placeName = newAddAddress1Bean.getResult().getAddress_name();
             tv_address.setText(placeName);

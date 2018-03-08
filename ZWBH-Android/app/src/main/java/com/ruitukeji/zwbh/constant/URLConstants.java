@@ -275,6 +275,11 @@ public class URLConstants {
     public static String CANCELGOODS = APIURL + "goods/cancelGoods";
 
     /**
+     * 再次发布
+     */
+    public static String RELEASEAGAIN = APIURL + "order/releaseAgain";
+
+    /**
      * 确认取消订单功能
      */
     public static String CANCELGOODSCOMPLETE = APIURL + "Quote/cancelGoodsComplete";

@@ -847,6 +847,26 @@ public class RequestClient {
     }
 
     /**
+     * 再次发布弹框
+     */
+    public static void postReleaseAgain(HttpParams httpParams, ResponseListener<String> listener) {
+        Log.d("tag", "postReleaseAgain");
+        doServer(new TokenCallback() {
+            @Override
+            public void execute() {
+                String accessToken = PreferenceHelper.readString(MyApplication.getContext(), StringConstants.FILENAME, "accessToken");
+                if (StringUtils.isEmpty(accessToken)) {
+                    PreferenceHelper.write(KJActivityStack.create().topActivity(), StringConstants.FILENAME, "isGoneBanner", false);
+                    listener.onFailure(NumericConstants.TOLINGIN + "");
+                    return;
+                }
+                httpParams.putHeaders("authorization-token", accessToken);
+                HttpRequest.requestPostHttp(URLConstants.RELEASEAGAIN, httpParams, listener);
+            }
+        }, listener);
+    }
+
+    /**
      * 任务---确认取消订单
      */
     public static void postConfirmCancelOrder(HttpParams httpParams, ResponseListener<String> listener) {
@@ -864,6 +884,7 @@ public class RequestClient {
             }
         }, listener);
     }
+
 
     /**
      * 更新用户信息

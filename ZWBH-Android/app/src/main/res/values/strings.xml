@@ -384,6 +384,9 @@
     <string name="settings">设置</string>
     <string name="technicalSupport">技术支持@物载天下网络科技</string>
 
+    <!--个人中心   投诉中心-->
+    <string name="problemSolving">问题将在1-2个工作日处理完成，请耐心等待……</string>
+
     <!--个人中心   货主认证-->
     <string name="individualOwners">个人货主</string>
     <string name="companyOwner">公司货主</string>
@@ -923,6 +926,8 @@
     <string name="cancelOrder3">确定取消订单吗？</string>
     <string name="cancelOrder2">您有一个被取消的订单</string>
     <string name="checkDetails">查看详情</string>
+    <string name="releaseAgainOrder">确定再次发布订单吗？</string>
+
 
 
 </resources>

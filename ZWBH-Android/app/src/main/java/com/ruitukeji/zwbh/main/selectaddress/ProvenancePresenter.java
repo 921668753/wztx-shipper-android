@@ -1,5 +1,7 @@
 package com.ruitukeji.zwbh.main.selectaddress;
 
+import android.util.Log;
+
 import com.kymjs.rxvolley.client.HttpParams;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.application.MyApplication;
@@ -33,7 +35,8 @@ public class ProvenancePresenter implements ProvenanceContract.Presenter {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
-        if (deliveryCustomer.length() > 16 || deliveryCustomer.length() <= 0) {
+        Log.d("tag", deliveryCustomer.length() + "");
+        if (deliveryCustomer.length() > 15 || deliveryCustomer.length() <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.deliveryCustomer1), 0);
             return;
         }

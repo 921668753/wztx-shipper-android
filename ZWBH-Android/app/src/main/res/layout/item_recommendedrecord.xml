@@ -12,7 +12,7 @@
         android:layout_width="@dimen/dimen50"
         android:layout_height="@dimen/dimen50"
         android:scaleType="fitXY"
-        android:src="@mipmap/headportrait" />
+        android:src="@mipmap/headload" />
 
     <LinearLayout
         style="@style/AutoMatch"

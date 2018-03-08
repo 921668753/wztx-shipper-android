@@ -2,6 +2,7 @@ package com.ruitukeji.zwbh.adapter.mine.complaintcenter;
 
 import android.content.Context;
 
+import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
 import com.ruitukeji.zwbh.entity.mine.complaintcenter.ComplaintCenterBean.ResultBean.ListBean;
 
@@ -30,22 +31,27 @@ public class ComplaintCenterViewAdapter extends BGAAdapterViewAdapter<ListBean> 
         /**
          * 姓名
          */
-        viewHolderHelper.setText(R.id.tv_complaintsAboutDriver, listBean.getDr_name() );
+        viewHolderHelper.setText(R.id.tv_complaintsAboutDriver, listBean.getDr_name());
 
         /**
          * 车牌号
          */
-        viewHolderHelper.setText(R.id.tv_licensePlateNumber, listBean.getCard_number() );
+        viewHolderHelper.setText(R.id.tv_licensePlateNumber, listBean.getCard_number());
 
         /**
          * 投诉原因
          */
-        viewHolderHelper.setText(R.id.tv_complaintsReasons, listBean.getReason() );
+        viewHolderHelper.setText(R.id.tv_complaintsReasons, listBean.getReason());
 
         /**
          * 处理结果
          */
-        viewHolderHelper.setText(R.id.tv_processingResult, listBean.getProcessing_result());
+        if (StringUtils.isEmpty(listBean.getProcessing_result())) {
+            viewHolderHelper.setText(R.id.tv_processingResult,mContext.getString(R.string.problemSolving));
+        } else {
+            viewHolderHelper.setText(R.id.tv_processingResult, listBean.getProcessing_result());
+        }
+
     }
 
 }

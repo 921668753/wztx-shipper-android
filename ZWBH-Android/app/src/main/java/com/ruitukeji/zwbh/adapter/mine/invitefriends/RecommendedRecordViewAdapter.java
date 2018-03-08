@@ -1,6 +1,7 @@
 package com.ruitukeji.zwbh.adapter.mine.invitefriends;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -9,7 +10,6 @@ import com.ruitukeji.zwbh.entity.mine.invitefriends.RecommendedRecordBean.Result
 
 import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
 import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
-import cn.bingoogolapple.imageview.BGAImageView;
 
 
 /**
@@ -47,8 +47,7 @@ public class RecommendedRecordViewAdapter extends BGAAdapterViewAdapter<ListBean
         /**
          * 头像
          */
-        GlideImageLoader.glideLoader(mContext, listBean.getAvatar(), (BGAImageView) viewHolderHelper.getView(R.id.img_user), 0);
-
+        GlideImageLoader.glideLoader(mContext, listBean.getAvatar(), (ImageView) viewHolderHelper.getView(R.id.img_user), 0);
         // 这里不知道当前图片的尺寸，加载成功后会乱跳
 //        Glide.with(mContext).load(model.icon).placeholder(R.mipmap.staggered_holder).error(R.mipmap.staggered_holder).dontAnimate().into((ImageView) viewHolderHelper.getView(R.id.iv_item_staggered_icon));
 

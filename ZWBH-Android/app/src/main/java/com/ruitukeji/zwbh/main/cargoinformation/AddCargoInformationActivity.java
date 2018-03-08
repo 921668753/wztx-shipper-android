@@ -523,8 +523,7 @@ public class AddCargoInformationActivity extends BaseActivity implements TextWat
             public void run() {
                 double distance1 = distance - StringUtils.toDouble(m);
                 if (distance1 <= 0) {
-                    systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(freight) * (distance) * weight
-                            + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
+                    systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());
                 } else {
                     systemPrice = StringUtils.toDouble(initiatePrice) + StringUtils.toDouble(kmFee) * (distance1) + StringUtils.toDouble(freight) * (distance1) * weight
                             + StringUtils.toInt(et_peiSongDian.getText().toString().trim(), 0) * StringUtils.toDouble(et_costDistribution.getText().toString().trim());

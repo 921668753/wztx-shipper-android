@@ -120,6 +120,8 @@ public class OrderBean extends BaseResult<OrderBean.ResultBean> {
             private String mind_price;
             private int is_cancel;
             private String per_status;
+            private int is_refuse_order;
+
 
             public int getIs_quote() {
                 return is_quote;
@@ -327,6 +329,14 @@ public class OrderBean extends BaseResult<OrderBean.ResultBean> {
 
             public void setPer_status(String per_status) {
                 this.per_status = per_status;
+            }
+
+            public int getIs_refuse_order() {
+                return is_refuse_order;
+            }
+
+            public void setIs_refuse_order(int is_refuse_order) {
+                this.is_refuse_order = is_refuse_order;
             }
         }
     }

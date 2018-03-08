@@ -3,7 +3,6 @@ package com.ruitukeji.zwbh.mine.myorder.orderfragment;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +25,8 @@ import com.ruitukeji.zwbh.entity.mine.myorder.orderfragment.OrderBean;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.MyOrderActivity;
 import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
-import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderNoticBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
+import com.ruitukeji.zwbh.mine.myorder.dialog.ReleaseAgainOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.logisticspositioning.LogisticsPositioningActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.EvaluationDriverActivity;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
@@ -95,6 +94,7 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
 
     private CancelOrderBouncedDialog cancelOrderBouncedDialog = null;
     public int isShowingOrderNotic1 = 0;
+    private ReleaseAgainOrderBouncedDialog releaseAgainOrderBouncedDialog = null;
 
 
     @Override
@@ -165,12 +165,22 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
             };
             cancelOrderBouncedDialog.show();
         } else if (view.getId() == R.id.tv_releaseAgain) {
-
-
-
-
-
-
+            if (mAdapter.getItem(position).getIs_refuse_order() == 0) {
+                return;
+            }
+            if (releaseAgainOrderBouncedDialog != null && !releaseAgainOrderBouncedDialog.isShowing()) {
+                releaseAgainOrderBouncedDialog.show();
+                releaseAgainOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id());
+                return;
+            }
+            releaseAgainOrderBouncedDialog = new ReleaseAgainOrderBouncedDialog(aty, mAdapter.getItem(position).getOrder_id()) {
+                @Override
+                public void confirm() {
+                    this.cancel();
+                    mRefreshLayout.beginRefreshing();
+                }
+            };
+            releaseAgainOrderBouncedDialog.show();
         } else if (view.getId() == R.id.tv_viewQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
@@ -330,6 +340,10 @@ public class AllFragment extends BaseFragment implements EasyPermissions.Permiss
             cancelOrderBouncedDialog.cancel();
         }
         cancelOrderBouncedDialog = null;
+        if (releaseAgainOrderBouncedDialog != null) {
+            releaseAgainOrderBouncedDialog.cancel();
+        }
+        releaseAgainOrderBouncedDialog = null;
         if (contactDriverBouncedDialog != null) {
             contactDriverBouncedDialog.cancel();
         }

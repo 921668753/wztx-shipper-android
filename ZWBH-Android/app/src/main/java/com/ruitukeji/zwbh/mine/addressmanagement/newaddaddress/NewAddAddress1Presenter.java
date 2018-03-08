@@ -51,7 +51,7 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
             return;
         }
-        if (deliveryCustomer.length() > 16 || deliveryCustomer.length() <= 0) {
+        if (deliveryCustomer.length() > 15 || deliveryCustomer.length() <= 0) {
             mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.deliveryCustomer1), 0);
             return;
         }
@@ -88,6 +88,14 @@ public class NewAddAddress1Presenter implements NewAddAddress1Contract.Presenter
 
     @Override
     public void postUpdateAddress(String longi, String lat, String provincialLevel, String address, String detailedAddress, String deliveryCustomer, String shipper, String phone, String eixedTelephone, int id, int type, int is_default) {
+        if (phone.length() != 11 || !AccountValidatorUtil.isMobile(phone)) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.inputPhone), 0);
+            return;
+        }
+        if (deliveryCustomer.length() > 15 || deliveryCustomer.length() <= 0) {
+            mView.errorMsg(KJActivityStack.create().topActivity().getString(R.string.deliveryCustomer1), 0);
+            return;
+        }
         mView.showLoadingDialog(MyApplication.getContext().getString(R.string.dataLoad));
         HttpParams httpParams = HttpUtilParams.getInstance().getHttpParams();
         Map<String, Object> map = new HashMap<String, Object>();

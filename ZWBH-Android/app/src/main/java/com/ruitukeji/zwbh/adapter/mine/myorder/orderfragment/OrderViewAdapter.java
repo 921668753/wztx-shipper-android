@@ -177,7 +177,7 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         } else {
             viewHolderHelper.setVisibility(R.id.tv_cancelOrder, View.GONE);
         }
-        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && listBean.getIs_cancel() == 0) {
+        if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && listBean.getIs_refuse_order() == 1) {
             viewHolderHelper.setVisibility(R.id.tv_releaseAgain, View.VISIBLE);
         } else {
             viewHolderHelper.setVisibility(R.id.tv_releaseAgain, View.GONE);

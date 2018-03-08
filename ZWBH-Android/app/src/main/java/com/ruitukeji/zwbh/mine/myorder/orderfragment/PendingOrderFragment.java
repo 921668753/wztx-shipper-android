@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ruitukeji.zwbh.R;
+import com.ruitukeji.zwbh.mine.myorder.dialog.ReleaseAgainOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.OrderDetailsActivity;
 import com.ruitukeji.zwbh.adapter.mine.myorder.orderfragment.OrderViewAdapter;
 import com.ruitukeji.zwbh.common.BaseFragment;
@@ -76,6 +77,7 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
      */
     private String type = "quote";
     private CancelOrderBouncedDialog cancelOrderBouncedDialog = null;
+    private ReleaseAgainOrderBouncedDialog releaseAgainOrderBouncedDialog = null;
 
     @Override
     protected View inflaterView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
@@ -199,6 +201,10 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
             cancelOrderBouncedDialog.cancel();
         }
         cancelOrderBouncedDialog = null;
+        if (releaseAgainOrderBouncedDialog != null) {
+            releaseAgainOrderBouncedDialog.cancel();
+        }
+        releaseAgainOrderBouncedDialog = null;
         mAdapter.clear();
         mAdapter = null;
     }
@@ -219,6 +225,23 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
                 }
             };
             cancelOrderBouncedDialog.show();
+        } else if (view.getId() == R.id.tv_releaseAgain) {
+            if (mAdapter.getItem(position).getIs_refuse_order() == 0) {
+                return;
+            }
+            if (releaseAgainOrderBouncedDialog != null && !releaseAgainOrderBouncedDialog.isShowing()) {
+                releaseAgainOrderBouncedDialog.show();
+                releaseAgainOrderBouncedDialog.setOrderId(mAdapter.getItem(position).getOrder_id());
+                return;
+            }
+            releaseAgainOrderBouncedDialog = new ReleaseAgainOrderBouncedDialog(aty, mAdapter.getItem(position).getOrder_id()) {
+                @Override
+                public void confirm() {
+                    this.cancel();
+                    mRefreshLayout.beginRefreshing();
+                }
+            };
+            releaseAgainOrderBouncedDialog.show();
         } else if (view.getId() == R.id.tv_viewQuotation) {
             Intent intent = new Intent(aty, QuotationListActivity.class);
             intent.putExtra("order_id", mAdapter.getItem(position).getOrder_id());
