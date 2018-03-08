@@ -73,8 +73,8 @@ public class CompanyOwnerPresenter implements CompanyOwnerContract.Presenter {
 
 
     @Override
-    public void postCompanyOwner(String com_name, String com_buss_num, String address, String phone, String buss_pic, String law_person, String identity, String hold_pic, String front_pic,
-                                 String back_pic, String sp_identity_name, String sp_identity, String sp_hold_pic, String sp_front_pic, String sp_back_pic) {
+    public void postCompanyOwner(String com_name, String com_buss_num, String address, String phone, String buss_pic, String law_person, String identity, String front_pic,
+                                 String back_pic, String hold_pic, String sp_identity_name, String sp_identity, String sp_front_pic, String sp_back_pic, String sp_hold_pic) {
         if (StringUtils.isEmpty(com_name)) {
             mView.errorMsg(MyApplication.getContext().getString(R.string.companyName1), 0);
             return;
