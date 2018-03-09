@@ -306,10 +306,20 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 appointmentTime();
                 break;
             case R.id.tv_pleaseEnterDeparturePoint:
+                String destCity = destinationPlaceName;
+                if (!StringUtils.isEmpty(destinationPlaceName)) {
+                    int destprovince = destinationPlaceName.indexOf("省");
+                    int destcity = destinationPlaceName.indexOf("市");
+                    if (destprovince == -1 && destcity != -1) {
+                        destCity = destCity.substring(0, destcity + 1);
+                    } else if (destprovince != -1 && destcity != -1) {
+                        destCity = destCity.substring(destprovince + 1, destcity + 1);
+                    }
+                }
                 type = 0;
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isProvenance, isOff, type, tran_type, provenanceLat,
                         provenanceLongi, city, provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer,
-                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO, "");
+                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO, destCity);
                 break;
             case R.id.tv_enterDestination:
                 if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {

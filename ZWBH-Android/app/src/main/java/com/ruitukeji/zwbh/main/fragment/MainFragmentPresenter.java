@@ -185,8 +185,8 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
             provenanceIntent.putExtra("title", KJActivityStack.create().topActivity().getString(R.string.provenance));
         } else {
             provenanceIntent.putExtra("title", KJActivityStack.create().topActivity().getString(R.string.destination));
-            provenanceIntent.putExtra("startCity", startCity);
         }
+        provenanceIntent.putExtra("startCity", startCity);
         provenanceIntent.putExtra("tran_type", tran_type);
         provenanceIntent.putExtra("lat", provenanceLat);
         provenanceIntent.putExtra("longi", provenanceLongi);

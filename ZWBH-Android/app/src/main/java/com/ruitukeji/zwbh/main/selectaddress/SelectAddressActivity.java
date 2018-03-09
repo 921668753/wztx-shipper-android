@@ -136,7 +136,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         super.widgetClick(v);
         switch (v.getId()) {
             case R.id.tv_city:
-                if (tran_type == 0 && type != 0) {
+                if (tran_type == 0 && type != 0 || tran_type == 0 && type == 0 && !StringUtils.isEmpty(startCity)) {
                     return;
                 }
 //                Intent intent = new Intent(aty, SelectionCityActivity.class);
@@ -151,7 +151,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
                 addressProvinceBouncedDialog = new AddressProvinceBouncedDialog(aty, "", 0) {
                     @Override
                     public void confirmProvince(String provinceName, String addressName, int provinceId, int cityId) {
-                        if (tran_type == 1 && !StringUtils.isEmpty(startCity) && addressName.contains(startCity) && type == 1) {
+                        if (tran_type == 1 && !StringUtils.isEmpty(startCity) && addressName.contains(startCity)) {
                             ViewInject.toast(getString(R.string.enterIntercityAddress));
                             return;
                         }
@@ -210,6 +210,10 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         } else {
             district = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName();
             placeName = poiItem.getProvinceName() + poiItem.getCityName() + poiItem.getAdName() + poiItem.getSnippet() + poiItem.getTitle();
+        }
+        if (tran_type == 1 && !StringUtils.isEmpty(startCity) && poiItem.getCityName().contains(startCity)) {
+            ViewInject.toast(getString(R.string.enterIntercityAddress));
+            return;
         }
         if (getIntent().getIntExtra("isProvenance", 0) == 1) {
             Intent intent = new Intent();
@@ -305,11 +309,15 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress", false);
             PreferenceHelper.write(aty, StringConstants.FILENAME, "isDefaultAddress1", false);
             placeName = data.getStringExtra("placeName");
+            if (tran_type == 0 && type == 0 && !StringUtils.isEmpty(startCity) && !placeName.contains(startCity)) {
+                ViewInject.toast(getString(R.string.enterAddressSameCity));
+                return;
+            }
             if (tran_type == 0 && !placeName.contains(city) && type == 1) {
                 ViewInject.toast(getString(R.string.enterAddressSameCity));
                 return;
             }
-            if (tran_type == 1 && !StringUtils.isEmpty(startCity) && placeName.contains(startCity) && type == 1) {
+            if (tran_type == 1 && !StringUtils.isEmpty(startCity) && placeName.contains(startCity)) {
                 ViewInject.toast(getString(R.string.enterIntercityAddress));
                 return;
             }
