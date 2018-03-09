@@ -117,7 +117,7 @@ public abstract class AddressCityBouncedDialog extends BaseDialog implements Ada
             return;
         }
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().equals(context.getString(R.string.all1))) {
+            if (list.get(i).getName().equals(context.getString(R.string.all1))||list.get(i).getName().equals(context.getString(R.string.countyLevel))) {
                 list.remove(i);
             }
         }

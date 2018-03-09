@@ -251,7 +251,7 @@
     <string name="returnUpperLevel">返回上一级</string>
     <string name="back">返回</string>
     <string name="all1">不限</string>
-
+    <string name="countyLevel">直辖县级</string>
 
     <!--始发地-->
     <string name="provenance">始发地</string>
