@@ -98,6 +98,8 @@ public class OrderViewAdapter extends BGAAdapterViewAdapter<ListBean> {
          */
         if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("hang")) {
             viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.hang));
+        } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote") && listBean.getIs_refuse_order() == 1) {
+            viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.refused));
         } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quote")) {
             viewHolderHelper.setText(R.id.tv_orderStatus, mContext.getString(R.string.pendingOrder));
         } else if (!StringUtils.isEmpty(listBean.getStatus()) && listBean.getStatus().equals("quoted")) {

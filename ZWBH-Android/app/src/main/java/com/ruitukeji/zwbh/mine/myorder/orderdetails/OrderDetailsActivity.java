@@ -17,6 +17,7 @@ import com.ruitukeji.zwbh.main.dialog.AuthenticationBouncedDialog;
 import com.ruitukeji.zwbh.mine.abnormalrecords.AbnormalRecordsActivity;
 import com.ruitukeji.zwbh.mine.myorder.dialog.CancelOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.dialog.ContactDriverBouncedDialog;
+import com.ruitukeji.zwbh.mine.myorder.dialog.ReleaseAgainOrderBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.orderdetails.dialog.ComplaintsAboutDriverBouncedDialog;
 import com.ruitukeji.zwbh.mine.myorder.logisticspositioning.LogisticsPositioningActivity;
 import com.ruitukeji.zwbh.mine.myorder.payment.CheckVoucherActivity;
@@ -291,6 +292,12 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private TextView tv_cancelOrder;
 
     /**
+     * 再次发布
+     */
+    @BindView(id = R.id.tv_releaseAgain, click = true)
+    private TextView tv_releaseAgain;
+
+    /**
      * 查看报价
      */
     @BindView(id = R.id.tv_viewQuotation, click = true)
@@ -366,6 +373,8 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
     private boolean isRefresh = false;
     private AuthenticationBouncedDialog authenticationBouncedDialog1 = null;
     private AuthenticationBouncedDialog authenticationBouncedDialog2 = null;
+    private int is_refuse_order = 0;
+    private ReleaseAgainOrderBouncedDialog releaseAgainOrderBouncedDialog = null;
 
     @Override
     public void setRootView() {
@@ -377,6 +386,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         super.initData();
         mPresenter = new OrderDetailsPresenter(this);
         orderId = getIntent().getIntExtra("order_id", 0);
+        is_refuse_order = getIntent().getIntExtra("is_refuse_order", 0);
     }
 
     @Override
@@ -429,6 +439,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 showActivity(aty, checkReceiptIntent);
                 break;
             case R.id.tv_collect:
+                if (dr_id == 0) {
+                    errorMsg(getString(R.string.serverReturnsDataError), 0);
+                    return;
+                }
                 if (is_collect == 1) {
                     showLoadingDialog(getString(R.string.dataLoad));
                     ((OrderDetailsContract.Presenter) mPresenter).postDelCollectDriver(dr_id);
@@ -438,6 +452,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 ((OrderDetailsContract.Presenter) mPresenter).postCollectDriver(dr_id);
                 break;
             case R.id.tv_complaints:
+                if (dr_id == 0) {
+                    errorMsg(getString(R.string.serverReturnsDataError), 0);
+                    return;
+                }
                 if (complaintsAboutDriverBouncedDialog != null && !complaintsAboutDriverBouncedDialog.isShowing()) {
                     complaintsAboutDriverBouncedDialog.show();
                     complaintsAboutDriverBouncedDialog.setDriverId(dr_id);
@@ -476,6 +494,25 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 };
                 cancelOrderBouncedDialog.show();
                 break;
+            case R.id.tv_releaseAgain:
+                if (is_refuse_order == 0) {
+                    return;
+                }
+                if (releaseAgainOrderBouncedDialog != null && !releaseAgainOrderBouncedDialog.isShowing()) {
+                    releaseAgainOrderBouncedDialog.show();
+                    releaseAgainOrderBouncedDialog.setOrderId(orderId);
+                    return;
+                }
+                releaseAgainOrderBouncedDialog = new ReleaseAgainOrderBouncedDialog(aty, orderId) {
+                    @Override
+                    public void confirm() {
+                        this.cancel();
+                        ((OrderDetailsContract.Presenter) mPresenter).getOrderDetails(orderId);
+                        isRefresh = true;
+                    }
+                };
+                releaseAgainOrderBouncedDialog.show();
+                break;
             case R.id.tv_viewQuotation:
                 Intent intent = new Intent(aty, QuotationListActivity.class);
                 intent.putExtra("order_id", orderId);
@@ -502,9 +539,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
                 checkVoucherIntent.putExtra("per_status", per_status);
                 startActivityForResult(checkVoucherIntent, REQUEST_CODE_PREVIEW);
                 break;
-
             case R.id.tv_refusedLift:
-
                 if (authenticationBouncedDialog1 != null && !authenticationBouncedDialog1.isShowing()) {
                     authenticationBouncedDialog1.show();
                     return;
@@ -567,11 +602,14 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
         if (flag == 0) {
             OrderDetailsBean orderDetailsBean = (OrderDetailsBean) JsonUtil.getInstance().json2Obj(success, OrderDetailsBean.class);
             OrderDetailsBean.ResultBean result = orderDetailsBean.getResult();
+            if (result == null) {
+                return;
+            }
             status = result.getStatus();
             is_cancel = result.getIs_cancel();
             getOrderStatus(status);
             avatar = result.getAvatar();
-            dr_id = result.getDr_id();
+            dr_id = StringUtils.toInt(result.getDr_id(), 0);
             map_code = result.getMap_code();
             dr_name = result.getDr_name();
             dr_phone = result.getDr_phone();
@@ -731,6 +769,20 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             ll_userName.setVisibility(View.GONE);
             ll_licensePlateNumber.setVisibility(View.GONE);
             ll_vehicleInformation.setVisibility(View.GONE);
+        } else if (!StringUtils.isEmpty(status) && status.equals("quote") && is_refuse_order == 1) {
+            tv_orderStatus.setText(getString(R.string.refused));
+            ll_bottom.setVisibility(View.VISIBLE);
+            tv_checkAbnormal.setVisibility(View.GONE);
+            tv_viewShippingTrack.setVisibility(View.GONE);
+            tv_confirmPayment.setVisibility(View.GONE);
+            tv_releaseAgain.setVisibility(View.VISIBLE);
+            tv_contactDriver.setVisibility(View.GONE);
+            tv_evaluationDriver.setVisibility(View.GONE);
+            tv_seeEvaluation.setVisibility(View.GONE);
+            ll_driverInformation.setVisibility(View.GONE);
+            ll_userName.setVisibility(View.GONE);
+            ll_licensePlateNumber.setVisibility(View.GONE);
+            ll_vehicleInformation.setVisibility(View.GONE);
         } else if (!StringUtils.isEmpty(status) && status.equals("quote")) {
             tv_orderStatus.setText(getString(R.string.pendingOrder));
             ll_bottom.setVisibility(View.VISIBLE);
@@ -738,6 +790,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_viewShippingTrack.setVisibility(View.GONE);
             tv_confirmPayment.setVisibility(View.GONE);
             tv_contactDriver.setVisibility(View.GONE);
+            tv_releaseAgain.setVisibility(View.GONE);
             tv_evaluationDriver.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.GONE);
             ll_driverInformation.setVisibility(View.GONE);
@@ -751,6 +804,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_viewShippingTrack.setVisibility(View.GONE);
             tv_confirmPayment.setVisibility(View.GONE);
             tv_contactDriver.setVisibility(View.VISIBLE);
+            tv_releaseAgain.setVisibility(View.GONE);
             tv_evaluationDriver.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.GONE);
             ll_userName.setVisibility(View.VISIBLE);
@@ -760,6 +814,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_orderStatus.setText(getString(R.string.transportation));
             ll_bottom.setVisibility(View.VISIBLE);
             tv_viewQuotation.setVisibility(View.GONE);
+            tv_releaseAgain.setVisibility(View.GONE);
             tv_viewShippingTrack.setVisibility(View.VISIBLE);
             tv_contactDriver.setVisibility(View.VISIBLE);
             tv_confirmPayment.setVisibility(View.GONE);
@@ -775,6 +830,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_viewShippingTrack.setVisibility(View.GONE);
             tv_contactDriver.setVisibility(View.GONE);
             tv_confirmPayment.setVisibility(View.VISIBLE);
+            tv_releaseAgain.setVisibility(View.GONE);
             tv_evaluationDriver.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.GONE);
             ll_userName.setVisibility(View.VISIBLE);
@@ -786,6 +842,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_viewQuotation.setVisibility(View.GONE);
             tv_viewShippingTrack.setVisibility(View.VISIBLE);
             tv_contactDriver.setVisibility(View.GONE);
+            tv_releaseAgain.setVisibility(View.GONE);
             tv_confirmPayment.setVisibility(View.GONE);
             tv_evaluationDriver.setVisibility(View.VISIBLE);
             tv_seeEvaluation.setVisibility(View.GONE);
@@ -798,6 +855,7 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             tv_viewQuotation.setVisibility(View.GONE);
             tv_viewShippingTrack.setVisibility(View.VISIBLE);
             tv_contactDriver.setVisibility(View.GONE);
+            tv_releaseAgain.setVisibility(View.GONE);
             tv_confirmPayment.setVisibility(View.GONE);
             tv_evaluationDriver.setVisibility(View.GONE);
             tv_seeEvaluation.setVisibility(View.VISIBLE);
@@ -883,6 +941,10 @@ public class OrderDetailsActivity extends BaseActivity implements OrderDetailsCo
             cancelOrderBouncedDialog.cancel();
         }
         cancelOrderBouncedDialog = null;
+        if (releaseAgainOrderBouncedDialog != null) {
+            releaseAgainOrderBouncedDialog.cancel();
+        }
+        releaseAgainOrderBouncedDialog = null;
         if (contactDriverBouncedDialog != null) {
             contactDriverBouncedDialog.cancel();
         }

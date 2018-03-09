@@ -58,11 +58,12 @@ public interface MainFragmentContract {
         void getNearbySearch(LatLonPoint latLonPoint);
 
         /**
-         * 始發地/目的地
+         * 同城始發地/目的地
          */
         void startActivityForResult(BaseFragment baseFragment, int isProvenance, int isOff, int type, int tran_type, String provenanceLat, String provenanceLongi,
                                     String city, String provenanceDistrict, String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer,
-                                    String provenanceShipper, String provenancePhone, String provenanceEixedTelephone, int resultCode);
+                                    String provenanceShipper, String provenancePhone, String provenanceEixedTelephone, int resultCode, String startCity);
+
 
         /**
          * 跳傳貨物詳情

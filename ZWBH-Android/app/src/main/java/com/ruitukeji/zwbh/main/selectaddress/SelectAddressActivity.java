@@ -77,6 +77,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
     private PoiSearch.Query query;
     private PoiSearch poiSearch;
     private AddressProvinceBouncedDialog addressProvinceBouncedDialog = null;
+    private String startCity = null;
 
     @Override
     public void setRootView() {
@@ -101,6 +102,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         placeName = getIntent().getStringExtra("placeName");
         tran_type = getIntent().getIntExtra("tran_type", 0);
         city = getIntent().getStringExtra("cityName");
+        startCity = getIntent().getStringExtra("startCity");
     }
 
     @Override
@@ -302,7 +304,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
                 ViewInject.toast(getString(R.string.enterAddressSameCity));
                 return;
             }
-            if (tran_type == 1 && placeName.contains(city) && type == 1) {
+            if (tran_type == 1 && placeName.contains(startCity) && type == 1) {
                 ViewInject.toast(getString(R.string.enterIntercityAddress));
                 return;
             }

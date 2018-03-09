@@ -309,7 +309,7 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                 type = 0;
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isProvenance, isOff, type, tran_type, provenanceLat,
                         provenanceLongi, city, provenanceDistrict, provenancePlaceName, provenanceDetailedAddress, provenanceDeliveryCustomer,
-                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO);
+                        provenanceShipper, provenancePhone, provenanceEixedTelephone, REQUEST_CODE_CHOOSE_PHOTO, "");
                 break;
             case R.id.tv_enterDestination:
                 if (StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
@@ -320,10 +320,18 @@ public class SameCityFragment extends BaseFragment implements EasyPermissions.Pe
                     ViewInject.toast(getString(R.string.pleaseEnterInformationShipper));
                     break;
                 }
+                String startCity = provenancePlaceName;
+                int orgprovince = provenancePlaceName.indexOf("省");
+                int orgcity = provenancePlaceName.indexOf("市");
+                if (orgprovince == -1 && orgcity != -1) {
+                    startCity = startCity.substring(0, orgcity + 1);
+                } else if (orgprovince != -1 && orgcity != -1) {
+                    startCity = startCity.substring(orgprovince + 1, orgcity + 1);
+                }
                 type = 1;
                 ((MainFragmentContract.Presenter) mPresenter).startActivityForResult(this, isDestination, isOff1, type, tran_type, destinationLat,
                         destinationLongi, city, destinationDistrict, destinationPlaceName, destinationDetailedAddress, destinationDeliveryCustomer,
-                        destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PHOTO_PREVIEW);
+                        destinationShipper, destinationPhone, destinationEixedTelephone, REQUEST_CODE_PHOTO_PREVIEW, startCity);
                 break;
             case R.id.rl_cargoInformation:
                 ((MainFragmentContract.Presenter) mPresenter).startAddCargoInformationActivityForResult(this, tran_type, type1,

@@ -431,6 +431,7 @@
     <string name="hang">挂起</string>
     <string name="all">全部</string>
     <string name="pendingOrder">待接单</string>
+    <string name="refused">已拒绝</string>
     <string name="pendingDelivery">待发货</string>
     <string name="transportation">运输中</string>
     <string name="pendingPayment">待支付</string>

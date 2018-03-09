@@ -107,7 +107,8 @@ public class PendingOrderFragment extends BaseFragment implements OrderContract.
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(aty, OrderDetailsActivity.class);
         intent.putExtra("order_id", mAdapter.getItem(i).getOrder_id());
-        aty.showActivity(aty, intent);
+        intent.putExtra("is_refuse_order", mAdapter.getItem(i).getIs_refuse_order());
+        startActivityForResult(intent, REQUEST_CODE_SELECT);
     }
 
     @Override

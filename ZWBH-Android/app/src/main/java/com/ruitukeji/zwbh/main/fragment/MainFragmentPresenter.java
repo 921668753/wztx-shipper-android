@@ -171,7 +171,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
     @Override
     public void startActivityForResult(BaseFragment baseFragment, int isProvenance, int isOff, int type, int tran_type, String provenanceLat, String provenanceLongi,
                                        String city, String provenanceDistrict, String provenancePlaceName, String provenanceDetailedAddress, String provenanceDeliveryCustomer,
-                                       String provenanceShipper, String provenancePhone, String provenanceEixedTelephone, int resultCode) {
+                                       String provenanceShipper, String provenancePhone, String provenanceEixedTelephone, int resultCode, String startCity) {
         Intent provenanceIntent = new Intent();
         if (isProvenance == 0 || StringUtils.isEmpty(provenanceLat) || StringUtils.isEmpty(provenanceDistrict) || StringUtils.isEmpty(provenancePlaceName)) {
             provenanceIntent.setClass(KJActivityStack.create().topActivity(), SelectAddressActivity.class);
@@ -185,6 +185,7 @@ public class MainFragmentPresenter implements MainFragmentContract.Presenter {
             provenanceIntent.putExtra("title", KJActivityStack.create().topActivity().getString(R.string.provenance));
         } else {
             provenanceIntent.putExtra("title", KJActivityStack.create().topActivity().getString(R.string.destination));
+            provenanceIntent.putExtra("startCity", startCity);
         }
         provenanceIntent.putExtra("tran_type", tran_type);
         provenanceIntent.putExtra("lat", provenanceLat);
