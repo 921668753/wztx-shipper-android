@@ -13,6 +13,7 @@ import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.kymjs.common.Log;
 import com.kymjs.common.PreferenceHelper;
 import com.kymjs.common.StringUtils;
 import com.ruitukeji.zwbh.R;
@@ -150,6 +151,10 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
                 addressProvinceBouncedDialog = new AddressProvinceBouncedDialog(aty, "", 0) {
                     @Override
                     public void confirmProvince(String provinceName, String addressName, int provinceId, int cityId) {
+                        if (tran_type == 1 && !StringUtils.isEmpty(startCity) && addressName.contains(startCity) && type == 1) {
+                            ViewInject.toast(getString(R.string.enterIntercityAddress));
+                            return;
+                        }
                         this.cancel();
                         tv_city.setText(addressName);
                     }
@@ -304,7 +309,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
                 ViewInject.toast(getString(R.string.enterAddressSameCity));
                 return;
             }
-            if (tran_type == 1 && placeName.contains(startCity) && type == 1) {
+            if (tran_type == 1 && !StringUtils.isEmpty(startCity) && placeName.contains(startCity) && type == 1) {
                 ViewInject.toast(getString(R.string.enterIntercityAddress));
                 return;
             }

@@ -100,6 +100,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
     private String placeName1 = "";
 
     private int isfinish = 0;
+    private String startCity = null;
 
 
     @Override
@@ -124,6 +125,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
         eixedTelephone = getIntent().getStringExtra("eixedTelephone");
         city = getIntent().getStringExtra("cityName");
         title = getIntent().getStringExtra("title");
+        startCity = getIntent().getStringExtra("startCity");
         if (StringUtils.isEmpty(detailedAddress)) {
             detailedAddress = "";
         }
@@ -239,6 +241,7 @@ public class ProvenanceActivity extends BaseActivity implements ProvenanceContra
                 intent.putExtra("tran_type", tran_type);
                 intent.putExtra("type", type);
                 intent.putExtra("cityName", city);
+                intent.putExtra("startCity", startCity);
                 startActivityForResult(intent, REQUEST_CODE_CHOOSE_PHOTO);
                 break;
             case R.id.img_off:
