@@ -61,12 +61,12 @@ public class QuotationListViewAdapter extends BGAAdapterViewAdapter<ResultBean> 
         /**
          *服务等级
          */
-        viewHolderHelper.setText(R.id.tv_driverLevel, listBean.getDr_score());
+        viewHolderHelper.setText(R.id.tv_driverLevel, listBean.getDr_level());
 
         /**
          *司机等级
          */
-        viewHolderHelper.setText(R.id.tv_serviceLevel, listBean.getDr_level());
+        viewHolderHelper.setText(R.id.tv_serviceLevel, listBean.getDr_score());
 
         /**
          *投诉次数
