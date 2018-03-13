@@ -125,12 +125,12 @@ public class WithdrawalRecordActivity extends BaseActivity implements Withdrawal
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
         WithdrawalRecordBean withdrawalRecordBean = (WithdrawalRecordBean) JsonUtil.getInstance().json2Obj(s, WithdrawalRecordBean.class);
-        mMorePageNumber = withdrawalRecordBean.getResult().getPage();
-        totalPageNumber = withdrawalRecordBean.getResult().getPageTotal();
         if (withdrawalRecordBean.getResult().getList() == null || withdrawalRecordBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;
         }
+        mMorePageNumber = withdrawalRecordBean.getResult().getPage();
+        totalPageNumber = withdrawalRecordBean.getResult().getPageTotal();
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             withdrawalRecordViewAdapter.clear();

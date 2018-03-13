@@ -31,7 +31,7 @@ public class WithdrawalRecordViewAdapter extends BGAAdapterViewAdapter<ListBean>
             viewHolderHelper.setTextColorRes(R.id.tv_name, R.color.titletextcolors);
         } else if (listBean.getStatus().equals("init") || listBean.getStatus().equals("agree")) {
             viewHolderHelper.setText(R.id.tv_name, mContext.getString(R.string.withdrawalProcessing));
-            //   viewHolderHelper.setTextColorRes(R.id.tv_name, R.color.announcementCloseColors);
+            viewHolderHelper.setTextColorRes(R.id.tv_name, R.color.titletextcolors);
         } else {
             viewHolderHelper.setText(R.id.tv_name, mContext.getString(R.string.withdrawalFailure));
             viewHolderHelper.setTextColorRes(R.id.tv_name, R.color.announcementCloseColors);
@@ -45,8 +45,10 @@ public class WithdrawalRecordViewAdapter extends BGAAdapterViewAdapter<ListBean>
         /**
          *时间
          */
-        if (StringUtils.isEmpty(listBean.getResult_time())) {
-            viewHolderHelper.setText(R.id.tv_time, listBean.getResult_time().substring(0, 10));
+        if (!StringUtils.isEmpty(listBean.getResult_time())) {
+            viewHolderHelper.setText(R.id.tv_time, listBean.getResult_time());
+        } else {
+            viewHolderHelper.setText(R.id.tv_time, "");
         }
 
         /**

@@ -47,15 +47,17 @@ public class RechargeRecordViewAdapter extends BGAAdapterViewAdapter<ListBean> {
         /**
          *时间
          */
-        if (StringUtils.isEmpty(listBean.getPay_time())) {
-            viewHolderHelper.setText(R.id.tv_time, listBean.getPay_time().substring(0, 10));
+        if (!StringUtils.isEmpty(listBean.getPay_time())) {
+            viewHolderHelper.setText(R.id.tv_time, listBean.getPay_time());
+        } else {
+            viewHolderHelper.setText(R.id.tv_time, "");
         }
 
 
         /**
          * 余额
          */
-        viewHolderHelper.setText(R.id.tv_balance, listBean.getTotal_amount());
+        viewHolderHelper.setText(R.id.tv_balance, listBean.getBalance());
 
     }
 }

@@ -126,22 +126,23 @@ public class RechargeRecordActivity extends BaseActivity implements RechargeReco
 
     @Override
     public void getSuccess(String s) {
-
         isShowLoadingMore = true;
         ll_commonError.setVisibility(View.GONE);
         mRefreshLayout.setVisibility(View.VISIBLE);
-        RechargeRecordBean prepaidPhoneRecordsBean = (RechargeRecordBean) JsonUtil.getInstance().json2Obj(s, RechargeRecordBean.class);
-        if (prepaidPhoneRecordsBean.getResult().getList() == null || prepaidPhoneRecordsBean.getResult().getList().size() == 0) {
+        RechargeRecordBean rechargeRecordBean = (RechargeRecordBean) JsonUtil.getInstance().json2Obj(s, RechargeRecordBean.class);
+        if (rechargeRecordBean.getResult().getList() == null || rechargeRecordBean.getResult().getList().size() == 0) {
             error(getString(R.string.serverReturnsDataNull));
             return;
         }
+        mMorePageNumber = rechargeRecordBean.getResult().getPage();
+        totalPageNumber = rechargeRecordBean.getResult().getPageTotal();
         if (mMorePageNumber == NumericConstants.START_PAGE_NUMBER) {
             mRefreshLayout.endRefreshing();
             rechargeRecordViewAdapter.clear();
-            rechargeRecordViewAdapter.addNewData(prepaidPhoneRecordsBean.getResult().getList());
+            rechargeRecordViewAdapter.addNewData(rechargeRecordBean.getResult().getList());
         } else {
             mRefreshLayout.endLoadingMore();
-            rechargeRecordViewAdapter.addMoreData(prepaidPhoneRecordsBean.getResult().getList());
+            rechargeRecordViewAdapter.addMoreData(rechargeRecordBean.getResult().getList());
         }
         dismissLoadingDialog();
     }
