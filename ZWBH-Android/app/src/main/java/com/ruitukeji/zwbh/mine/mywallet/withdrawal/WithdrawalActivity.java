@@ -14,6 +14,8 @@ import com.ruitukeji.zwbh.common.ViewInject;
 import com.ruitukeji.zwbh.constant.NumericConstants;
 import com.ruitukeji.zwbh.constant.StringConstants;
 import com.ruitukeji.zwbh.loginregister.LoginActivity;
+import com.ruitukeji.zwbh.mine.mywallet.paymentpasswordmanagement.setpaymentpassword.SetPaymentPasswordActivity;
+import com.ruitukeji.zwbh.mine.mywallet.withdrawal.dialog.PayPasswordBouncedDialogActivity;
 import com.ruitukeji.zwbh.mine.setting.aboutus.AboutUsActivity;
 import com.ruitukeji.zwbh.mine.mywallet.mybankcard.MyBankCardActivity;
 import com.ruitukeji.zwbh.utils.ActivityTitleUtils;
@@ -23,6 +25,7 @@ import com.ruitukeji.zwbh.utils.rx.RxBus;
 import cn.bingoogolapple.titlebar.BGATitleBar;
 
 import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_CHOOSE_PHOTO;
+import static com.ruitukeji.zwbh.constant.NumericConstants.REQUEST_CODE_SELECT;
 
 
 /**
@@ -137,7 +140,14 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
                 showActivity(aty, intentDriver);
                 break;
             case R.id.tv_confirmSubmit:
-                ((WithdrawalContract.Presenter) mPresenter).postWithdrawal(et_withdrawalAmount1.getText().toString(), bankCardId);
+                int is_pay_password = PreferenceHelper.readInt(aty, StringConstants.FILENAME, "is_pay_password", 0);
+                if (is_pay_password == 0) {
+                    ViewInject.toast(getString(R.string.notPaymentPassword));
+                    Intent intent = new Intent(aty, SetPaymentPasswordActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+                ((WithdrawalContract.Presenter) mPresenter).postWithdrawal(et_withdrawalAmount1.getText().toString().trim(), bankCardId);
                 break;
         }
     }
@@ -152,9 +162,10 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         if (flag == 0) {
-            ViewInject.toast(getString(R.string.confirmSubmit2));
-            RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
-            finish();
+            Intent intent = new Intent(aty, PayPasswordBouncedDialogActivity.class);
+            intent.putExtra("withdrawalAmount", et_withdrawalAmount1.getText().toString().trim());
+            intent.putExtra("bankId", bankCardId);
+            startActivityForResult(intent, REQUEST_CODE_SELECT);
         } else if (flag == 1) {
             Intent intent = new Intent(aty, MyBankCardActivity.class);
             intent.putExtra("type", 1);
@@ -176,7 +187,11 @@ public class WithdrawalActivity extends BaseActivity implements WithdrawalContra
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_CODE_SELECT && resultCode == RESULT_OK) {
+            ViewInject.toast(getString(R.string.confirmSubmit2));
+            RxBus.getInstance().post(new MsgEvent<String>("RxBusWithdrawalEvent"));
+            finish();
+        } else if (requestCode == REQUEST_CODE_CHOOSE_PHOTO && resultCode == RESULT_OK) {
             bankCardName = data.getStringExtra("bankCardName");
             bankCardNun = data.getStringExtra("bankCardNun");
             bankCardId = data.getIntExtra("bankCardId", 0);

@@ -1,4 +1,4 @@
-package com.ruitukeji.zwbh.mine.myorder.payment.dialog;
+package com.ruitukeji.zwbh.mine.mywallet.withdrawal.dialog;
 
 import android.content.Intent;
 import android.view.View;
@@ -18,13 +18,13 @@ import com.ruitukeji.zwbh.utils.SoftKeyboardUtils;
 import com.ruitukeji.zwbh.utils.myview.PayPwdEditText;
 
 /**
- * 付款---支付密码弹框
+ * 提现---支付密码弹框
  * Created by Administrator on 2017/11/28.
  */
 
 public class PayPasswordBouncedDialogActivity extends BaseActivity implements PayPasswordBouncedContract.View {
 
-    private int orderId = 0;
+    private int bankCardId = 0;
 
     /**
      * 关闭
@@ -44,6 +44,9 @@ public class PayPasswordBouncedDialogActivity extends BaseActivity implements Pa
     @BindView(id = R.id.tv_forgotPassword, click = true)
     private TextView tv_forgotPassword;
 
+
+    private String withdrawalAmount = "";
+
     @Override
     public void setRootView() {
         setContentView(R.layout.dialog_paypasswordbounced);
@@ -54,7 +57,8 @@ public class PayPasswordBouncedDialogActivity extends BaseActivity implements Pa
     public void initData() {
         super.initData();
         mPresenter = new PayPasswordBouncedPresenter(this);
-        orderId = getIntent().getIntExtra("order_id", 0);
+        withdrawalAmount = getIntent().getStringExtra("withdrawalAmount");
+        bankCardId = getIntent().getIntExtra("bankCardId", 0);
     }
 
     @Override
@@ -108,7 +112,8 @@ public class PayPasswordBouncedDialogActivity extends BaseActivity implements Pa
     public void getSuccess(String success, int flag) {
         dismissLoadingDialog();
         if (flag == 0) {
-            ((PayPasswordBouncedContract.Presenter) mPresenter).postScorePay(orderId);
+            showLoadingDialog(getString(R.string.submissionLoad));
+            ((PayPasswordBouncedContract.Presenter) mPresenter).postWithdrawal(withdrawalAmount, bankCardId);
         } else if (flag == 1) {
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);

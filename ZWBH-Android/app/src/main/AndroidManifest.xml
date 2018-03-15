@@ -131,9 +131,9 @@
         <!--主界面  添加货物信息  指派车辆-->
         <activity
             android:name=".main.dialog.AssignedVehicleBouncedDialogActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/transcutestyle"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan" />
 
         <!--主界面  系统消息-->
         <activity
@@ -213,9 +213,9 @@
         <!--个人中心 我的订单 付款  输入支付密码-->
         <activity
             android:name=".mine.myorder.payment.dialog.PayPasswordBouncedDialogActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/transcutestyle"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:windowSoftInputMode="adjustPan" />
 
         <!--个人中心 我的订单 付款 付款凭证-->
         <activity
@@ -303,6 +303,13 @@
         <activity
             android:name=".mine.mywallet.withdrawal.WithdrawalActivity"
             android:screenOrientation="portrait" />
+
+        <!--个人中心  我的钱包  提现  支付密码弹框-->
+        <activity
+            android:name=".mine.mywallet.withdrawal.dialog.PayPasswordBouncedDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/transcutestyle"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--个人中心  我的钱包  提现 提现记录-->
         <activity
