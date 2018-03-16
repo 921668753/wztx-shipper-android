@@ -235,7 +235,7 @@
     <string name="setCommonAddress">设为常用地址</string>
     <string name="enterAddressSameCity">请选择正确的同城地址</string>
     <string name="enterIntercityAddress">请选择正确的城际地址</string>
-
+    <string name="notChangeCity">您选择的是同城配送，不能更改目的地城市</string>
 
     <!--城市选择-->
     <string name="selectCity">选择城市</string>

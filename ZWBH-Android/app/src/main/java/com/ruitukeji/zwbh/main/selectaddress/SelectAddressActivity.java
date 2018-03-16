@@ -137,6 +137,7 @@ public class SelectAddressActivity extends BaseActivity implements TextWatcher, 
         switch (v.getId()) {
             case R.id.tv_city:
                 if (tran_type == 0 && type != 0 || tran_type == 0 && type == 0 && !StringUtils.isEmpty(startCity)) {
+                    ViewInject.toast(getString(R.string.notChangeCity));
                     return;
                 }
 //                Intent intent = new Intent(aty, SelectionCityActivity.class);
